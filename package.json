@@ -13,10 +13,13 @@
     "build": "cross-env BABEL_ENV=production NODE_ENV=production webpack --colors --progress --config ./webpack/webpack.config.prod.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "dva": "^2.1.0-0",
     "dva-loading": "^1.0.4",
     "eslint-config-airbnb": "^16.1.0",
     "history": "^4.7.2",
+    "kitsu": "^5.1.0",
+    "pure-render-decorator": "^1.2.1",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   },
