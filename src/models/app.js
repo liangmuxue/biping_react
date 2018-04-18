@@ -28,13 +28,14 @@ const App = {
     setup({ dispatch, history }) {
       // 进入主页面前，先进行身份识别
       const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      return;
       // 如果本地没有登录数据，则进入登录页
-      if (!userStr) {
-        dispatch({ type: 'toLoginPage' });
-        return;
-      }
-      const userData = JSON.parse(userStr);
-      dispatch({ type: 'query', payload: userData });
+    //   if (!userStr) {
+    //     dispatch({ type: 'toLoginPage' });
+    //     return;
+    //   }
+    //   const userData = JSON.parse(userStr);
+    //   dispatch({ type: 'query', payload: userData });
     },
   },
 
