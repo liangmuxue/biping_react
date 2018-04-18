@@ -1,0 +1,86 @@
+import React from 'react';
+import { Switch, Route, Link, Redirect, routerRedux } from 'dva/router';
+import dynamic from 'dva/dynamic';
+import 'react-hot-loader/patch';
+import { AppContainer } from 'react-hot-loader';
+import styles from './routes/weixin/app/index.less';
+
+const { ConnectedRouter } = routerRedux;
+export const innerPageDefs = { def: [] };
+
+/*
+ * 整体路由定义
+ * 创建人：梁慕学
+ */
+function RouterConfig({ history, app }) {
+  // mainpage全局路由，进行全局页面控制
+  const LoginPage = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/login/login'),
+  });
+  // mainpage全局路由，进行全局页面控制
+  const MainPage = dynamic({
+    app,
+    models: () => [
+      import('./models/pageConstruction'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/app/application'),
+  });
+  const CustomerDynamic = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/customerDynamic'),
+    ],
+    component: () => import('./routes/weixin/customerDynamic/customerDynamic'),
+  });
+  const AccountInfo = dynamic({
+    app,
+    models: () => [
+      import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/accountInfo/accountInfo'),
+  });
+  const HealthInfo = dynamic({
+    app,
+    models: () => [
+      import('./models/healthInfo'),
+    ],
+    component: () => import('./routes/weixin/healthInfo/healthInfo'),
+  });
+  // 定义内部页面，并导出，用于后续动态页面渲染使用
+  innerPageDefs.def = innerPageDefs.def.concat([{
+    name: 'customerDynamic',
+    component: CustomerDynamic,
+  }, {
+    name: 'accountInfo',
+    component: AccountInfo,
+  }, {
+    name: 'healthInfo',
+    component: HealthInfo,
+  }]);
+  const routeInner = [];
+  for (let i = 0; i < innerPageDefs.def.length; i += 1) {
+    const item = innerPageDefs.def[i];
+    // routeInner.push(<Route exact path={`/mainpage/${item.name}`} component={item.component} />);
+  }
+  // 路由定义，默认进入子路由mainpage
+  return (
+    <AppContainer>
+      <ConnectedRouter history={history}>
+        <div className={styles.normal} name="jjj">
+          <Route exact path="/" render={() => (<Redirect to="/mainpage" />)} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/mainpage" component={MainPage} />
+          {routeInner}
+        </div>
+      </ConnectedRouter>
+    </AppContainer>
+  );
+}
+
+export default RouterConfig;

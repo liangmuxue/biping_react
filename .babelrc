@@ -1,0 +1,29 @@
+{
+  "presets": [
+    "react",
+    ["env", {
+      "targets": {
+        "browsers": ["last 2 versions", "safari >= 7"],
+      },
+      "modules": false,
+      "loose": true,
+      "useBuiltIns": true
+    }],
+    "stage-3",
+  ],
+  "plugins": [
+    ["import", { "libraryName": "antd", "style": "true" }],
+    "syntax-dynamic-import",
+    "transform-runtime",
+    "transform-decorators-legacy",
+    "transform-class-properties",
+    "react-hot-loader/babel",
+    "lodash"
+  ],
+
+  "env": {
+    "production": {
+      "presets": ["react-optimize"]
+    }
+  }
+}
