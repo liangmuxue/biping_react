@@ -17,7 +17,7 @@ function genDynamics({ dispatch, accountInfo }) {
         textAlign:'left',
 
       }}>
-        <Card.Header title="NEO NEO见面会" style={{
+        <Card.Header title="1111111" style={{
         textAlign:'left',
         fontSize:'  20px'
         }} />
