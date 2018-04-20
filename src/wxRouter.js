@@ -80,6 +80,21 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/bEvents/bEvents'),
   });
+  const Currency = dynamic({
+    app,
+    models: () => [
+      import('./models/healthInfo'),
+    ],
+    component: () => import('./routes/weixin/Currency/Currency'),
+  });
+
+  const Myself = dynamic({
+    app,
+    models: () => [
+      import('./models/healthInfo'),
+    ],
+    component: () => import('./routes/weixin/myself/myself'),
+  });
   const HealthInfo = dynamic({
     app,
     models: () => [
@@ -113,10 +128,11 @@ function RouterConfig({ history, app }) {
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MesageInfo} />
           <Route path="/indexMessage" component={IndexMessage} />
-            <Route path="/indexControl" component={IndexControl} />
-            <Route path="/Announcement" component={Announcement} />
-            <Route path="/bEvents" component={bEvents} />
-
+          <Route path="/indexControl" component={IndexControl} />
+          <Route path="/Announcement" component={Announcement} />
+          <Route path="/bEvents" component={bEvents} />
+          <Route path="/Currency" component={Currency} />
+          <Route path="/myself" component={Myself} />
           {routeInner}
         </div>
       </ConnectedRouter>
