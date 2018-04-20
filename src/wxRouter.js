@@ -45,6 +45,41 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/accountInfo/accountInfo'),
   });
+  const MesageInfo = dynamic({
+    app,
+    models: () => [
+      // import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/messageList/messageList'),
+  });
+  const IndexMessage = dynamic({
+    app,
+    models: () => [
+      // import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/indexMessage/indexMessage'),
+  });
+  const IndexControl = dynamic({
+    app,
+    models: () => [
+      // import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/indexControl/indexControl'),
+  });
+  const Announcement = dynamic({
+    app,
+    models: () => [
+      // import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/announcement/announcement'),
+  });
+  const bEvents = dynamic({
+    app,
+    models: () => [
+      import('./models/healthInfo'),
+    ],
+    component: () => import('./routes/weixin/bEvents/bEvents'),
+  });
   const HealthInfo = dynamic({
     app,
     models: () => [
@@ -76,6 +111,12 @@ function RouterConfig({ history, app }) {
           <Route exact path="/" render={() => (<Redirect to="/mainpage" />)} />
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
+          <Route path="/messageList" component={MesageInfo} />
+          <Route path="/indexMessage" component={IndexMessage} />
+            <Route path="/indexControl" component={IndexControl} />
+            <Route path="/Announcement" component={Announcement} />
+            <Route path="/bEvents" component={bEvents} />
+
           {routeInner}
         </div>
       </ConnectedRouter>
