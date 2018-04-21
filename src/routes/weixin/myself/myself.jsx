@@ -5,13 +5,33 @@ import { List, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
 import { createForm } from 'rc-form';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
+import 'antd-mobile/es/switch/style/index.css';
 import style from './myself.less';
 /**
 * 老人账号信息页面
 * @author 梁慕学
 * @Date  2017-12-25
 */
-
+let SwitchExample = (props) => {
+  const { getFieldProps } = props.form;
+  return (
+    <List>
+      <List.Item
+        extra={<Switch
+          {...getFieldProps('Switch1', {
+            initialValue: true,
+            valuePropName: 'checked',
+          })}
+          onClick={(checked) => { console.log(checked); }}
+        />}
+      ><div>
+        <img src="/assets/myselfImg/1.png" className={style.pushMsgPic} /> <span>推送消息  </span>
+      </div>
+      </List.Item>
+    </List>
+  );
+};
+SwitchExample = createForm()(SwitchExample);
 const Item = List.Item;
 const Brief = Item.Brief;
 
@@ -42,6 +62,7 @@ class BasicInput extends React.Component {
       callback(new Error('At least four charactors for account'));
     }
   }
+
   render() {
     return (<div>
       <List renderHeader={() => 'Basic Style'} className="my-list">
