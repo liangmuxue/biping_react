@@ -7,7 +7,7 @@ import request from '../dataExchange/request';
  */
 export async function login(params) {
   return request({
-    url: 'userSession',
+    url: 'userLogin',
     method: 'get',
     filter: params,
   });
@@ -22,7 +22,7 @@ export async function logout(params) {
 }
 
 export const query = async function query(params) {
-  return request('userSession', {
+  return request('userLogin', {
     method: 'get',
     filter: params,
   });

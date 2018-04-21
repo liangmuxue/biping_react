@@ -30,14 +30,6 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/app/application'),
   });
-  const CustomerDynamic = dynamic({
-    app,
-    models: () => [
-      import('./models/app'),
-      import('./models/customerDynamic'),
-    ],
-    component: () => import('./routes/weixin/customerDynamic/customerDynamic'),
-  });
   const AccountInfo = dynamic({
     app,
     models: () => [
@@ -45,19 +37,19 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/accountInfo/accountInfo'),
   });
-  const MesageInfo = dynamic({
+  const MessageList = dynamic({
     app,
     models: () => [
       // import('./models/accountInfo'),
     ],
-    component: () => import('./routes/weixin/messageList/messageList'),
+    component: () => import('./routes/weixin/message/messageList'),
   });
   const IndexMessage = dynamic({
     app,
     models: () => [
       // import('./models/accountInfo'),
     ],
-    component: () => import('./routes/weixin/indexMessage/indexMessage'),
+    component: () => import('./routes/weixin/customerDynamic/indexMessage'),
   });
   const IndexControl = dynamic({
     app,
@@ -104,8 +96,8 @@ function RouterConfig({ history, app }) {
   });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
-    name: 'customerDynamic',
-    component: CustomerDynamic,
+    name: 'indexMessage',
+    component: IndexMessage,
   }, {
     name: 'accountInfo',
     component: AccountInfo,
@@ -126,7 +118,7 @@ function RouterConfig({ history, app }) {
           <Route exact path="/" render={() => (<Redirect to="/mainpage" />)} />
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
-          <Route path="/messageList" component={MesageInfo} />
+          <Route path="/messageList" component={MessageList} />
           <Route path="/indexMessage" component={IndexMessage} />
           <Route path="/indexControl" component={IndexControl} />
           <Route path="/Announcement" component={Announcement} />
