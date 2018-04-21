@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import 'antd-mobile/es/button/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
+import { Button, WingBlank } from 'antd-mobile';
 import { Card, WhiteSpace } from 'antd-mobile';
 import styles from './indexMessage.less';
 /**
@@ -8,6 +10,12 @@ import styles from './indexMessage.less';
  * @author 梁慕学
  * @Date  2017-12-25
  */
+
+ const Buttongo = () => (
+   <WingBlank>
+      <Button type="primary">赶紧去订阅</Button><WhiteSpace />
+  </WingBlank>
+)
 function genDynamics({ dispatch, accountInfo }) {
   // const { customerName } = accountInfo;
 
@@ -83,10 +91,15 @@ function genDynamics({ dispatch, accountInfo }) {
 </a>
     </div>
 
-      // 二维码弹框
 
       <div className={styles.alertBox}></div>
       <div>  <img src="/assets/indexImg/wechat.png" className={styles.alertWechat}/></div>
+
+      <div className={styles.empty}>
+          <div><img src="/assets/indexImg/nomsg.png"  className={styles.buycar}/></div>
+          <div className={styles.notread}>无消息</div>
+          <Buttongo />
+      </div>
     </div>
 
 
