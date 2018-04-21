@@ -66,7 +66,10 @@ function genDynamics({ dispatch, accountInfo }) {
                     <div className={style.similarTitle}>类似消息</div>
                     <ul className={style.similarListUl}>
                           <li className={style.similarListLi}><a href="#" className={style.similarList}>BTC，开展有奖竞赛。</a></li>
-                              <li className={style.similarListLi}><a href="#" className={style.similarList}>BT</a></li>
+                          <li className={style.similarListLi}><a href="#" className={style.similarList}>CAPP，进行空投。</a></li>
+                          <li className={style.similarListLi}><a href="#" className={style.similarList}>BLUE，更新白皮书和路线图。</a></li>
+                          <li className={style.similarListLi}><a href="#" className={style.similarList}>TIPS，发布Linux钱包。</a></li>
+                          <li className={style.similarListLi}><a href="#" className={style.similarList}>ARV，测试网络V2将于12日发布。</a></li>
                     </ul>
                </div>
            </div>
