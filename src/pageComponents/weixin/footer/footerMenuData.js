@@ -6,9 +6,9 @@
 
 const menus = [
   {
-    code: 'customerDynamic',
-    title: '动态',
-    key: 'customerDynamic',
+    code: 'indexMessage',
+    title: '消息',
+    key: 'indexMessage',
     badge: 1,
     // icon: 'calendar',
     icon: 'url(https://zos.alipayobjects.com/rmsportal/sifuoDUQdAFKAVcFGROC.svg) center center /  21px 21px no-repeat',

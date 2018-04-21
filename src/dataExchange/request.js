@@ -1,8 +1,22 @@
 import axios from 'axios';
-import qs from 'qs';
-import lodash from 'lodash';
 import Kitsu from 'kitsu';
+import MockAdapter from 'axios-mock-adapter';
 import { config } from '../../config/environment';
+
+
+// 模拟请求设置
+const mock = new MockAdapter(axios);
+// 模拟任意GET请求到 /messageList
+mock.onGet('/messageList').reply(200, {
+  flag: 0,
+  data: [{
+    title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22141, readCnt: 1000, time: '刚刚',
+  },
+  {
+    title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22141, readCnt: 1000, time: '刚刚',
+  }],
+});
+
 
 /**
 * 数据请求交换封装
@@ -11,7 +25,7 @@ import { config } from '../../config/environment';
 */
 const API_ROOT = config.env.host;
 const api = new Kitsu({
-  baseURL: `${API_ROOT}/api`,
+  baseURL: `${API_ROOT}/webInterface`,
   resourceCase: 'none',
   pluralize: false,
   camelCaseTypes: true,
@@ -21,16 +35,19 @@ const fetch = (endpoint, options) => {
   const {
     method = 'get',
     systemUser,
-    data, page, fields, include, filter,
+    data, filter,
   } = options;
   // const cloneData = lodash.cloneDeep(data);
   // 公共头信息
+  api.headers = {
+    type: 'wechat',
+  };
+  // 登录后获取token信息
   if (systemUser) {
-    api.headers = {
-      'ccd-token': systemUser.token,
-      'ccd-user-id': systemUser.id,
-      tenantId: systemUser.tenant.id,
-    };
+    Object.assign(api.headers, {
+      token: systemUser.token,
+      // 'uid': systemUser.id,
+    });
   }
 
   // 根据不同的请求类型，执行不同的发方法
@@ -38,7 +55,7 @@ const fetch = (endpoint, options) => {
     switch (method.toLowerCase()) {
       case 'get':
         return api.fetch(endpoint, {
-          page, fields, include, filter,
+          ...filter,
         });
       case 'delete':
         return api.remove(endpoint, data.id);
@@ -75,7 +92,10 @@ export default function request(endpoint, options) {
       statusCode = 600;
       msg = error.message || 'Network Error';
     }
-    return Promise.reject(new Error({ success: false, statusCode, message: msg }));
+    return Promise.resolve({
+      success: false,
+      error: new Error({ success: false, statusCode, message: msg }),
+    });
   });
 }
 

@@ -27,15 +27,16 @@ const App = {
   subscriptions: {
     setup({ dispatch, history }) {
       // 进入主页面前，先进行身份识别
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
-      return;
-        // 如果本地没有登录数据，则进入登录页
-        //   if (!userStr) {
-        //     dispatch({ type: 'toLoginPage' });
-        //     return;
-        //   }
-        //   const userData = JSON.parse(userStr);
-        //   dispatch({ type: 'query', payload: userData });
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
+      userStr = JSON.stringify(userMoni);
+      // 如果本地没有登录数据，则进入登录页
+      if (!userStr) {
+        dispatch({ type: 'toLoginPage' });
+        return;
+      }
+      const userData = JSON.parse(userStr);
+      dispatch({ type: 'query', payload: userData });
     },
   },
 
@@ -49,8 +50,9 @@ const App = {
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
-      if (success && response.data && response.data.length > 0) {
-        const systemUser = response.data[0];
+      if (success && response.data && response.flag === 0) {
+        const { token } = response.data;
+        const systemUser = { token };
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',
@@ -66,8 +68,9 @@ const App = {
           payload: { selectedMenu: menu },
         });
       } else {
-        // 如果自动登录失败，则进入登录页面
-        yield put({ type: 'toLoginPage' });
+        // 如果自动登录失败，则进入游客页面
+        yield put({ type: 'toTourPage' });
+        // yield put({ type: 'toLoginPage' });
       }
     },
     // 登录页面登录请求
@@ -100,6 +103,10 @@ const App = {
       } else {
         yield put({ type: 'loginFail' });
       }
+    },
+    // 跳转到游客页面
+    * toTourPage() {
+      // do nothing
     },
     // 跳转到登录页
     * toLoginPage({

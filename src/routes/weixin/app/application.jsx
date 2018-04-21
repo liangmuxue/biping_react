@@ -18,6 +18,7 @@ class HomePage extends Component {
       match, dispatch, app, pageConstruction,
     } = this.props;
     console.log(`match.url:${match.url}`);
+    console.log('app data', app);
     const { innerPageList } = pageConstruction;
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
@@ -30,7 +31,10 @@ class HomePage extends Component {
       // 根据标志决定隐藏还是显示
       if (item.isShow) {
         // 注意此处div不能加key，否则会重复渲染
-        return <div name={ckey} className={styles.container}><MComponent key={item.pageName} /></div>;
+        return (<div name={ckey} className={styles.container}>
+          <MComponent key={item.pageName} />
+        </div>
+        );
       }
       const style = {
         display: 'none',
@@ -38,14 +42,16 @@ class HomePage extends Component {
       // 注意此处div不能加key，否则会重复渲染
       return <div name={ckey} style={style} className={styles.container}><MComponent key={item.pageName} /></div>;
     });
+    let pageContent = null;
+    // 根据用户是否登录决定显示内容
+    if (app.user.id || true) {
+      // 本级路由定义,动态显示下级组件
+      pageContent = <div>{ routeInner }<Footer /></div>;
+    } else {
+      pageContent = <div>没有权限查看</div>;
+    }
 
-    // 本级路由定义,动态显示下级组件
-    return (
-      <div>
-        { routeInner }
-        <Footer />
-      </div>
-    );
+    return pageContent;
   }
 }
 
