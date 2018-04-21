@@ -7,9 +7,9 @@ import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './myself.less';
 /**
-* 老人账号信息页面
-* @author 梁慕学
-* @Date  2017-12-25
+* 个人中心
+* @author 赵永帅
+* @Date 2018-4-21
 */
 
 const Item = List.Item;
@@ -61,7 +61,7 @@ class BasicInput extends React.Component {
     </Item>
     <Item
       arrow="horizontal"
-      thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
+      thumb="https://zos..com/rmsportal/dNuvNrtqUztHCwM.png"
       multipleLine
       onClick={() => {}}
       >
