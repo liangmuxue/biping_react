@@ -79,7 +79,6 @@ class BasicInput extends React.Component {
           platform="android"
         >
         ListItem （Android）<Brief>There may have water ripple effect of <br /> material if you set the click event.</Brief>
-<<<<<<< HEAD
     </Item>
     <Item
       arrow="horizontal"
@@ -87,7 +86,6 @@ class BasicInput extends React.Component {
       multipleLine
       onClick={() => {}}
       >
-=======
         </Item>
         <Item
           arrow="horizontal"
@@ -95,7 +93,6 @@ class BasicInput extends React.Component {
           multipleLine
           onClick={() => {}}
         >
->>>>>>> 52c8b7c9b74200aac503a66e9d402540956284c3
       Title <Brief>subtitle</Brief>
         </Item>
       </List>
