@@ -8,9 +8,9 @@ import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/switch/style/index.css';
 import style from './myself.less';
 /**
-* 个人中心
-* @author 赵永帅
-* @Date 2018-4-21
+* 老人账号信息页面
+* @author 梁慕学
+* @Date  2017-12-25
 */
 let SwitchExample = (props) => {
   const { getFieldProps } = props.form;
@@ -25,10 +25,9 @@ let SwitchExample = (props) => {
           onClick={(checked) => { console.log(checked); }}
         />}
       ><div>
-        <img src="/assets/myselfImg/1.png" className={style.pushMsgPic} /> <span>推送消息  </span>
-      </div>
-      </List.Item>
-    </List>
+            <img src="/assets/myselfImg/1.png" className={style.pushMsgPic}/ > <span>推送消息  </span>
+      </div></List.Item>
+        </List>
   );
 };
 SwitchExample = createForm()(SwitchExample);
@@ -40,7 +39,7 @@ class BasicInput extends React.Component {
     super(props);
     // 设置 initial state
     this.state = {
-      value: 1,
+      value:1
     };
   }
   onSubmit() {
@@ -65,90 +64,21 @@ class BasicInput extends React.Component {
 
   render() {
     return (<div>
-      <List renderHeader={() => 'Basic Style'} className="my-list">
-        <Item extra="extra content">Title</Item>
-      </List>
-      <List renderHeader={() => 'Subtitle'} className="my-list">
-        <Item arrow="horizontal" multipleLine onClick={() => {}}>
-          Title <Brief>subtitle</Brief>
-        </Item>
-        <Item
-          arrow="horizontal"
-          multipleLine
-          onClick={() => {}}
-          platform="android"
-        >
-        ListItem （Android）<Brief>There may have water ripple effect of <br /> material if you set the click event.</Brief>
-<<<<<<< HEAD
-    </Item>
-    <Item
-      arrow="horizontal"
-      thumb="https://zos..com/rmsportal/dNuvNrtqUztHCwM.png"
-      multipleLine
-      onClick={() => {}}
-      >
-=======
-        </Item>
-        <Item
-          arrow="horizontal"
-          thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-          multipleLine
-          onClick={() => {}}
-        >
->>>>>>> 52c8b7c9b74200aac503a66e9d402540956284c3
-      Title <Brief>subtitle</Brief>
-        </Item>
-      </List>
-      <List renderHeader={() => 'Customized Right Side（Empty Content / Text / Image）'} className="my-list">
-        <Item>Title</Item>
-        <Item arrow="horizontal" onClick={() => {}}>Title</Item>
-        <Item extra="extra content" arrow="horizontal" onClick={() => {}}>Title</Item>
-        <Item extra="10:30" align="top" thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png" multipleLine>
-    Title <Brief>subtitle</Brief>
-        </Item>
-      </List>
-      <List renderHeader={() => 'Align Vertical Center'} className="my-list">
-        <Item multipleLine extra="extra content">
-    Title <Brief>subtitle</Brief>
-        </Item>
-      </List>
-      <List renderHeader={() => 'Icon in the left'}>
-        <Item
-          thumb="https://zos.alipayobjects.com/rmsportal/dNuvNrtqUztHCwM.png"
-          arrow="horizontal"
-          onClick={() => {}}
-        >My wallet
-        </Item>
-        <Item
-          thumb="https://zos.alipayobjects.com/rmsportal/UmbJMbWOejVOpxe.png"
-          onClick={() => {}}
-          arrow="horizontal"
-        >
-    My Cost Ratio
-        </Item>
-      </List>
-      <List renderHeader={() => 'Text Wrapping'} className="my-list">
-        <Item data-seed="logId">Single line，long text will be hidden with ellipsis；</Item>
-        <Item wrap>Multiple line，long text will wrap；Long Text Long Text Long Text Long Text Long Text Long Text</Item>
-        <Item extra="extra content" multipleLine align="top" wrap>
-    Multiple line and long text will wrap. Long Text Long Text Long Text
-        </Item>
-        <Item extra="no arrow" arrow="empty" className="spe" wrap>
-    In rare cases, the text of right side will wrap in the single line with long text. long text long text long text
-        </Item>
-      </List>
-      <List renderHeader={() => 'Other'} className="my-list">
-        <Item disabled={this.state.disabled} extra="" onClick={() => { console.log('click', this.state.disabled); this.setState({ disabled: true }); }}>Click to disable</Item>
-        <Item>
-          <select defaultValue="1">
-            <option value="1">Html select element</option>
-            <option value="2" disabled>Unable to select</option>
-            <option value="3">option 3</option>
-          </select>
-        </Item>
-      </List>
-            </div>);
-  }
+<div className={style.mineBox}>
+    <div><img src="/assets/myselfImg/mine_pic.png" className={style.minePic }/></div>
+    <div className={style.mineName}>币评</div>
+</div>
+<List className={style.myList}>
+  <Item arrow="horizontal" onClick={() => {}}>
+  <div><img src="/assets/myselfImg/2.png" className={style.historyPic}/> <span className={style.history}>购买记录</span> </div>
+
+  </Item>
+</List>
+
+<SwitchExample />
+  <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
+</div>);
+}
 }
 
 function mapStateToProps({ state }) {
