@@ -83,9 +83,6 @@ class MsgDetail extends Component {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
-    this.state = {
-      data: props.data,
-    };
   }
   render() {
     console.log('MsgDetail render', this.props);
