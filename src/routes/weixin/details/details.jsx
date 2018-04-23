@@ -26,11 +26,11 @@ function genDynamics({ dispatch, accountInfo }) {
     <div>
       <div className={styles.toptitle}>
       详情
-      <a href="#" ><img src="/assets/messageListImg/left_arrow.png" className={styles.leftArrow}/></a>
+      <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow}/></a>
       </div>
 
       <div className={style.bannerBox}>
-            <div><img src="/assets/details/banner.png" className={style.bannerPic}/></div>
+            <div><img src="/images/details/banner.png" className={style.bannerPic}/></div>
               <div className={style.btnBox}><Buttongo /></div>
       </div>
 
@@ -56,8 +56,8 @@ function genDynamics({ dispatch, accountInfo }) {
               </ul>
 
               <div className={style.likesBox}>
-                  <div className={style.like}><img src="assets/details/zan.png" className={style.goodImg}/><span className={style.numbers}>445</span></div>
-                  <div className={style.unlike}><img src="assets/details/2.png" className={style.goodImg}/><span className={style.numbers}>不喜欢</span></div>
+                  <div className={style.like}><img src="details/zan.png" className={style.goodImg}/><span className={style.numbers}>445</span></div>
+                  <div className={style.unlike}><img src="details/2.png" className={style.goodImg}/><span className={style.numbers}>不喜欢</span></div>
               </div>
            </div>
 

@@ -84,12 +84,12 @@ const pageModel = modelExtend(model, {
       payload, modelDef, filter, list,
     }) {
       // 分页模式，服务端统一返回data及meta属性
-      const { data, meta } = payload;
+      const { data, pager } = payload;
       // 根据服务器返回的分页属性，重置本地分页信息
       const pagination = {
-        current: meta.currPage,
-        totalCount: meta.totalCount,
-        totalPage: meta.totalPage,
+        current: pager.number,
+        totalCount: pager.totalElements,
+        totalPage: pager.totalPages,
       };
 
       return {

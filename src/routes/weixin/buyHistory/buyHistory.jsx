@@ -26,14 +26,14 @@ function genDynamics({ dispatch, accountInfo }) {
     <div>
     <div className={style.toptitle}>
     购买记录
-    <a href="#" ><img src="/assets/messageListImg/left_arrow.png" className={style.leftArrow}/></a>
+    <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={style.leftArrow}/></a>
     </div>
 
     <div className={styles.historyBox}>
         <div className={styles.tops}>
-          <div><img src="/assets/buyHistoryImg/1.png" className={styles.leftlogo}/></div>
+          <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo}/></div>
           <div className={styles.events}>购买：</div>
-          <div><a href="#"><span className={styles.watch}>查看</span><img src="/assets/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
+          <div><a href="#"><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
         </div>
         </div>
 
@@ -46,9 +46,9 @@ function genDynamics({ dispatch, accountInfo }) {
 
     <div className={styles.historyBox}>
         <div className={styles.tops}>
-          <div><img src="/assets/buyHistoryImg/2.png" className={styles.leftlogo}/></div>
+          <div><img src="/images/buyHistoryImg/2.png" className={styles.leftlogo}/></div>
           <div className={styles.events}>分享有礼：</div>
-          <div><a href="#"><span className={styles.watch}>查看</span><img src="/assets/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
+          <div><a href="#"><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
         </div>
         </div>
 
@@ -61,9 +61,9 @@ function genDynamics({ dispatch, accountInfo }) {
 
     <div className={styles.historyBox}>
         <div className={styles.tops}>
-          <div><img src="/assets/buyHistoryImg/1.png" className={styles.leftlogo}/></div>
+          <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo}/></div>
           <div className={styles.events}>购买：</div>
-          <div><a href="#"><span className={styles.watch}>查看</span><img src="/assets/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
+          <div><a href="#"><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow}/></a>
         </div>
         </div>
 
@@ -78,7 +78,7 @@ function genDynamics({ dispatch, accountInfo }) {
 
 
     <div className={styles.empty}>
-        <div><img src="/assets/buyHistoryImg/3.png"  className={styles.buycar}/></div>
+        <div><img src="/images/buyHistoryImg/3.png"  className={styles.buycar}/></div>
         <div className={styles.notread}>您还没有买过任何订阅包</div>
         <Buttongo />
     </div>

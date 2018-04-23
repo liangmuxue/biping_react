@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
-    *msgQuery({ put }) {
+    *msgQuery({ payload }, { put }) {
       console.log('query for msgQuery');
       // 在这里拼好filter，然后调用通用的query方法
       yield put({

@@ -47,7 +47,7 @@ function RouterConfig({ history, app }) {
   const IndexMessage = dynamic({
     app,
     models: () => [
-      // import('./models/accountInfo'),
+      import('./models/indexMessage'),
     ],
     component: () => import('./routes/weixin/customerDynamic/indexMessage'),
   });

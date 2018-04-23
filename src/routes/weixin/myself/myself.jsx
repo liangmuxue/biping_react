@@ -25,7 +25,7 @@ let SwitchExample = (props) => {
           onClick={(checked) => { console.log(checked); }}
         />}
       ><div>
-        <img src="/assets/myselfImg/1.png" className={style.pushMsgPic} /> <span>推送消息  </span>
+        <img src="/images/myselfImg/1.png" className={style.pushMsgPic} /> <span>推送消息  </span>
       </div>
       </List.Item>
     </List>
