@@ -28,7 +28,7 @@ function genDynamics({ dispatch, messages }) {
                   <span className={styles.event}>#币事件</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>刚刚</span>
                 </div>
               }
-              extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
             />
           </Card>
         </a>
@@ -49,7 +49,7 @@ function genDynamics({ dispatch, messages }) {
                   <span className={styles.event}>#异动币提醒</span> <span className={styles.readNum}>1.5万阅读</span> <span className={styles.times}>1分钟前</span>
                 </div>
                 }
-              extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
             />
           </Card>
         </a>
@@ -69,7 +69,7 @@ function genDynamics({ dispatch, messages }) {
                   <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
                 </div>
                   }
-              extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
             />
           </Card>
         </a>
@@ -89,7 +89,7 @@ function genDynamics({ dispatch, messages }) {
                   <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
                 </div>
                     }
-              extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
             />
           </Card>
         </a>
@@ -98,7 +98,7 @@ function genDynamics({ dispatch, messages }) {
               // 二维码弹框
 
       <div className={styles.alertBox} />
-      <div>  <img src="/assets/indexImg/wechat.png" className={styles.alertWechat} /></div>
+      <div>  <img src="/images/indexImg/wechat.png" className={styles.alertWechat} /></div>
     </div>
 
 

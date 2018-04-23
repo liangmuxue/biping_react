@@ -15,7 +15,7 @@ function genDynamics({ dispatch, accountInfo }) {
     <div>
       <div className={styles.toptitle}>
       交易所公告
-      <a href="#" ><img src="/assets/messageListImg/left_arrow.png" className={styles.leftArrow}/></a>
+      <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow}/></a>
       </div>
 
       <div className={styles.mesList}>
@@ -30,7 +30,7 @@ function genDynamics({ dispatch, accountInfo }) {
      <div class={styles.cardFooter}>
         <span className={styles.event}>#币事件</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>刚刚</span>
      </div>
-   } extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
+   } extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
  </Card>
  </a>
       </div>
@@ -48,7 +48,7 @@ function genDynamics({ dispatch, accountInfo }) {
      <div class={styles.cardFooter}>
         <span className={styles.event}>#异动币提醒</span> <span className={styles.readNum}>1.5万阅读</span> <span className={styles.times}>1分钟前</span>
      </div>
-   } extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
+   } extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
  </Card>
  </a>
       </div>
@@ -65,7 +65,7 @@ function genDynamics({ dispatch, accountInfo }) {
      <div class={styles.cardFooter}>
         <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
      </div>
-   } extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
+   } extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
  </Card>
  </a>
       </div>
@@ -82,7 +82,7 @@ function genDynamics({ dispatch, accountInfo }) {
      <div class={styles.cardFooter}>
         <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
      </div>
-   } extra={<div ><img src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
+   } extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>} />
  </Card>
  </a>
       </div>

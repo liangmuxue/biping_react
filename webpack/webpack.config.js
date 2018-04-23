@@ -2,7 +2,7 @@ const path = require('path');
 const webpack = require('webpack');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   context: path.join(__dirname, '../src'),
@@ -50,7 +50,7 @@ module.exports = {
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg|jpg)$/,
-        loader: 'url-loader?limit=100000',
+        loader: 'url-loader?limit=100000&name=images/[name].[ext]',
       },
     ],
   },
@@ -72,8 +72,8 @@ module.exports = {
       name: ['vendor', 'manifest'],
       minChunks: ({ resource }) => (
         resource &&
-        resource.indexOf('node_modules') >= 0 &&
-        resource.match(/\.js$/)
+      resource.indexOf('node_modules') >= 0 &&
+      resource.match(/\.js$/)
       ),
     }),
 
@@ -82,8 +82,8 @@ module.exports = {
       async: 'echarts',
       minChunks: ({ resource } = {}) => (
         resource &&
-        resource.includes('node_modules') &&
-        /echarts|zrender/.test(resource)
+      resource.includes('node_modules') &&
+      /echarts|zrender/.test(resource)
       ),
     }),
     new webpack.optimize.CommonsChunkPlugin({
@@ -91,9 +91,12 @@ module.exports = {
       async: 'lodash',
       minChunks: ({ resource } = {}) => (
         resource &&
-        resource.includes('node_modules') &&
-        /lodash/.test(resource)
+      resource.includes('node_modules') &&
+      /lodash/.test(resource)
       ),
     }),
+    new CopyWebpackPlugin([
+      { from: 'assets/', to: '' },
+    ]),
   ],
 };

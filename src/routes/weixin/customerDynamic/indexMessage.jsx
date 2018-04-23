@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
-import 'antd-mobile/es/card/style/index.css';
 import 'antd-mobile/es/wing-blank/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 import InfiniteListView from '../../../components/infiniteListView';
 import { buildPagiProps } from '../../common/paginationRoute';
-import { rebuildCustomerDynamic } from '../../../selectors/customerDynamic';
+import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
 import styles from './index.less';
@@ -30,7 +29,7 @@ function genDynamics({
   });
   const height = document.documentElement.clientHeight * 3 / 4;
   return (
-    <div className={styles.container}>
+    <div>
       {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
       <InfiniteListView {...messageListProps} height={height} />
     </div>
@@ -47,12 +46,12 @@ class MessageList extends Component {
 
 function mapStateToProps(state, ownProps) {
   // 第一次进入时没有数据，直接返回
-  if (!state.messageList.dataSource) {
-    const { messageList } = state;
-    return { messageList };
+  if (!state.message.dataSource) {
+    const { message } = state;
+    return { message };
   }
   // 加工数据
-  const messageList = rebuildCustomerDynamic(state, state.messageList);
+  const messageList = rebuildMessageList(state.message);
   return messageList;
 }
 

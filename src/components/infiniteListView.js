@@ -67,10 +67,7 @@ class InfiniteListView extends React.Component {
       <div
         key={`${sectionID}-${rowID}`}
         style={{
-           backgroundColor: '#F5F5F9',
-           height: 8,
-           borderTop: '1px solid #ECECED',
-           borderBottom: '1px solid #ECECED',
+
          }}
       />
     );
@@ -79,10 +76,6 @@ class InfiniteListView extends React.Component {
       <ListView
         ref={el => this.lv = el}
         dataSource={this.state.dataSource}
-        renderHeader={() => <span>header</span>}
-        renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}>
-          {loading ? 'Loading...' : 'Loaded'}
-                             </div>)}
         renderRow={this.props.renderRow}
         renderSeparator={separator}
         className="am-list"

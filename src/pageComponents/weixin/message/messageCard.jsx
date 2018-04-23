@@ -1,5 +1,6 @@
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Card from 'antd-mobile/lib/card/index';
+// import 'antd-mobile/es/card/style/index.css';
 import React from 'react';
 import styles from './messageCard.less';
 
@@ -38,7 +39,7 @@ class MessageCard extends React.Component {
                 <span className={styles.times}>{msgObj.time}</span>
               </div>
               }
-            extra={<div ><img alt="noicon" src="/assets/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+            extra={<div ><img alt="noicon" src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
           />
         </Card>
       </div>

@@ -8,16 +8,19 @@ import { pathConfig } from '../utils/pathConfig';
 * @date  18-02-05
 */
 const { getAvatarRemotePath } = pathConfig;
-const getCustomerDynamic = state => state.customerDynamic;
+const getMessageList = (data) => {
+  console.log('data in getMessageList', data);
+  return data;
+};
 
-export const rebuildCustomerDynamic = createSelector(
-  [getCustomerDynamic],
-  (customerDynamic) => {
-    if (!customerDynamic.dataSource) {
-      return customerDynamic;
+export const rebuildMessageList = createSelector(
+  [getMessageList],
+  (messageList) => {
+    if (!messageList.dataSource) {
+      return messageList;
     }
     const imDataSource = [];
-    customerDynamic.dataSource.forEach((item) => {
+    messageList.dataSource.forEach((item) => {
       // 加工为实际图片路径
       const picPathTotal = getAvatarRemotePath(item.picPath);
       // 使用Immutable对象
@@ -25,9 +28,9 @@ export const rebuildCustomerDynamic = createSelector(
     });
     console.log('imDataSource is', imDataSource);
     // 使用Immutable数组
-    customerDynamic.dataSource = Immutable(imDataSource);// eslint-disable-line no-param-reassign
+    messageList.dataSource = Immutable(imDataSource);// eslint-disable-line no-param-reassign
     return {
-      customerDynamic,
+      messageList,
     };
   },
 );

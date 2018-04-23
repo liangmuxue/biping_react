@@ -72,7 +72,7 @@ function genDynamics({ dispatch, accountInfo }) {
     <div>
     <div className={style.toptitle}>
     交易所公告
-    <a href="#" ><img src="/assets/messageListImg/left_arrow.png" className={style.leftArrow}/></a>
+    <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={style.leftArrow}/></a>
     </div>
       <div className={styles.whiteBox}>
       <Renew /  >
@@ -80,7 +80,7 @@ function genDynamics({ dispatch, accountInfo }) {
             <div className={styles.hadReady}>已经有1000人订阅：</div>
             <h1 className={styles.titles}>币事件</h1>
             <div className={styles.contents}>我们会从社交媒体收录加密货币未来可能会发生的事件，来帮助投资者多个维度预测行情。</div>
-            <div className={styles.bottomBtn}><a href="#">查看所有事件类型<img src="/assets/messageListImg/right_arrow.png" className={styles.arrowRight}/></a></div>
+            <div className={styles.bottomBtn}><a href="#">查看所有事件类型<img src="/images/messageListImg/right_arrow.png" className={styles.arrowRight}/></a></div>
         </div>
       </div>
       <div className={style.listTitle}>【交易所公告】订阅管理</div>

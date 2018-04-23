@@ -7,7 +7,7 @@ import { config } from '../../config/environment';
 */
 
 export const pathConfig = {
-  // baseRemotePath: config.env.resourceHost + "/assets/mockData/image",
+  // baseRemotePath: config.env.resourceHost + "/mockData/image",
   basePath: () => {
     return config.env.host;
   },
@@ -35,7 +35,7 @@ export const pathConfig = {
   },
   // 居家项目本地路径
   getJujiaLocalPath(avatar) {
-    return `./assets/images/kangyi/${avatar}`;
+    return `./images/kangyi/${avatar}`;
   },
   // 居家项目服务器路径
   getJujiaRemotePath(avatar) {

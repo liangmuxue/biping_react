@@ -4,24 +4,34 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import { Card, WhiteSpace, Result, Icon } from 'antd-mobile';
 import { Button, WingBlank } from 'antd-mobile';
 import 'antd-mobile/es/button/style/index.css';
-import 'antd-mobile/es/list/style/index.css';
+import 'antd-mobile/es/result/style/index.css';
+import 'antd-mobile/es/icon/style/index.css';
 import styles from './result.less';
 /**
  * 老人账号信息页面
  * @author 梁慕学
  * @Date  2017-12-25
  */
- const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt="" />;
+const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt="" />;
 
- const ResultExample = () => (<div className="result-example">
+ const ResultExample = () => (
+   <div className="result-example">
+      <Result
+      img={<Icon type="check-circle" className="spe" style={{ fill: '#1F90E6' }} />}
+    title="购买成功"
+    message="你已购买「交易所公告」3个月礼包"
 
+        />
+          <WhiteSpace />
+      </div>
+);
 
 function genDynamics({ dispatch, accountInfo }) {
   // const { customerName } = accountInfo;
 
   return (
       <div>
-
+<ResultExample/>
       </div>
 
 
