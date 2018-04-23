@@ -48,6 +48,8 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/indexMessage'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/customerDynamic/indexMessage'),
   });
@@ -68,14 +70,14 @@ function RouterConfig({ history, app }) {
   const bEvents = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/bEvents/bEvents'),
   });
   const Currency = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/Currency/Currency'),
   });
@@ -83,14 +85,14 @@ function RouterConfig({ history, app }) {
   const Myself = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/myself/myself'),
   });
   const result = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/result/result'),
   });
@@ -98,42 +100,41 @@ function RouterConfig({ history, app }) {
   const toOpen = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/toOpen/toOpen'),
   });
   const buyHistory = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/buyHistory/buyHistory'),
   });
-  const details = dynamic({
+  const MsgDetail = dynamic({
     app,
     models: () => [
-      import('./models/healthInfo'),
+      import('./models/messageDetail'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
-    component: () => import('./routes/weixin/details/details'),
-  });
-
-  const HealthInfo = dynamic({
-    app,
-    models: () => [
-      import('./models/healthInfo'),
-    ],
-    component: () => import('./routes/weixin/healthInfo/healthInfo'),
+    component: () => import('./routes/weixin/message/messageDetail'),
   });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
+    modelName: 'message',
     component: IndexMessage,
+  }, {
+    name: 'messageDetail',
+    modelName: 'messageDetail',
+    component: MsgDetail,
+  }, {
+    name: 'messageList',
+    component: MessageList,
   }, {
     name: 'accountInfo',
     component: AccountInfo,
-  }, {
-    name: 'healthInfo',
-    component: HealthInfo,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -156,7 +157,7 @@ function RouterConfig({ history, app }) {
           <Route path="/Currency" component={Currency} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={buyHistory} />
-          <Route path="/details" component={details} />
+          <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={toOpen} />
 

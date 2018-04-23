@@ -111,7 +111,7 @@ class MessageList extends Component {
     super(props);
   }
   render() {
-    console.log('MessageList render');
+    console.log('MessageList render', this.props);
     return genDynamics(this.props);
   }
 }

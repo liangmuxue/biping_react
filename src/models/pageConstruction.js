@@ -17,7 +17,7 @@ const pcEntity = {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
+    setup({ history }) {
       his = history;
       console.log('his set', his);
     },
@@ -64,6 +64,7 @@ const pcEntity = {
             console.log('st is', st);
             console.log(`new currentModel is:${modelName}`);
             const state = st[modelName];
+            console.log('relate state is:', state);
             matchPage.isShow = true;
             // 如果由非激活状态转变为激活状态，要进行页面通知
             state.onActive();
@@ -73,7 +74,8 @@ const pcEntity = {
           innerPageList[i].isShow = false;
           const st = yield select();
           console.log('st is', st);
-          console.log(`new currentModel is:${modelName}`);
+          console.log(`new currentModel in hide is:${modelName}`);
+          console.log('relate state is:', state);
           const state = st[modelName];
           // 如果由激活状态转变为非激活状态，要进行页面通知
           state.deActive();

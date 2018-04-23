@@ -25,7 +25,10 @@ export const query = async function query(
     [options.pageNumber]: current,
   };
   // 获取通用请求头信息
-  const { systemUser } = state.app;
+  let systemUser = null;
+  if (state.app) {
+    ({ systemUser } = state.app);
+  }
   return request(endpoint, {
     method: 'get',
     filter,
