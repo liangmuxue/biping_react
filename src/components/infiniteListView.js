@@ -66,9 +66,6 @@ class InfiniteListView extends React.Component {
     const separator = (sectionID, rowID) => (
       <div
         key={`${sectionID}-${rowID}`}
-        style={{
-
-         }}
       />
     );
 
