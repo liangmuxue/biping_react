@@ -130,6 +130,7 @@ const App = {
   },
   reducers: {
     sysUserSet(state, { payload }) {
+      console.log('sysUserSet in', payload);
       return {
         ...state,
         ...payload,
