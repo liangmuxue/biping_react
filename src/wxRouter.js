@@ -30,20 +30,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/app/application'),
   });
-  const AccountInfo = dynamic({
-    app,
-    models: () => [
-      import('./models/accountInfo'),
-    ],
-    component: () => import('./routes/weixin/accountInfo/accountInfo'),
-  });
-  const MessageList = dynamic({
-    app,
-    models: () => [
-      // import('./models/accountInfo'),
-    ],
-    component: () => import('./routes/weixin/message/messageList'),
-  });
+  // 消息列表
   const IndexMessage = dynamic({
     app,
     models: () => [
@@ -53,6 +40,34 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/customerDynamic/indexMessage'),
   });
+  // 某大类消息列表
+  const MessageList = dynamic({
+    app,
+    models: () => [
+      // import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/message/messageList'),
+  });
+  // 消息详情
+  const MsgDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/indexMessage'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/message/messageDetail'),
+  });
+  // 订阅列表
+  const AccountInfo = dynamic({
+    app,
+    models: () => [
+      import('./models/accountInfo'),
+    ],
+    component: () => import('./routes/weixin/accountInfo/accountInfo'),
+  });
+
+
   const IndexControl = dynamic({
     app,
     models: () => [
@@ -111,15 +126,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/buyHistory/buyHistory'),
   });
-  const MsgDetail = dynamic({
-    app,
-    models: () => [
-      import('./models/indexMessage'),
-      import('./models/pageConstruction'),
-      import('./models/app'),
-    ],
-    component: () => import('./routes/weixin/message/messageDetail'),
-  });
+
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
