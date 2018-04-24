@@ -26,6 +26,7 @@ export default modelExtend({
 
   subscriptions: {
     setup({ dispatch, history }) {
+      console.log('4444444444');
       // 第一次初始化时进行默认查询
       dispatch({
         type: 'detailQuery',

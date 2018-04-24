@@ -86,7 +86,6 @@ function RouterConfig({ history, app }) {
   const Currency = dynamic({
     app,
     models: () => [
-      // import('./models/healthInfo'),
     ],
     component: () => import('./routes/weixin/Currency/Currency'),
   });
@@ -94,7 +93,8 @@ function RouterConfig({ history, app }) {
   const Myself = dynamic({
     app,
     models: () => [
-      // import('./models/healthInfo'),
+      import('./models/myself'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/myself/myself'),
   });
