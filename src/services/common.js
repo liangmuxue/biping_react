@@ -14,7 +14,7 @@ export const query = async function query(
   // 分页请求默认属性
   options = {
     pageSize: 'size', // 每页条目数
-    pageNumber: 'number', // 当前页码
+    pageNumber: 'number', // 当前页
     totalPage: 'meta.totalPage', // 总页码
   },
 ) {
@@ -25,10 +25,7 @@ export const query = async function query(
     [options.pageNumber]: current,
   };
   // 获取通用请求头信息
-  let systemUser = null;
-  if (state.app) {
-    ({ systemUser } = state.app);
-  }
+  const { systemUser } = state.app;
   return request(endpoint, {
     method: 'get',
     filter,

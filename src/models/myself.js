@@ -1,21 +1,20 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryDetail } from '../services/message';
-import { queryNormal } from '../services/common';
+import { queryDetail } from '../services/myselfservice';
 
 /**
-* 老人动态处理类
-* @author 梁慕学
-* @date  18-01-10
+* 消息详情处理
+* @author 赵永帅
+* @date  18-04-23
 */
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
-  modelName: 'indexMessage',
-  endpoint: 'messageList',
+  modelName: 'myself',
+  endpoint: '',
 };
 
-export default modelExtend(pageModel, {
+export default modelExtend({
   namespace: MODEL_DEF.modelName,
 
   state: {
@@ -29,37 +28,16 @@ export default modelExtend(pageModel, {
     setup({ dispatch, history }) {
       // 第一次初始化时进行默认查询
       dispatch({
-        type: 'msgQuery',
+        type: 'detailQuery',
       });
     },
   },
 
   effects: {
-    // 查询消息列表
-    *msgQuery({ payload }, { put }) {
-      console.log('query for msgQuery');
-      // 在这里拼好filter，然后调用通用的query方法
-      yield put({
-        type: 'query',
-        payload: {
-          modelDef: MODEL_DEF,
-        },
-      });
-    },
     // 查询单个消息
-    *detailQuery({ payload }, { put, call, select }) {
+    *detailQuery({ payload }, { put, call }) {
       console.log('query for detailQuery,payload', payload);
-      let messageId = null;
-      if (!payload) {
-        messageId = 111;
-      } else {
-        ({ messageId } = payload);
-      }
-      const st = yield select();
-      const endpoint = 'messageDetail';
-      const data = yield call(queryNormal, {
-        endpoint, messageId,
-      }, st);
+      const data = yield call(queryDetail);
       console.log('queryDetail data', data);
       yield put({
         type: 'queryDetailSuccess',

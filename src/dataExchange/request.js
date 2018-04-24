@@ -45,7 +45,6 @@ const mock = new MockAdapter(axios);
 //   },
 // });
 
-
 /**
 * 数据请求交换封装
 * @date        2018-01-10
@@ -69,14 +68,8 @@ const fetch = (endpoint, options) => {
   // 公共头信息
   api.headers = {
     type: 'wechat',
+    token: systemUser.token, // 登录后获取的token信息
   };
-  // 登录后获取token信息
-  if (systemUser) {
-    Object.assign(api.headers, {
-      token: systemUser.token,
-      // 'uid': systemUser.id,
-    });
-  }
 
   // 根据不同的请求类型，执行不同的发方法
   try {
