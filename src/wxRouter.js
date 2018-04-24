@@ -85,7 +85,9 @@ function RouterConfig({ history, app }) {
   const Myself = dynamic({
     app,
     models: () => [
-      // import('./models/healthInfo'),
+      import('./models/myself'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/myself/myself'),
   });
