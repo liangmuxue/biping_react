@@ -57,8 +57,9 @@ export default modelExtend(pageModel, {
       }
       const st = yield select();
       const endpoint = 'messageDetail';
+      const filter = { messageId };
       const data = yield call(queryNormal, {
-        endpoint, messageId,
+        endpoint, filter,
       }, st);
       console.log('queryDetail data', data);
       yield put({

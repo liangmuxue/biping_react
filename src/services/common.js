@@ -33,3 +33,31 @@ export const query = async function query(
     systemUser,
   });
 };
+<<<<<<< HEAD
+=======
+
+/**
+ * 通用请求处理(不包含分页)
+ * @date        2018-04-22
+ * @author      梁慕学
+ * @params endpoint 请求对象地址
+ * @params filter 过滤
+ * @params state 其他请求内容,主要是承载分页信息
+ */
+export const queryNormal = async function queryNormal(
+  { endpoint, filter },
+  state,
+) {
+  // 获取通用请求头信息
+  let systemUser = null;
+  if (state.app) {
+    ({ systemUser } = state.app);
+  }
+  console.log('queryNormal in,filter', filter);
+  return request(endpoint, {
+    method: 'get',
+    filter,
+    systemUser,
+  });
+};
+>>>>>>> 811d85bb6c36b8c536c7d421f5665264fb9c16e2
