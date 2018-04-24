@@ -12,15 +12,7 @@ import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.js
 
 function genSubList({ dispatch, data }) {
   // const { customerName } = accountInfo;
-  console.log('genSubList data', data);
-  if (data) {
-    return (
-      <div>
-        {data.map(item => <SubTypeCard key={item.typeId} typeObj={item} />)}
-      </div>
-    );
-  }
-  return null;
+
 }
 
 class subList extends Component {
@@ -28,9 +20,35 @@ class subList extends Component {
     console.log('props in subList', props);
     super(props);
   }
+  remarkClick(typeObj) {
+    console.log('remarkClick in,typeObj:', typeObj);
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'subscribe/subscribeDetail',
+      payload: { messageId: typeObj.typeId },
+    });
+    // 跳转到订阅详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subDetail' },
+    });
+  }
   render() {
-    console.log('subList render');
-    return genSubList(this.props);
+    const { data } = this.props;
+    console.log('subList data', data);
+    if (data) {
+      return (
+        <div>
+          {data.map(item =>
+            (<SubTypeCard
+              key={item.typeId}
+              typeObj={item}
+              remarkClick={this.remarkClick.bind(this)}
+            />))}
+        </div>
+      );
+    }
+    return null;
   }
 }
 

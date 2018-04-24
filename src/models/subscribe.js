@@ -52,11 +52,33 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 查询订阅详情
+    *subscribeDetail({ typeId }, { put, select, call }) {
+      console.log('query for subscribeDetail');
+      const st = yield select();
+      const endpoint = 'subscribeDetail';
+      const filter = { typeId };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('subscribeQuery data', data);
+      yield put({
+        type: 'subscribeDetailSuccess',
+        payload: data,
+      });
+    },
   },
-
   reducers: {
     subscribeQuerySuccess(state, action) {
       console.log('subscribeQuerySuccess in', action.payload);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
+    subscribeDetailSuccess(state, action) {
+      console.log('subscribeDetailSuccess in', action.payload);
       const { response } = action.payload;
       return {
         ...state,
