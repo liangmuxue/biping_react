@@ -61,6 +61,7 @@ export const queryNormal = async function queryNormal(
   if (state.app) {
     ({ systemUser } = state.app);
   }
+  console.log('queryNormal in,filter', filter);
   return request(endpoint, {
     method: 'get',
     filter,
