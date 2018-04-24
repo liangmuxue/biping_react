@@ -135,6 +135,7 @@ function RouterConfig({ history, app }) {
     component: MessageList,
   }, {
     name: 'subList',
+    modelName: 'subscribe',
     component: SubList,
   }, {
     name: 'myself',

@@ -1,6 +1,5 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryDetail } from '../services/message';
 import { queryNormal } from '../services/common';
 
 /**
@@ -70,6 +69,9 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    active() {
+      console.log(`active in:${this.namespace}`);
+    },
     queryDetailSuccess(state, action) {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);

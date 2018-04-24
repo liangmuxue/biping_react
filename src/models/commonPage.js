@@ -24,20 +24,21 @@ const pageModel = modelExtend(model, {
     // endpoint: '', // 子类设置
     filter: {}, // 子类设置
     list: Immutable([]), // 用于承载返回的数据列表
-    // 被激活时的处理，子类继承
-    onActive() {
-      console.log(`onActive in base:${this.namespace}`);
-    },
-    // 取消激活时的处理，子类继承
-    deActive() {
-      console.log(`deActive in:${this.namespace}`);
-    },
   },
   effects: {
+
   },
   reducers: {
     showLoading(state, action) {
       return { ...state, loading: true };
+    },
+    active(state, action) {
+      console.log(`common active in${action.pageName}`);
+      return { ...state };
+    },
+    deactive(state, action) {
+      console.log(`common deactive in:${action.pageName}`);
+      return { ...state };
     },
   },
 

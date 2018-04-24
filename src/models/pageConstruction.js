@@ -67,7 +67,11 @@ const pcEntity = {
             console.log('relate state is:', state);
             matchPage.isShow = true;
             // 如果由非激活状态转变为激活状态，要进行页面通知
-            state.onActive(pageName);
+            const actEvent = `${modelName}/active`;
+            yield put({
+              type: actEvent,
+              pageName,
+            });
           }
         } else if (innerPageList[i].isShow) {
           // 从显示到隐藏
@@ -78,7 +82,12 @@ const pcEntity = {
           console.log('relate state is:', state);
           const state = st[modelName];
           // 如果由激活状态转变为非激活状态，要进行页面通知
-          state.deActive(pageName);
+          const deActive = `${modelName}/deactive`;
+          console.log(`need send deactive:${deActive}`);
+          yield put({
+            type: deActive,
+            pageName,
+          });
         }
       }
       // 如果没有匹配，则初始化此页面组件

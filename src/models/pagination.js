@@ -30,14 +30,6 @@ const pageModel = modelExtend(model, {
       totalCount: 0,
       totalPage: 0,
     },
-    // 被激活时的处理，子类继承
-    onActive() {
-      console.log(`onActive in base:${this.namespace}`);
-    },
-    // 取消激活时的处理，子类继承
-    deActive() {
-      console.log(`deActive in:${this.namespace}`);
-    },
   },
   effects: {
     *query({ payload }, { call, put, select }) {
@@ -79,6 +71,14 @@ const pageModel = modelExtend(model, {
   reducers: {
     showLoading(state, action) {
       return { ...state, loading: true };
+    },
+    active(state, action) {
+      console.log(`pagi active in${action.pageName}`);
+      return { ...state };
+    },
+    deactive(state, action) {
+      console.log(`pagi deactive in:${action.pageName}`);
+      return { ...state };
     },
     querySuccess(state, {
       payload, modelDef, filter, list,

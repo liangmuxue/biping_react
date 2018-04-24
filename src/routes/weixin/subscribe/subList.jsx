@@ -23,9 +23,9 @@ const Renew = () => (
     <Button className={styles.Renew}>剩81天&nbsp;| 续费</Button><WhiteSpace />
   </WingBlank>
 );
-function genDynamics({ dispatch, accountInfo }) {
+function genSubList({ dispatch, data }) {
   // const { customerName } = accountInfo;
-
+  console.log('genSubList data', data);
   return (
     <div>
       <div className={styles.whiteBox}>
@@ -63,20 +63,20 @@ function genDynamics({ dispatch, accountInfo }) {
   );
 }
 
-class AccountInfo extends Component {
+class subList extends Component {
   constructor(props) {
-    console.log('props in AccountInfo', props);
+    console.log('props in subList', props);
     super(props);
   }
   render() {
-    console.log('AccountInfo render');
-    return genDynamics(this.props);
+    console.log('subList render');
+    return genSubList(this.props);
   }
 }
 
-function mapStateToProps({ state }) {
-  return { state };
+function mapStateToProps(state) {
+  return state.subscribe;
 }
 
-export default connect(mapStateToProps)(mobileRouteComponent(AccountInfo));
+export default connect(mapStateToProps)(mobileRouteComponent(subList));
 // export default mobileRouteComponent(AccountInfo);
