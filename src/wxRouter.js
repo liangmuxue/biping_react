@@ -136,6 +136,9 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'subList',
     component: SubList,
+  }, {
+    name: 'myself',
+    component: Myself,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {

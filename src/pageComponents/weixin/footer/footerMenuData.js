@@ -24,9 +24,9 @@ const menus = [
     selectedIcon: 'url(/assets/footerImg/3actived.png) center center /  21px 21px no-repeat',
   },
   {
-    code: 'accountInfo',
+    code: 'myself',
     title: '我的  ',
-    key: 'accountInfo',
+    key: 'myself',
     badge: 0,
     // icon: 'appstore-o',
     icon: 'url(/assets/footerImg/3.png) center center /  21px 21px no-repeat',
