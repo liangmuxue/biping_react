@@ -96,7 +96,7 @@ class MsgDetail extends Component {
 function mapStateToProps(state) {
   console.log('mapStateToProps in,state', state);
   // 直接返回本model
-  return state.messageDetail;
+  return state.indexMessage;
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(MsgDetail));

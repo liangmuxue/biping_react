@@ -10,7 +10,7 @@ import { queryDetail } from '../services/message';
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
-  modelName: 'message',
+  modelName: 'indexMessage',
   endpoint: 'messageList',
 };
 
@@ -48,7 +48,13 @@ export default modelExtend(pageModel, {
     // 查询单个消息
     *detailQuery({ payload }, { put, call }) {
       console.log('query for detailQuery,payload', payload);
-      const { data } = yield call(queryDetail, payload.messageId);
+      let messageId = null;
+      if (!payload) {
+        messageId = 111;
+      } else {
+        ({ messageId } = payload);
+      }
+      const data = yield call(queryDetail, messageId);
       console.log('queryDetail data', data);
       yield put({
         type: 'queryDetailSuccess',
@@ -58,10 +64,13 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
-    queryDetailSuccess(payload) {
-      console.log('queryDetailSuccess,payload', payload);
+    queryDetailSuccess(state, action) {
+      console.log('queryDetailSuccess in', action.payload);
+      console.log('queryDetailSuccess state', state);
+      const { response } = action.payload;
       return {
-        payload,
+        ...state,
+        ...response,
       };
     },
   },

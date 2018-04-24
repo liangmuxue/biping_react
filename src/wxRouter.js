@@ -114,7 +114,7 @@ function RouterConfig({ history, app }) {
   const MsgDetail = dynamic({
     app,
     models: () => [
-      import('./models/messageDetail'),
+      import('./models/indexMessage'),
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
@@ -123,11 +123,11 @@ function RouterConfig({ history, app }) {
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
-    modelName: 'message',
+    modelName: 'indexMessage',
     component: IndexMessage,
   }, {
     name: 'messageDetail',
-    modelName: 'messageDetail',
+    modelName: 'indexMessage',
     component: MsgDetail,
   }, {
     name: 'messageList',

@@ -15,10 +15,10 @@ mock.onGet('/userLogin').reply(200, {
 mock.onGet('/messageList').reply(200, {
   flag: 0,
   data: [{
-    title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22141, readCnt: 1000, time: '刚刚',
+    mid: 111, title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22141, readCnt: 1000, time: '刚刚',
   },
   {
-    title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22143, readCnt: 1000, time: '刚刚',
+    mid: 112, title: 'NEO日本见面会', content: 'NEO日本见面会xxxxx', tagName: '币事件', tagId: 22143, readCnt: 1000, time: '刚刚',
   }],
   pager: {
     totalElements: 11,
