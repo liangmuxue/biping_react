@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { pageModel } from './pagination';
+import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
 
 /**
@@ -14,7 +14,7 @@ export const MODEL_DEF = {
   endpoint: '',
 };
 
-export default modelExtend({
+export default modelExtend(pageModel, {
   namespace: MODEL_DEF.modelName,
 
   state: {
@@ -23,7 +23,6 @@ export default modelExtend({
 
   subscriptions: {
     setup({ dispatch, history }) {
-      console.log('4444444444');
       // 第一次初始化时进行默认查询
       dispatch({
         type: 'detailQuery',
@@ -46,6 +45,23 @@ export default modelExtend({
         payload: data,
       });
     },
+    // 是否推送消息
+    *ifpush({ payload }, { put, call, select }) {
+      console.log('query for detailQuery,payload', payload);
+      const st = yield select();
+      const endpoint = 'ifpush';
+      let ifpush = null;
+      ({ ifpush } = payload);
+      const filter = { ifpush };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('myself data', data);
+      yield put({
+        type: 'ifpushSuccess',
+        payload: data,
+      });
+    },
   },
 
   reducers: {
@@ -56,6 +72,14 @@ export default modelExtend({
       return {
         ...state,
         ...response,
+      };
+    },
+    ifpushSuccess(state, action) {
+      console.log('ifpushSuccess in', action.payload);
+      console.log('ifpushSuccess state', state);
+      const { response } = action.payload;
+      return {
+        ...state,
       };
     },
   },

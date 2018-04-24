@@ -94,6 +94,7 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/myself'),
+      import('./models/pageConstruction'),
       import('./models/app'),
     ],
     component: () => import('./routes/weixin/myself/myself'),
@@ -113,10 +114,12 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/toOpen/toOpen'),
   });
-  const buyHistory = dynamic({
+  const BuyHistory = dynamic({
     app,
     models: () => [
-      // import('./models/healthInfo'),
+      import('./models/buyHistory'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/buyHistory/buyHistory'),
   });
@@ -139,6 +142,9 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'myself',
     component: Myself,
+  }, {
+    name: 'buyHistory',
+    component: BuyHistory,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -159,7 +165,7 @@ function RouterConfig({ history, app }) {
           <Route path="/bEvents" component={bEvents} />
           <Route path="/Currency" component={Currency} />
           <Route path="/myself" component={Myself} />
-          <Route path="/buyhistory" component={buyHistory} />
+          <Route path="/buyhistory" component={BuyHistory} />
           <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={toOpen} />
