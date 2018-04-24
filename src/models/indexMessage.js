@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
 import { queryDetail } from '../services/message';
+import { queryNormal } from '../services/common';
 
 /**
 * 老人动态处理类
@@ -46,7 +47,7 @@ export default modelExtend(pageModel, {
       });
     },
     // 查询单个消息
-    *detailQuery({ payload }, { put, call }) {
+    *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
       let messageId = null;
       if (!payload) {
@@ -54,7 +55,11 @@ export default modelExtend(pageModel, {
       } else {
         ({ messageId } = payload);
       }
-      const data = yield call(queryDetail, messageId);
+      const st = yield select();
+      const endpoint = 'messageDetail';
+      const data = yield call(queryNormal, {
+        endpoint, messageId,
+      }, st);
       console.log('queryDetail data', data);
       yield put({
         type: 'queryDetailSuccess',
