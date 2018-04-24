@@ -43,7 +43,7 @@ class MessageList extends Component {
         );
       },
     });
-    const height = document.documentElement.clientHeight * 3 / 4;
+    const height = document.documentElement.clientHeight;
     return (
       <div>
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
