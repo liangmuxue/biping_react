@@ -9,7 +9,7 @@ import { pageModel } from './pagination';
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
-  modelName: 'accountInfo',
+  modelName: 'subscribe',
   endpoint: '',
 };
 

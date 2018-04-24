@@ -30,12 +30,12 @@ export const query = async function query(
     ({ systemUser } = state.app);
   }
   // 登录后获取token信息
-  if (!systemUser) {
-    systemUser = {
-      uid: 'xxx',
-      token: 'xxx',
-    };
-  }
+  // if (!systemUser) {
+  //   systemUser = {
+  //     uid: 'xxx',
+  //     token: 'xxx',
+  //   };
+  // }
   return request(endpoint, {
     method: 'get',
     filter,

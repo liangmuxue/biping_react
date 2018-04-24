@@ -15,9 +15,9 @@ const menus = [
     selectedIcon: 'url(/assets/footerImg/2actived.png) center center /  21px 21px no-repeat',
   },
   {
-    code: 'healthInfo',
+    code: 'subList',
     title: '订阅管理',
-    key: 'healthInfo',
+    key: 'subList',
     badge: 0,
     // icon: 'line-chart',
     icon: 'url(/assets/footerImg/3.png) center center /  21px 21px no-repeat',

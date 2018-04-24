@@ -59,22 +59,16 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/weixin/message/messageDetail'),
   });
   // 订阅列表
-  const AccountInfo = dynamic({
+  const SubList = dynamic({
     app,
     models: () => [
-      import('./models/accountInfo'),
+      import('./models/subscribe'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
-    component: () => import('./routes/weixin/accountInfo/accountInfo'),
+    component: () => import('./routes/weixin/subscribe/subList'),
   });
 
-
-  const IndexControl = dynamic({
-    app,
-    models: () => [
-      // import('./models/accountInfo'),
-    ],
-    component: () => import('./routes/weixin/indexControl/indexControl'),
-  });
   const Announcement = dynamic({
     app,
     models: () => [
@@ -140,8 +134,8 @@ function RouterConfig({ history, app }) {
     name: 'messageList',
     component: MessageList,
   }, {
-    name: 'accountInfo',
-    component: AccountInfo,
+    name: 'subList',
+    component: SubList,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -158,7 +152,6 @@ function RouterConfig({ history, app }) {
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
           <Route path="/indexMessage" component={IndexMessage} />
-          <Route path="/indexControl" component={IndexControl} />
           <Route path="/Announcement" component={Announcement} />
           <Route path="/bEvents" component={bEvents} />
           <Route path="/Currency" component={Currency} />
