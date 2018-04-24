@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend';
-import { pageModel } from './pagination';
+import { pageModel } from './commonPage';
+import { queryNormal } from '../services/common';
 
 /**
 * 老人账户数据处理类
@@ -10,7 +11,7 @@ import { pageModel } from './pagination';
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
   modelName: 'subscribe',
-  endpoint: '',
+  endpoint: 'subscribeList',
 };
 
 export default modelExtend(pageModel, {
@@ -18,23 +19,72 @@ export default modelExtend(pageModel, {
 
   state: {
     endpoint: MODEL_DEF.endpoint,
-    deActive() {
-      console.log('deActive in healthInfo');
+    onActive({ dispatch }) {
+      console.log('onActive in subscribe');
+      // 进入时查询订阅信息
+      dispatch({
+        type: 'subscribeQuery',
+      });
     },
   },
 
   subscriptions: {
     setup({ dispatch, history }) {
-      // TODO
+      dispatch({
+        type: 'subscribeQuery',
+      });
     },
   },
 
   effects: {
-
+    // 查询订阅信息
+    *subscribeQuery({ payload }, { put, select, call }) {
+      console.log('query for subscribeQuery');
+      const st = yield select();
+      const endpoint = 'subscribeList';
+      const filter = { };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('subscribeQuery data', data);
+      yield put({
+        type: 'subscribeQuerySuccess',
+        payload: data,
+      });
+    },
+    // 查询订阅详情
+    *subscribeDetail({ typeId }, { put, select, call }) {
+      console.log('query for subscribeDetail');
+      const st = yield select();
+      const endpoint = 'subscribeDetail';
+      const filter = { typeId };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('subscribeQuery data', data);
+      yield put({
+        type: 'subscribeDetailSuccess',
+        payload: data,
+      });
+    },
   },
-
   reducers: {
-
+    subscribeQuerySuccess(state, action) {
+      console.log('subscribeQuerySuccess in', action.payload);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
+    subscribeDetailSuccess(state, action) {
+      console.log('subscribeDetailSuccess in', action.payload);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
   },
 
 });

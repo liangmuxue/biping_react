@@ -1,124 +1,69 @@
 import React, { Component } from 'react';
+import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
+import 'antd-mobile/es/wing-blank/style/index.css';
+import 'antd-mobile/es/white-space/style/index.css';
+import InfiniteListView from '../../../components/infiniteListView';
+import { buildPagiProps } from '../../common/paginationRoute';
+import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace } from 'antd-mobile';
-import styles from './indexMessage.less';
+import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
+
 /**
-* 老人账号信息页面
-* @author 梁慕学
-* @Date  2017-12-25
-*/
-function genDynamics({ dispatch, messages }) {
-  // const { customerName } = accountInfo;
+ * 消息列表页面
+ * @author 梁慕学
+ * @Date  2017-12-25
+ */
 
-  return (
-    <div>
-
-      <div className={styles.mesList}>
-        <a href="#">
-          <WhiteSpace size="lg" />
-          <Card full>
-            <Card.Header title={<div className={styles.cardtitle}> NEO 日本东京举办NEO见面会</div>} />
-            <Card.Body>
-              <div className={styles.cardContent}>在东京与我见面，Hikima Miki，Chris Chen，Mishima Yusaku和Kiyohide Hi在东京与我见面，Hikima Miki，Chris Chen，Mishima Yusaku和Kiyohide Higuchi…</div>
-            </Card.Body>
-            <Card.Footer
-              content={
-                <div className={styles.cardFooter}>
-                  <span className={styles.event}>#币事件</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>刚刚</span>
-                </div>
-              }
-              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
-            />
-          </Card>
-        </a>
-      </div>
-
-
-      <div className={styles.mesList}>
-        <a href="#">
-          <WhiteSpace size="lg" />
-          <Card full>
-            <Card.Header title={<div className={styles.cardtitle}> 火币PRO EOS/USDT 1分钟内涨幅：20%</div>} />
-            <Card.Body>
-              <div className={styles.cardContent}>火币PRO EOS/USDT 1分钟内涨幅：20%，当前价格9.0517≈￥57.00，成交量318371，请注意</div>
-            </Card.Body>
-            <Card.Footer
-              content={
-                <div className={styles.cardFooter}>
-                  <span className={styles.event}>#异动币提醒</span> <span className={styles.readNum}>1.5万阅读</span> <span className={styles.times}>1分钟前</span>
-                </div>
-                }
-              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
-            />
-          </Card>
-        </a>
-      </div>
-
-      <div className={styles.mesList}>
-        <a href="#">
-          <WhiteSpace size="lg" />
-          <Card full>
-            <Card.Header title={<div className={styles.cardtitle}> 火币自主数字资产交易所（Huobi HAD…</div>} />
-            <Card.Body>
-              <div className={styles.cardContent}>尊敬的用户：火币自主数字资产交易所（Huobi HADAX）将于新加坡时间4月11日14:30开尊敬的用户：火币自主数字资产交易所（Huobi HADAX）将于新加坡时间4月11日14:30开放18…</div>
-            </Card.Body>
-            <Card.Footer
-              content={
-                <div className={styles.cardFooter}>
-                  <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
-                </div>
-                  }
-              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
-            />
-          </Card>
-        </a>
-      </div>
-
-      <div className={styles.mesList}>
-        <a href="#">
-          <WhiteSpace size="lg" />
-          <Card full>
-            <Card.Header title={<div className={styles.cardtitle}> 火币自主数字资产交易所（Huobi HAD…</div>} />
-            <Card.Body>
-              <div className={styles.cardContent}>尊敬的用户：火币自主数字资产交易所（Huobi HADAX）将于新加坡时间4月11日14:30开尊敬的用户：火币自主数字资产交易所（Huobi HADAX）将于新加坡时间4月11日14:30开放18…</div>
-            </Card.Body>
-            <Card.Footer
-              content={
-                <div className={styles.cardFooter}>
-                  <span className={styles.event}>#交易所公告</span> <span className={styles.readNum}>1000阅读</span> <span className={styles.times}>1小时  前</span>
-                </div>
-                    }
-              extra={<div ><img src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
-            />
-          </Card>
-        </a>
-      </div>
-
-              // 二维码弹框
-
-      <div className={styles.alertBox} />
-      <div>  <img src="/images/indexImg/wechat.png" className={styles.alertWechat} /></div>
-    </div>
-
-
-  );
-}
-
+@pureRender
 class MessageList extends Component {
-  constructor(props) {
-    console.log('props in MessageList', props);
-    super(props);
+  cardClick(msgObj) {
+    console.log('cardClick in,msgObj:', msgObj);
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'indexMessage/detailQuery',
+      payload: { messageId: msgObj.mid },
+    });
+    // 跳转到信息详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'messageDetail' },
+    });
   }
   render() {
-    console.log('MessageList render', this.props);
-    return genDynamics(this.props);
+    console.log('cd render');
+    const { messageList } = this.props;
+    console.log('messageList is:', messageList);
+    const messageListProps = buildPagiProps(this.props.dispatch, {
+      ...messageList,
+      renderRow: (rowData, sectionID, rowID) => {
+        console.log('rowData is', rowData);
+        return (
+          <MessageCard msgObj={rowData} cardClick={this.cardClick.bind(this)} />
+        );
+      },
+    });
+    const height = document.documentElement.clientHeight;
+    return (
+      <div>
+        {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
+        <InfiniteListView {...messageListProps} height={height} />
+      </div>
+    );
   }
 }
 
-function mapStateToProps({ state }) {
-  return { state };
+function mapStateToProps(state, ownProps) {
+  console.log('mapStateToProps in indexMessage,state', state);
+  // 第一次进入时没有数据，直接返回
+  if (!state.indexMessage.dataSource) {
+    const { indexMessage } = state;
+    return { indexMessage };
+  }
+  // 加工数据
+  const messageList = rebuildMessageList(state.indexMessage);
+  return messageList;
 }
 
+
 export default connect(mapStateToProps)(mobileRouteComponent(MessageList));
-// export default mobileRouteComponent(AccountInfo);

@@ -14,7 +14,7 @@ export const query = async function query(
   // 分页请求默认属性
   options = {
     pageSize: 'size', // 每页条目数
-    pageNumber: 'number', // 当前页码
+    pageNumber: 'number', // 当前页
     totalPage: 'meta.totalPage', // 总页码
   },
 ) {
@@ -29,13 +29,6 @@ export const query = async function query(
   if (state.app) {
     ({ systemUser } = state.app);
   }
-  // 登录后获取token信息
-  // if (!systemUser) {
-  //   systemUser = {
-  //     uid: 'xxx',
-  //     token: 'xxx',
-  //   };
-  // }
   return request(endpoint, {
     method: 'get',
     filter,
@@ -43,6 +36,7 @@ export const query = async function query(
     systemUser,
   });
 };
+
 
 /**
  * 通用请求处理(不包含分页)
