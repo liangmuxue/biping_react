@@ -1,20 +1,20 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryDetail } from '../services/message';
+import { queryDetail } from '../services/myselfservice';
 
 /**
 * 消息详情处理
-* @author 梁慕学
+* @author 赵永帅
 * @date  18-04-23
 */
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
-  modelName: 'messageDetail',
-  endpoint: 'messageDetail',
+  modelName: 'myself',
+  endpoint: '',
 };
 
-export default modelExtend(pageModel, {
+export default modelExtend({
   namespace: MODEL_DEF.modelName,
 
   state: {
@@ -37,13 +37,7 @@ export default modelExtend(pageModel, {
     // 查询单个消息
     *detailQuery({ payload }, { put, call }) {
       console.log('query for detailQuery,payload', payload);
-      let messageId = null;
-      if (!payload) {
-        messageId = 111;
-      } else {
-        messageId = payload.messageId;
-      }
-      const data = yield call(queryDetail, messageId);
+      const data = yield call(queryDetail);
       console.log('queryDetail data', data);
       yield put({
         type: 'queryDetailSuccess',
