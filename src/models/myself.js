@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryDetail } from '../services/myselfservice';
+import { queryNormal } from '../services/common';
 
 /**
 * 消息详情处理
@@ -35,10 +35,14 @@ export default modelExtend({
 
   effects: {
     // 查询单个消息
-    *detailQuery({ payload }, { put, call }) {
+    *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
-      const data = yield call(queryDetail);
-      console.log('queryDetail data', data);
+      const st = yield select();
+      const endpoint = 'userMain';
+      const data = yield call(queryNormal, {
+        endpoint,
+      }, st);
+      console.log('myself data', data);
       yield put({
         type: 'queryDetailSuccess',
         payload: data,
