@@ -7,11 +7,8 @@ const ENV = {
 if (process.env.NODE_ENV === 'development') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://10.0.109.126';
-<<<<<<< HEAD
-    ENV.host = 'http://10.0.107.254:8280';
-=======
   ENV.host = 'http://10.0.107.254:8280';
->>>>>>> 811d85bb6c36b8c536c7d421f5665264fb9c16e2
+  ENV.host = 'http://10.0.107.254:8280';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
 }

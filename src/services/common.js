@@ -33,8 +33,7 @@ export const query = async function query(
     systemUser,
   });
 };
-<<<<<<< HEAD
-=======
+
 
 /**
  * 通用请求处理(不包含分页)
@@ -60,4 +59,3 @@ export const queryNormal = async function queryNormal(
     systemUser,
   });
 };
->>>>>>> 811d85bb6c36b8c536c7d421f5665264fb9c16e2

@@ -35,7 +35,7 @@ class MessageCard extends React.Component {
           <Card full>
             <Card.Header title={<div className={styles.cardtitle}> {msgObj.title}</div>} />
             <Card.Body>
-              <div className={styles.cardContent}>{msgObj.title}</div>
+              <div className={styles.cardContent}>{msgObj.content}</div>
             </Card.Body>
             <Card.Footer
               content={

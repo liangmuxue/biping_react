@@ -4,9 +4,8 @@ import MockAdapter from 'axios-mock-adapter';
 import { config } from '../../config/environment';
 
 
-<<<<<<< HEAD
 // 模拟请求设置
-const mock = new MockAdapter(axios);
+// const mock = new MockAdapter(axios);
 // 模拟任意GET请求到 /messageList
 // mock.onGet('/userLogin').reply(200, {
 //   flag: 0,
@@ -46,8 +45,6 @@ const mock = new MockAdapter(axios);
 //   },
 // });
 
-=======
->>>>>>> 811d85bb6c36b8c536c7d421f5665264fb9c16e2
 /**
 * 数据请求交换封装
 * @date        2018-01-10
