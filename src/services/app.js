@@ -25,5 +25,9 @@ export const query = async function query(params) {
   return request('userLogin', {
     method: 'get',
     filter: params,
+    // 构造默认空token
+    systemUser: {
+      token: 'none',
+    },
   });
 };

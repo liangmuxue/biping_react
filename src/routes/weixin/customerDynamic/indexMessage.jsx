@@ -19,6 +19,11 @@ import styles from './index.less';
 class MessageList extends Component {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'indexMessage/detailQuery',
+      payload: { messageId: msgObj.mid },
+    });
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -51,12 +56,12 @@ class MessageList extends Component {
 function mapStateToProps(state, ownProps) {
   console.log('mapStateToProps in indexMessage,state', state);
   // 第一次进入时没有数据，直接返回
-  if (!state.message.dataSource) {
-    const { message } = state;
-    return { message };
+  if (!state.indexMessage.dataSource) {
+    const { indexMessage } = state;
+    return { indexMessage };
   }
   // 加工数据
-  const messageList = rebuildMessageList(state.message);
+  const messageList = rebuildMessageList(state.indexMessage);
   return messageList;
 }
 
