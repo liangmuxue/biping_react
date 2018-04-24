@@ -11,8 +11,8 @@ const menus = [
     key: 'indexMessage',
     badge: 1,
     // icon: 'calendar',
-    icon: 'url(/assets/footerImg/2.png) center center /  21px 21px no-repeat',
-    selectedIcon: 'url(/assets/footerImg/2actived.png) center center /  21px 21px no-repeat',
+    icon: 'url(/images/footerImg/2.png) center center /  21px 21px no-repeat',
+    selectedIcon: 'url(/images/footerImg/2actived.png) center center /  21px 21px no-repeat',
   },
   {
     code: 'subList',
@@ -20,8 +20,8 @@ const menus = [
     key: 'subList',
     badge: 0,
     // icon: 'line-chart',
-    icon: 'url(/assets/footerImg/3.png) center center /  21px 21px no-repeat',
-    selectedIcon: 'url(/assets/footerImg/3actived.png) center center /  21px 21px no-repeat',
+    icon: 'url(/images/footerImg/3.png) center center /  21px 21px no-repeat',
+    selectedIcon: 'url(/images/footerImg/3actived.png) center center /  21px 21px no-repeat',
   },
   {
     code: 'myself',
@@ -29,8 +29,8 @@ const menus = [
     key: 'myself',
     badge: 0,
     // icon: 'appstore-o',
-    icon: 'url(/assets/footerImg/3.png) center center /  21px 21px no-repeat',
-    selectedIcon: 'url(/assets/footerImg/4actived.png) center center /  21px 21px no-repeat',
+    icon: 'url(/images/footerImg/3.png) center center /  21px 21px no-repeat',
+    selectedIcon: 'url(/images/footerImg/4actived.png) center center /  21px 21px no-repeat',
   },
 ];
 

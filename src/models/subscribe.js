@@ -41,7 +41,7 @@ export default modelExtend(pageModel, {
     *subscribeQuery({ payload }, { put, select, call }) {
       console.log('query for subscribeQuery');
       const st = yield select();
-      const endpoint = 'subscribeQuery';
+      const endpoint = 'subscribeList';
       const filter = { };
       const data = yield call(queryNormal, {
         endpoint, filter,
