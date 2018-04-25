@@ -24,10 +24,7 @@ export const query = async function query(
     [options.pageSize]: pageSize,
     [options.pageNumber]: current,
   };
-  // 获取通用请求头信息
-<<<<<<< HEAD
-  const { systemUser } = state.app;
-=======
+  // 获取通用请求头信
   let systemUser = null;
   if (state.app) {
     ({ systemUser } = state.app);
@@ -39,7 +36,6 @@ export const query = async function query(
   //     token: 'xxx',
   //   };
   // }
->>>>>>> e2ae2b34094696895d9342fc0e60ee23ebb77fc9
   return request(endpoint, {
     method: 'get',
     filter,
@@ -50,8 +46,8 @@ export const query = async function query(
 
 
 /**
+* @date        2018-04-22
  * 通用请求处理(不包含分页)
- * @date        2018-04-22
  * @author      梁慕学
  * @params endpoint 请求对象地址
  * @params filter 过滤

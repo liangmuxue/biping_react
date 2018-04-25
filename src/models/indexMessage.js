@@ -35,6 +35,23 @@ export default modelExtend(pageModel, {
   },
 
   effects: {
+    // 是否推送消息
+    *msgLike({ payload }, { put, call, select }) {
+      console.log('query for detailQuery,payload', payload);
+      const st = yield select();
+      const endpoint = 'msgLike';
+      let msgLike = null;
+      ({ msgLike } = payload);
+      const filter = { msgLike };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('messageDetail data', data);
+      yield put({
+        type: 'msgLikeSuccess',
+        payload: data,
+      });
+    },
     // 查询消息列表
     *msgQuery({ payload }, { put }) {
       console.log('query for msgQuery');
@@ -70,6 +87,15 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    queryDetailSuccess(state, action) {
+      console.log('queryDetailSuccess in', action.payload);
+      console.log('queryDetailSuccess state', state);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
     queryDetailSuccess(state, action) {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);
