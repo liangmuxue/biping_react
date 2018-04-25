@@ -46,7 +46,7 @@ export const query = async function query(
  * @params state 其他请求内容,主要是承载分页信息
  */
 export const queryNormal = async function queryNormal(
-  { endpoint, filter },
+  { endpoint, filter, method },
   state,
 ) {
   // 获取通用请求头信息
@@ -56,7 +56,7 @@ export const queryNormal = async function queryNormal(
   }
   console.log('queryNormal in,filter', filter);
   return request(endpoint, {
-    method: 'get',
+    method,
     filter,
     systemUser,
   });
