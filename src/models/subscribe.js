@@ -76,6 +76,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...response,
+        busiFlag: 'subscribeQuerySuccess',
       };
     },
     subscribeDetailSuccess(state, action) {
@@ -84,6 +85,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...response,
+        busiFlag: 'subscribeDetailSuccess',
       };
     },
   },

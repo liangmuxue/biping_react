@@ -9,10 +9,10 @@ import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import styles from '../bEvents/bEvents.less';
 /**
- * 老人账号信息页面
- * @author 梁慕学
- * @Date  2017-12-25
- */
+* 老人账号信息页面
+* @author 梁慕学
+* @Date  2017-12-25
+*/
 
 const Buttongo = () => (
   <WingBlank>
@@ -23,7 +23,6 @@ const Buttongo = () => (
 function genMessage({ dispatch, data }) {
   const msgObj = data;
   console.log('msgObj is', msgObj);
-
 }
 
 class MsgDetail extends Component {
@@ -34,16 +33,15 @@ class MsgDetail extends Component {
   addNum() {
     const { dispatch, data } = this.props;
     const msgObj = data;
-    console.log(111111,msgObj.mid)
+    console.log(111111, msgObj.mid);
     this.props.dispatch({
-    type: 'indexMessage/msgLike',
-    payload: {
-      status :2,
-      messageId:msgObj.mid,
-      flag:true,
-    },
-  });
-
+      type: 'indexMessage/msgLike',
+      payload: {
+        status: 2,
+        messageId: msgObj.mid,
+        flag: true,
+      },
+    });
   }
 
   render() {
@@ -58,11 +56,11 @@ class MsgDetail extends Component {
     }
     const { dispatch, data } = this.props;
     const msgObj = data;
-    console.log("msgObj44444",msgObj);
+    console.log('msgObj44444', msgObj);
     return (
       <div>
         <div className={styles.toptitle}>
-        详情
+          详情
           <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} /></a>
         </div>
 
@@ -93,14 +91,17 @@ class MsgDetail extends Component {
             </ul>
 
             <div className={style.likesBox}>
-              <div className={style.like}
-
-              >
-              <Hammer onTap={this.addNum.bind(this)}>
-            <div>  <span className={style.numbers}>445</span></div>
-              </Hammer>
+              <div className={style.like}>
+                <img src="/images/details/zan.png" className={style.goodImg} />
+                <span className={style.numbers}>喜欢</span>
+                <Hammer onTap={this.addNum.bind(this)}>
+                  <div>  <span className={style.numbers}>445</span></div>
+                </Hammer>
               </div>
-              <div className={style.unlike}><img src="details/2.png" className={style.goodImg} /><span className={style.numbers}>不喜欢</span></div>
+              <div className={style.unlike}>
+                <img src="/images/details/2.png" className={style.goodImg} />
+                <span className={style.numbers}>不喜欢</span>
+              </div>
             </div>
           </div>
 
@@ -113,7 +114,7 @@ class MsgDetail extends Component {
                     <li className={style.similarListLi}>
                       <a href="#" className={style.similarList}>{msg.title}</a>
                     </li>
-              ))}
+                  ))}
               </ul>
             </div>
           </div>

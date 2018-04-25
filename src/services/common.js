@@ -13,8 +13,8 @@ export const query = async function query(
   state,
   // 分页请求默认属性
   options = {
-    pageSize: 'size', // 每页条目数
-    pageNumber: 'number', // 当前页
+    pageSize: 'pager.pageSize', // 每页条目数
+    pageNumber: 'pager.number', // 当前页
     totalPage: 'meta.totalPage', // 总页码
   },
 ) {
