@@ -27,7 +27,7 @@ function genDynamics({ dispatch, accountInfo }) {
 
 }
 @pureRender
-class AccountInfo extends Component {
+class payRecordList extends Component {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
@@ -37,11 +37,11 @@ class AccountInfo extends Component {
   }
   render() {
     console.log('cd render');
-    console.log('messageList is:0000000', this.props.dataSource);
+    console.log('messageList is:0000000', this.props);
     if (!this.props.dataSource) {
       return (<div>none</div>);
     }
-    const { dataSource } = this.props;
+    const dataSource = this.props;
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...dataSource,
       renderRow: (rowData, sectionID, rowID) => {
@@ -67,5 +67,5 @@ function mapStateToProps(state) {
   return state.buyHistory;
 }
 
-export default connect(mapStateToProps)(mobileRouteComponent(AccountInfo));
+export default connect(mapStateToProps)(mobileRouteComponent(payRecordList));
 // export default mobileRouteComponent(AccountInfo);
