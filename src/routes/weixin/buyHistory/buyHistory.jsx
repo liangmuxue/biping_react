@@ -37,8 +37,23 @@ class AccountInfo extends Component {
     console.log('cardClick in,msgObj:', msgObj);
   }
   render() {
+    console.log('6666666666', this.props);
     const { buyList } = this.props;
     console.log('buyList is:', buyList);
+    if (buyList) {
+      const totalCount = buyList.pagination.totalCount;
+      if (totalCount == 0) {
+        return (
+          <div className={styles.empty}>
+            <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>
+            <div className={styles.notread}>您还没有买过任何订阅包</div>
+            <Buttongo />
+          </div>
+        );
+      }
+    }
+
+
     const buyListProps = buildPagiProps(this.props.dispatch, {
       ...buyList,
       renderRow: (rowData, sectionID, rowID) => {
