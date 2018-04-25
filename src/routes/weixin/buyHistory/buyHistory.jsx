@@ -8,6 +8,7 @@ import 'antd-mobile/es/list/style/index.css';
 import InfiniteListView from '../../../components/infiniteListView';
 import { buildPagiProps } from '../../common/paginationRoute';
 import BuyCard from '../../../pageComponents/weixin/buyHistory/buyCard.jsx';
+import { rebuildBuyList } from '../../../selectors/buyList';
 import style from '../announcement/announcement.less';
 import styles from './buyHistory.less';
 /**
@@ -36,14 +37,10 @@ class AccountInfo extends Component {
     console.log('cardClick in,msgObj:', msgObj);
   }
   render() {
-    console.log('cd render');
-    console.log('messageList is:0000000', this.props.dataSource);
-    if (!this.props.dataSource) {
-      return (<div>none</div>);
-    }
-    const { dataSource } = this.props;
-    const messageListProps = buildPagiProps(this.props.dispatch, {
-      ...dataSource,
+    const { buyList } = this.props;
+    console.log('buyList is:', buyList);
+    const buyListProps = buildPagiProps(this.props.dispatch, {
+      ...buyList,
       renderRow: (rowData, sectionID, rowID) => {
         console.log('rowData is', rowData);
         return (
@@ -56,7 +53,7 @@ class AccountInfo extends Component {
     return (
       <div>
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
-        <InfiniteListView {...messageListProps} height={height} />
+        <InfiniteListView {...buyListProps} height={height} />
       </div>
     );
   }
@@ -64,7 +61,14 @@ class AccountInfo extends Component {
 
 function mapStateToProps(state) {
   console.log('dfasdafsdsafdsafdsfd', state.buyHistory);
-  return state.buyHistory;
+  // 第一次进入时没有数据，直接返回
+  if (!state.buyHistory.dataSource) {
+    const { buyHistory } = state;
+    return { buyHistory };
+  }
+  // 加工数据
+  const buyList = rebuildBuyList(state.buyHistory);
+  return buyList;
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(AccountInfo));

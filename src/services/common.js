@@ -24,7 +24,10 @@ export const query = async function query(
     [options.pageSize]: pageSize,
     [options.pageNumber]: current,
   };
+<<<<<<< HEAD
   // 获取通用请求头信息
+=======
+>>>>>>> 52813562808015ac8657d495cbcceb525f006f44
   let systemUser = null;
   if (state.app) {
     ({ systemUser } = state.app);
@@ -47,7 +50,7 @@ export const query = async function query(
  * @params state 其他请求内容,主要是承载分页信息
  */
 export const queryNormal = async function queryNormal(
-  { endpoint, filter },
+  { endpoint, filter, method },
   state,
 ) {
   // 获取通用请求头信息
@@ -57,7 +60,7 @@ export const queryNormal = async function queryNormal(
   }
   console.log('queryNormal in,filter', filter);
   return request(endpoint, {
-    method: 'get',
+    method,
     filter,
     systemUser,
   });

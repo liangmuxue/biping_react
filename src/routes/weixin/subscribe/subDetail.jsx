@@ -33,13 +33,13 @@ class SubDetail extends Component {
     if (!this.props.data) {
       return null;
     }
-    const { data } = this.props;
-    const { typeObj } = this.props.data;
+    const { content } = this.props.data;
+    console.log('content in subdetail');
     return (
       <div>
-        <SubTypeCard key={typeObj.typeId} typeObj={typeObj} />
-        <div className={style.listTitle}>【{typeObj.typeName}】订阅管理</div>
-        {data.map(item =>
+        <SubTypeCard key={this.props.data.typeId} typeObj={this.props.data} />
+        <div className={style.listTitle}>【{this.props.data.typeName}】订阅管理</div>
+        {content.map(item =>
                     (<SubItem
                       key={item.typeId}
                       itemObj={item}

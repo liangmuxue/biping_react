@@ -53,10 +53,11 @@ export default modelExtend(pageModel, {
       });
     },
     // 查询订阅详情
-    *subscribeDetail({ typeId }, { put, select, call }) {
+    *subscribeDetail({ payload }, { put, select, call }) {
       console.log('query for subscribeDetail');
       const st = yield select();
       const endpoint = 'subscribeDetail';
+      const { typeId } = payload;
       const filter = { typeId };
       const data = yield call(queryNormal, {
         endpoint, filter,
