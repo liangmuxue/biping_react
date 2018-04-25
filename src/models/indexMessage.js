@@ -39,9 +39,7 @@ export default modelExtend(pageModel, {
       console.log('query for detailQuery,payload', payload);
       const st = yield select();
       const endpoint = 'msgLike';
-      let msgLike = null;
-      ({ msgLike } = payload);
-      const filter = { msgLike };
+      const filter = payload;
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
