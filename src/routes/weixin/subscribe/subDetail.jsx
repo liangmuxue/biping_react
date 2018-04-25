@@ -39,7 +39,7 @@ class SubDetail extends Component {
       <div>
         <SubTypeCard key={this.props.data.typeId} typeObj={this.props.data} />
         <div className={style.listTitle}>【{this.props.data.typeName}】订阅管理</div>
-        {content.data.map(item =>
+        {content.map(item =>
                     (<SubItem
                       key={item.typeId}
                       itemObj={item}
