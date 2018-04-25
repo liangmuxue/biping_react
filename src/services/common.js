@@ -24,11 +24,25 @@ export const query = async function query(
     [options.pageSize]: pageSize,
     [options.pageNumber]: current,
   };
+<<<<<<< HEAD
+  // 获取通用请求头信
+=======
   // 获取通用请求头信息
+>>>>>>> 1bf42b77a392835903e855d28b5df540102353fb
   let systemUser = null;
   if (state.app) {
     ({ systemUser } = state.app);
   }
+<<<<<<< HEAD
+  // 登录后获取token信息
+  // if (!systemUser) {
+  //   systemUser = {
+  //     uid: 'xxx',
+  //     token: 'xxx',
+  //   };
+  // }
+=======
+>>>>>>> 1bf42b77a392835903e855d28b5df540102353fb
   return request(endpoint, {
     method: 'get',
     filter,
@@ -39,8 +53,8 @@ export const query = async function query(
 
 
 /**
+* @date        2018-04-22
  * 通用请求处理(不包含分页)
- * @date        2018-04-22
  * @author      梁慕学
  * @params endpoint 请求对象地址
  * @params filter 过滤

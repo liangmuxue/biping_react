@@ -27,7 +27,7 @@ class BasicInput extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
-  onSubmit() {
+    onSubmit() {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         console.log(this.props.form.getFieldsValue());
