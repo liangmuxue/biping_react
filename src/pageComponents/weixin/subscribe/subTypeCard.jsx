@@ -55,7 +55,7 @@ class SubTypeCard extends React.Component {
         <div className={styles.boxCenter}>
           <div className={styles.hadReady}>已经有{typeObj.subCnt}人订阅：</div>
           <h1 className={styles.titles}>{typeObj.typeName}</h1>
-          <div className={styles.contents}>{typeObj.typeDesc}</div>
+          <div className={styles.contents}>{typeObj.tagDesc}</div>
           <Hammer onTap={this.handleRemarkTap.bind(this)}>
             <div className={styles.bottomBtn}>{typeObj.typeRemark}<img alt="right_arrow" src="/images/messageListImg/right_arrow.png" className={styles.arrowRight} /></div>
           </Hammer>
