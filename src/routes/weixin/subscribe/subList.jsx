@@ -25,7 +25,7 @@ class subList extends Component {
     // 请求消息详细信息
     this.props.dispatch({
       type: 'subscribe/subscribeDetail',
-      payload: { messageId: typeObj.typeId },
+      payload: { typeId: typeObj.typeId },
     });
     // 跳转到订阅详情页面
     this.props.dispatch({
