@@ -31,13 +31,16 @@ class MsgDetail extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
-  addNum(msgObj) {
-    console.log(111,this.msgObj)
+  addNum() {
+    const { dispatch, data } = this.props;
+    const msgObj = data;
+    console.log(111111,msgObj.mid)
     this.props.dispatch({
     type: 'indexMessage/msgLike',
-    payload: { status : 2,
-      messageId:1,
-      flag:true
+    payload: {
+      status :2,
+      messageId:msgObj.mid,
+      flag:true,
     },
   });
 
