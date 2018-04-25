@@ -34,6 +34,11 @@ class subList extends Component {
     });
   }
   render() {
+    const { busiFlag } = this.props;
+    // 只有消息列表请求才响应
+    if (!busiFlag || busiFlag !== 'subscribeQuerySuccess') {
+      return null;
+    }
     const { data } = this.props;
     console.log('subList data', data);
     if (data) {
