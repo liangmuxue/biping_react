@@ -38,7 +38,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/customerDynamic/indexMessage'),
+    component: () => import('./routes/weixin/message/indexMessage'),
   });
   // 某大类消息列表
   const MessageList = dynamic({
@@ -68,6 +68,15 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/subscribe/subList'),
   });
+  const SubDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/subscribe'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/subscribe/subDetail'),
+  });
 
   const Announcement = dynamic({
     app,
@@ -83,12 +92,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/bEvents/bEvents'),
   });
-  const Currency = dynamic({
-    app,
-    models: () => [
-    ],
-    component: () => import('./routes/weixin/Currency/Currency'),
-  });
+
 
   const Myself = dynamic({
     app,
@@ -138,7 +142,12 @@ function RouterConfig({ history, app }) {
     component: MessageList,
   }, {
     name: 'subList',
+    modelName: 'subscribe',
     component: SubList,
+  }, {
+    name: 'subDetail',
+    modelName: 'subscribe',
+    component: SubDetail,
   }, {
     name: 'myself',
     component: Myself,
@@ -163,7 +172,7 @@ function RouterConfig({ history, app }) {
           <Route path="/indexMessage" component={IndexMessage} />
           <Route path="/Announcement" component={Announcement} />
           <Route path="/bEvents" component={bEvents} />
-          <Route path="/Currency" component={Currency} />
+          <Route path="/subDetail" component={SubDetail} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={BuyHistory} />
           <Route path="/messageDetail" component={MsgDetail} />

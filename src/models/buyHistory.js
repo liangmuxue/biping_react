@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { pageModel } from './commonPage';
+import { pageModel } from './pagination';
 import { queryNormal } from '../services/common';
 
 /**
