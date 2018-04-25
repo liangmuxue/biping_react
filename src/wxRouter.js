@@ -68,6 +68,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/subscribe/subList'),
   });
+  // 订阅详情
   const SubDetail = dynamic({
     app,
     models: () => [
@@ -93,7 +94,7 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/weixin/bEvents/bEvents'),
   });
 
-
+  // 我的，个人中心
   const Myself = dynamic({
     app,
     models: () => [
@@ -110,14 +111,17 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/result/result'),
   });
-
-  const toOpen = dynamic({
+  // 订阅包管理
+  const ToOpen = dynamic({
     app,
     models: () => [
-      // import('./models/healthInfo'),
+      import('./models/toOpen'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/toOpen/toOpen'),
   });
+  // 购买记录
   const BuyHistory = dynamic({
     app,
     models: () => [
@@ -177,7 +181,7 @@ function RouterConfig({ history, app }) {
           <Route path="/buyhistory" component={BuyHistory} />
           <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/result" component={result} />
-          <Route path="/toOpen" component={toOpen} />
+          <Route path="/toOpen" component={ToOpen} />
 
 
           {routeInner}

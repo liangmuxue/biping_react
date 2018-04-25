@@ -22,11 +22,6 @@ const Buttongo = () => (
   </WingBlank>
 );
 
-function genDynamics({ dispatch, accountInfo }) {
-  // const { customerName } = accountInfo;
-
-
-}
 @pureRender
 class AccountInfo extends Component {
   constructor(props) {
@@ -34,7 +29,17 @@ class AccountInfo extends Component {
     super(props);
   }
   cardClick(msgObj) {
-    console.log('cardClick in,msgObj:', msgObj);
+    console.log('cardClick in,msgObj:', msgObj.typeId);
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'subscribe/subscribeDetail',
+      payload: { typeId: msgObj.typeId },
+    });
+    // 跳转到订阅详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subDetail' },
+    });
   }
   render() {
     console.log('6666666666', this.props);
