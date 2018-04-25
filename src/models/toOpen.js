@@ -1,5 +1,5 @@
 import modelExtend from 'dva-model-extend';
-import { pageModel } from './pagination';
+import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
 
 /**
@@ -11,7 +11,7 @@ import { queryNormal } from '../services/common';
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
   modelName: 'toOpen',
-  endpoint: 'verbCommodList',
+  endpoint: '',
 };
 
 export default modelExtend(pageModel, {
@@ -22,29 +22,36 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      // 第一次初始化时进行默认查询
-      dispatch({
-        type: 'toOpen',
-      });
-    },
   },
 
   effects: {
-    // 查询订单列表
-    *toOpen({ payload }, { put }) {
-      console.log('query for buyHistory');
-      // 在这里拼好filter，然后调用通用的query方法
+    // 查询订阅包
+    *toOpenDetail({ payload }, { put, select, call }) {
+      console.log('query for verbCommodList', payload);
+      const st = yield select();
+      const endpoint = 'verbCommodList';
+      const { typeId } = payload;
+      const filter = { typeId };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      console.log('verbCommodList data', data);
       yield put({
-        type: 'query',
-        payload: {
-          modelDef: MODEL_DEF,
-        },
+        type: 'toOpenDetailSuccess',
+        payload: data,
       });
     },
   },
 
   reducers: {
+    toOpenDetailSuccess(state, action) {
+      console.log('toOpenDetailSuccess in', action.payload);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
   },
 
 });
