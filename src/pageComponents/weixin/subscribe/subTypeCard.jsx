@@ -25,6 +25,10 @@ class SubTypeCard extends React.Component {
     console.log('handleRemarkTap in,props:', this.props);
     this.props.remarkClick(this.props.typeObj);
   }
+  subTypeClick(e) {
+    console.log('handleTap in,props:', this.props);
+    this.props.subTypeClick(this.props.msgObj);
+  }
 
   render() {
     const { typeObj } = this.props;
@@ -40,7 +44,7 @@ class SubTypeCard extends React.Component {
     } else {
       const Renew = () => (
         <WingBlank>
-          <Button className={styles.Renew}>剩{typeObj.remainDate}天&nbsp;| 续费</Button><WhiteSpace />
+          <Button className={styles.Renew}>剩{typeObj.remainDate}天&nbsp;| 续费</Button><WhiteSpace onClick={this.subTypeClick.bind(this)} />
         </WingBlank>
       );
       remainButton = (<Renew />);

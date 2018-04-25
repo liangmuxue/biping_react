@@ -28,6 +28,9 @@ class SubDetail extends Component {
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
   }
+  subTypeClick(subTypeObj) {
+    console.log('subType in', subTypeObj);
+  }
   render() {
     console.log('SubDetail render', this.props);
     if (!this.props.data) {
@@ -37,7 +40,7 @@ class SubDetail extends Component {
     console.log('content in subdetail');
     return (
       <div>
-        <SubTypeCard key={this.props.data.typeId} typeObj={this.props.data} />
+        <SubTypeCard key={this.props.data.typeId} typeObj={this.props.data} subTypeClick={this.subTypeClick.bind(this)} />
         <div className={style.listTitle}>【{this.props.data.typeName}】订阅管理</div>
         {content.map(item =>
                     (<SubItem
