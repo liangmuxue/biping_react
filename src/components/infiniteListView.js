@@ -35,6 +35,7 @@ class InfiniteListView extends React.Component {
 
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps in', nextProps);
     // 如果是显示加载信息的内容，则不进行数据比较
     if (nextProps.loading) {
       return;

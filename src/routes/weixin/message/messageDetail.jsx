@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import Hammer from 'react-hammerjs';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import { Card, WhiteSpace } from 'antd-mobile';
 import { Button, WingBlank, List } from 'antd-mobile';
@@ -22,61 +23,7 @@ const Buttongo = () => (
 function genMessage({ dispatch, data }) {
   const msgObj = data;
   console.log('msgObj is', msgObj);
-  return (
-    <div>
-      <div className={styles.toptitle}>
-      详情
-        <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} /></a>
-      </div>
 
-      <div className={style.bannerBox}>
-        <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
-        <div className={style.btnBox}><Buttongo /></div>
-      </div>
-
-      <div className={style.notice}>
-        <div className={style.noticeTitle}>
-          <div className={style.times}>{msgObj.time}</div>
-          <div className={style.detail}>{msgObj.verbname}</div>
-        </div>
-
-        <div className={style.caption}>{msgObj.title}</div>
-        <div className={style.article}>{msgObj.content}
-        </div>
-        <div><a href="#" className={style.toFriend}>分享给好友</a></div>
-      </div>
-
-      <div className={style.up}>
-        <div className={style.upCenter}>
-          <div className={style.upTitle}>所属标签</div>
-
-          <ul className={style.labels}>
-            <li className={style.labelsList}>ZRX</li>
-            <li className={style.labelsList}>交易所：火币PRO</li>
-          </ul>
-
-          <div className={style.likesBox}>
-            <div className={style.like}><img src="details/zan.png" className={style.goodImg} /><span className={style.numbers}>445</span></div>
-            <div className={style.unlike}><img src="details/2.png" className={style.goodImg} /><span className={style.numbers}>不喜欢</span></div>
-          </div>
-        </div>
-
-        <div className={style.similarBox}>
-          <div className={style.similarCenter}>
-            <div className={style.similarTitle}>类似消息</div>
-            <ul className={style.similarListUl}>
-              {msgObj.relateMsg.map(msg =>
-                (
-                  <li className={style.similarListLi}>
-                    <a href="#" className={style.similarList}>{msg.title}</a>
-                  </li>
-            ))}
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
 }
 
 class MsgDetail extends Component {
@@ -84,12 +31,92 @@ class MsgDetail extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
+  addNum(msgObj) {
+    console.log(111,this.msgObj)
+    this.props.dispatch({
+    type: 'indexMessage/msgLike',
+    payload: { status : 2,
+      messageId:1,
+      flag:true
+    },
+  });
+
+  }
+
   render() {
+    // const chooseImg =  <img src="details/zan.png" className={style.goodImg} />;
+    // if(msgObj.userlike !== 2){
+    //    <img src="details/zan.png" className={style.goodImg} />;
+    // }
+
     console.log('MsgDetail render', this.props);
     if (!this.props.data) {
       return (<div>none</div>);
     }
-    return genMessage(this.props);
+    const { dispatch, data } = this.props;
+    const msgObj = data;
+    console.log("msgObj44444",msgObj);
+    return (
+      <div>
+        <div className={styles.toptitle}>
+        详情
+          <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} /></a>
+        </div>
+
+        <div className={style.bannerBox}>
+          <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
+          <div className={style.btnBox}><Buttongo /></div>
+        </div>
+
+        <div className={style.notice}>
+          <div className={style.noticeTitle}>
+            <div className={style.times}>{msgObj.time}</div>
+            <div className={style.detail}>{msgObj.verbname}</div>
+          </div>
+
+          <div className={style.caption}>{msgObj.title}</div>
+          <div className={style.article}>{msgObj.content}
+          </div>
+          <div><a href="#" className={style.toFriend}>分享给好友</a></div>
+        </div>
+
+        <div className={style.up}>
+          <div className={style.upCenter}>
+            <div className={style.upTitle}>所属标签</div>
+
+            <ul className={style.labels}>
+              <li className={style.labelsList}>ZRX</li>
+              <li className={style.labelsList}>交易所：火币PRO</li>
+            </ul>
+
+            <div className={style.likesBox}>
+              <div className={style.like}
+
+              >
+              <Hammer onTap={this.addNum.bind(this)}>
+            <div>  <span className={style.numbers}>445</span></div>
+              </Hammer>
+              </div>
+              <div className={style.unlike}><img src="details/2.png" className={style.goodImg} /><span className={style.numbers}>不喜欢</span></div>
+            </div>
+          </div>
+
+          <div className={style.similarBox}>
+            <div className={style.similarCenter}>
+              <div className={style.similarTitle}>类似消息</div>
+              <ul className={style.similarListUl}>
+                {msgObj.relateMsg.map(msg =>
+                  (
+                    <li className={style.similarListLi}>
+                      <a href="#" className={style.similarList}>{msg.title}</a>
+                    </li>
+              ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
