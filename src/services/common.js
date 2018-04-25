@@ -24,10 +24,7 @@ export const query = async function query(
     [options.pageSize]: pageSize,
     [options.pageNumber]: current,
   };
-<<<<<<< HEAD
-  // 获取通用请求头信息
-=======
->>>>>>> 52813562808015ac8657d495cbcceb525f006f44
+
   let systemUser = null;
   if (state.app) {
     ({ systemUser } = state.app);
