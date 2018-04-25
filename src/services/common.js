@@ -24,6 +24,7 @@ export const query = async function query(
     [options.pageSize]: pageSize,
     [options.pageNumber]: current,
   };
+
   let systemUser = null;
   if (state.app) {
     ({ systemUser } = state.app);
