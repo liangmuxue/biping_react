@@ -37,18 +37,21 @@ export default modelExtend(pageModel, {
     // 喜欢
     *msgLike({ payload }, { put, call, select }) {
       console.log('query for msgLike,payload', payload);
-      const st = yield select(({ indexMessage }) => indexMessage);
+      const st = yield select();
+      const { indexMessage } = st;
       // 当前的消息对象
-      const msgObj = st.data;
+      const msgObj = indexMessage.data;
       const endpoint = 'msgLike';
       const filter = payload;
       let status = 0;
       // 根据原来的喜欢状态，进行变更
       if (msgObj.userlike === 0) {
         msgObj.userlike = 1;
+        msgObj.likeCnt += 1;
       } else {
         msgObj.userlike = 0;
         status = 1;
+        msgObj.likeCnt -= 1;
       }
       const data = yield call(queryNormal, {
         endpoint,
