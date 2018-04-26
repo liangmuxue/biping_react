@@ -34,6 +34,8 @@ class toOpenDetail extends Component {
       return null;
     }
     const { data } = this.props.toOpen;
+    const { typeId } = this.props.toOpen;
+    const { dispatch } = this.props;
     console.log('content in subdetail', data);
     return (
       <div>
@@ -44,11 +46,11 @@ class toOpenDetail extends Component {
             {
               key: i.count,
               onChange: function onChange() {
-                console.log('i.count', i.count);
+                console.log('i.count');
                 // 请订阅包信息
-                this.props.dispatch({
+                dispatch({
                   type: 'toOpen/toOpenPayDetail',
-                  payload: { verbId: data.typeId, commoId: i.commid },
+                  payload: { verbId: typeId, commoId: i.commid },
                 });
               },
             },

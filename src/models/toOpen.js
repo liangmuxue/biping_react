@@ -36,7 +36,7 @@ export default modelExtend(pageModel, {
         endpoint, filter,
       }, st);
       console.log('verbCommodList data', data);
-      data.typeId = typeId;
+      data.response.typeId = typeId;
       yield put({
         type: 'toOpenDetailSuccess',
         payload: data,
@@ -46,16 +46,17 @@ export default modelExtend(pageModel, {
     *toOpenPayDetail({ payload }, { put, select, call }) {
       console.log('query for verbCommodList', payload);
       const st = yield select();
+      const filter = payload;
       const endpoint = 'subscribeverb';
-      const { typeId } = payload;
-      const filter = { typeId };
-      const data = yield call(queryNormal, {
-        endpoint, filter, method: 'POST',
+      const { verbId, commoId } = payload;
+      const data = { verbId, commoId };
+      const dataReturn = yield call(queryNormal, {
+        endpoint, filter, data, method: 'POST',
       }, st);
       console.log('verbCommodList data', data);
       yield put({
         type: 'toOpenPayDetailSuccess',
-        payload: data,
+        payload: dataReturn,
       });
     },
   },
