@@ -51,12 +51,6 @@ import { config } from '../../config/environment';
 * @author 梁慕学
 */
 const API_ROOT = config.env.host;
-const api = new Kitsu({
-  baseURL: `${API_ROOT}/webInterface`,
-  resourceCase: 'none',
-  pluralize: false,
-  camelCaseTypes: true,
-});
 
 const fetch = (endpoint, options) => {
   const {
@@ -64,14 +58,15 @@ const fetch = (endpoint, options) => {
     systemUser,
     data, filter,
   } = options;
-  // const cloneData = lodash.cloneDeep(data);
-  // 公共头信息
-  api.headers = {
-    type: 'wechat',
-    token: systemUser.token, // 登录后获取的token信息
-  };
-
-  const url = `${API_ROOT}/webInterface/${endpoint}`;
+  // 定义标准请求，加入协议头信息
+  const axiosInst = axios.create({
+    baseURL: `${API_ROOT}/webInterface`,
+    timeout: 3000,
+    headers: {
+      type: 'wechat',
+      token: systemUser.token,
+    },
+  });
   // 转form请求
   const formData = new window.FormData();
   if (method.toLowerCase() === 'post') {
@@ -85,22 +80,22 @@ const fetch = (endpoint, options) => {
   try {
     switch (method.toLowerCase()) {
       case 'get':
-        return api.fetch(endpoint, {
-          ...filter,
+        return axiosInst.get(endpoint, {
+          params: { ...filter },
         });
       case 'delete':
-        return axios.remove(url, data.id);
+        return axiosInst.remove(endpoint, data.id);
       case 'post':
-        return axios.post(
-          url, formData,
+        return axiosInst.post(
+          endpoint, formData,
           { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
         );
       case 'put':
-        return axios.update(url, data);
+        return axiosInst.update(endpoint, data);
       case 'patch':
-        return axios.update(url, data);
+        return axiosInst.update(endpoint, data);
       default:
-        return axios(options);
+        return axiosInst(options);
     }
   } catch (err) {
     console.log(err);
@@ -110,9 +105,10 @@ const fetch = (endpoint, options) => {
 
 export default function request(endpoint, options) {
   return fetch(endpoint, options).then((response) => {
+    const { data } = response;
     return Promise.resolve({
       success: true,
-      response,
+      response: data,
     });
   }).catch((error) => {
     const { response } = error;
