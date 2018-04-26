@@ -33,6 +33,11 @@ class SubDetail extends Component {
   }
   render() {
     console.log('SubDetail render', this.props);
+    const { busiFlag } = this.props;
+    // 只有消息详情请求才响应
+    if (!busiFlag || busiFlag !== 'subscribeDetailSuccess') {
+      return null;
+    }
     if (!this.props.data) {
       return null;
     }

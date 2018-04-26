@@ -37,16 +37,33 @@ export default modelExtend(pageModel, {
     // 喜欢
     *msgLike({ payload }, { put, call, select }) {
       console.log('query for msgLike,payload', payload);
-      const st = yield select();
+      const st = yield select(({ indexMessage }) => indexMessage);
+      // 当前的消息对象
+      const msgObj = st.data;
       const endpoint = 'msgLike';
       const filter = payload;
+      let status = 0;
+      // 根据原来的喜欢状态，进行变更
+      if (msgObj.userlike === 0) {
+        msgObj.userlike = 1;
+      } else {
+        msgObj.userlike = 0;
+        status = 1;
+      }
       const data = yield call(queryNormal, {
-        endpoint, filter, method: 'POST',
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          messageId: payload.messageId,
+          flag: true,
+          status,
+        },
       }, st);
       console.log('messageDetail data', data);
       yield put({
         type: 'msgLikeSuccess',
-        payload: data,
+        payload: msgObj,
       });
     },
     // 查询消息列表
@@ -63,12 +80,7 @@ export default modelExtend(pageModel, {
     // 查询单个消息
     *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
-      let messageId = null;
-      if (!payload) {
-        messageId = 111;
-      } else {
-        ({ messageId } = payload);
-      }
+      const { messageId } = payload;
       const st = yield select();
       const endpoint = 'messageDetail';
       const filter = { messageId };
@@ -93,13 +105,12 @@ export default modelExtend(pageModel, {
         ...response,
       };
     },
-    queryDetailSuccess(state, action) {
-      console.log('queryDetailSuccess in', action.payload);
-      console.log('queryDetailSuccess state', state);
-      const { response } = action.payload;
+    msgLikeSuccess(state, action) {
+      console.log('msgLikeSuccess in', action.payload);
+      console.log('msgLikeSuccess state', state);
       return {
         ...state,
-        ...response,
+        ...action.payload,
       };
     },
   },
