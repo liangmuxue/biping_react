@@ -45,7 +45,11 @@ class toOpenDetail extends Component {
               key: i.count,
               onChange: function onChange() {
                 console.log('i.count', i.count);
-                // return this.onChange(i.count);
+                // 请订阅包信息
+                this.props.dispatch({
+                  type: 'toOpen/toOpenPayDetail',
+                  payload: { verbId: data.typeId, commoId: i.commid },
+                });
               },
             },
             i.name, i.count, '元',
@@ -57,6 +61,7 @@ class toOpenDetail extends Component {
 }
 
 function mapStateToProps(state) {
+  console.log('dd666666', state);
   // console.log('toooooo', { toOpen: state.toOpen, systemUser: state.app.systemUser });
   return { toOpen: state.toOpen, systemUser: state.app.systemUser };
 }
