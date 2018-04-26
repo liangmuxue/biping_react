@@ -37,9 +37,10 @@ export default modelExtend(pageModel, {
     // 喜欢
     *msgLike({ payload }, { put, call, select }) {
       console.log('query for msgLike,payload', payload);
-      const st = yield select(({ indexMessage }) => indexMessage);
+      const st = yield select();
+      const { indexMessage } = st;
       // 当前的消息对象
-      const msgObj = st.data;
+      const msgObj = indexMessage.data;
       const endpoint = 'msgLike';
       const filter = payload;
       let status = 0;
