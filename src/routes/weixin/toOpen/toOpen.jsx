@@ -63,7 +63,7 @@ var Test = function (_React$Component) {
               CheckboxItem,
               { key: i.value, onChange: function onChange() {
                   return _this2.onChange(i.value);
-                } },
+                } }, 
               i.label
             );
           })
