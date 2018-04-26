@@ -39,7 +39,7 @@ export default modelExtend(pageModel, {
   effects: {
     // 查询订阅信息
     *subscribeQuery({ payload }, { put, select, call }) {
-      console.log('query for subscribeQuery');
+      console.log('query for subscribeQuery', payload);
       const st = yield select();
       const endpoint = 'subscribeList';
       const filter = { };
@@ -54,7 +54,7 @@ export default modelExtend(pageModel, {
     },
     // 查询订阅详情
     *subscribeDetail({ payload }, { put, select, call }) {
-      console.log('query for subscribeDetail');
+      console.log('query for subscribeDetail', payload);
       const st = yield select();
       const endpoint = 'subscribeDetail';
       const { typeId } = payload;

@@ -29,10 +29,25 @@ class SubDetail extends Component {
     console.log('subscribeItem in', itemObj);
   }
   subTypeClick(subTypeObj) {
-    console.log('subType in', subTypeObj);
+    console.log('subType in', subTypeObj.typeId);
+    // 请订阅包信息
+    this.props.dispatch({
+      type: 'toOpen/toOpenDetail',
+      payload: { typeId: subTypeObj.typeId },
+    });
+    // 跳转到订阅包页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'toOpen' },
+    });
   }
   render() {
     console.log('SubDetail render', this.props);
+    const { busiFlag } = this.props;
+    // 只有消息详情请求才响应
+    if (!busiFlag || busiFlag !== 'subscribeDetailSuccess') {
+      return null;
+    }
     if (!this.props.data) {
       return null;
     }

@@ -30,16 +30,15 @@ class MsgDetail extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
-  addNum() {
+  likeClick() {
     const { dispatch, data } = this.props;
     const msgObj = data;
-    console.log(111111, msgObj.mid);
+    console.log('likeClick in', msgObj.mid);
     this.props.dispatch({
       type: 'indexMessage/msgLike',
+      // 不需要传是否喜欢，model中根据原数据判断
       payload: {
-        status: 2,
         messageId: msgObj.mid,
-        flag: true,
       },
     });
   }
@@ -57,6 +56,17 @@ class MsgDetail extends Component {
     const { dispatch, data } = this.props;
     const msgObj = data;
     console.log('msgObj44444', msgObj);
+    const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
+      <div>
+        <img
+          src={msgObj.userlike === 1 ? '/images/details/zan.png' : '/images/details/notzan.png'}
+          className={style.goodImg}
+          alt=""
+        />
+        <span className={style.numbers}>喜欢</span>
+        <div>  <span className={style.numbers}>{msgObj.likeCnt}</span></div>
+      </div>
+    </Hammer>);
     return (
       <div>
         <div className={styles.toptitle}>
@@ -92,14 +102,10 @@ class MsgDetail extends Component {
 
             <div className={style.likesBox}>
               <div className={style.like}>
-                <img src="/images/details/zan.png" className={style.goodImg} />
-                <span className={style.numbers}>喜欢</span>
-                <Hammer onTap={this.addNum.bind(this)}>
-                  <div>  <span className={style.numbers}>445</span></div>
-                </Hammer>
+                {likeArea}
               </div>
               <div className={style.unlike}>
-                <img src="/images/details/2.png" className={style.goodImg} />
+                <img src="/images/details/2.png" className={style.goodImg} alt="" />
                 <span className={style.numbers}>不喜欢</span>
               </div>
             </div>

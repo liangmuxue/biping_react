@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace, Result, Icon,Button, WingBlank } from 'antd-mobile';
+import { Card, WhiteSpace, Result, Icon, Button, WingBlank } from 'antd-mobile';
 import { List, Checkbox, Flex } from 'antd-mobile';
+import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/checkbox/style/index.css';
@@ -11,14 +12,15 @@ import style from './toOpen.less';
 import styles from '../myself/myself.less';
 
 /**
- * 老人账号信息页面
- * @author 梁慕学
- * @Date  2017-12-25
+ * 订阅包
+ * @author 赵永帅
+ * @Date 2018-4-25
  */
 
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
+<<<<<<< HEAD
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -121,19 +123,55 @@ function genDynamics({ dispatch, accountInfo }) {
 }
 
 class AccountInfo extends Component {
+=======
+class toOpenDetail extends Component {
+>>>>>>> 1cc7cd35b7f4cf89a8100615d815fe5f24732175
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
   }
+  openClick(type) {
+    console.log('dddddddd');
+  }
   render() {
-    console.log('AccountInfo render');
-    return genDynamics(this.props);
+    console.log('toOpenDetail render', this.props.toOpen);
+    if (!this.props.toOpen.data) {
+      return null;
+    }
+    const { data } = this.props.toOpen;
+    const { typeId } = this.props.toOpen;
+    const { dispatch } = this.props;
+    console.log('content in subdetail', data);
+    return (
+      <div>
+        <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
+        {data.map((i) => {
+          return React.createElement(
+            CheckboxItem,
+            {
+              key: i.count,
+              onChange: function onChange() {
+                console.log('i.count');
+                // 请订阅包信息
+                dispatch({
+                  type: 'toOpen/toOpenPayDetail',
+                  payload: { verbId: typeId, commoId: i.commid },
+                });
+              },
+            },
+            i.name, i.count, '元',
+          );
+        })}
+      </div>
+    );
   }
 }
 
-function mapStateToProps({ state }) {
-  return { state };
+function mapStateToProps(state) {
+  console.log('dd666666', state);
+  // console.log('toooooo', { toOpen: state.toOpen, systemUser: state.app.systemUser });
+  return { toOpen: state.toOpen, systemUser: state.app.systemUser };
 }
 
-export default connect(mapStateToProps)(mobileRouteComponent(AccountInfo));
+export default connect(mapStateToProps)(mobileRouteComponent(toOpenDetail));
 // export default mobileRouteComponent(AccountInfo);
