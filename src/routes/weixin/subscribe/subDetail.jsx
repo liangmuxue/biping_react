@@ -47,7 +47,7 @@ class SubDetail extends Component {
       return null;
     }
     const { content } = this.props.data;
-    console.log('content in subdetail');
+    console.log('content in subdetail', content);
     return (
       <div>
         <SubTypeCard key={this.props.data.typeId} typeObj={this.props.data} subTypeClick={this.subTypeClick.bind(this)} />

@@ -36,8 +36,25 @@ export default modelExtend(pageModel, {
         endpoint, filter,
       }, st);
       console.log('verbCommodList data', data);
+      data.typeId = typeId;
       yield put({
         type: 'toOpenDetailSuccess',
+        payload: data,
+      });
+    },
+    // 调取微信支付接口
+    *toOpenPayDetail({ payload }, { put, select, call }) {
+      console.log('query for verbCommodList', payload);
+      const st = yield select();
+      const endpoint = 'subscribeverb';
+      const { typeId } = payload;
+      const filter = { typeId };
+      const data = yield call(queryNormal, {
+        endpoint, filter, method: 'POST',
+      }, st);
+      console.log('verbCommodList data', data);
+      yield put({
+        type: 'toOpenPayDetailSuccess',
         payload: data,
       });
     },
@@ -45,6 +62,14 @@ export default modelExtend(pageModel, {
 
   reducers: {
     toOpenDetailSuccess(state, action) {
+      console.log('toOpenDetailSuccess in', action.payload);
+      const { response } = action.payload;
+      return {
+        ...state,
+        ...response,
+      };
+    },
+    toOpenPayDetailSuccess(state, action) {
       console.log('toOpenDetailSuccess in', action.payload);
       const { response } = action.payload;
       return {
