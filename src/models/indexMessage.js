@@ -47,9 +47,11 @@ export default modelExtend(pageModel, {
       // 根据原来的喜欢状态，进行变更
       if (msgObj.userlike === 0) {
         msgObj.userlike = 1;
+        msgObj.likeCnt += 1;
       } else {
         msgObj.userlike = 0;
         status = 1;
+        msgObj.likeCnt -= 1;
       }
       const data = yield call(queryNormal, {
         endpoint,
