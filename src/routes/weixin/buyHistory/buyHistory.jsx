@@ -30,15 +30,15 @@ class AccountInfo extends Component {
   }
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj.typeId);
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'subscribe/subscribeDetail',
-      payload: { typeId: msgObj.typeId },
-    });
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'subDetail' },
+    });
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'subscribe/subscribeDetail',
+      payload: { typeId: msgObj.typeId },
     });
   }
   render() {

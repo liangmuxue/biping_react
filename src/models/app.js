@@ -51,8 +51,8 @@ const App = {
       console.log('ret in app query', ret);
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
-        const { token } = response.data;
-        const systemUser = { token };
+        const { token, name, headUrl } = response.data;
+        const systemUser = { token, name, headUrl };
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',
