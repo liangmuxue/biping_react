@@ -71,6 +71,16 @@ const fetch = (endpoint, options) => {
     token: systemUser.token, // 登录后获取的token信息
   };
 
+  const url = `${API_ROOT}/webInterface/${endpoint}`;
+  // 转form请求
+  const formData = new window.FormData();
+  if (method.toLowerCase() === 'post') {
+    for (const key in data) {
+      if ({}.hasOwnProperty.call(data, key)) {
+        formData.append(key, data[key]);
+      }
+    }
+  }
   // 根据不同的请求类型，执行不同的发方法
   try {
     switch (method.toLowerCase()) {
@@ -79,13 +89,16 @@ const fetch = (endpoint, options) => {
           ...filter,
         });
       case 'delete':
-        return api.remove(endpoint, data.id);
+        return axios.remove(url, data.id);
       case 'post':
-        return api.create(endpoint, data);
+        return axios.post(
+          url, formData,
+          { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } },
+        );
       case 'put':
-        return api.update(endpoint, data);
+        return axios.update(url, data);
       case 'patch':
-        return api.update(endpoint, data);
+        return axios.update(url, data);
       default:
         return axios(options);
     }
