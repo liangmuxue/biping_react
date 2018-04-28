@@ -19,6 +19,8 @@ import styles from '../myself/myself.less';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
+const WechatJSSDK = require('../../../models/client');
+
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -138,6 +140,11 @@ class toOpenDetail extends Component {
     const { typeId } = this.props.toOpen;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
+    if (data.timeStamp) {
+      const config = data;
+      console.log('config111111', config);
+      const wechatObj = new window.WechatJSSDK(config);
+    }
     return (
       <div>
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
