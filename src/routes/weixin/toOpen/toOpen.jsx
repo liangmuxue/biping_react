@@ -21,50 +21,6 @@ const { CheckboxItem } = Checkbox;
 const { AgreeItem } = Checkbox;
 const WechatJSSDK = require('../../../models/client');
 
-
-const ButtonExample = () => (
-  <WingBlank className={style.transfrom}>
-    <Button type="primary" className={style.toGret}>去获取</Button><WhiteSpace />
-  </WingBlank>
-);
-
-const ButtonPay = () => (
-  <WingBlank className={style.pay}>
-    <Button type="primary" className={style.toPay}>确认支付</Button><WhiteSpace />
-  </WingBlank>
-);
-
-
-function genDynamics({ dispatch, accountInfo }) {
-  // const { customerName } = accountInfo;
-
-  return (
-    <div>
-      <div className={styles.mineBox}>
-        <div><img src="/assets/myselfImg/mine_pic.png" className={styles.minePic} /></div>
-        <div className={styles.mineName}>币评</div>
-      </div>
-
-      <div className={style.introduce}>
-        <img src="/assets/toOpen/open_bg.png" className={style.openbg} />
-        <div className={style.introduceTitle}>套餐介绍</div>
-        <div className={style.slogan}>拉好友、<span className={style.colorFont}>免费</span>开通</div>
-        <ButtonExample />
-        <div className={style.matterBox}>每邀请1位好友关注「币评区块链」公众号、免费获得「币事件」服务<span className={style.redData}>30</span>天</div>
-      </div>
-      <Test />
-
-      <div className={style.full} />
-      <div className={style.payBottom}>
-        <ButtonPay />
-        <div className={style.payMoney}>支付金额：<span className={style.sum}>20</span>元</div>
-      </div>
-    </div>
-
-
-  );
-}
-
 class toOpenDetail extends Component {
   constructor(props) {
     console.log('props in AccountInfo', props);
