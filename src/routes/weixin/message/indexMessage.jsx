@@ -38,8 +38,8 @@ class MessageList extends Component {
     const { messageList } = this.props;
     console.log('messageList is:', messageList);
     if (messageList) {
-      const totalCount = messageList.pagination.totalCount;
-      if (totalCount == 0) {
+      const { totalCount } = messageList.pagination;
+      if (totalCount === 0) {
         return (
           <EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />
         );

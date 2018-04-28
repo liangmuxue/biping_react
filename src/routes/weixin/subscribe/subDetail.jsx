@@ -1,14 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
-import Button from 'antd-mobile/lib/button/index';
-import WingBlank from 'antd-mobile/lib/wing-blank/index';
-import List from 'antd-mobile/lib/list/index';
-import Tabs from 'antd-mobile/lib/tabs/index';
-import { StickyContainer, Sticky } from 'react-sticky';
-import 'antd-mobile/es/button/style/index.css';
-import 'antd-mobile/es/list/style/index.css';
-import 'antd-mobile/es/tabs/style/index.css';
 import style from './subDetail.less';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';

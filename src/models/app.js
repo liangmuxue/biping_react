@@ -29,10 +29,10 @@ const App = {
     setup({ dispatch, history }) {
       // 判断是否在微信浏览器打开
       const ua = navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) != 'micromessenger') {
-        dispatch({ type: 'noWechat' });
-        return;
-      }
+      // if (ua.match(/MicroMessenger/i) != 'micromessenger') {
+      //   dispatch({ type: 'noWechat' });
+      //   return;
+      // }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
@@ -43,7 +43,7 @@ const App = {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') != -1) {
           const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
-          alert('gotoregist', code);
+          // alert('gotoregist', code);
           dispatch({ type: 'autoReg', payload: { code } });
           return;
         } else if (hrefUrl && hrefUrl.indexOf('messageDetail') != -1 && hrefUrl.indexOf('messageId') != -1) {

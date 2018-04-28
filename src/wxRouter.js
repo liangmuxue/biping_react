@@ -72,7 +72,6 @@ function RouterConfig({ history, app }) {
   const SubDetail = dynamic({
     app,
     models: () => [
-      import('./models/toOpen'),
       import('./models/subDetail'),
       import('./models/pageConstruction'),
       import('./models/app'),
@@ -162,6 +161,10 @@ function RouterConfig({ history, app }) {
     name: 'subDetail',
     modelName: 'subDetail',
     component: SubDetail,
+  }, {
+    name: 'toOpen',
+    modelName: 'toOpen',
+    component: ToOpen,
   }, {
     name: 'myself',
     component: Myself,

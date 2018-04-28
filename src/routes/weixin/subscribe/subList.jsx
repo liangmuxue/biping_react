@@ -25,15 +25,10 @@ class subList extends Component {
   }
   subTypeClick(subTypeObj) {
     console.log('subType in subList', subTypeObj.typeId);
-    // 请订阅包信息
-    this.props.dispatch({
-      type: 'toOpen/toOpenDetail',
-      payload: { typeId: subTypeObj.typeId },
-    });
     // 跳转到订阅包页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'toOpen' },
+      payload: { pageName: 'toOpen', params: { typeId: subTypeObj.typeId } },
     });
   }
   render() {

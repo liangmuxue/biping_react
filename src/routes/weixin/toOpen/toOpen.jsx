@@ -17,77 +17,10 @@ import styles from '../myself/myself.less';
  * @Date 2018-4-25
  */
 
-const CheckboxItem = Checkbox.CheckboxItem;
-const AgreeItem = Checkbox.AgreeItem;
+const { CheckboxItem } = Checkbox;
+const { AgreeItem } = Checkbox;
 const WechatJSSDK = require('../../../models/client');
 
-
-const _createClass = (function () { function defineProperties(target, props) { for (let i = 0; i < props.length; i++) { const descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }());
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === 'object' || typeof call === 'function') ? call : self; }
-
-function _inherits(subClass, superClass) {
-  if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError(`Super expression must either be null or a function, not ${typeof superClass}`); } subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass, enumerable: false, writable: true, configurable: true,
-    },
-  }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-}
-
-const Test = (function (_React$Component) {
-  _inherits(Test, _React$Component);
-
-  function Test() {
-    let _ref;
-
-    let _temp,
-      _this,
-      _ret;
-
-    _classCallCheck(this, Test);
-
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Test.__proto__ || Object.getPrototypeOf(Test)).call.apply(_ref, [this].concat(args))), _this), _this.onChange = function (val) {
-      console.log(val);
-    }, _temp), _possibleConstructorReturn(_this, _ret);
-  }
-
-  _createClass(Test, [{
-    key: 'render',
-    value: function render() {
-      const _this2 = this;
-
-      const data = [{ value: 0, label: '1个月20元' }, { value: 1, label: '3个月60元' }, { value: 3, label: '6个月120元' }, { value: 4, label: '1年200元' }];
-      return React.createElement(
-        'div',
-        null,
-        React.createElement(
-          List,
-          null,
-          data.map((i) => {
-            return React.createElement(
-              CheckboxItem,
-              {
-                key: i.value,
-                onChange: function onChange() {
-                  return _this2.onChange(i.value);
-                },
-              },
-              i.label,
-            );
-          }),
-        ),
-      );
-    },
-  }]);
-
-  return Test;
-}(React.Component));
 
 const ButtonExample = () => (
   <WingBlank className={style.transfrom}>
@@ -138,15 +71,20 @@ class toOpenDetail extends Component {
     super(props);
   }
   openClick(type) {
-    console.log('dddddddd');
+    console.log('dddddddd', this);
   }
   render() {
     console.log('toOpenDetail render', this.props.toOpen);
-    if (!this.props.toOpen.data) {
+    const { toOpenData } = this.props.toOpen;
+    // 如果没有数据，需要首先进行查询
+    if (!toOpenData) {
+      this.props.dispatch({
+        type: 'toOpen/toOpenDetail',
+        payload: { typeId: this.props.params.typeId },
+      });
       return null;
     }
-    const { data } = this.props.toOpen;
-    const { typeId } = this.props.toOpen;
+    const { data, typeId } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
     if (data.timeStamp) {
@@ -181,9 +119,7 @@ class toOpenDetail extends Component {
 
 function mapStateToProps(state) {
   console.log('dd666666', state);
-  // console.log('toooooo', { toOpen: state.toOpen, systemUser: state.app.systemUser });
   return { toOpen: state.toOpen, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(toOpenDetail));
-// export default mobileRouteComponent(AccountInfo);
