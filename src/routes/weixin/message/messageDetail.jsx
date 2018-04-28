@@ -8,6 +8,8 @@ import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import styles from '../bEvents/bEvents.less';
+import HeaderBar from '../../../components/headerBar';
+
 /**
 * 老人账号信息页面
 * @author 梁慕学
@@ -31,11 +33,11 @@ class MsgDetail extends Component {
     super(props);
   }
   likeClick() {
-    const { dispatch, data } = this.props;
-    const msgObj = data;
-    console.log('likeClick in', msgObj.mid);
-    this.props.dispatch({
-      type: 'indexMessage/msgLike',
+    const { dispatch, msgDetailData } = this.props;
+    const msgObj = msgDetailData.data;
+    console.log(`likeClick in:${msgObj.mid}`);
+    dispatch({
+      type: 'messageDetail/msgLike',
       // 不需要传是否喜欢，model中根据原数据判断
       payload: {
         messageId: msgObj.mid,
@@ -44,17 +46,17 @@ class MsgDetail extends Component {
   }
 
   render() {
-    // const chooseImg =  <img src="details/zan.png" className={style.goodImg} />;
-    // if(msgObj.userlike !== 2){
-    //    <img src="details/zan.png" className={style.goodImg} />;
-    // }
-
     console.log('MsgDetail render', this.props);
-    if (!this.props.data) {
-      return (<div>none</div>);
+    const { msgDetailData } = this.props;
+    // 如果没有数据，需要首先进行查询
+    if (!msgDetailData) {
+      this.props.dispatch({
+        type: 'messageDetail/detailQuery',
+        payload: { messageId: this.props.params.messageId },
+      });
+      return null;
     }
-    const { dispatch, data } = this.props;
-    const msgObj = data;
+    const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
@@ -69,11 +71,7 @@ class MsgDetail extends Component {
     </Hammer>);
     return (
       <div>
-        <div className={styles.toptitle}>
-          详情
-          <a href="#" ><img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} /></a>
-        </div>
-
+        <HeaderBar headerText="详情" backRouteLink="indexMessage" {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}><Buttongo /></div>
@@ -133,7 +131,7 @@ class MsgDetail extends Component {
 function mapStateToProps(state) {
   console.log('mapStateToProps in,state', state);
   // 直接返回本model
-  return state.indexMessage;
+  return state.messageDetail;
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(MsgDetail));

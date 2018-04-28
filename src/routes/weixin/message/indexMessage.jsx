@@ -19,15 +19,10 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 class MessageList extends Component {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'indexMessage/detailQuery',
-      payload: { messageId: msgObj.mid },
-    });
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageDetail' },
+      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
     });
   }
   render() {
