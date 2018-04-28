@@ -27,6 +27,12 @@ const App = {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      // 判断是否在微信浏览器打开
+      const ua = navigator.userAgent.toLowerCase();
+      if (ua.match(/MicroMessenger/i) != 'micromessenger') {
+        dispatch({ type: 'noWechat' });
+        return;
+      }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
@@ -132,6 +138,12 @@ const App = {
       });
       yield put(routerRedux.push({
         pathname: '/messageDetail',
+      }));
+    },
+    *noWechat({ payload }, { call, put, select }) {
+      console.log('未在微信浏览器打开');
+      yield put(routerRedux.push({
+        pathname: '/noWechat',
       }));
     },
     // 登录页面登录请求

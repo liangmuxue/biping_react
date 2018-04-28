@@ -139,7 +139,7 @@ function RouterConfig({ history, app }) {
       // import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/NoWechat'),
+    component: () => import('./routes/weixin/errorCheck/noWechat'),
   });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
