@@ -20,7 +20,6 @@ import styles from '../myself/myself.less';
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
 
-<<<<<<< HEAD
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -65,7 +64,7 @@ var Test = function (_React$Component) {
               CheckboxItem,
               { key: i.value, onChange: function onChange() {
                   return _this2.onChange(i.value);
-                } }, 
+                } },
               i.label
             );
           })
@@ -122,10 +121,7 @@ function genDynamics({ dispatch, accountInfo }) {
   );
 }
 
-class AccountInfo extends Component {
-=======
 class toOpenDetail extends Component {
->>>>>>> 1cc7cd35b7f4cf89a8100615d815fe5f24732175
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);

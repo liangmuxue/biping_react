@@ -20,7 +20,7 @@ class MessageCard extends React.Component {
     };
   }
 
-  handleTap(e) {
+  handleTap() {
     console.log('handleTap in,props:', this.props);
     this.props.cardClick(this.props.msgObj);
   }

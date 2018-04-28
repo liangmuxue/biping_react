@@ -12,13 +12,13 @@ import styles from './emptyMsg.less';
 * @date        2018-04-20
 * @author 梁慕学
 */
-//去订阅 按钮
+// 去订阅 按钮
 const Buttongo = () => (
   <WingBlank>
-     <Button type="primary">赶紧去订阅</Button><WhiteSpace />
- </WingBlank>
-)
-class SubTypeCard extends React.Component {
+    <Button type="primary">赶紧去订阅</Button><WhiteSpace />
+  </WingBlank>
+);
+class EmptyMsgCard extends React.Component {
   constructor(props) {
     super(props);
     console.log('props in MessageCard', props);
@@ -28,18 +28,15 @@ class SubTypeCard extends React.Component {
 
 
   render() {
-
-    }
     return (
-    <div>
       <div className={styles.empty}>
-         <div><img src="/assets/indexImg/nomsg.png"  className={styles.buycar}/></div>
-         <div className={styles.notread}>无消息</div>
-         <Buttongo />
-     </div>
-    </div>
+        <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+        <Buttongo />
+      </div>
+
     );
   }
 }
 
-export default SubTypeCard;
+export default EmptyMsgCard;

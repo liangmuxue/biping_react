@@ -43,6 +43,19 @@ class MsgDetail extends Component {
     });
   }
 
+  unlikeClick() {
+    const { dispatch, data } = this.props;
+    const msgObj = data;
+    console.log('unlikeClick in', msgObj.mid);
+    this.props.dispatch({
+      type: 'indexMessage/msgUnlike',
+      // 不需要传是否喜欢，model中根据原数据判断
+      payload: {
+        messageId: msgObj.mid,
+      },
+    });
+  }
+
   render() {
     // const chooseImg =  <img src="details/zan.png" className={style.goodImg} />;
     // if(msgObj.userlike !== 2){
@@ -59,14 +72,26 @@ class MsgDetail extends Component {
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
         <img
-          src={msgObj.userlike === 1 ? '/images/details/zan.png' : '/images/details/notzan.png'}
+          src={msgObj.userlike === 1 ? '/images/details/zan.png' : '/images/details/buzan.png'}
           className={style.goodImg}
           alt=""
         />
-        <span className={style.numbers}>喜欢</span>
-        <div>  <span className={style.numbers}>{msgObj.likeCnt}</span></div>
+        <span className={style.numbers}>{msgObj.likeCnt}</span>
       </div>
     </Hammer>);
+
+    // 不喜欢
+    const unlikeArea = (<Hammer onTap={this.unlikeClick.bind(this)}>
+      <div>
+        <img
+          src={msgObj.userunlike === 2 ? '/images/details/cai.png' : '/images/details/bucai.png'}
+          className={style.goodImg}
+          alt=""
+        />
+        <span className={style.numbers}>不喜欢</span>
+      </div>
+                        </Hammer>);
+
     return (
       <div>
         <div className={styles.toptitle}>
@@ -105,8 +130,7 @@ class MsgDetail extends Component {
                 {likeArea}
               </div>
               <div className={style.unlike}>
-                <img src="/images/details/2.png" className={style.goodImg} alt="" />
-                <span className={style.numbers}>不喜欢</span>
+                {unlikeArea}
               </div>
             </div>
           </div>
