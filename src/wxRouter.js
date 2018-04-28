@@ -52,7 +52,7 @@ function RouterConfig({ history, app }) {
   const MsgDetail = dynamic({
     app,
     models: () => [
-      import('./models/indexMessage'),
+      import('./models/messageDetail'),
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
@@ -72,7 +72,7 @@ function RouterConfig({ history, app }) {
   const SubDetail = dynamic({
     app,
     models: () => [
-      import('./models/subscribe'),
+      import('./models/subDetail'),
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
@@ -148,7 +148,7 @@ function RouterConfig({ history, app }) {
     component: IndexMessage,
   }, {
     name: 'messageDetail',
-    modelName: 'indexMessage',
+    modelName: 'messageDetail',
     component: MsgDetail,
   }, {
     name: 'messageList',
@@ -159,8 +159,12 @@ function RouterConfig({ history, app }) {
     component: SubList,
   }, {
     name: 'subDetail',
-    modelName: 'subscribe',
+    modelName: 'subDetail',
     component: SubDetail,
+  }, {
+    name: 'toOpen',
+    modelName: 'toOpen',
+    component: ToOpen,
   }, {
     name: 'myself',
     component: Myself,
@@ -182,13 +186,14 @@ function RouterConfig({ history, app }) {
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
+          <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/indexMessage" component={IndexMessage} />
           <Route path="/Announcement" component={Announcement} />
           <Route path="/bEvents" component={bEvents} />
+          <Route path="/subList" component={SubList} />
           <Route path="/subDetail" component={SubDetail} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={BuyHistory} />
-          <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={ToOpen} />
           <Route path="/noWechat" component={NoWechat} />

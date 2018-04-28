@@ -68,6 +68,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...response,
+        toOpenData: { ...response },
       };
     },
     toOpenPayDetailSuccess(state, action) {

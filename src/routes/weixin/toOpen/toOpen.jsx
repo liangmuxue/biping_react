@@ -27,15 +27,20 @@ class toOpenDetail extends Component {
     super(props);
   }
   openClick(type) {
-    console.log('dddddddd');
+    console.log('dddddddd', this);
   }
   render() {
     console.log('toOpenDetail render', this.props.toOpen);
-    if (!this.props.toOpen.data) {
+    const { toOpenData } = this.props.toOpen;
+    // 如果没有数据，需要首先进行查询
+    if (!toOpenData) {
+      this.props.dispatch({
+        type: 'toOpen/toOpenDetail',
+        payload: { typeId: this.props.params.typeId },
+      });
       return null;
     }
-    const { data } = this.props.toOpen;
-    const { typeId } = this.props.toOpen;
+    const { data, typeId } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
     if (data.timeStamp) {
@@ -70,9 +75,7 @@ class toOpenDetail extends Component {
 
 function mapStateToProps(state) {
   console.log('dd666666', state);
-  // console.log('toooooo', { toOpen: state.toOpen, systemUser: state.app.systemUser });
   return { toOpen: state.toOpen, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(toOpenDetail));
-// export default mobileRouteComponent(AccountInfo);

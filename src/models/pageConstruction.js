@@ -71,6 +71,7 @@ const pcEntity = {
             yield put({
               type: actEvent,
               pageName,
+              params,
             });
           }
         } else if (innerPageList[i].isShow) {
@@ -87,11 +88,13 @@ const pcEntity = {
           yield put({
             type: deActive,
             pageName,
+            params,
           });
         }
       }
       // 如果没有匹配，则初始化此页面组件
       if (!matchPage) {
+        console.log('params in r', params);
         // 初始化页面映射定义
         matchPage = {
           pageName,
@@ -103,6 +106,7 @@ const pcEntity = {
       }
       yield put({
         type: 'innerPageSwitched',
+        params,
       });
     },
   },

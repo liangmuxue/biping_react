@@ -10,11 +10,6 @@ import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.js
  * @Date  2017-12-25
  */
 
-function genSubList({ dispatch, data }) {
-  // const { customerName } = accountInfo;
-
-}
-
 class subList extends Component {
   constructor(props) {
     console.log('props in subList', props);
@@ -22,42 +17,29 @@ class subList extends Component {
   }
   remarkClick(typeObj) {
     console.log('remarkClick in,typeObj:', typeObj);
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'subscribe/subscribeDetail',
-      payload: { typeId: typeObj.typeId },
-    });
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail' },
+      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId } },
     });
   }
   subTypeClick(subTypeObj) {
     console.log('subType in subList', subTypeObj.typeId);
-    // 请订阅包信息
-    this.props.dispatch({
-      type: 'toOpen/toOpenDetail',
-      payload: { typeId: subTypeObj.typeId },
-    });
     // 跳转到订阅包页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'toOpen' },
+      payload: { pageName: 'toOpen', params: { typeId: subTypeObj.typeId } },
     });
   }
   render() {
     const { busiFlag } = this.props;
-    // 只有消息列表请求才响应
-    if (!busiFlag || busiFlag !== 'subscribeQuerySuccess') {
-      return null;
-    }
-    const { data } = this.props;
-    console.log('subList data', data);
-    if (data) {
+    console.log(`render flag:${busiFlag}`);
+    const { subListData } = this.props;
+    console.log('subList data', subListData);
+    if (subListData) {
       return (
         <div>
-          {data.map(item =>
+          {subListData.data.map(item =>
             (<SubTypeCard
               key={item.typeId}
               typeObj={item}

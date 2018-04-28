@@ -20,15 +20,10 @@ import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.js
 class MessageList extends Component {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'indexMessage/detailQuery',
-      payload: { messageId: msgObj.mid },
-    });
-    // 跳转到订阅列表页面
+    // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageDetail' },
+      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
     });
   }
 
@@ -43,8 +38,8 @@ class MessageList extends Component {
     const { messageList } = this.props;
     console.log('messageList is:', messageList);
     if (messageList) {
-      const totalCount = messageList.pagination.totalCount;
-      if (totalCount == 0) {
+      const { totalCount } = messageList.pagination;
+      if (totalCount === 0) {
         return (
           <EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />
         );
