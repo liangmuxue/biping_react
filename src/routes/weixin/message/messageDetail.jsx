@@ -148,7 +148,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <a href="#" className={style.similarList}>{msg.title}</a>
+                      <a href='/' className={style.similarList}>{msg.title}</a>
                     </li>
                   ))}
               </ul>
