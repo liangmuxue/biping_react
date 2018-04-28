@@ -72,7 +72,6 @@ function RouterConfig({ history, app }) {
   const SubDetail = dynamic({
     app,
     models: () => [
-      import('./models/toOpen'),
       import('./models/subscribe'),
       import('./models/pageConstruction'),
       import('./models/app'),
@@ -132,7 +131,16 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/buyHistory/buyHistory'),
   });
-
+  // 微信外登录提醒
+  const NoWechat = dynamic({
+    app,
+    models: () => [
+      // import('./models/buyHistory'),
+      // import('./models/pageConstruction'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/NoWechat'),
+  });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -159,9 +167,6 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'buyHistory',
     component: BuyHistory,
-  }, {
-    name: 'toOpen',
-    component: ToOpen,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -186,6 +191,7 @@ function RouterConfig({ history, app }) {
           <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={ToOpen} />
+          <Route path="/noWechat" component={NoWechat} />
 
 
           {routeInner}

@@ -59,13 +59,47 @@ export default modelExtend(pageModel, {
         method: 'POST',
         data: {
           messageId: payload.messageId,
-          flag: true,
+          flag: false,
           status,
         },
       }, st);
       console.log('messageDetail data', data);
       yield put({
         type: 'msgLikeSuccess',
+        payload: msgObj,
+      });
+    },
+
+    // 不喜欢
+    *msgUnlike({ payload }, { put, call, select }) {
+      console.log('query for msgLike,payload', payload);
+      const st = yield select();
+      const { indexMessage } = st;
+      // 当前的消息对象
+      const msgObj = indexMessage.data;
+      const endpoint = 'msgLike';
+      const filter = payload;
+      let status = 2;
+      // 根据原来的不喜欢状态，进行变更
+      if (msgObj.userunlike === 2) {
+        msgObj.userunlike = 3;
+      } else {
+        msgObj.userunlike = 2;
+        status = 3;
+      }
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          messageId: payload.messageId,
+          flag: false,
+          status,
+        },
+      }, st);
+      console.log('messageDetail data', data);
+      yield put({
+        type: 'msgunLikeSuccess',
         payload: msgObj,
       });
     },
@@ -111,6 +145,14 @@ export default modelExtend(pageModel, {
     msgLikeSuccess(state, action) {
       console.log('msgLikeSuccess in', action.payload);
       console.log('msgLikeSuccess state', state);
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+    msgunLikeSuccess(state, action) {
+      console.log('msgunLikeSuccess in', action.payload);
+      console.log('msgunLikeSuccess state', state);
       return {
         ...state,
         ...action.payload,
