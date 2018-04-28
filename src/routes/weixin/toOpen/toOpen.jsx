@@ -7,7 +7,7 @@ import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/checkbox/style/index.css';
-
+import HeaderBar from '../../../components/headerBar';
 import style from './toOpen.less';
 import styles from '../myself/myself.less';
 
@@ -84,6 +84,15 @@ class toOpenDetail extends Component {
       });
       return null;
     }
+    // 如果有更新标志，则发送请求并重新渲染
+    const { routeActive } = this.props;
+    if (routeActive) {
+      this.props.dispatch({
+        type: 'toOpen/toOpenDetail',
+        payload: { typeId: this.props.params.typeId },
+      });
+      return null;
+    }
     const { data, typeId } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
@@ -92,8 +101,10 @@ class toOpenDetail extends Component {
       console.log('config111111', config);
       const wechatObj = new window.WechatJSSDK(config);
     }
+    const subDesc = `订阅${this.props.params.typeName}`;
     return (
       <div>
+        <HeaderBar headerText={subDesc} backRouteLink="subList" {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map((i) => {
           return React.createElement(

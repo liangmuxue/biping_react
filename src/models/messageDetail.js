@@ -108,8 +108,8 @@ export default modelExtend(pageModel, {
       // 设置新加载标志
       let routeActive = false;
       const { data } = state.msgDetailData;
-      // 如果typeId不一致，说明是另一个消息，设置重加载标志
-      if (!data || params.messageId !== data.typeId) {
+      // 如果messageId不一致，说明是另一个消息，设置重加载标志
+      if (!data || params.messageId !== data.mid) {
         routeActive = true;
       }
       return { ...state, routeActive, params };
