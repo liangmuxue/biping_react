@@ -38,7 +38,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/message/indexMessage'),
+    component: () => import('./routes/weixin/message/indexMessage.jsx'),
   });
   // 某大类消息列表
   const MessageList = dynamic({
@@ -56,7 +56,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/message/messageDetail'),
+    component: () => import('./routes/weixin/message/messageDetail.jsx'),
   });
   // 订阅列表
   const SubList = dynamic({
@@ -132,7 +132,16 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/buyHistory/buyHistory'),
   });
-
+  // 微信外登录提醒
+  const NoWechat = dynamic({
+    app,
+    models: () => [
+      // import('./models/buyHistory'),
+      // import('./models/pageConstruction'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/errorCheck/noWechat'),
+  });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -159,9 +168,6 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'buyHistory',
     component: BuyHistory,
-  }, {
-    name: 'toOpen',
-    component: ToOpen,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -187,6 +193,7 @@ function RouterConfig({ history, app }) {
           <Route path="/buyhistory" component={BuyHistory} />
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={ToOpen} />
+          <Route path="/noWechat" component={NoWechat} />
 
 
           {routeInner}

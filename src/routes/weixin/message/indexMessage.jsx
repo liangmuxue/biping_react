@@ -8,6 +8,7 @@ import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
+import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 
 /**
  * 消息列表页面
@@ -19,16 +20,42 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 class MessageList extends Component {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
+<<<<<<< HEAD
     // 跳转到信息详情页面
+=======
+    // 请求消息详细信息
+    this.props.dispatch({
+      type: 'indexMessage/detailQuery',
+      payload: { messageId: msgObj.mid },
+    });
+    // 跳转到订阅列表页面
+>>>>>>> 06e61b3caa65e5cd6331c00ec6eaa24ca43bf7b7
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
+    });
+  }
+
+  emptyClick(e) {
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'SubList' },
     });
   }
   render() {
     console.log('cd render');
     const { messageList } = this.props;
     console.log('messageList is:', messageList);
+    if (messageList) {
+      const totalCount = messageList.pagination.totalCount;
+      if (totalCount == 0) {
+        return (
+          <EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />
+        );
+      }
+    }
+
+
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       renderRow: (rowData, sectionID, rowID) => {

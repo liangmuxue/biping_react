@@ -37,7 +37,7 @@ class SubTypeCard extends React.Component {
       // 去注册按钮
       const Register = () => (
         <WingBlank>
-          <Button type="primary" className={styles.toRegister}>去开通</Button><WhiteSpace />
+          <Button onClick={this.botonClick.bind(this)} type="primary" className={styles.toRegister}>去开通</Button><WhiteSpace />
         </WingBlank>
       );
       remainButton = (<Register />);

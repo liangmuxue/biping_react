@@ -45,6 +45,19 @@ class MsgDetail extends Component {
     });
   }
 
+  unlikeClick() {
+    const { dispatch, data } = this.props;
+    const msgObj = data;
+    console.log('unlikeClick in', msgObj.mid);
+    this.props.dispatch({
+      type: 'indexMessage/msgUnlike',
+      // 不需要传是否喜欢，model中根据原数据判断
+      payload: {
+        messageId: msgObj.mid,
+      },
+    });
+  }
+
   render() {
     console.log('MsgDetail render', this.props);
     const { msgDetailData } = this.props;
@@ -61,14 +74,26 @@ class MsgDetail extends Component {
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
         <img
-          src={msgObj.userlike === 1 ? '/images/details/zan.png' : '/images/details/notzan.png'}
+          src={msgObj.userlike === 1 ? '/images/details/zan.png' : '/images/details/buzan.png'}
           className={style.goodImg}
           alt=""
         />
-        <span className={style.numbers}>喜欢</span>
-        <div>  <span className={style.numbers}>{msgObj.likeCnt}</span></div>
+        <span className={style.numbers}>{msgObj.likeCnt}</span>
       </div>
     </Hammer>);
+
+    // 不喜欢
+    const unlikeArea = (<Hammer onTap={this.unlikeClick.bind(this)}>
+      <div>
+        <img
+          src={msgObj.userunlike === 2 ? '/images/details/cai.png' : '/images/details/bucai.png'}
+          className={style.goodImg}
+          alt=""
+        />
+        <span className={style.numbers}>不喜欢</span>
+      </div>
+                        </Hammer>);
+
     return (
       <div>
         <HeaderBar headerText="详情" backRouteLink="indexMessage" {...this.props} />
@@ -103,8 +128,7 @@ class MsgDetail extends Component {
                 {likeArea}
               </div>
               <div className={style.unlike}>
-                <img src="/images/details/2.png" className={style.goodImg} alt="" />
-                <span className={style.numbers}>不喜欢</span>
+                {unlikeArea}
               </div>
             </div>
           </div>
@@ -116,7 +140,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <a href="#" className={style.similarList}>{msg.title}</a>
+                      <a href="/" className={style.similarList}>{msg.title}</a>
                     </li>
                   ))}
               </ul>
@@ -129,7 +153,7 @@ class MsgDetail extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps in,state', state);
+  console.log('mapStateToPropsmessageDetail', state);
   // 直接返回本model
   return state.messageDetail;
 }

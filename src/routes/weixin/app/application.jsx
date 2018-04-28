@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import Footer from '../../../pageComponents/weixin/footer/footer';
+import Tour from '../../../pageComponents/weixin/loginError/tour.jsx';
 import { innerPageDefs } from '../../../wxRouter';
 import styles from './index.less';
 
@@ -15,6 +16,12 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
+    const { isTour } = app;
+    if (isTour) {
+      return (
+        <Tour />
+      );
+    }
     const { innerPageList } = pageConstruction;
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
