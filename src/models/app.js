@@ -43,7 +43,7 @@ const App = {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') != -1) {
           const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
-          console.log('gotoregist', code);
+          alert('gotoregist', code);
           dispatch({ type: 'autoReg', payload: { code } });
           return;
         } else if (hrefUrl && hrefUrl.indexOf('messageDetail') != -1 && hrefUrl.indexOf('messageId') != -1) {
