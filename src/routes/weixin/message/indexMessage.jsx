@@ -20,16 +20,7 @@ import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.js
 class MessageList extends Component {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
-<<<<<<< HEAD
     // 跳转到信息详情页面
-=======
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'indexMessage/detailQuery',
-      payload: { messageId: msgObj.mid },
-    });
-    // 跳转到订阅列表页面
->>>>>>> 06e61b3caa65e5cd6331c00ec6eaa24ca43bf7b7
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
