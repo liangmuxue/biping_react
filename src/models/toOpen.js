@@ -77,7 +77,20 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...response,
+        routeActive: false, // 重置routeActive标志，避免重复查询
       };
+    },
+    active(state, action) {
+      console.log('active in open detail');
+      const { params } = action;
+      // 设置新加载标志
+      let routeActive = false;
+      const { data } = state.toOpenData;
+      // 如果typeId不一致，说明是另一个消息，设置重加载标志
+      if (!data || params.typeId !== data.typeId) {
+        routeActive = true;
+      }
+      return { ...state, routeActive, params };
     },
   },
 
