@@ -33,6 +33,19 @@ class subList extends Component {
       payload: { pageName: 'subDetail' },
     });
   }
+  subTypeClick(subTypeObj) {
+    console.log('subType in subList', subTypeObj.typeId);
+    // 请订阅包信息
+    this.props.dispatch({
+      type: 'toOpen/toOpenDetail',
+      payload: { typeId: subTypeObj.typeId },
+    });
+    // 跳转到订阅包页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'toOpen' },
+    });
+  }
   render() {
     const { busiFlag } = this.props;
     // 只有消息列表请求才响应
@@ -49,6 +62,7 @@ class subList extends Component {
               key={item.typeId}
               typeObj={item}
               remarkClick={this.remarkClick.bind(this)}
+              subTypeClick={this.subTypeClick.bind(this)}
             />))}
         </div>
       );

@@ -19,6 +19,8 @@ import styles from '../myself/myself.less';
 
 const CheckboxItem = Checkbox.CheckboxItem;
 const AgreeItem = Checkbox.AgreeItem;
+const WechatJSSDK = require('../../../models/client');
+
 
 class toOpenDetail extends Component {
   constructor(props) {
@@ -37,6 +39,11 @@ class toOpenDetail extends Component {
     const { typeId } = this.props.toOpen;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
+    if (data.timeStamp) {
+      const config = data;
+      console.log('config111111', config);
+      const wechatObj = new window.WechatJSSDK(config);
+    }
     return (
       <div>
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />

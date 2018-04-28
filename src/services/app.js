@@ -20,6 +20,17 @@ export async function logout(params) {
     data: params,
   });
 }
+// 通过code获取用户信息
+export const autoReg = async function query(params) {
+  return request('getUser', {
+    method: 'get',
+    filter: params,
+    // 构造默认空token
+    systemUser: {
+      token: 'none',
+    },
+  });
+};
 
 export const query = async function query(params) {
   return request('userLogin', {
@@ -28,6 +39,17 @@ export const query = async function query(params) {
     // 构造默认空token
     systemUser: {
       token: 'none',
+    },
+  });
+};
+// 消息详情查看
+export const openMessage = async function query(params) {
+  return request('messageDetail', {
+    method: 'get',
+    filter: params,
+    // 构造默认游客访问token
+    systemUser: {
+      token: 'tourmessage',
     },
   });
 };

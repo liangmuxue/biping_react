@@ -38,7 +38,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/message/indexMessage'),
+    component: () => import('./routes/weixin/message/indexMessage.jsx'),
   });
   // 某大类消息列表
   const MessageList = dynamic({
@@ -56,7 +56,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/message/messageDetail'),
+    component: () => import('./routes/weixin/message/messageDetail.jsx'),
   });
   // 订阅列表
   const SubList = dynamic({

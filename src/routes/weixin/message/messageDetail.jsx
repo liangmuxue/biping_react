@@ -49,11 +49,17 @@ class MsgDetail extends Component {
     //    <img src="details/zan.png" className={style.goodImg} />;
     // }
 
-    console.log('MsgDetail render', this.props);
-    if (!this.props.data) {
+    console.log('MsgDetail render', this.props.app);
+    if (!this.props.indexMessage.data) {
       return (<div>none</div>);
     }
-    const { dispatch, data } = this.props;
+    const { systemUser } = this.props.app;
+    const token = systemUser.token;
+    if (token == 'tourmessage') {
+      return (<div>请关注</div>);
+    }
+    console.log(token, 'token');
+    const { dispatch, data } = this.props.indexMessage;
     const msgObj = data;
     console.log('msgObj44444', msgObj);
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
@@ -131,9 +137,9 @@ class MsgDetail extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps in,state', state);
+  console.log('mapStateToPropsmessageDetail', state);
   // 直接返回本model
-  return state.indexMessage;
+  return { indexMessage: state.indexMessage, app: state.app };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(MsgDetail));

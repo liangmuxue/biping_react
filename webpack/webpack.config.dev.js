@@ -7,6 +7,7 @@ module.exports = merge(require('./webpack.config'), {
   devServer: {
     compress: false,
     port: 9000,
+    host: '0.0.0.0',
     contentBase: path.resolve(__dirname, '../src'),
     historyApiFallback: true,
     hot: true,

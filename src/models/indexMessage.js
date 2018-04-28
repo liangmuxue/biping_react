@@ -71,7 +71,7 @@ export default modelExtend(pageModel, {
     },
     // 查询消息列表
     *msgQuery({ payload }, { put }) {
-      console.log('query for msgQuery');
+      console.log('query for msgQuery', put);
       // 在这里拼好filter，然后调用通用的query方法
       yield put({
         type: 'query',

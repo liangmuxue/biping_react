@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
-import { query, logout } from '../services/app';
+import { query, logout, autoReg, openMessage } from '../services/app';
 import * as constants from '../constants/constants';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 
@@ -18,6 +18,7 @@ const App = {
   state: {
     user: {},
     isLoginFail: false, // 登录页面登录失败标志
+    isTour: false, // 游客登录标识
     permissions: {
       visit: [],
     },
@@ -27,13 +28,27 @@ const App = {
   subscriptions: {
     setup({ dispatch, history }) {
       // 进入主页面前，先进行身份识别
-      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
-      const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
-      userStr = JSON.stringify(userMoni);
-      // 如果本地没有登录数据，则进入登录页
-      if (!userStr) {
-        dispatch({ type: 'toLoginPage' });
-        return;
+      const hrefUrl = window.location.href;
+      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      // const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
+      // userStr = JSON.stringify(userStr);
+      // 如果本地没有登录数据，则通过code进入登录页
+      if (userStr == null) {
+        // 如果存在code
+        if (hrefUrl && hrefUrl.indexOf('code') != -1) {
+          const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+          console.log('gotoregist', code);
+          dispatch({ type: 'autoReg', payload: { code } });
+          return;
+        } else if (hrefUrl && hrefUrl.indexOf('messageDetail') != -1 && hrefUrl.indexOf('messageId') != -1) {
+          const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
+          console.log('游客身份访问消息详情！！', messageId);
+          dispatch({ type: 'openMessage', payload: { messageId } });
+          return;
+        } else {
+          dispatch({ type: 'toTourPage' });
+          return;
+        }
       }
       const userData = JSON.parse(userStr);
       dispatch({ type: 'query', payload: userData });
@@ -52,6 +67,7 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const { token, name, headUrl } = response.data;
+        const { ifVerb } = response.data;// 是否订阅内容
         const systemUser = { token, name, headUrl };
         // 成功后把用户数据存储到全局
         yield put({
@@ -63,15 +79,60 @@ const App = {
         console.log('app query suc');
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
-        yield put({
-          type: 'pageConstruction/footMenuChoice',
-          payload: { selectedMenu: menu },
-        });
+        if (ifVerb == 0) {
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: menu },
+          });
+        } else {
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: footMenus[1] },
+          });
+        }
       } else {
-        // 如果自动登录失败，则进入游客页面
-        yield put({ type: 'toTourPage' });
         // yield put({ type: 'toLoginPage' });
       }
+    },
+
+    // 通过code获取用户名密码自动注册
+    *autoReg({ payload }, { call, put, select }) {
+      console.log('go autoReg', autoReg);
+      const ret = yield call(autoReg, payload);
+      console.log('ret in app autoReg', ret);
+      const { success, response } = ret;
+      if (success && response.data && response.flag === 0) {
+        const systemUser = response.data;
+        console.log('usermessage1111222', systemUser);
+        // 等成功后，存储到本地
+        yield put({
+          type: 'regSuccess',
+          payload: {
+            systemUser,
+          },
+        });
+        yield put({ type: 'query', payload: systemUser });
+      } else {
+        yield put({ type: 'loginFail' });
+      }
+    },
+    // 消息详情查看
+    *openMessage({ payload }, { call, put, select }) {
+      console.log('go autoReg', openMessage);
+      const ret = yield call(openMessage, payload);
+      console.log('ret in app openMessage', ret);
+      const { success, response } = ret;
+      const systemUser = { token: 'tourmessage' };
+      // 成功后把用户数据存储到全局
+      yield put({
+        type: 'sysUserSet',
+        payload: {
+          systemUser,
+        },
+      });
+      yield put(routerRedux.push({
+        pathname: '/messageDetail',
+      }));
     },
     // 登录页面登录请求
     * login({
@@ -82,9 +143,10 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.data.length > 0) {
         const systemUser = response.data[0];
+        console.log('usermessage1111222', systemUser);
         // 等成功后，存储到本地
         yield put({
-          type: 'loginSuccess',
+          type: 'regSuccess',
           payload: {
             systemUser,
           },
@@ -105,8 +167,9 @@ const App = {
       }
     },
     // 跳转到游客页面
-    * toTourPage() {
-      // do nothing
+    * toTourPage({ payload }, { call, put, select }) {
+      console.log('游客身份登录', payload);
+      yield put({ type: 'tourLogin' });
     },
     // 跳转到登录页
     * toLoginPage({
@@ -136,11 +199,11 @@ const App = {
         ...payload,
       };
     },
-    loginSuccess(state, action) {
+    regSuccess(state, action) {
       const { systemUser } = action.payload;
       const userInfo = {
-        loginName: systemUser.loginName,
-        password: systemUser.password,
+        userName: systemUser.userName,
+        passWord: systemUser.passWord,
       };
       window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
       return {
@@ -150,6 +213,11 @@ const App = {
     loginFail(state, action) {
       return {
         ...state, isLoginFail: true, modalVisible: false,
+      };
+    },
+    tourLogin(state, action) {
+      return {
+        ...state, isTour: true, modalVisible: false,
       };
     },
   },
