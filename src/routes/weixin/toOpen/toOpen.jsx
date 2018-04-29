@@ -47,7 +47,7 @@ class toOpenDetail extends Component {
     if (data.timeStamp) {
       const config = data;
       console.log('config111111', config);
-      const wechatObj = new window.WechatJSSDK(config);
+      WechatJSSDK.chooseWXPay(config);
     }
     const subDesc = `订阅${toOpenData.typeName}`;
     return (
