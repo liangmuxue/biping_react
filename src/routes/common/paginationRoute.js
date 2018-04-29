@@ -10,7 +10,7 @@ export function buildPagiProps(dispatch, config) {
   const props = Object.assign({}, config, {
     // 定义滚动到底部的处理，需要进行分页处理
     onEndReached() {
-      const { modelName, endpoint } = config.modelDef;
+      const { modelName } = config.modelDef;
       // 请求名的通用拼法
       const disPatchType = `${modelName}/query`;
       // payload中需要连带modelDef和filter，用于后续分页查询

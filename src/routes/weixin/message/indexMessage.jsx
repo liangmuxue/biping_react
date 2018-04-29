@@ -18,6 +18,7 @@ import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.js
 
 @pureRender
 class MessageList extends Component {
+  // 卡片点击事件，进入详情页
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
     // 跳转到信息详情页面
@@ -26,7 +27,14 @@ class MessageList extends Component {
       payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
     });
   }
-
+  // 标签点击，进行条件筛选
+  tagClick(msgObj) {
+    // 跳转到信息详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'messageList', params: { ...msgObj } },
+    });
+  }
   emptyClick(e) {
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -34,25 +42,20 @@ class MessageList extends Component {
     });
   }
   render() {
-    console.log('cd render');
-    const { messageList } = this.props;
-    console.log('messageList is:', messageList);
-    if (messageList) {
-      const { totalCount } = messageList.pagination;
-      if (totalCount === 0) {
-        return (
-          <EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />
-        );
-      }
-    }
-
-
+    console.log('cd render in indexMessage', this.props);
+    // 加工数据
+    const { messageList } = rebuildMessageList({ messageList: this.props });
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
+      pageSize: this.props.paginationDef.pageSize,
       renderRow: (rowData, sectionID, rowID) => {
         console.log('rowData is', rowData);
         return (
-          <MessageCard msgObj={rowData} cardClick={this.cardClick.bind(this)} />
+          <MessageCard
+            msgObj={rowData}
+            cardClick={this.cardClick.bind(this)}
+            tagClick={this.tagClick.bind(this)}
+          />
         );
       },
     });
@@ -60,22 +63,19 @@ class MessageList extends Component {
     return (
       <div>
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
-        <InfiniteListView {...messageListProps} height={height} />
+        <InfiniteListView
+          {...messageListProps}
+          height={height}
+          pageSize={this.props.paginationDef.pageSize}
+        />
       </div>
     );
   }
 }
 
-function mapStateToProps(state, ownProps) {
+function mapStateToProps(state) {
   console.log('mapStateToProps in indexMessage,state', state);
-  // 第一次进入时没有数据，直接返回
-  if (!state.indexMessage.dataSource) {
-    const { indexMessage } = state;
-    return { indexMessage };
-  }
-  // 加工数据
-  const messageList = rebuildMessageList(state.indexMessage);
-  return messageList;
+  return state.indexMessage;
 }
 
 

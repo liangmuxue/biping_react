@@ -44,15 +44,6 @@ class SubDetail extends Component {
       });
       return null;
     }
-    const { routeActive } = this.props;
-    // 如果有更新标志，则发送请求并重新渲染
-    if (routeActive) {
-      this.props.dispatch({
-        type: 'subDetail/subscribeDetail',
-        payload: { typeId: this.props.params.typeId },
-      });
-      return null;
-    }
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink="subList" {...this.props} />

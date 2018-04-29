@@ -30,26 +30,18 @@ class toOpenDetail extends Component {
     console.log('dddddddd', this);
   }
   render() {
-    console.log('toOpenDetail render', this.props.toOpen);
+    console.log('toOpenDetail render', this.props);
     const { toOpenData } = this.props.toOpen;
+    const { typeId, typeName } = this.props.params;
     // 如果没有数据，需要首先进行查询
     if (!toOpenData) {
       this.props.dispatch({
         type: 'toOpen/toOpenDetail',
-        payload: { typeId: this.props.params.typeId },
+        payload: { typeId, typeName },
       });
       return null;
     }
-    // 如果有更新标志，则发送请求并重新渲染
-    const { routeActive } = this.props;
-    if (routeActive) {
-      this.props.dispatch({
-        type: 'toOpen/toOpenDetail',
-        payload: { typeId: this.props.params.typeId },
-      });
-      return null;
-    }
-    const { data, typeId } = toOpenData;
+    const { data } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
     if (data.timeStamp) {
@@ -57,7 +49,7 @@ class toOpenDetail extends Component {
       console.log('config111111', config);
       const wechatObj = new window.WechatJSSDK(config);
     }
-    const subDesc = `订阅${this.props.params.typeName}`;
+    const subDesc = `订阅${toOpenData.typeName}`;
     return (
       <div>
         <HeaderBar headerText={subDesc} backRouteLink="subList" {...this.props} />

@@ -32,14 +32,7 @@ const pageModel = modelExtend(model, {
     showLoading(state, action) {
       return { ...state, loading: true };
     },
-    active(state, action) {
-      console.log(`common active in:${action.pageName}`);
-      return { ...state };
-    },
-    deactive(state, action) {
-      console.log(`common deactive in:${action.pageName}`);
-      return { ...state };
-    },
+
   },
 
 });

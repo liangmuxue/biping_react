@@ -26,6 +26,7 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch }) {
+
     },
   },
 
@@ -81,6 +82,12 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *active({ params }, { put }) {
+      yield put({
+        type: 'detailQuery',
+        payload: params,
+      });
+    },
   },
 
   reducers: {
@@ -101,18 +108,6 @@ export default modelExtend(pageModel, {
         ...state,
         ...action.payload,
       };
-    },
-    active(state, action) {
-      console.log('active in msg detail');
-      const { params } = action;
-      // 设置新加载标志
-      let routeActive = false;
-      const { data } = state.msgDetailData;
-      // 如果messageId不一致，说明是另一个消息，设置重加载标志
-      if (!data || params.messageId !== data.mid) {
-        routeActive = true;
-      }
-      return { ...state, routeActive, params };
     },
   },
 

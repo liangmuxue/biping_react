@@ -69,15 +69,6 @@ class MsgDetail extends Component {
       });
       return null;
     }
-    // 如果有更新标志，则发送请求并重新渲染
-    const { routeActive } = this.props;
-    if (routeActive) {
-      this.props.dispatch({
-        type: 'messageDetail/detailQuery',
-        payload: { messageId: this.props.params.messageId },
-      });
-      return null;
-    }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>

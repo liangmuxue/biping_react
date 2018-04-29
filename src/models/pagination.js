@@ -25,8 +25,8 @@ const pageModel = modelExtend(model, {
     filter: {}, // 子类设置
     list: Immutable([]), // 用于承载返回的数据列表
     paginationDef: {
-      current: 1, // 当前页码
-      pageSize: 20, // 默认每页条目
+      current: 0, // 当前页码
+      pageSize: 10, // 默认每页条目
       totalCount: 0,
       totalPage: 0,
     },
@@ -37,7 +37,7 @@ const pageModel = modelExtend(model, {
       yield put({ type: 'showLoading' });
       // 通过filter，endpoint以及state里的pagination,进行通用查询
       const {
-        filter, modelDef, list = [], pagination = {},
+        filter = {}, modelDef, list = [], pagination = {},
       } = payload;
       const st = yield select();
       console.log('st is', st);
@@ -45,12 +45,15 @@ const pageModel = modelExtend(model, {
       const state = st[modelDef.modelName];
       const { paginationDef } = state;
       // 如果没有初始化，则使用state中的分页定义
-      if (!pagination.current) {
+      if (!pagination.pageSize) {
         Object.assign(pagination, paginationDef);
       } else {
         // 由于pageSize没有在payload中获取，因此需要自行添加
-        pagination.pageSize = paginationDef.pageSize;
+        // pagination.pageSize = paginationDef.pageSize;
       }
+      // 拼接请求分页参数
+      filter.pageSize = pagination.pageSize;
+      filter.pageNum = pagination.current;
       const { endpoint } = modelDef;
       const data = yield call(query, {
         endpoint, filter, list, pagination,
@@ -61,6 +64,7 @@ const pageModel = modelExtend(model, {
           payload: data.response,
           modelDef,
           filter,
+          pageSize: pagination.pageSize,
           list,
         });
       } else {
@@ -72,26 +76,23 @@ const pageModel = modelExtend(model, {
     showLoading(state, action) {
       return { ...state, loading: true };
     },
-    active(state, action) {
-      console.log(`pagi active in${action.pageName}`);
-      return { ...state };
-    },
-    deactive(state, action) {
-      console.log(`pagi deactive in:${action.pageName}`);
-      return { ...state };
-    },
     querySuccess(state, {
-      payload, modelDef, filter, list,
+      payload, modelDef, filter, list, pageSize,
     }) {
       // 分页模式，服务端统一返回data及meta属性
       const { data, pager } = payload;
       // 根据服务器返回的分页属性，重置本地分页信息
       const pagination = {
         current: pager.number,
+        pageSize,
         totalCount: pager.totalElements,
         totalPage: pager.totalPages,
       };
-
+      // 设置是否还有更多内容的标志
+      let hasMore = true;
+      if (pager.number >= pager.totalPages - 1) {
+        hasMore = false;
+      }
       return {
         ...state,
         // 透传当前的filter和基本定义
@@ -107,6 +108,7 @@ const pageModel = modelExtend(model, {
         pagination: {
           ...state.pagination,
           ...pagination,
+          hasMore,
         },
       };
     },

@@ -42,6 +42,12 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *active({ params }, { put }) {
+      yield put({
+        type: 'subscribeDetail',
+        payload: params,
+      });
+    },
   },
   reducers: {
     subscribeDetailSuccess(state, action) {
@@ -52,18 +58,6 @@ export default modelExtend(pageModel, {
         subDetailData: { ...response },
         routeActive: false, // 重置routeActive标志，避免重复查询
       };
-    },
-    active(state, action) {
-      console.log('active in sub detail');
-      const { params } = action;
-      // 设置新加载标志
-      let routeActive = false;
-      const { data } = state.subDetailData;
-      // 如果typeId不一致，说明是另一个消息，设置重加载标志
-      if (!data || params.typeId !== data.typeId) {
-        routeActive = true;
-      }
-      return { ...state, routeActive, params };
     },
   },
 
