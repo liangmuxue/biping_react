@@ -16,6 +16,7 @@ class HeaderBar extends React.Component {
   }
   backTo() {
     const { dispatch, backRouteLink } = this.props;
+    console.log(`need back to:${backRouteLink}`);
     // 跳转到之前的页面
     dispatch({
       type: 'pageConstruction/switchToInnerPage',

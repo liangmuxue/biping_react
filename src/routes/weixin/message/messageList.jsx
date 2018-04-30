@@ -20,11 +20,12 @@ import HeaderBar from '../../../components/headerBar';
 @pureRender
 class MessageList extends Component {
   cardClick(msgObj) {
-    console.log('cardClick in,msgObj:', msgObj);
+    const backPath = 'messageList';
+    console.log(`cardClick in,backPath:${backPath}`);
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
+      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid, backPath } },
     });
   }
 

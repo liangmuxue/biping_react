@@ -154,6 +154,7 @@ function RouterConfig({ history, app }) {
     component: MsgDetail,
   }, {
     name: 'messageList',
+    modelName: 'messageList',
     component: MessageList,
   }, {
     name: 'subList',

@@ -24,7 +24,7 @@ class MessageList extends Component {
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid } },
+      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid, backPath: 'indexMessage' } },
     });
   }
   // 标签点击，进行条件筛选

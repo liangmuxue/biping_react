@@ -65,7 +65,7 @@ class MsgDetail extends Component {
     if (!msgDetailData) {
       this.props.dispatch({
         type: 'messageDetail/detailQuery',
-        payload: { messageId: this.props.params.messageId },
+        payload: { ...this.props.params },
       });
       return null;
     }
@@ -96,7 +96,7 @@ class MsgDetail extends Component {
 
     return (
       <div>
-        <HeaderBar headerText="详情" backRouteLink="indexMessage" {...this.props} />
+        <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}><Buttongo /></div>
