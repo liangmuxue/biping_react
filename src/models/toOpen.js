@@ -60,6 +60,7 @@ export default modelExtend(pageModel, {
         payload: dataReturn,
       });
     },
+
     *active({ params }, { put }) {
       yield put({
         type: 'toOpenDetail',
@@ -85,6 +86,21 @@ export default modelExtend(pageModel, {
         ...state,
         ...response,
         routeActive: false, // 重置routeActive标志，避免重复查询
+      };
+    },
+    // 切换支付类别
+    payTypeChange(state, action) {
+      console.log('payTypeChange val', action.payload);
+      const val = action.payload;
+      state.toOpenData.data.forEach((item) => {
+        if (item.commid === val.commid) {
+          item.checked = true;
+        } else {
+          item.checked = false;
+        }
+      });
+      return {
+        ...state,
       };
     },
   },
