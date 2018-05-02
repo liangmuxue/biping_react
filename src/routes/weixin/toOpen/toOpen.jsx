@@ -27,10 +27,16 @@ class toOpenDetail extends Component {
     console.log('dddddddd', this);
   }
   switchPayType(val) {
-    console.log('switchPayType in', val);
+    const { params } = this.props;
+    console.log('switchPayType in', params);
+    const filter = { verbId: params.typeId, commoId: val.commid };
     this.props.dispatch({
       type: 'toOpen/payTypeChange',
       payload: val,
+    });
+    this.props.dispatch({
+      type: 'toOpen/toOpenPayDetail',
+      payload: filter,
     });
   }
   render() {
@@ -47,10 +53,11 @@ class toOpenDetail extends Component {
     const { data } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
-    if (data.timeStamp) {
-      const config = data;
+    const dataReturn = this.props.toOpen.data;
+    if (dataReturn && dataReturn.timeStamp) {
+      const config = dataReturn;
       console.log('config111111', config);
-      // WechatJSSDK.chooseWXPay(config);
+      WechatJSSDK.chooseWXPay(config);
     }
     const subDesc = `订阅${toOpenData.typeName}`;
     return (

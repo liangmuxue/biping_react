@@ -9,7 +9,7 @@ import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
-
+import styles from './index.less';
 /**
  * 消息列表页面
  * @author 梁慕学
@@ -36,13 +36,27 @@ class MessageList extends Component {
     });
   }
   emptyClick(e) {
+    console.log('toSublist55555');
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'SubList' },
+      payload: { pageName: 'subList' },
     });
   }
   render() {
     console.log('cd render in indexMessage', this.props);
+    const { pagination } = this.props;
+    if (pagination && pagination.totalCount === 0) {
+      return (<div className={styles.empty}>
+        <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+      </div>);
+    }
+    const { paginationDef } = this.props;
+    if (paginationDef && paginationDef.totalCount === 0) {
+      console.log('pagination2222', paginationDef.totalCount);
+      return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
+    }
+
     // 加工数据
     const { messageList } = rebuildMessageList({ messageList: this.props });
     const messageListProps = buildPagiProps(this.props.dispatch, {
