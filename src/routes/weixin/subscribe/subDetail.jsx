@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import style from './subDetail.less';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
 import SubItem from '../../../pageComponents/weixin/subscribe/subItem.jsx';
 import HeaderBar from '../../../components/headerBar';
-
+import style from './subDetail.less';
 /**
 * 订阅详情页面
 * @author 梁慕学
