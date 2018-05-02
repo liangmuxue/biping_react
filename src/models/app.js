@@ -209,7 +209,7 @@ const App = {
       return {
         ...state,
         ...payload,
-        attentionModal: true,
+        attentionModal: false,
       };
     },
     regSuccess(state, action) {
