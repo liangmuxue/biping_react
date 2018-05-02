@@ -37,8 +37,8 @@ class HomePage extends Component {
       maskClosable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
     >
-      <div style={{ height: 200, overflow: 'hidden' }}>
-        <img src="/images/indexImg/wechat.png" width="250" height="250" alt="" />
+      <div style={{ overflow: 'hidden' }}>
+        <img src="/images/indexImg/wechat.png"   />
       </div>
     </Modal>);
     // 当前已有页面，与内部页面定义进行匹配及显示
