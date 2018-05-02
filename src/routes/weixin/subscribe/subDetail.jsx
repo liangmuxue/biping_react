@@ -19,18 +19,23 @@ class SubDetail extends Component {
   }
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
+    // 发起订阅请求
+    this.props.dispatch({
+      type: 'subDetail/subscribeItem',
+      payload: {
+        subItem: itemObj,
+      },
+    });
   }
   subTypeClick(subTypeObj) {
     console.log('subType in', subTypeObj.typeId);
-    // 请订阅包信息
-    this.props.dispatch({
-      type: 'toOpen/toOpenDetail',
-      payload: { typeId: subTypeObj.typeId },
-    });
     // 跳转到订阅包页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'toOpen' },
+      payload: {
+        pageName: 'toOpen',
+        params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subDetail' },
+      },
     });
   }
   render() {

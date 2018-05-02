@@ -85,7 +85,7 @@ const App = {
         console.log('app query suc');
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
-        if (ifVerb == 0) {
+        if (ifVerb === 0) {
           yield put({
             type: 'pageConstruction/footMenuChoice',
             payload: { selectedMenu: menu },
@@ -209,6 +209,7 @@ const App = {
       return {
         ...state,
         ...payload,
+        attentionModal: true,
       };
     },
     regSuccess(state, action) {
@@ -230,6 +231,13 @@ const App = {
     tourLogin(state, action) {
       return {
         ...state, isTour: true, modalVisible: false,
+      };
+    },
+    // 关闭关注提示窗口
+    closeAttenModal(state, action) {
+      console.log('closeAttenModal in');
+      return {
+        ...state, isTour: false, attentionModal: false,
       };
     },
   },

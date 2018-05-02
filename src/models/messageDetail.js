@@ -19,9 +19,6 @@ export default modelExtend(pageModel, {
 
   state: {
     endpoint: MODEL_DEF.endpoint,
-    deActive() {
-      console.log('deActive in indexMessage');
-    },
   },
 
   subscriptions: {

@@ -34,13 +34,12 @@ class toOpenDetail extends Component {
   }
   render() {
     console.log('toOpenDetail render', this.props);
-    const { toOpenData } = this.props.toOpen;
-    const { typeId, typeName } = this.props.params;
+    const { toOpenData, backPath } = this.props.toOpen;
     // 如果没有数据，需要首先进行查询
     if (!toOpenData) {
       this.props.dispatch({
         type: 'toOpen/toOpenDetail',
-        payload: { typeId, typeName },
+        payload: { ...this.props.params },
       });
       return null;
     }
@@ -55,7 +54,7 @@ class toOpenDetail extends Component {
     const subDesc = `订阅${toOpenData.typeName}`;
     return (
       <div>
-        <HeaderBar headerText={subDesc} backRouteLink="subList" {...this.props} />
+        <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>

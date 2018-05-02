@@ -38,6 +38,7 @@ export default modelExtend(pageModel, {
       console.log('verbCommodList data', data);
       data.response.typeId = typeId;
       data.response.typeName = typeName;
+      data.backPath = payload.backPath;
       yield put({
         type: 'toOpenDetailSuccess',
         payload: data,
@@ -72,11 +73,11 @@ export default modelExtend(pageModel, {
   reducers: {
     toOpenDetailSuccess(state, action) {
       console.log('toOpenDetailSuccess in', action.payload);
-      const { response } = action.payload;
+      const { response, backPath } = action.payload;
       return {
         ...state,
         toOpenData: { ...response },
-        routeActive: false, // 重置routeActive标志，避免重复查询
+        backPath,
       };
     },
     toOpenPayDetailSuccess(state, action) {

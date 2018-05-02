@@ -42,6 +42,36 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 订阅小类别
+    *subscribeItem({ payload }, { put, select, call }) {
+      const st = yield select();
+      const { subDetail } = st;
+      // 当前的订阅对象
+      const subObj = subDetail.subDetailData.data;
+      const { subItem } = payload;
+      subObj.content.map((item) => {
+        if (item.typeId === subItem.typeId) {
+          item.isSub = 1;
+        }
+        return item;
+      });
+      const endpoint = 'subscribe';
+      const filter = {};
+      // 发起订阅请求
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          typeId: subItem.typeId,
+          isSub: subItem.isSub,
+        },
+      }, st);
+      yield put({
+        type: 'subscribeSuccess',
+        payload: subObj,
+      });
+    },
     *active({ params }, { put }) {
       yield put({
         type: 'subscribeDetail',
@@ -56,9 +86,15 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         subDetailData: { ...response },
-        routeActive: false, // 重置routeActive标志，避免重复查询
+      };
+    },
+    subscribeSuccess(state, action) {
+      console.log('subscribeSuccess in', action.payload);
+      console.log('subscribeSuccess state', state);
+      return {
+        ...state,
+        ...action.payload,
       };
     },
   },
-
 });

@@ -28,7 +28,10 @@ class subList extends Component {
     // 跳转到订阅包页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'toOpen', params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName } },
+      payload: {
+        pageName: 'toOpen',
+        params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subList' },
+      },
     });
   }
   render() {
