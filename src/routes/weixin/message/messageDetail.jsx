@@ -7,7 +7,6 @@ import { Button, WingBlank, List } from 'antd-mobile';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
-import styles from '../bEvents/bEvents.less';
 import HeaderBar from '../../../components/headerBar';
 
 /**
