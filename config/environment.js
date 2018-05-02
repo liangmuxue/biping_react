@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130';
   // ENV.host = 'http://10.0.109.224:80';
-  // ENV.host = 'http://10.0.107.254:8280';
+  ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130:80';
   // ENV.host = 'http://127.0.0.1:8280';
   // ENV.host = 'http://wx.test.tnb99.net';
