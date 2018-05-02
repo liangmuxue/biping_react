@@ -26,8 +26,8 @@ function genFooterMenus({ dispatch, pageConstruction }) {
 }}
     >
       <TabBar
-        unselectedTintColor="#949494"
-        tintColor="#33A3F4"
+        unselectedTintColor="#7F8389"
+        tintColor="#428Bff"
         barTintColor="white"
         hidden={pageConstruction.footMenuHidden}
       >
@@ -36,8 +36,8 @@ function genFooterMenus({ dispatch, pageConstruction }) {
             title={menu.title}
             key={menu.key}
             icon={<div style={{
-              width: '22px',
-              height: '22px',
+              width: '21px',
+              height: '21px',
               background: menu.icon,
 }}
             />

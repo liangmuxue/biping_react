@@ -40,7 +40,7 @@ class SubItem extends React.Component {
         extra={extraBtn}
         multipleLine
       >
-        {itemObj.typeName}
+        {'# '+ itemObj.typeName}
       </List.Item>
     );
   }
