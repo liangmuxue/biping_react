@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
+import Modal from 'antd-mobile/lib/modal/index';
+import 'antd-mobile/es/modal/style/index.css';
 import Footer from '../../../pageComponents/weixin/footer/footer';
 import Tour from '../../../pageComponents/weixin/loginError/tour.jsx';
 import { innerPageDefs } from '../../../wxRouter';
@@ -10,9 +12,15 @@ class HomePage extends Component {
   componentDidMount() {
     console.log('componentDidMount in,innerPageDefs', innerPageDefs);
   }
+  closeAttenModal() {
+    this.props.dispatch({
+      type: 'app/closeAttenModal',
+      payload: { },
+    });
+  }
   render() {
     const {
-      match, dispatch, app, pageConstruction,
+      match, app, pageConstruction,
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
@@ -23,6 +31,16 @@ class HomePage extends Component {
       );
     }
     const { innerPageList } = pageConstruction;
+    const modal = (<Modal
+      visible={app.attentionModal}
+      transparent
+      maskClosable={false}
+      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+    >
+      <div style={{ height: 200, overflow: 'hidden' }}>
+        <img src="/images/indexImg/wechat.png" width="250" height="250" alt="" />
+      </div>
+    </Modal>);
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
       const matchItem = innerPageDefs.def.filter((element) => {
@@ -36,6 +54,7 @@ class HomePage extends Component {
         console.log('item show', item);
         // 注意此处div不能加key，否则会重复渲染
         return (<div name={ckey} className={styles.container}>
+          {modal}
           <MComponent key={item.pageName} params={item.params} />
         </div>);
       }
@@ -44,6 +63,7 @@ class HomePage extends Component {
       };
       // 注意此处div不能加key，否则会重复渲染
       return (<div name={ckey} style={style} className={styles.container}>
+        {modal}
         <MComponent key={item.pageName} params={item.params} />
               </div>);
     });

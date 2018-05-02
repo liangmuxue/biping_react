@@ -53,12 +53,12 @@ class InfiniteListView extends React.Component {
 
 
   render() {
-    const { loading, onEndReached } = this.props;
+    const {
+      loading, onEndReached, pageSize, pagination,
+    } = this.props;
     const endReached = (event) => {
       console.log('reach end', event);
-      // load new data
-      // hasMore: from backend data, indicates whether it is the last page, here is false
-      if (loading && !this.state.hasMore) {
+      if (loading || !pagination.hasMore) {
         return;
       }
       // 调用父级方法，进行分页请求
@@ -77,7 +77,7 @@ class InfiniteListView extends React.Component {
         renderRow={this.props.renderRow}
         renderSeparator={separator}
         className="am-list"
-        pageSize={4}
+        pageSize={pageSize}
         style={{
           height: this.props.height,
           overflow: 'auto',

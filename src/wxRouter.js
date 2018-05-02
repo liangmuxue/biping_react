@@ -44,7 +44,9 @@ function RouterConfig({ history, app }) {
   const MessageList = dynamic({
     app,
     models: () => [
-      // import('./models/accountInfo'),
+      import('./models/messageList'),
+      import('./models/pageConstruction'),
+      import('./models/app'),
     ],
     component: () => import('./routes/weixin/message/messageList'),
   });
@@ -152,10 +154,11 @@ function RouterConfig({ history, app }) {
     component: MsgDetail,
   }, {
     name: 'messageList',
+    modelName: 'messageList',
     component: MessageList,
   }, {
     name: 'subList',
-    modelName: 'subscribe',
+    modelName: 'subList',
     component: SubList,
   }, {
     name: 'subDetail',

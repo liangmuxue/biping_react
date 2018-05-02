@@ -19,13 +19,11 @@ export default modelExtend(pageModel, {
 
   state: {
     endpoint: MODEL_DEF.endpoint,
-    deActive() {
-      console.log('deActive in indexMessage');
-    },
   },
 
   subscriptions: {
     setup({ dispatch }) {
+
     },
   },
 
@@ -68,7 +66,7 @@ export default modelExtend(pageModel, {
     // 查询单个消息
     *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
-      const { messageId } = payload;
+      const { messageId, backPath } = payload;
       const st = yield select();
       const endpoint = 'messageDetail';
       const filter = { messageId };
@@ -76,9 +74,16 @@ export default modelExtend(pageModel, {
         endpoint, filter,
       }, st);
       console.log('queryDetail data', data);
+      data.backPath = backPath;
       yield put({
         type: 'queryDetailSuccess',
         payload: data,
+      });
+    },
+    *active({ params }, { put }) {
+      yield put({
+        type: 'detailQuery',
+        payload: params,
       });
     },
   },
@@ -87,11 +92,12 @@ export default modelExtend(pageModel, {
     queryDetailSuccess(state, action) {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);
-      const { response } = action.payload;
+      const { response, backPath } = action.payload;
       return {
         ...state,
         msgDetailData: { ...response },
         routeActive: false, // 重置routeActive标志，避免重复查询
+        backPath,
       };
     },
     msgLikeSuccess(state, action) {
@@ -101,18 +107,6 @@ export default modelExtend(pageModel, {
         ...state,
         ...action.payload,
       };
-    },
-    active(state, action) {
-      console.log('active in msg detail');
-      const { params } = action;
-      // 设置新加载标志
-      let routeActive = false;
-      const { data } = state.msgDetailData;
-      // 如果messageId不一致，说明是另一个消息，设置重加载标志
-      if (!data || params.messageId !== data.mid) {
-        routeActive = true;
-      }
-      return { ...state, routeActive, params };
     },
   },
 

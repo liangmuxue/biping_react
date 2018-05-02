@@ -65,16 +65,7 @@ class MsgDetail extends Component {
     if (!msgDetailData) {
       this.props.dispatch({
         type: 'messageDetail/detailQuery',
-        payload: { messageId: this.props.params.messageId },
-      });
-      return null;
-    }
-    // 如果有更新标志，则发送请求并重新渲染
-    const { routeActive } = this.props;
-    if (routeActive) {
-      this.props.dispatch({
-        type: 'messageDetail/detailQuery',
-        payload: { messageId: this.props.params.messageId },
+        payload: { ...this.props.params },
       });
       return null;
     }
@@ -105,7 +96,7 @@ class MsgDetail extends Component {
 
     return (
       <div>
-        <HeaderBar headerText="详情" backRouteLink="indexMessage" {...this.props} />
+        <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}><Buttongo /></div>

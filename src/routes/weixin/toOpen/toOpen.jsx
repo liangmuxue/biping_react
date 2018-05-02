@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace, Result, Icon, Button, WingBlank } from 'antd-mobile';
-import { List, Checkbox, Flex } from 'antd-mobile';
+import { Checkbox } from 'antd-mobile';
 import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
+import 'antd-mobile/es/checkbox/style/index.css';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
-import 'antd-mobile/es/checkbox/style/index.css';
 import HeaderBar from '../../../components/headerBar';
-import style from './toOpen.less';
-import styles from '../myself/myself.less';
 
 /**
  * 订阅包
@@ -29,56 +26,42 @@ class toOpenDetail extends Component {
   openClick(type) {
     console.log('dddddddd', this);
   }
+  switchPayType(val) {
+    console.log('switchPayType in', val);
+    this.props.dispatch({
+      type: 'toOpen/payTypeChange',
+      payload: val,
+    });
+  }
   render() {
-    console.log('toOpenDetail render', this.props.toOpen);
-    const { toOpenData } = this.props.toOpen;
+    console.log('toOpenDetail render', this.props);
+    const { toOpenData, backPath } = this.props.toOpen;
     // 如果没有数据，需要首先进行查询
     if (!toOpenData) {
       this.props.dispatch({
         type: 'toOpen/toOpenDetail',
-        payload: { typeId: this.props.params.typeId },
+        payload: { ...this.props.params },
       });
       return null;
     }
-    // 如果有更新标志，则发送请求并重新渲染
-    const { routeActive } = this.props;
-    if (routeActive) {
-      this.props.dispatch({
-        type: 'toOpen/toOpenDetail',
-        payload: { typeId: this.props.params.typeId },
-      });
-      return null;
-    }
-    const { data, typeId } = toOpenData;
+    const { data } = toOpenData;
     const { dispatch } = this.props;
     console.log('content in subdetail', data);
     if (data.timeStamp) {
       const config = data;
       console.log('config111111', config);
-      WechatJSSDK.chooseWXPay(config);
+      // WechatJSSDK.chooseWXPay(config);
     }
-    const subDesc = `订阅${this.props.params.typeName}`;
+    const subDesc = `订阅${toOpenData.typeName}`;
     return (
       <div>
-        <HeaderBar headerText={subDesc} backRouteLink="subList" {...this.props} />
+        <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
-        {data.map((i) => {
-          return React.createElement(
-            CheckboxItem,
-            {
-              key: i.count,
-              onChange: function onChange() {
-                console.log('i.count');
-                // 请订阅包信息
-                dispatch({
-                  type: 'toOpen/toOpenPayDetail',
-                  payload: { verbId: typeId, commoId: i.commid },
-                });
-              },
-            },
-            i.name, i.count, '元',
-          );
-        })}
+        {data.map(i => (
+          <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>
+            {`${i.name + i.count}元`}
+          </CheckboxItem>
+          ))}
       </div>
     );
   }

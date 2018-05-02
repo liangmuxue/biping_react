@@ -36,9 +36,9 @@ const App = {
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
-      // const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
-      // userStr = JSON.stringify(userStr);
+      // const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
+      const userStr = JSON.stringify(userMoni);
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
@@ -85,7 +85,7 @@ const App = {
         console.log('app query suc');
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
-        if (ifVerb == 0) {
+        if (ifVerb === 0) {
           yield put({
             type: 'pageConstruction/footMenuChoice',
             payload: { selectedMenu: menu },
@@ -209,6 +209,7 @@ const App = {
       return {
         ...state,
         ...payload,
+        attentionModal: true,
       };
     },
     regSuccess(state, action) {
@@ -230,6 +231,13 @@ const App = {
     tourLogin(state, action) {
       return {
         ...state, isTour: true, modalVisible: false,
+      };
+    },
+    // 关闭关注提示窗口
+    closeAttenModal(state, action) {
+      console.log('closeAttenModal in');
+      return {
+        ...state, isTour: false, attentionModal: false,
       };
     },
   },

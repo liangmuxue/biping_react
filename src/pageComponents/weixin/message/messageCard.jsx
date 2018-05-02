@@ -19,37 +19,49 @@ class MessageCard extends React.Component {
     this.state = {
     };
   }
-
+  // 卡片点击
   handleTap() {
     console.log('handleTap in,props:', this.props);
     this.props.cardClick(this.props.msgObj);
+  }
+  // 点击标签，进行筛选
+  handleTagTap(e) {
+    console.log('handleTagTap in,props:', this.props);
+    e.preventDefault();
+    this.props.tagClick(this.props.msgObj);
   }
 
   render() {
     const { msgObj } = this.props;
 
     return (
-      <Hammer onTap={this.handleTap.bind(this)}>
-        <div className={styles.mesList} >
-          <WhiteSpace size="lg" />
-          <Card full>
-            <Card.Header title={<div className={styles.cardtitle}> {msgObj.title}</div>} />
-            <Card.Body>
-              <div className={styles.cardContent}>{msgObj.content}</div>
-            </Card.Body>
-            <Card.Footer
-              content={
-                <div className={styles.cardFooter}>
+
+      <div className={styles.mesList} >
+        <WhiteSpace size="lg" />
+        <Card full>
+          <Hammer onTap={this.handleTap.bind(this)}>
+            <div>
+              <Card.Header title={<div className={styles.cardtitle}> {msgObj.title}</div>} />
+              <Card.Body>
+                <div className={styles.cardContent}>{msgObj.content}</div>
+              </Card.Body>
+            </div>
+          </Hammer>
+          <Card.Footer
+            content={
+              <div className={styles.cardFooter}>
+                <Hammer onTap={this.handleTagTap.bind(this)}>
                   <span className={styles.event}>#{msgObj.tagName}</span>
-                  <span className={styles.readNum}>{msgObj.readCnt}阅读</span>
-                  <span className={styles.times}>{msgObj.time}</span>
-                </div>
+                </Hammer>
+                <span className={styles.readNum}>{msgObj.readCnt}阅读</span>
+                <span className={styles.times}>{msgObj.time}</span>
+              </div>
               }
-              extra={<div ><img alt="noicon" src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
-            />
-          </Card>
-        </div>
-      </Hammer>
+            extra={<div ><img alt="noicon" src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+          />
+        </Card>
+      </div>
+
     );
   }
 }

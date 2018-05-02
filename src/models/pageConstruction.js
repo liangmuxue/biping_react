@@ -56,18 +56,19 @@ const pcEntity = {
         if (!modelName) {
           modelName = matchItem.name;
         }
+        const st = yield select();
+        const state = st[modelName];
+        console.log(`new currentModel is:${modelName}`);
+        console.log('relate state is:', state);
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
           // 从隐藏到显示
           if (!matchPage.isShow) {
-            const st = yield select();
-            console.log('st is', st);
-            console.log(`new currentModel is:${modelName}`);
-            const state = st[modelName];
-            console.log('relate state is:', state);
             matchPage.isShow = true;
             // 如果由非激活状态转变为激活状态，要进行页面通知
             const actEvent = `${modelName}/active`;
+            console.log(`act name:${actEvent}`);
+            console.log('act params:', params);
             yield put({
               type: actEvent,
               pageName,
@@ -77,11 +78,6 @@ const pcEntity = {
         } else if (innerPageList[i].isShow) {
           // 从显示到隐藏
           innerPageList[i].isShow = false;
-          const st = yield select();
-          console.log('st is', st);
-          console.log(`new currentModel in hide is:${modelName}`);
-          console.log('relate state is:', state);
-          const state = st[modelName];
           // 如果由激活状态转变为非激活状态，要进行页面通知
           const deActive = `${modelName}/deactive`;
           console.log(`need send deactive:${deActive}`);
@@ -94,8 +90,6 @@ const pcEntity = {
       }
       // 如果没有匹配，则初始化此页面组件
       if (!matchPage) {
-        console.log('params in r', params);
-        // 初始化页面映射定义
         matchPage = {
           pageName,
           params,

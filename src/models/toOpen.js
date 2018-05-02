@@ -27,16 +27,18 @@ export default modelExtend(pageModel, {
   effects: {
     // 查询订阅包
     *toOpenDetail({ payload }, { put, select, call }) {
-      console.log('query for verbCommodList', payload);
+      console.log('query for toOpenDetail', payload);
       const st = yield select();
       const endpoint = 'verbCommodList';
-      const { typeId } = payload;
+      const { typeId, typeName } = payload;
       const filter = { typeId };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
       console.log('verbCommodList data', data);
       data.response.typeId = typeId;
+      data.response.typeName = typeName;
+      data.backPath = payload.backPath;
       yield put({
         type: 'toOpenDetailSuccess',
         payload: data,
@@ -44,7 +46,7 @@ export default modelExtend(pageModel, {
     },
     // 调取微信支付接口
     *toOpenPayDetail({ payload }, { put, select, call }) {
-      console.log('query for verbCommodList', payload);
+      console.log('query for toOpenPayDetail', payload);
       const st = yield select();
       const filter = payload;
       const endpoint = 'subscribeverb';
@@ -59,16 +61,23 @@ export default modelExtend(pageModel, {
         payload: dataReturn,
       });
     },
+
+    *active({ params }, { put }) {
+      yield put({
+        type: 'toOpenDetail',
+        payload: params,
+      });
+    },
   },
 
   reducers: {
     toOpenDetailSuccess(state, action) {
       console.log('toOpenDetailSuccess in', action.payload);
-      const { response } = action.payload;
+      const { response, backPath } = action.payload;
       return {
         ...state,
-        ...response,
         toOpenData: { ...response },
+        backPath,
       };
     },
     toOpenPayDetailSuccess(state, action) {
@@ -80,17 +89,20 @@ export default modelExtend(pageModel, {
         routeActive: false, // 重置routeActive标志，避免重复查询
       };
     },
-    active(state, action) {
-      console.log('active in open detail');
-      const { params } = action;
-      // 设置新加载标志
-      let routeActive = false;
-      const { data } = state.toOpenData;
-      // 如果typeId不一致，说明是另一个消息，设置重加载标志
-      if (!data || params.typeId !== data.typeId) {
-        routeActive = true;
-      }
-      return { ...state, routeActive, params };
+    // 切换支付类别
+    payTypeChange(state, action) {
+      console.log('payTypeChange val', action.payload);
+      const val = action.payload;
+      state.toOpenData.data.forEach((item) => {
+        if (item.commid === val.commid) {
+          item.checked = true;
+        } else {
+          item.checked = false;
+        }
+      });
+      return {
+        ...state,
+      };
     },
   },
 

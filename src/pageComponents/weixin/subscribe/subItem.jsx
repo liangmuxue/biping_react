@@ -1,7 +1,6 @@
 import List from 'antd-mobile/lib/list/index';
 import Button from 'antd-mobile/lib/button/index';
 import 'antd-mobile/es/button/style/index.css';
-import Hammer from 'react-hammerjs';
 import React from 'react';
 import style from './subItem.less';
 
@@ -27,16 +26,18 @@ class SubItem extends React.Component {
 
   render() {
     const { itemObj } = this.props;
+    console.log('itemObj is', itemObj);
+    const extraBtn = (<Button
+      type="primary"
+      size="small"
+      inline
+      className={style.unreadBtn}
+      onClick={this.subscribe.bind(this)}
+    >{itemObj.isSub ? '已订阅' : '订阅'}
+                      </Button>);
     return (
       <List.Item
-        extra={<Button
-          type="primary"
-          size="small"
-          inline
-          className={style.unreadBtn}
-          onClick={this.subscribe.bind(this)}
-        >订阅
-        </Button>}
+        extra={extraBtn}
         multipleLine
       >
         {itemObj.typeName}
