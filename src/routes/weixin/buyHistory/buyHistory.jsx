@@ -33,12 +33,7 @@ class AccountInfo extends Component {
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail' },
-    });
-    // 请求消息详细信息
-    this.props.dispatch({
-      type: 'subscribe/subscribeDetail',
-      payload: { typeId: msgObj.typeId },
+      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId } },
     });
   }
   render() {

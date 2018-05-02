@@ -19,7 +19,7 @@ import styles from '../myself/myself.less';
 
 const { CheckboxItem } = Checkbox;
 const { AgreeItem } = Checkbox;
-const WechatJSSDK = require('../../../models/client');
+const WechatJSSDK = require('weixin-js-sdk');
 
 class toOpenDetail extends Component {
   constructor(props) {
