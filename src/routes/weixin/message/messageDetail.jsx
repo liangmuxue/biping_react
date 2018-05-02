@@ -8,6 +8,7 @@ import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
+import Modal from 'antd-mobile/lib/modal/index';
 
 /**
 * 老人账号信息页面
@@ -32,7 +33,7 @@ class MsgDetail extends Component {
     super(props);
   }
   likeClick() {
-    const { dispatch, msgDetailData } = this.props;
+    const { dispatch, msgDetailData } = this.props.messageData;
     const msgObj = msgDetailData.data;
     console.log(`likeClick in:${msgObj.mid}`);
     dispatch({
@@ -45,7 +46,7 @@ class MsgDetail extends Component {
   }
 
   unlikeClick() {
-    const { dispatch, data } = this.props;
+    const { dispatch, data } = this.props.messageData;
     const msgObj = data;
     console.log('unlikeClick in', msgObj.mid);
     this.props.dispatch({
@@ -59,7 +60,19 @@ class MsgDetail extends Component {
 
   render() {
     console.log('MsgDetail render', this.props);
-    const { msgDetailData } = this.props;
+    const systemUser = this.props.systemUser;
+    console.log('app2222', systemUser);
+    const modal = (<Modal
+      visible={systemUser.attentionModal}
+      transparent
+      maskClosable={false}
+      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+    >
+      <div style={{ height: 200, overflow: 'hidden' }}>
+        <img src="/images/indexImg/wechat.png" width="250" height="250" alt="" />
+      </div>
+    </Modal>);
+    const { msgDetailData } = this.props.messageData;
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData) {
       this.props.dispatch({
@@ -95,6 +108,7 @@ class MsgDetail extends Component {
 
     return (
       <div>
+        {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
@@ -154,7 +168,8 @@ class MsgDetail extends Component {
 function mapStateToProps(state) {
   console.log('mapStateToPropsmessageDetail', state);
   // 直接返回本model
-  return state.messageDetail;
+  // const { messageDetail, app } = state;
+  return { messageData: state.messageDetail, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(MsgDetail));

@@ -42,14 +42,3 @@ export const query = async function query(params) {
     },
   });
 };
-// 消息详情查看
-export const openMessage = async function query(params) {
-  return request('messageDetail', {
-    method: 'get',
-    filter: params,
-    // 构造默认游客访问token
-    systemUser: {
-      token: 'tourmessage',
-    },
-  });
-};
