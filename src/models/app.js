@@ -68,7 +68,7 @@ const App = {
         }
       }
       const userData = JSON.parse(userStr);
-      dispatch({ type: 'query', payload: { userData, code } });
+      dispatch({ type: 'query', payload: userData });
     },
   },
 
