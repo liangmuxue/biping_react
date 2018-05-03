@@ -105,7 +105,7 @@ const pcEntity = {
           const selectedMenu = footMenus[1];
           yield put({
             type: 'footMenuChoiced',
-            selectedMenu,
+            payload: { selectedMenu },
           });
         }
       }
@@ -118,6 +118,7 @@ const pcEntity = {
 
   reducers: {
     footMenuChoiced(state, action) {
+      console.log('footMenuChoiced action.payload is', action.payload);
       return { ...state, ...action.payload };
     },
     // 切换到其他内部页面时返回的数据
