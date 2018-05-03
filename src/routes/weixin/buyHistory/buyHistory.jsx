@@ -18,7 +18,7 @@ import styles from './buyHistory.less';
  */
 const Buttongo = () => (
   <WingBlank>
-    <Button type="primary">去看看</Button><WhiteSpace />
+    <Button type="primary">去看看订阅包</Button><WhiteSpace />
   </WingBlank>
 );
 
@@ -36,18 +36,26 @@ class AccountInfo extends Component {
       payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId } },
     });
   }
+  buttonClick() {
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subList' },
+    });
+  }
   render() {
     console.log('6666666666', this.props);
     const { buyList } = this.props;
     console.log('buyList is:', buyList);
     if (buyList) {
-      const totalCount = buyList.pagination.totalCount;
-      if (totalCount == 0) {
+      const { pagination } = buyList;
+      if (pagination && pagination.totalCount == 0) {
         return (
           <div className={styles.empty}>
             <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>
             <div className={styles.notread}>您还没有买过任何订阅包</div>
-            <Buttongo />
+            <WingBlank>
+              <Button type="primary" onClick={this.buttonClick.bind(this)}>去看看订阅包</Button><WhiteSpace />
+            </WingBlank>
           </div>
         );
       }

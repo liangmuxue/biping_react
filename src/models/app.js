@@ -57,6 +57,11 @@ const App = {
           dispatch({ type: 'openMessage' });
           return;
         } else {
+          const backPath = '/messageList';
+          dispatch({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'messageList', params: { backPath } },
+          });
           dispatch({ type: 'toTourPage' });
           return;
         }
@@ -129,14 +134,8 @@ const App = {
     },
     // 消息详情查看
     *openMessage({ payload }, { call, put, select }) {
-      const systemUser = { token: 'tourmessage', attentionModal: true };
-      // 成功后把用户数据存储到全局
-      yield put({
-        type: 'sysUserSet',
-        payload: {
-          systemUser,
-        },
-      });
+      // 成功后把数据存储到全局
+      yield put({ type: 'tourLogin' });
     },
     *noWechat({ payload }, { call, put, select }) {
       console.log('未在微信浏览器打开');
@@ -227,8 +226,9 @@ const App = {
       };
     },
     tourLogin(state, action) {
+      const systemUser = { token: 'tourLogin' };
       return {
-        ...state, isTour: true, modalVisible: false,
+        ...state, isTour: true, modalVisible: false, attentionModal: true, systemUser,
       };
     },
     // 关闭关注提示窗口

@@ -57,7 +57,7 @@ class MessageList extends Component {
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       renderRow: (rowData, sectionID, rowID) => {
-        console.log('rowData is', rowData); 
+        console.log('rowData is', rowData);
         return (
           <MessageCard msgObj={rowData} cardClick={this.cardClick.bind(this)} />
         );

@@ -24,23 +24,20 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { isTour } = app;
-    if (isTour) {
-      return (
-        <Tour />
-      );
-    }
-    const { innerPageList } = pageConstruction;
+    const { isTour, attentionModal } = app;
+    console.log('attentionModal', attentionModal);
     const modal = (<Modal
-      visible={app.attentionModal}
+      visible={attentionModal}
       transparent
       maskClosable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src="/images/indexImg/wechat.png"   />
+        <img src="/images/indexImg/wechat.png" />
       </div>
     </Modal>);
+    const { innerPageList } = pageConstruction;
+
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
       const matchItem = innerPageDefs.def.filter((element) => {

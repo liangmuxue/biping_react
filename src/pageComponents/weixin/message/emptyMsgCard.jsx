@@ -12,12 +12,6 @@ import styles from './emptyMsg.less';
 * @date        2018-04-20
 * @author 梁慕学
 */
-// 去订阅 按钮
-const Buttongo = () => (
-  <WingBlank>
-    <Button type="primary">赶紧去订阅</Button><WhiteSpace />
-  </WingBlank>
-);
 class EmptyMsgCard extends React.Component {
   constructor(props) {
     super(props);
@@ -25,14 +19,19 @@ class EmptyMsgCard extends React.Component {
     this.state = {
     };
   }
-
+  buttonClick() {
+    console.log('8888888888888888');
+    this.props.emptyClick(this);
+  }
 
   render() {
     return (
       <div className={styles.empty}>
         <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-        <Buttongo />
+        <div className={styles.notread}>没有订阅</div>
+        <WingBlank>
+          <Button type="primary" onClick={this.buttonClick.bind(this)}>赶紧去订阅</Button><WhiteSpace />
+        </WingBlank>
       </div>
 
     );
