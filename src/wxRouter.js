@@ -143,7 +143,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/errorCheck/noWechat'),
   });
-  // H5中间页
+  // 分享进群
   const EnterGroup = dynamic({
     app,
     models: () => [
