@@ -101,10 +101,11 @@ const pcEntity = {
       }
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
-        if (pageName === 'messageDetail') {
+        if (pageName === 'subList') {
+          const selectedMenu = footMenus[1];
           yield put({
             type: 'footMenuChoiced',
-            payload,
+            payload: { selectedMenu },
           });
         }
       }
@@ -117,6 +118,7 @@ const pcEntity = {
 
   reducers: {
     footMenuChoiced(state, action) {
+      console.log('footMenuChoiced action.payload is', action.payload);
       return { ...state, ...action.payload };
     },
     // 切换到其他内部页面时返回的数据
