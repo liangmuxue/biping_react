@@ -101,10 +101,11 @@ const pcEntity = {
       }
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
-        if (pageName === 'messageDetail') {
+        if (pageName === 'subList') {
+          const selectedMenu = footMenus[1];
           yield put({
             type: 'footMenuChoiced',
-            payload,
+            selectedMenu,
           });
         }
       }
