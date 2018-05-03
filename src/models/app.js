@@ -206,6 +206,7 @@ const App = {
       return {
         ...state,
         ...payload,
+        attentionModal: false,
       };
     },
     regSuccess(state, action) {

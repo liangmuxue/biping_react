@@ -45,7 +45,7 @@ class AccountInfo extends Component {
   render() {
     console.log('6666666666', this.props);
     const { buyList } = this.props;
-    console.log('buyList is:', buyList);
+    console.log('buyList', buyList);
     if (buyList) {
       const { pagination } = buyList;
       if (pagination && pagination.totalCount == 0) {

@@ -185,6 +185,9 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'buyHistory',
     component: BuyHistory,
+  }, {
+    name: 'enterGroup',
+    component: EnterGroup,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
