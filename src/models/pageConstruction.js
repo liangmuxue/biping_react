@@ -37,12 +37,13 @@ const pcEntity = {
         type: 'switchToInnerPage',
         payload: {
           pageName: code,
+          direct: true,
         },
       });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
-      const { pageName, params } = payload;
+      const { pageName, params, direct } = payload;
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // 进行内部页面排列处理
       let matchPage = null;
