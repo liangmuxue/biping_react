@@ -21,7 +21,8 @@ class SubItem extends React.Component {
   // 订阅某小类
   subscribe(e) {
     console.log('subscribe in,props:', this.props);
-    this.props.subscribeClick(this.props.itemObj);
+    this.props.subscribesClick(this.props.itemObj);
+
   }
 
   render() {
@@ -40,7 +41,7 @@ class SubItem extends React.Component {
         extra={extraBtn}
         multipleLine
       >
-        {`# ${itemObj.typeName}`}
+        {'# '+ itemObj.typeName}
       </List.Item>
     );
   }
