@@ -51,14 +51,15 @@ class MessageList extends Component {
         <div className={styles.notread}>暂无消息</div>
       </div>);
     }
-    const { paginationDef } = this.props;
-    if (paginationDef && paginationDef.totalCount === 0) {
-      console.log('pagination2222', paginationDef.totalCount);
-      return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
-    }
+    // const { paginationDef } = this.props;
+    // if (paginationDef && paginationDef.totalCount === 0) {
+    //   console.log('pagination2222', pagination.totalCount);
+    //   return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
+    // }
 
     // 加工数据
     const { messageList } = rebuildMessageList({ messageList: this.props });
+    console.log('messageList', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       pageSize: this.props.paginationDef.pageSize,
