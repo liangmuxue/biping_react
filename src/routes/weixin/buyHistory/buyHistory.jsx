@@ -46,9 +46,9 @@ class AccountInfo extends Component {
     console.log('6666666666', this.props);
     const { buyList } = this.props;
     console.log('buyList is:', buyList);
-    if (!buyList) {
-      const { paginationDef } = this.props.buyHistory;
-      if (paginationDef && paginationDef.totalCount == 0) {
+    if (buyList) {
+      const { pagination } = buyList;
+      if (pagination && pagination.totalCount == 0) {
         return (
           <div className={styles.empty}>
             <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>

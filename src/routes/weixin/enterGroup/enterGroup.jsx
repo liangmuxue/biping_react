@@ -4,18 +4,18 @@ import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
-import style from './h5.less';
+import style from './enterGroup.less';
 
 
 /**
-* 订阅消息卡片
-* @date        2018-04-20
-* @author 梁慕学
+* 分享获取订阅权限页面
+* @date        2018-05-03
+* @author 赵永帅
 */
 // 入群 按钮
 const ButtonJoin = () => (
   <WingBlank>
-    <Button  className={style.joinBtn}>我要入群</Button><WhiteSpace />
+    <Button className={style.joinBtn}>我要入群</Button><WhiteSpace />
   </WingBlank>
 );
 class Join extends React.Component {
