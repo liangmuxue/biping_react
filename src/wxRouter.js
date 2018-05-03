@@ -144,14 +144,14 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/weixin/errorCheck/noWechat'),
   });
   // H5中间页
-  const H5 = dynamic({
+  const EnterGroup = dynamic({
     app,
     models: () => [
       // import('./models/buyHistory'),
       // import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/h5/h5'),
+    component: () => import('./routes/weixin/enterGroup/enterGroup'),
   });
 
   // 定义内部页面，并导出，用于后续动态页面渲染使用
@@ -211,7 +211,7 @@ function RouterConfig({ history, app }) {
           <Route path="/result" component={result} />
           <Route path="/toOpen" component={ToOpen} />
           <Route path="/noWechat" component={NoWechat} />
-          <Route path="/h5" component={H5} />
+          <Route path="/enterGroup" component={EnterGroup} />
 
           {routeInner}
         </div>
