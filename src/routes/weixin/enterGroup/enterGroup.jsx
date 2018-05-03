@@ -12,12 +12,7 @@ import style from './enterGroup.less';
 * @date        2018-05-03
 * @author 赵永帅
 */
-// 入群 按钮
-const ButtonJoin = () => (
-  <WingBlank>
-    <Button className={style.joinBtn}>我要入群</Button><WhiteSpace />
-  </WingBlank>
-);
+
 class Join extends React.Component {
   constructor(props) {
     super(props);
@@ -25,13 +20,17 @@ class Join extends React.Component {
     this.state = {
     };
   }
-
+  enterGroup(e) {
+    window.location.href = 'https://weixin.qq.com/g/AQQfr9hj9a1d8if_';
+  }
 
   render() {
     return (
       <div className={style.H5box}>
         <div><img src="/assets/images/h5Img/H5.png" className={style.H5bg} /></div>
-        <ButtonJoin />
+        <WingBlank>
+          <Button className={style.joinBtn} onClick={this.enterGroup.bind(this)}>我要入群</Button><WhiteSpace />
+        </WingBlank>
       </div>
 
     );
