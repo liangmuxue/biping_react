@@ -39,15 +39,14 @@ const App = {
       const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       // const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
       // const userStr = JSON.stringify(userMoni);
-      let code = null;
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
-        if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
-          code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+        if (hrefUrl && hrefUrl.indexOf('code') != -1) {
+          const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
           dispatch({ type: 'autoReg', payload: { code } });
           return;
-        } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
+        } else if (hrefUrl && hrefUrl.indexOf('messageId') != -1) {
           const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
           const backPath = '/messageList';
@@ -68,7 +67,7 @@ const App = {
         }
       }
       const userData = JSON.parse(userStr);
-      dispatch({ type: 'query', payload: { userData, code } });
+      dispatch({ type: 'query', payload: userData });
     },
   },
 
@@ -90,7 +89,6 @@ const App = {
         yield put({
           type: 'sysUserSet',
           payload: {
-            code: payload.code,
             systemUser,
           },
         });
@@ -115,7 +113,7 @@ const App = {
 
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
-      console.log('go autoReg', payload);
+      console.log('go autoReg', autoReg);
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
       const { success, response } = ret;
@@ -126,7 +124,6 @@ const App = {
         yield put({
           type: 'regSuccess',
           payload: {
-            code: payload.code,
             systemUser,
           },
         });
@@ -213,14 +210,14 @@ const App = {
       };
     },
     regSuccess(state, action) {
-      const { systemUser, code } = action.payload;
+      const { systemUser } = action.payload;
       const userInfo = {
         userName: systemUser.userName,
         passWord: systemUser.passWord,
       };
       window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
       return {
-        ...state, ...systemUser, code, isLogin: true, modalVisible: false,
+        ...state, ...systemUser, isLogin: true, modalVisible: false,
       };
     },
     loginFail(state, action) {
