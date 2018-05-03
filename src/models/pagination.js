@@ -80,7 +80,7 @@ const pageModel = modelExtend(model, {
       payload, modelDef, filter, list, pageSize,
     }) {
       // 分页模式，服务端统一返回data及meta属性
-      const { data, pager } = payload;
+      const { data, pager, flag } = payload;
       // 根据服务器返回的分页属性，重置本地分页信息
       const pagination = {
         current: pager.number,
@@ -94,6 +94,7 @@ const pageModel = modelExtend(model, {
         hasMore = false;
       }
       return {
+        flag,
         ...state,
         // 透传当前的filter和基本定义
         filter,

@@ -51,14 +51,19 @@ export default modelExtend(pageModel, {
       const { subItem } = payload;
       subObj.content.map((item) => {
         if (item.typeId === subItem.typeId) {
-          item.isSub = 1;
+          // 反向选择
+          if (subItem.isSub === 1) {
+            item.isSub = 0;
+          } else {
+            item.isSub = 1;
+          }
         }
         return item;
       });
       const endpoint = 'subscribe';
       const filter = {};
       // 发起订阅请求
-      const data = yield call(queryNormal, {
+      yield call(queryNormal, {
         endpoint,
         filter,
         method: 'POST',
