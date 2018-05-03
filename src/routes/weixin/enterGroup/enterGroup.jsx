@@ -1,7 +1,6 @@
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Button from 'antd-mobile/lib/button/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
-import 'antd-mobile/es/button/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
 import style from './enterGroup.less';
