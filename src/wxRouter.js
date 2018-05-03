@@ -13,11 +13,6 @@ export const innerPageDefs = { def: [] };
  * 创建人：梁慕学
  */
 function RouterConfig({ history, app }) {
-  const hrefUrl = window.location.href;
-  let code = null;
-  if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
-    code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
-  }
   // mainpage全局路由，进行全局页面控制
   const LoginPage = dynamic({
     app,
@@ -199,9 +194,19 @@ function RouterConfig({ history, app }) {
     const item = innerPageDefs.def[i];
     // routeInner.push(<Route exact path={`/mainpage/${item.name}`} component={item.component} />);
   }
+  // 透传code参数
+  const code = analysisParam('code');
+  const messageId = analysisParam('messageId');
   let mainpage = '/mainpage';
+  let paramFix = '?any=any';
   if (code) {
-    mainpage = `${mainpage}?code=${code}`;
+    paramFix = `${paramFix}&code=${code}`;
+  }
+  if (messageId) {
+    paramFix = `${paramFix}&messageId=${messageId}`;
+  }
+  if (paramFix.length > 8) {
+    mainpage += paramFix;
   }
   // 路由定义，默认进入子路由mainpage
   return (
@@ -230,6 +235,26 @@ function RouterConfig({ history, app }) {
       </ConnectedRouter>
     </AppContainer>
   );
+}
+
+// url参数拆分
+function analysisParam(paras) {
+  const url = window.location.href;
+  console.log(`url is:${url}`);
+  const paraString = url.substring(url.indexOf('?') + 1, url.length).split('&');
+  console.log(`paraString is:${paraString}`);
+  const paraObj = {};
+  let i,
+    j;
+  for (i = 0; j = paraString[i]; i++) {
+    paraObj[j.substring(0, j.indexOf('=')).toLowerCase()] = j.substring(j.indexOf('=') + 1, j.length);
+  }
+  const returnValue = paraObj[paras.toLowerCase()];
+  if (typeof (returnValue) === 'undefined') {
+    return null;
+  } else {
+    return returnValue;
+  }
 }
 
 export default RouterConfig;
