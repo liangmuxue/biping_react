@@ -109,6 +109,16 @@ const pcEntity = {
           });
         }
       }
+      // 支付页面隐藏底部
+      if (pageName === 'toOpen') {
+        yield put({
+          type: 'hideFooter',
+        });
+      } else {
+        yield put({
+          type: 'showFooter',
+        });
+      }
       yield put({
         type: 'innerPageSwitched',
         params,
@@ -118,8 +128,13 @@ const pcEntity = {
 
   reducers: {
     footMenuChoiced(state, action) {
-      console.log('footMenuChoiced action.payload is', action.payload);
       return { ...state, ...action.payload };
+    },
+    hideFooter(state) {
+      return { ...state, footerHide: true };
+    },
+    showFooter(state) {
+      return { ...state, footerHide: false };
     },
     // 切换到其他内部页面时返回的数据
     innerPageSwitched(state, action) {

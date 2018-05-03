@@ -4,8 +4,8 @@ import TabBar from 'antd-mobile/es/tab-bar';
 import 'antd-mobile/es/tab-bar/style/index.css';
 import 'antd-mobile/es/badge/style/index.css';
 import 'antd-mobile/es/tabs/style/index.css';
-import Icon from 'antd-mobile/es/icon';
 import footMenus from './footerMenuData';
+import styles from './index.less';
 
 /**
 * 底部菜单栏
@@ -13,7 +13,7 @@ import footMenus from './footerMenuData';
 * @Date  2017-12-25
 */
 function genFooterMenus({ dispatch, pageConstruction }) {
-  const { selectedMenu } = pageConstruction;
+  const { selectedMenu, footerHide } = pageConstruction;
   const menuChoice = (menu) => {
     dispatch({
       type: 'pageConstruction/footMenuChoice',
@@ -21,9 +21,11 @@ function genFooterMenus({ dispatch, pageConstruction }) {
     });
   };
   return (
-    <div style={{
+    <div
+      style={{
  position: 'fixed', zIndex: 999, width: '100%', bottom: 0, height: '50px',
 }}
+      className={footerHide ? styles.hide : null}
     >
       <TabBar
         unselectedTintColor="#7F8389"
@@ -31,7 +33,7 @@ function genFooterMenus({ dispatch, pageConstruction }) {
         barTintColor="white"
         hidden={pageConstruction.footMenuHidden}
       >
-        {footMenus.map((menu, index) =>
+        {footMenus.map(menu =>
           (<TabBar.Item
             title={menu.title}
             key={menu.key}
