@@ -37,12 +37,13 @@ const pcEntity = {
         type: 'switchToInnerPage',
         payload: {
           pageName: code,
+          direct: true,
         },
       });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
-      const { pageName, params } = payload;
+      const { pageName, params, direct } = payload;
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // 进行内部页面排列处理
       let matchPage = null;
@@ -97,6 +98,15 @@ const pcEntity = {
         };
         // 放入页面列表
         innerPageList.push(matchPage);
+      }
+      // 直接跳转时，需要判断当前页面属于哪个底部菜单
+      if (!direct) {
+        if (pageName === 'messageDetail') {
+          yield put({
+            type: 'footMenuChoiced',
+            payload,
+          });
+        }
       }
       yield put({
         type: 'innerPageSwitched',

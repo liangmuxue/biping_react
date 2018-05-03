@@ -66,6 +66,7 @@ class toOpenDetail extends Component {
     const subDesc = `订阅${toOpenData.typeName}`;
     return (
       <div>
+        <HeaderBar headerText="开通服务" backRouteLink="subList" {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>

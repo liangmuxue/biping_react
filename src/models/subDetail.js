@@ -1,4 +1,5 @@
 import modelExtend from 'dva-model-extend';
+import Immutable from 'seamless-immutable';
 import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
 
@@ -49,22 +50,33 @@ export default modelExtend(pageModel, {
       // 当前的订阅对象
       const subObj = subDetail.subDetailData.data;
       const { subItem } = payload;
+      let { isSub } = subItem;
+      // 反向选择
+      if (isSub === 1) {
+        isSub = 0;
+      } else {
+        isSub = 1;
+      }
+      const newContent = [];
       subObj.content.map((item) => {
         if (item.typeId === subItem.typeId) {
-          item.isSub = 1;
+          newContent.push(Immutable.merge(item, { isSub }));
+        } else {
+          newContent.push(Immutable.merge(item));
         }
         return item;
       });
+      subObj.content = newContent;
       const endpoint = 'subscribe';
       const filter = {};
       // 发起订阅请求
-      const data = yield call(queryNormal, {
+      yield call(queryNormal, {
         endpoint,
         filter,
         method: 'POST',
         data: {
           typeId: subItem.typeId,
-          isSub: subItem.isSub,
+          isSub,
         },
       }, st);
       yield put({

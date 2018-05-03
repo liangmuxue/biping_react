@@ -143,7 +143,7 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/errorCheck/noWechat'),
   });
-  // H5中间页
+  // 分享进群
   const EnterGroup = dynamic({
     app,
     models: () => [
@@ -194,12 +194,26 @@ function RouterConfig({ history, app }) {
     const item = innerPageDefs.def[i];
     // routeInner.push(<Route exact path={`/mainpage/${item.name}`} component={item.component} />);
   }
+  // 透传code参数
+  const code = analysisParam('code');
+  const messageId = analysisParam('messageId');
+  let mainpage = '/mainpage';
+  let paramFix = '?any=any';
+  if (code) {
+    paramFix = `${paramFix}&code=${code}`;
+  }
+  if (messageId) {
+    paramFix = `${paramFix}&messageId=${messageId}`;
+  }
+  if (paramFix.length > 8) {
+    mainpage += paramFix;
+  }
   // 路由定义，默认进入子路由mainpage
   return (
     <AppContainer>
       <ConnectedRouter history={history}>
         <div className={styles.normal} name="jjj">
-          <Route exact path="/" render={() => (<Redirect to="/mainpage" />)} />
+          <Route exact path="/" render={() => (<Redirect to={mainpage} />)} />
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
@@ -221,6 +235,26 @@ function RouterConfig({ history, app }) {
       </ConnectedRouter>
     </AppContainer>
   );
+}
+
+// url参数拆分
+function analysisParam(paras) {
+  const url = window.location.href;
+  console.log(`url is:${url}`);
+  const paraString = url.substring(url.indexOf('?') + 1, url.length).split('&');
+  console.log(`paraString is:${paraString}`);
+  const paraObj = {};
+  let i,
+    j;
+  for (i = 0; j = paraString[i]; i++) {
+    paraObj[j.substring(0, j.indexOf('=')).toLowerCase()] = j.substring(j.indexOf('=') + 1, j.length);
+  }
+  const returnValue = paraObj[paras.toLowerCase()];
+  if (typeof (returnValue) === 'undefined') {
+    return null;
+  } else {
+    return returnValue;
+  }
 }
 
 export default RouterConfig;

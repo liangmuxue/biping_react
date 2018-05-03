@@ -80,20 +80,27 @@ const pageModel = modelExtend(model, {
       payload, modelDef, filter, list, pageSize,
     }) {
       // 分页模式，服务端统一返回data及meta属性
-      const { data, pager } = payload;
-      // 根据服务器返回的分页属性，重置本地分页信息
-      const pagination = {
-        current: pager.number,
-        pageSize,
-        totalCount: pager.totalElements,
-        totalPage: pager.totalPages,
-      };
+      const { data, pager, flag } = payload;
+      console.log(`querySuccess flag:${flag}`);
+      let pagination = {};
       // 设置是否还有更多内容的标志
       let hasMore = true;
-      if (pager.number >= pager.totalPages - 1) {
-        hasMore = false;
+      // 只有flag为0，才有分页信息
+      if (parseInt(flag, 0) === 0) {
+        // 根据服务器返回的分页属性，重置本地分页信息
+        pagination = {
+          current: pager.number,
+          pageSize,
+          totalCount: pager.totalElements,
+          totalPage: pager.totalPages,
+        };
+        if (pager.number >= pager.totalPages - 1) {
+          hasMore = false;
+        }
       }
+      console.log(`rtn flag:${flag}`);
       return {
+        flag,
         ...state,
         // 透传当前的filter和基本定义
         filter,
