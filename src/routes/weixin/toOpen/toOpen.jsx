@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
+import { Card, WhiteSpace, Result, Icon, Button, WingBlank } from 'antd-mobile';
 import { Checkbox } from 'antd-mobile';
 import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import 'antd-mobile/es/checkbox/style/index.css';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import HeaderBar from '../../../components/headerBar';
+import style from './toOpen.less';
 
 /**
  * 订阅包
@@ -61,7 +63,28 @@ class toOpenDetail extends Component {
     if (dataReturn && dataReturn.timeStamp) {
       const config = dataReturn;
       console.log('config111111', config);
-      WechatJSSDK.chooseWXPay(config);
+      if (typeof WeixinJSBridge === 'undefined') {
+        if (document.addEventListener) {
+          alert('wechat');
+          // document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        } else if (document.attachEvent) {
+          alert('nowechat');
+          // document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
+          // document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+      } else {
+        alert('yeswechat');
+        WeixinJSBridge.invoke(
+          'getBrandWCPayRequest', {
+            config,
+          },
+          (res) => {
+            alert(res.err_msg);
+            // if (res.err_msg == 'get_brand_wcpay_request:ok') {} // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+          },
+        );
+      }
+      // WechatJSSDK.chooseWXPay();
     }
     const subDesc = `订阅${toOpenData.typeName}`;
     return (
@@ -73,6 +96,13 @@ class toOpenDetail extends Component {
             {`${i.name + i.count}元`}
           </CheckboxItem>
           ))}
+        <div className={style.full} />
+        <div className={style.payBottom}>
+          <WingBlank className={style.pay}>
+            <Button type="primary" className={style.toPay}>确认支付</Button><WhiteSpace />
+          </WingBlank>
+          <div className={style.payMoney}>支付金额：<span className={style.sum}>20</span>元</div>
+        </div>
       </div>
     );
   }
