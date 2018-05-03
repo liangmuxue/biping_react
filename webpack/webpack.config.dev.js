@@ -11,6 +11,7 @@ module.exports = merge(require('./webpack.config'), {
     contentBase: path.resolve(__dirname, '../src'),
     historyApiFallback: true,
     hot: true,
+    disableHostCheck: true,
     publicPath: '/',
   },
 
