@@ -13,6 +13,11 @@ export const innerPageDefs = { def: [] };
  * 创建人：梁慕学
  */
 function RouterConfig({ history, app }) {
+  const hrefUrl = window.location.href;
+  let code = null;
+  if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
+    code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+  }
   // mainpage全局路由，进行全局页面控制
   const LoginPage = dynamic({
     app,
@@ -194,12 +199,16 @@ function RouterConfig({ history, app }) {
     const item = innerPageDefs.def[i];
     // routeInner.push(<Route exact path={`/mainpage/${item.name}`} component={item.component} />);
   }
+  let mainpage = '/mainpage';
+  if (code) {
+    mainpage = `${mainpage}?code=${code}`;
+  }
   // 路由定义，默认进入子路由mainpage
   return (
     <AppContainer>
       <ConnectedRouter history={history}>
         <div className={styles.normal} name="jjj">
-          <Route exact path="/" render={() => (<Redirect to="/mainpage" />)} />
+          <Route exact path="/" render={() => (<Redirect to={mainpage} />)} />
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
