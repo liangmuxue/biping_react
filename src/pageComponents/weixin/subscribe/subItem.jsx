@@ -21,14 +21,16 @@ class SubItem extends React.Component {
   // 订阅某小类
   subscribe(e) {
     console.log('subscribe in,props:', this.props);
-    this.props.subscribeClick(this.props.itemObj);
+    this.props.subscribesClick(this.props.itemObj);
+
   }
 
   render() {
     const { itemObj } = this.props;
     console.log('itemObj is', itemObj);
     const extraBtn = (<Button
-      type={itemObj.isSub ? 'ghost' : 'primary'}
+
+      style={itemObj.isSub ? { background: '#DDDDDD', color: '#353535' } : { background: '#108ee9', color: '#fff' }}
       size="small"
       inline
       className={style.unreadBtn}
@@ -40,7 +42,7 @@ class SubItem extends React.Component {
         extra={extraBtn}
         multipleLine
       >
-        {`# ${itemObj.typeName}`}
+        {'# '+ itemObj.typeName}
       </List.Item>
     );
   }

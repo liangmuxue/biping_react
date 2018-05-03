@@ -101,12 +101,23 @@ const pcEntity = {
       }
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
-        if (pageName === 'messageDetail') {
+        if (pageName === 'subList') {
+          const selectedMenu = footMenus[1];
           yield put({
             type: 'footMenuChoiced',
-            payload,
+            payload: { selectedMenu },
           });
         }
+      }
+      // 支付页面隐藏底部
+      if (pageName === 'toOpen') {
+        yield put({
+          type: 'hideFooter',
+        });
+      } else {
+        yield put({
+          type: 'showFooter',
+        });
       }
       yield put({
         type: 'innerPageSwitched',
@@ -118,6 +129,12 @@ const pcEntity = {
   reducers: {
     footMenuChoiced(state, action) {
       return { ...state, ...action.payload };
+    },
+    hideFooter(state) {
+      return { ...state, footerHide: true };
+    },
+    showFooter(state) {
+      return { ...state, footerHide: false };
     },
     // 切换到其他内部页面时返回的数据
     innerPageSwitched(state, action) {
