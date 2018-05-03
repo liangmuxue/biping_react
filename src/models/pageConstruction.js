@@ -99,6 +99,15 @@ const pcEntity = {
         // 放入页面列表
         innerPageList.push(matchPage);
       }
+      // 直接跳转时，需要判断当前页面属于哪个底部菜单
+      if (!direct) {
+        if (pageName === 'messageDetail') {
+          yield put({
+            type: 'footMenuChoiced',
+            payload,
+          });
+        }
+      }
       yield put({
         type: 'innerPageSwitched',
         params,
