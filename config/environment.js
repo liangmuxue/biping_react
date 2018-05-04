@@ -17,7 +17,7 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
-  ENV.msgShareUrl = 'http://47.92.25.130/msgImages';
+  ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
