@@ -63,6 +63,39 @@ export default modelExtend(pageModel, {
         payload: msgObj,
       });
     },
+    // 不喜欢
+    *msgUnLike({ payload }, { put, call, select }) {
+      console.log('query for msgUnLike,payload', payload);
+      const st = yield select();
+      const { messageDetail } = st;
+      // 当前的消息对象
+      const msgObj = messageDetail.msgDetailData.data;
+      const endpoint = 'msgLike';
+      const filter = payload;
+      let status = 2;
+      // 根据原来的不喜欢状态，进行变更
+      if (msgObj.userunlike === 1) {
+        status = 3;
+        msgObj.userunlike = 0;
+      } else {
+        msgObj.userunlike = 1;
+      }
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          messageId: payload.messageId,
+          flag: true,
+          status,
+        },
+      }, st);
+      console.log('messageDetail data', data);
+      yield put({
+        type: 'msgLikeSuccess',
+        payload: msgObj,
+      });
+    },
     // 查询单个消息
     *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
