@@ -11,9 +11,9 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130';
   // ENV.host = 'http://10.0.109.224:8280';
-  // ENV.host = 'http://10.0.106.161:8280';
+  // ENV.host = 'http://10.0.106.221:8280';
   // ENV.host = 'http://127.0.0.1:80';
-  ENV.socketHost = 'http://10.0.109.221:8280';
+  // ENV.socketHost = 'http://10.0.106.221:8280';
   ENV.host = 'http://wp.test.tnb99.net';
   // ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';

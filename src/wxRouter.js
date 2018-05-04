@@ -147,7 +147,7 @@ function RouterConfig({ history, app }) {
   const EnterGroup = dynamic({
     app,
     models: () => [
-      // import('./models/buyHistory'),
+       import('./models/enterGroup'),
       // import('./models/pageConstruction'),
       import('./models/app'),
     ],
