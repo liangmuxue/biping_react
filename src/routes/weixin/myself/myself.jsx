@@ -29,7 +29,7 @@ class BasicInput extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
-    onSubmit() {
+  onSubmit() {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         console.log(this.props.form.getFieldsValue());
@@ -90,7 +90,8 @@ class BasicInput extends Component {
       );
     };
     SwitchExample = createForm()(SwitchExample);
-
+    const emoji = require('emoji');
+    const name = emoji.unifiedToHTML(userMain.name);
     return (<div>
       <div className={style.mineBox}>
         <div><img src={userMain.headUrl} className={style.minePic} /></div>

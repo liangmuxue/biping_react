@@ -4,6 +4,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank/index';
 // import Hammer from 'react-hammerjs';
 import React from 'react';
 import style from './enterGroup.less';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 
 
 /**
@@ -35,5 +36,11 @@ class Join extends React.Component {
     );
   }
 }
+function enterGroupstate(state) {
+  console.log('enterGroupstate', state);
+  // 直接返回本model
+  // const { messageDetail, app } = state;
+  return state;
+}
 
-export default Join;
+export default connect(enterGroupstate)(mobileRouteComponent(Join));

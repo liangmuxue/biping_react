@@ -47,7 +47,6 @@ const App = {
         if (hrefUrl && hrefUrl.indexOf('code') != -1) {
           const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
           dispatch({ type: 'autoReg', payload: { code } });
-          return;
         } else if (hrefUrl && hrefUrl.indexOf('messageId') != -1) {
           const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
@@ -57,7 +56,6 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage' });
-          return;
         } else {
           const backPath = '/messageList';
           dispatch({
@@ -65,11 +63,14 @@ const App = {
             payload: { pageName: 'messageList', params: { backPath } },
           });
           dispatch({ type: 'toTourPage' });
-          return;
         }
+      } else if (userStr != null && hrefUrl.indexOf('code') != -1) {
+        const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+        const userData = JSON.parse(userStr);
+        userData.code = code;
+        console.log('userData*****^^', userData);
+        dispatch({ type: 'query', payload: userData });
       }
-      const userData = JSON.parse(userStr);
-      dispatch({ type: 'query', payload: userData });
     },
   },
 
@@ -109,7 +110,8 @@ const App = {
           });
         }
       } else {
-        // yield put({ type: 'toLoginPage' });
+        console.log('fail999999999');
+        yield put({ type: 'tourLogin' });
       }
     },
 
@@ -130,13 +132,15 @@ const App = {
           },
         });
         yield put({ type: 'query', payload: systemUser });
-      } else {
-        yield put({ type: 'loginFail' });
+        // code重复使用，用户信息获取失败
+      } else if (success && response.flag === 1003) {
+        console.log('failautoReg');
+        yield put({ type: 'tourLogin' });
       }
     },
     // 消息详情查看
     *openMessage({ payload }, { call, put, select }) {
-      // 成功后把数据存储到全局
+      // 游客身份
       yield put({ type: 'tourLogin' });
     },
     *noWechat({ payload }, { call, put, select }) {
@@ -228,6 +232,7 @@ const App = {
       };
     },
     tourLogin(state, action) {
+      console.log('tourLogin88888');
       const systemUser = { token: 'tourLogin' };
       return {
         ...state, isTour: true, modalVisible: false, attentionModal: true, systemUser,
