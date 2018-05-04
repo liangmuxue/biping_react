@@ -21,7 +21,7 @@ class SubItem extends React.Component {
   // 订阅某小类
   subscribe(e) {
     console.log('subscribe in,props:', this.props);
-    this.props.subscribesClick(this.props.itemObj);
+    this.props.subscribeClick(this.props.itemObj);
 
   }
 
@@ -30,7 +30,7 @@ class SubItem extends React.Component {
     console.log('itemObj is', itemObj);
     const extraBtn = (<Button
 
-      style={itemObj.isSub ? { background: '#DDDDDD', color: '#353535' } : { background: '#108ee9', color: '#fff' }}
+      style={itemObj.isSub ? { background: '#DDDDDD', color: '#353535',width:'1.42rem' } : { width:'1.42rem', background: '#108ee9', color: '#fff' }}
       size="small"
       inline
       className={style.unreadBtn}
