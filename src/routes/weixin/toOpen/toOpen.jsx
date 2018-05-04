@@ -81,13 +81,9 @@ class toOpenDetail extends Component {
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
-<<<<<<< HEAD
-          <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.payList}>
-            {`${i.name + i.count}元`}
-=======
+
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>
             {`${i.name + i.currentPrice / 100}元`}
->>>>>>> 2a916c52472425010962b57477c2f94a54e2b0fe
           </CheckboxItem>
           ))}
         <div className={style.full} />
