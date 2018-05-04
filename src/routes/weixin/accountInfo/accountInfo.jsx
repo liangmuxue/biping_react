@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import Card from 'antd-mobile/lib/card/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace } from 'antd-mobile';
 /**
  * 老人账号信息页面
  * @author 梁慕学

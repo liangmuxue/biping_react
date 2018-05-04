@@ -1,11 +1,8 @@
 import React from 'react';
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
-import Icon from 'antd-mobile/lib/icon/index';
 import Result from 'antd-mobile/lib/result/index';
 import 'antd-mobile/es/white-space/style/index.css';
 import 'antd-mobile/es/icon/style/index.css';
 import 'antd-mobile/es/result/style/index.css';
-import style from './noWechat.less';
 /**
  * 微信外登录提醒
  * @date        2018-04-20

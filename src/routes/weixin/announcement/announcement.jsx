@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace } from 'antd-mobile';
-import { Button, WingBlank, List } from 'antd-mobile';
-import 'antd-mobile/es/button/style/index.css';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Button from 'antd-mobile/lib/button/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
+import List from 'antd-mobile/lib/list/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './announcement.less';
 import styles from '../subscribe/subList.less';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 /**
  * 老人账号信息页面
  * @author 梁慕学

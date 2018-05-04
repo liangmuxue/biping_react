@@ -4,8 +4,10 @@ import 'antd-mobile/es/switch/style/index.css';
 import { createForm } from 'rc-form';
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import List from 'antd-mobile/lib/list/index';
+import Switch from 'antd-mobile/lib/switch/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { List, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
+// import { List, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
 
 
 import style from './myself.less';
