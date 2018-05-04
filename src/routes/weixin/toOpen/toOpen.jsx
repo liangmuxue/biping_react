@@ -33,6 +33,10 @@ class toOpenDetail extends Component {
   }
   openClick(type) {
     console.log('dddddddd', this);
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'enterGroup' },
+    });
   }
   switchPayType(val) {
     const { params } = this.props;
