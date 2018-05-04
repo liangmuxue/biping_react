@@ -52,6 +52,12 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *active({ }, { put }) {
+      yield put({
+        type: 'subscribeQuery',
+        payload: {},
+      });
+    },
   },
   reducers: {
     subscribeQuerySuccess(state, action) {

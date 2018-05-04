@@ -25,7 +25,12 @@ class MessageList extends Component {
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageDetail', params: { messageId: msgObj.mid, backPath } },
+      payload: {
+        pageName: 'messageDetail',
+        params: {
+          messageId: msgObj.mid, backPath, tagId: msgObj.tagId, tagName: msgObj.tagName,
+        },
+      },
     });
   }
 

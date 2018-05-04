@@ -19,17 +19,26 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 * @Date  2017-12-25
 */
 
-const Buttongo = () => (
-  <WingBlank>
-    <Button type="primary" className={style.toButton}>去开通</Button><WhiteSpace />
-  </WingBlank>
-);
-
 class MsgDetail extends Component {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
   }
+  // 去开通
+  toOpen() {
+    const { dispatch, msgDetailData } = this.props;
+    const { tagId, tagName } = msgDetailData;
+    console.log('to open in md', this.props);
+    // 跳转到订阅包页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'toOpen',
+        params: { typeId: tagId, typeName: tagName, backPath: 'messageDetail' },
+      },
+    });
+  }
+  // 分享点击
   shareClick(event) {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
@@ -136,7 +145,11 @@ class MsgDetail extends Component {
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
-          <div className={style.btnBox}><Buttongo /></div>
+          <div className={style.btnBox}>
+            <WingBlank>
+              <Button type="primary" onClick={this.toOpen.bind(this)} className={style.toButton}>去开通</Button><WhiteSpace />
+            </WingBlank>
+          </div>
         </div>
 
         <div className={style.notice}>

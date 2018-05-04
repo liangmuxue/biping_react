@@ -169,7 +169,7 @@ function RouterConfig({ history, app }) {
     component: MessageList,
   }, {
     name: 'subList',
-    modelName: 'subList',
+    modelName: 'subscribe',
     component: SubList,
   }, {
     name: 'subDetail',
