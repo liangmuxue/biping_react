@@ -63,11 +63,11 @@ class MsgDetail extends Component {
     });
   }
   unlikeClick() {
-    const { dispatch, data } = this.props;
-    const msgObj = data;
-    console.log('unlikeClick in', msgObj.mid);
+    const { dispatch, msgDetailData } = this.props;
+    const msgObj = msgDetailData.data;
+    console.log(`unlikeClick in:${msgObj.mid}`);
     dispatch({
-      type: 'indexMessage/msgUnlike',
+      type: 'messageDetail/msgUnLike',
       // 不需要传是否喜欢，model中根据原数据判断
       payload: {
         messageId: msgObj.mid,
@@ -122,7 +122,7 @@ class MsgDetail extends Component {
     const unlikeArea = (<Hammer onTap={this.unlikeClick.bind(this)}>
       <div>
         <img
-          src={msgObj.userunlike === 2 ? '/images/details/cai.png' : '/images/details/bucai.png'}
+          src={msgObj.userunlike === 1 ? '/images/details/cai.png' : '/images/details/bucai.png'}
           className={style.goodImg}
           alt=""
         />
