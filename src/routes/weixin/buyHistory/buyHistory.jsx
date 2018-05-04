@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace } from 'antd-mobile';
-import { Button, WingBlank } from 'antd-mobile';
+// import Card from 'antd-mobile/lib/card/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Button from 'antd-mobile/lib/button/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import InfiniteListView from '../../../components/infiniteListView';
 import { buildPagiProps } from '../../common/paginationRoute';
 import BuyCard from '../../../pageComponents/weixin/buyHistory/buyCard.jsx';
 import { rebuildBuyList } from '../../../selectors/buyList';
-import style from '../announcement/announcement.less';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
+// import style from '../announcement/announcement.less';
 import styles from './buyHistory.less';
 /**
  * 购买历史记录

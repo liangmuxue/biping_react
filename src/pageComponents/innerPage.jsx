@@ -1,5 +1,5 @@
 import React from 'react';
-import ListView from 'antd-mobile/lib/list-view/index';
+// import ListView from 'antd-mobile/lib/list-view/index';
 
 /**
  * 内部页面调度

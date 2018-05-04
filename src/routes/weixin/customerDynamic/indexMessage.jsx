@@ -8,7 +8,7 @@ import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
-import styles from './index.less';
+
 /**
  * 消息列表页面
  * @author 梁慕学
