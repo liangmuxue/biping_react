@@ -23,10 +23,10 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
-  ENV.host = 'http://api.tnb99.cn';
+  ENV.host = 'http://wp.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
-  ENV.msgShareUrl = 'http://47.92.25.130/';
+  ENV.msgShareUrl = 'http://wx.test.tnb99.net/msgImages';
 }
 
 export const config = {

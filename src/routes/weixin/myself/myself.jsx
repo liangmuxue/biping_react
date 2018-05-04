@@ -27,7 +27,7 @@ class BasicInput extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
-    onSubmit() {
+  onSubmit() {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
         console.log(this.props.form.getFieldsValue());
@@ -56,7 +56,7 @@ class BasicInput extends Component {
   render() {
     console.log('MsgDetail render', this.props);
     if (!this.props.data) {
-      return (<div>none</div>);
+      return null;
     }
     const { dispatch, data } = this.props;
     const userMain = data;
