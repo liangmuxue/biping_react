@@ -8,7 +8,7 @@ import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
-// import Modal from 'antd-mobile/lib/modal/index';
+import { config } from '../../../config/environment';
 
 /**
 * 老人账号信息页面
@@ -72,6 +72,8 @@ class MsgDetail extends Component {
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
+    // 分享消息的图片链接
+    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}`;
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
         <img
