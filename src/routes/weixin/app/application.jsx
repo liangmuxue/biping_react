@@ -32,8 +32,8 @@ class HomePage extends Component {
       maskClosable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
     >
-      <div style={{ overflow: 'hidden' }}>
-        <img src="/images/indexImg/wechat.png" />
+      <div style={{ overflow: 'hidden',width: '5.38rem',height:'5.44rem'}}>
+        <img src="/images/indexImg/wechat.png" style={{ width : '5.38rem', height:'5.44rem'}}/>
       </div>
     </Modal>);
     const { innerPageList } = pageConstruction;

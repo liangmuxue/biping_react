@@ -8,7 +8,6 @@ import List from 'antd-mobile/lib/list/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './bEvents.less';
-import styles from '../subscribe/subList.less';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 /**
  * 老人账号信息页面

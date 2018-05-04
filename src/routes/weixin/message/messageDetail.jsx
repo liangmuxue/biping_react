@@ -140,7 +140,7 @@ class MsgDetail extends Component {
                         </Hammer>);
 
     return (
-      <div>
+      <div className={style.contentBox}>
         {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>

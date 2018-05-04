@@ -51,7 +51,9 @@ class SubDetail extends Component {
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink="subList" {...this.props} />
-        <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} subTypeClick={this.subTypeClick.bind(this)} />
+  <div className={ style.topBox }>
+       <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} subTypeClick={this.subTypeClick.bind(this)} />
+     </div>
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理</div>
         {subDetailData.data.content.map(item =>
                     (<SubItem
