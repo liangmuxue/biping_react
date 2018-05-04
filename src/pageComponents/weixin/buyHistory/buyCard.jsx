@@ -1,8 +1,9 @@
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import React from 'react';
+// import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Card from 'antd-mobile/lib/card/index';
 import Hammer from 'react-hammerjs';
 import styles from './buyHistory.less';
-import React from 'react';
+
 
 /**
  * 购买记录卡片

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace, Result, Icon } from 'antd-mobile';
-import { Button, WingBlank } from 'antd-mobile';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Result from 'antd-mobile/lib/result/index';
+import Icon from 'antd-mobile/lib/icon/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/result/style/index.css';
 import 'antd-mobile/es/icon/style/index.css';
-import styles from './result.less';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 /**
  * 老人账号信息页面
  * @author 梁慕学

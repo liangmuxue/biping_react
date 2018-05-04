@@ -1,13 +1,18 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace, Result, Icon, Button, WingBlank } from 'antd-mobile';
-import { Checkbox } from 'antd-mobile';
-import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
+// import Card from 'antd-mobile/lib/card/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+// import Result from 'antd-mobile/lib/result/index';
+// import Icon from 'antd-mobile/lib/icon/index';
+import Button from 'antd-mobile/lib/button/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
+import Checkbox from 'antd-mobile/lib/checkbox/index';
 import 'antd-mobile/es/checkbox/style/index.css';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import HeaderBar from '../../../components/headerBar';
+import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './toOpen.less';
 
 /**
@@ -80,6 +85,7 @@ class toOpenDetail extends Component {
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
+
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>
             {`${i.name + i.currentPrice / 100}元`}
           </CheckboxItem>

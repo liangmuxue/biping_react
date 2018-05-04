@@ -100,6 +100,20 @@ export default modelExtend(pageModel, {
         backPath,
       };
     },
+    // 分享给好友
+    shareMsg(state) {
+      return {
+        ...state,
+        showMsgShare: true,
+      };
+    },
+    // 关闭分享弹层
+    closeShare(state) {
+      return {
+        ...state,
+        showMsgShare: false,
+      };
+    },
     msgLikeSuccess(state, action) {
       console.log('msgLikeSuccess in', action.payload);
       console.log('msgLikeSuccess state', state);

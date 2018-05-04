@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import Modal from 'antd-mobile/lib/modal/index';
+import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
-import { Card, WhiteSpace } from 'antd-mobile';
-import { Button, WingBlank, List } from 'antd-mobile';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Button from 'antd-mobile/lib/button/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
-// import Modal from 'antd-mobile/lib/modal/index';
+import { config } from '../../../../config/environment';
 
 /**
 * 老人账号信息页面
@@ -22,15 +24,30 @@ const Buttongo = () => (
   </WingBlank>
 );
 
-function genMessage({ dispatch, data }) {
-  const msgObj = data;
-  console.log('msgObj is', msgObj);
-}
-
 class MsgDetail extends Component {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
+  }
+  shareClick(event) {
+    const { dispatch, msgDetailData } = this.props;
+    const msgObj = msgDetailData.data;
+    console.log(`shareClick in:${msgObj.mid}`, event);
+    // event.prventDefault();
+    dispatch({
+      type: 'messageDetail/shareMsg',
+      payload: {
+        messageId: msgObj.mid,
+      },
+    });
+  }
+
+  closeShare() {
+    const { dispatch } = this.props;
+    console.log('closeShare in');
+    dispatch({
+      type: 'messageDetail/closeShare',
+    });
   }
   likeClick() {
     const { dispatch, msgDetailData } = this.props;
@@ -44,12 +61,11 @@ class MsgDetail extends Component {
       },
     });
   }
-
   unlikeClick() {
     const { dispatch, data } = this.props;
     const msgObj = data;
     console.log('unlikeClick in', msgObj.mid);
-    this.props.dispatch({
+    dispatch({
       type: 'indexMessage/msgUnlike',
       // 不需要传是否喜欢，model中根据原数据判断
       payload: {
@@ -60,7 +76,7 @@ class MsgDetail extends Component {
 
   render() {
     console.log('MsgDetail render', this.props);
-    const { msgDetailData } = this.props;
+    const { msgDetailData, showMsgShare } = this.props;
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData) {
@@ -72,6 +88,24 @@ class MsgDetail extends Component {
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
+    // 分享消息的图片链接
+    let msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    const modal = (<Modal
+      visible={showMsgShare}
+      transparent
+      maskClosable={false}
+      closable
+      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+      onClose={this.closeShare.bind(this)}
+      footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.closeShare.bind(this); } }]}
+    >
+      <div style={{ overflow: 'hidden' }}>
+        <img src={msgImgUrl} alt="" />
+      </div>
+    </Modal>);
+
+
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
         <img
@@ -97,6 +131,7 @@ class MsgDetail extends Component {
 
     return (
       <div>
+        {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
         <div className={style.bannerBox}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
@@ -112,7 +147,13 @@ class MsgDetail extends Component {
           <div className={style.caption}>{msgObj.title}</div>
           <div className={style.article}>{msgObj.content}
           </div>
-          <div><a href="#" className={style.toFriend}>分享给好友</a></div>
+
+          <div className={style.toFriend}>
+            <Hammer onTap={this.shareClick.bind(this)}>
+              <a>分享给好友</a>
+            </Hammer>
+          </div>
+
         </div>
 
         <div className={style.up}>
