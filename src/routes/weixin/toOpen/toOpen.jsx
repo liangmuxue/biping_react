@@ -86,7 +86,7 @@ class toOpenDetail extends Component {
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
 
-          <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked}>
+          <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.lastList}>
             {`${i.name + i.currentPrice / 100}元`}
           </CheckboxItem>
           ))}

@@ -30,11 +30,11 @@ const App = {
       // 清理手机缓存
       // localStorage.clear();
       // 判断是否在微信浏览器打开
-      const ua = navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) != 'micromessenger') {
-        dispatch({ type: 'noWechat' });
-        return;
-      }
+      // const ua = navigator.userAgent.toLowerCase();
+      // if (ua.match(/MicroMessenger/i) != 'micromessenger') {
+      //   dispatch({ type: 'noWechat' });
+      //   return;
+      // }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
