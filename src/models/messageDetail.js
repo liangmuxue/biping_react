@@ -99,7 +99,9 @@ export default modelExtend(pageModel, {
     // 查询单个消息
     *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
-      const { messageId, backPath } = payload;
+      const {
+        messageId, backPath, tagId, tagName,
+      } = payload;
       const st = yield select();
       const endpoint = 'messageDetail';
       const filter = { messageId };
@@ -108,6 +110,8 @@ export default modelExtend(pageModel, {
       }, st);
       console.log('queryDetail data', data);
       data.backPath = backPath;
+      data.tagId = tagId;
+      data.tagName = tagName;
       yield put({
         type: 'queryDetailSuccess',
         payload: data,
@@ -125,10 +129,12 @@ export default modelExtend(pageModel, {
     queryDetailSuccess(state, action) {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);
-      const { response, backPath } = action.payload;
+      const {
+        response, backPath, tagId, tagName,
+      } = action.payload;
       return {
         ...state,
-        msgDetailData: { ...response },
+        msgDetailData: { ...response, tagId, tagName },
         routeActive: false, // 重置routeActive标志，避免重复查询
         backPath,
       };
