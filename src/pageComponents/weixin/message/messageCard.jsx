@@ -35,7 +35,7 @@ class MessageCard extends React.Component {
     const { msgObj } = this.props;
 
     return (
-        <div>
+    <div>
                 <div className={styles.mesList} >
                   <WhiteSpace size="lg" />
                   <Card full>
@@ -57,7 +57,7 @@ class MessageCard extends React.Component {
                           <span className={styles.times}>{msgObj.time}</span>
                         </div>
                         }
-                      extra={<div ><img alt="noicon" src="/images/messageListImg/close_btn.png"className={styles.closeBtn} /></div>}
+                      extra
                     />
                   </Card>
                 </div>
