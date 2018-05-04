@@ -9,6 +9,7 @@ import 'antd-mobile/es/list/style/index.css';
 import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
 import { config } from '../../../../config/environment';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 
 /**
 * 老人账号信息页面
