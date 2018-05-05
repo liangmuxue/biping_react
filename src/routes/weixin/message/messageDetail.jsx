@@ -88,9 +88,7 @@ class MsgDetail extends Component {
     this.props.dispatch({
       type: 'messageDetail/detailQuery',
       payload: {
-        params: {
-          messageId: msgObj.id, flag:true
-        },
+        messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName:msgObj.tagName
       }
     });
   }
