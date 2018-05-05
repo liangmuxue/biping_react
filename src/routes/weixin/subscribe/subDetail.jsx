@@ -61,6 +61,7 @@ class SubDetail extends Component {
                       itemObj={item}
                       subscribeClick={this.subscribeItem.bind(this)}
                     />))}
+              <div className={style.full}></div>
       </div>
     );
   }

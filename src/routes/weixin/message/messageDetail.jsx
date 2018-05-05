@@ -83,7 +83,17 @@ class MsgDetail extends Component {
       },
     });
   }
-
+  switchTitle(msgObj) {
+    console.log('switchTitle in', msgObj);
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: {
+        params: {
+          messageId: msgObj.id, flag:true
+        },
+      }
+    });
+  }
   render() {
     console.log('MsgDetail render', this.props);
     const { msgDetailData, showMsgShare } = this.props;
@@ -175,8 +185,12 @@ class MsgDetail extends Component {
             <div className={style.upTitle}>所属标签</div>
 
             <ul className={style.labels}>
-              <li className={style.labelsList}>ZRX</li>
-              <li className={style.labelsList}>交易所：火币PRO</li>
+                {msgObj.tagList.map(msg =>
+                  (
+                    <li className={style.labelsList}>
+                        {msg.name}
+                    </li>
+                  ))}
             </ul>
 
             <div className={style.likesBox}>
@@ -196,7 +210,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <a href="/" className={style.similarList}>{msg.title}</a>
+                      <Button onClick={() => this.switchTitle(msg)} className={style.similarList}>{msg.title}</Button>
                     </li>
                   ))}
               </ul>

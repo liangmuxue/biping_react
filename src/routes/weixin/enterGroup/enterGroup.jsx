@@ -65,10 +65,12 @@ class Join extends React.Component {
 
     return (
       <div className={style.H5box}>
-        <div><img src="/assets/images/h5Img/H5.png" className={style.H5bg} /></div>
-        <WingBlank>
-          <Button className={style.joinBtn} onClick={this.shareClick.bind(this)}>我要入群</Button><WhiteSpace />
-        </WingBlank>
+        <div><img src="/images/h5Img/H5.png" className={style.H5bg} /></div>
+        
+          <WingBlank>
+            <Button className={style.joinBtn} onClick={this.shareClick.bind(this)}>我要入群</Button><WhiteSpace />
+          </WingBlank>
+
         {modal}
       </div>
     );
