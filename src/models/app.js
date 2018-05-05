@@ -34,8 +34,6 @@ const App = {
       // 开发环境忽略
       const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
-      const ua = window.navigator.userAgent.toLowerCase();
-      console.log('ua is:', ua);
       let match = false;
       if (window.WeixinJSBridge !== 'undefined') {
         match = true;

@@ -40,14 +40,18 @@ class MessageList extends Component {
       payload: { pageName: 'SubList' },
     });
   }
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'messageList/msgQuery',
+      payload: { ...this.props.params },
+    });
+  }
+
   render() {
     console.log('cd render in messageLisst', this.props);
-    // 如果没有数据，需要首先进行查询
     if (!this.props.dataSource) {
-      this.props.dispatch({
-        type: 'messageList/msgQuery',
-        payload: { ...this.props.params },
-      });
       return null;
     }
     // 加工数据

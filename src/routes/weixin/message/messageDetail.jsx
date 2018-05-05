@@ -83,17 +83,20 @@ class MsgDetail extends Component {
       },
     });
   }
-
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: { ...this.props.params },
+    });
+  }
   render() {
     console.log('MsgDetail render', this.props);
     const { msgDetailData, showMsgShare } = this.props;
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData) {
-      this.props.dispatch({
-        type: 'messageDetail/detailQuery',
-        payload: { ...this.props.params },
-      });
       return null;
     }
     const msgObj = msgDetailData.data;
