@@ -35,7 +35,13 @@ const App = {
       const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
       const ua = window.navigator.userAgent.toLowerCase();
-      if (wxBrowserCheck && ua.match(/MicroMessenger/i) !== 'micromessenger') {
+      console.log('ua is:', ua);
+      let match = false;
+      if (window.WeixinJSBridge !== 'undefined') {
+        match = true;
+      }
+      console.log(`match is:${match}`);
+      if (wxBrowserCheck && !match) {
         dispatch({ type: 'noWechat' });
         return;
       }
