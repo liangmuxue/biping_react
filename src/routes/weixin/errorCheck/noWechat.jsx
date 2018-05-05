@@ -12,7 +12,7 @@ const myImg = src => <img src={src} className="spe am-icon am-icon-md" alt="" />
 
 const ResultExample = () => (<div className="result-example">
   <Result
-    img={<img src="./assets/images/indexImg/noWechat.png" />}
+    img={<img src="/images/indexImg/noWechat.png" />}
     title=""
     message="请在微信客户端打开链接"
   />
