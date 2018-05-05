@@ -19,6 +19,11 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
+  ENV.wxBrowserCheck = false;
+  ENV.mockUser = {
+    userName: '1379f405-b738-4e0a-bbdd-cecaaed71852',
+    passWord: 'cd2f80bd-02de-4e20-b27d-b22736cff9a1',
+  };
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
@@ -27,6 +32,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.msgShareUrl = 'http://wx.test.tnb99.net/msgImages';
+  ENV.wxBrowserCheck = true;
 }
 
 export const config = {
