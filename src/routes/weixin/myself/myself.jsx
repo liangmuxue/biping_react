@@ -8,8 +8,6 @@ import List from 'antd-mobile/lib/list/index';
 import Switch from 'antd-mobile/lib/switch/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 // import { List, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
-
-
 import style from './myself.less';
 /**
 * 个人中心
@@ -90,7 +88,8 @@ class BasicInput extends Component {
       );
     };
     SwitchExample = createForm()(SwitchExample);
-
+    const emoji = require('emoji');
+    const name = emoji.unifiedToHTML(userMain.name);
     return (<div>
       <div className={style.mineBox}>
         <div><img src={userMain.headUrl} className={style.minePic} /></div>

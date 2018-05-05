@@ -9,6 +9,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 // import Hammer from 'react-hammerjs';
 import React from 'react';
 import style from './enterGroup.less';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
 
 
 /**
@@ -27,7 +28,7 @@ class Join extends React.Component {
   shareClick(event) {
     // event.prventDefault();
     const { dispatch } = this.props;
-    console.log('111111111111111111111', this.props)
+    console.log('111111111111111111111', this.props);
     dispatch({
       type: 'enterGroup/shareWechat',
       payload: {
@@ -48,7 +49,7 @@ class Join extends React.Component {
     const { showShare } = this.props;
     console.log('msgObj44444', this.props);
     // 分享消息的图片链接
-    let wechatImg = `./assets/indexImg/wechat.png`;
+    const wechatImg = './assets/images/indexImg/wechat.png';
     const modal = (<Modal
       visible={showShare}
       transparent
@@ -59,7 +60,7 @@ class Join extends React.Component {
       footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.closeShare.bind(this); } }]}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src={wechatImg} alt="" />
+        <img src={wechatImg} alt="" style={{ width: '5rem', height: '5rem' }} />
       </div>
     </Modal>);
 
@@ -73,6 +74,12 @@ class Join extends React.Component {
       </div>
     );
   }
+}
+function enterGroupstate(state) {
+  console.log('enterGroupstate', state);
+  // 直接返回本model
+  // const { messageDetail, app } = state;
+  return state;
 }
 
 function enterGroupstate(state) {
