@@ -102,8 +102,8 @@ class MsgDetail extends Component {
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
     // 分享消息的图片链接
-    let msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
     const modal = (<Modal
       visible={showMsgShare}
       transparent
