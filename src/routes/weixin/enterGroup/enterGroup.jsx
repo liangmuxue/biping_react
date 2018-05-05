@@ -48,7 +48,7 @@ class Join extends React.Component {
     const { showShare } = this.props;
     console.log('msgObj44444', this.props);
     // 分享消息的图片链接
-    const wechatImg = './assets/images/indexImg/wechat.png';
+    const wechatImg = '/images/h5Img/enterGroup.jpg';
     const modal = (<Modal
       visible={showShare}
       transparent
@@ -66,11 +66,9 @@ class Join extends React.Component {
     return (
       <div className={style.H5box}>
         <div><img src="/images/h5Img/H5.png" className={style.H5bg} /></div>
-        
-          <WingBlank>
-            <Button className={style.joinBtn} onClick={this.shareClick.bind(this)}>我要入群</Button><WhiteSpace />
-          </WingBlank>
-
+        <WingBlank>
+          <Button className={style.joinBtn} onClick={this.shareClick.bind(this)}>我要入群</Button><WhiteSpace />
+        </WingBlank>
         {modal}
       </div>
     );

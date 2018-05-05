@@ -83,12 +83,13 @@ class MsgDetail extends Component {
       },
     });
   }
-  componentDidMount() {
-    console.log('componentDidMount messageLisst', this.props);
-    // 初始化时进行查询
+  switchTitle(msgObj) {
+    console.log('switchTitle in', msgObj);
     this.props.dispatch({
       type: 'messageDetail/detailQuery',
-      payload: { ...this.props.params },
+      payload: {
+        messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName:msgObj.tagName
+      }
     });
   }
   render() {
@@ -97,13 +98,17 @@ class MsgDetail extends Component {
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData) {
+      this.props.dispatch({
+        type: 'messageDetail/detailQuery',
+        payload: { ...this.props.params },
+      });
       return null;
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
     // 分享消息的图片链接
-    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    let msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
     const modal = (<Modal
       visible={showMsgShare}
       transparent

@@ -27,7 +27,7 @@ class EmptyMsgCard extends React.Component {
   render() {
     return (
       <div className={styles.empty}>
-        <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>没有订阅</div>
         <WingBlank>
           <Button type="primary" onClick={this.buttonClick.bind(this)}>赶紧去订阅</Button><WhiteSpace />

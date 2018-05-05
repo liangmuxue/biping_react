@@ -29,11 +29,6 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      dispatch({
-        type: 'subscribeQuery',
-      });
-    },
   },
 
   effects: {

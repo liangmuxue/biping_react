@@ -178,12 +178,8 @@ class MsgDetail extends Component {
             <div className={style.upTitle}>所属标签</div>
 
             <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                        {msg.name}
-                    </li>
-                  ))}
+              <li className={style.labelsList}>ZRX</li>
+              <li className={style.labelsList}>交易所：火币PRO</li>
             </ul>
 
             <div className={style.likesBox}>
@@ -203,7 +199,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <Button onClick={() => this.switchTitle(msg)} className={style.similarList}>{msg.title}</Button>
+                      <a href="/" className={style.similarList}>{msg.title}</a>
                     </li>
                   ))}
               </ul>

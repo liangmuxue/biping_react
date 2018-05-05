@@ -50,16 +50,24 @@ class MessageList extends Component {
   render() {
     console.log('cd render in indexMessage', this.props);
     const { pagination } = this.props;
-    if (pagination && pagination.totalCount === 0) {
-      return (<div className={styles.empty}>
-        <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
-    }
     const { flag } = this.props;
+    // 未开通大类别
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
       return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
+    }
+    // 未订阅小类别
+    if (flag && flag === 1002) {
+      return (<div className={styles.empty}>
+        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+      </div>);
+    }
+    if (flag === 0 && this.props.list.length === 0) {
+      return (<div className={styles.empty}>
+        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+      </div>);
     }
 
     // 加工数据
@@ -80,10 +88,12 @@ class MessageList extends Component {
       },
     });
     const height = document.documentElement.clientHeight;
+    const key = 'indexMessage';
     return (
       <div>
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView
+          bkey={key}
           {...messageListProps}
           height={height}
           pageSize={this.props.paginationDef.pageSize}

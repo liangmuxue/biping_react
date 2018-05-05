@@ -18,19 +18,18 @@ class InfiniteListView extends React.Component {
       dataSource,
     };
   }
-
-  componentDidMount() {
-    // you can scroll to the specified position
-    // setTimeout(() => this.lv.scrollTo(0, 120), 800);
-
-    // simulate initial Ajax
-    // setTimeout(() => {
-    //   this.rData = genData();
-    //   this.setState({
-    //     dataSource: this.state.dataSource.cloneWithRows(this.rData),
-    //     isLoading: false,
-    //   });
-    // }, 600);
+  componentWillMount() {
+    console.log('componentWillMount infi', this.props);
+    // // 有数据则加入到滚动列表
+    if (this.props.dataSource && this.props.dataSource.length > 0) {
+      // 这个list是所有的列表数据
+      const { list } = this.props;
+      // 转换为listview的数据源
+      console.log('componentWillMount list is:', list);
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(list),
+      });
+    }
   }
 
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
@@ -45,17 +44,18 @@ class InfiniteListView extends React.Component {
       // 这个list是所有的列表数据
       const { list } = nextProps;
       // 转换为listview的数据源
+      console.log('componentWillReceivePropslist is:', list);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(list),
       });
     }
   }
 
-
   render() {
     const {
-      loading, onEndReached, pageSize, pagination,
+      loading, onEndReached, pagination, bkey,
     } = this.props;
+    console.log('render in infi', this.props);
     const endReached = (event) => {
       console.log('reach end', event);
       if (loading || !pagination.hasMore) {
@@ -69,7 +69,12 @@ class InfiniteListView extends React.Component {
         key={`${sectionID}-${rowID}`}
       />
     );
-
+    let { pageSize } = this.props;
+    if (pagination) {
+      ({ pageSize } = pagination);
+    }
+    console.log(`pageSize in infi:${pageSize} with key:${bkey}`);
+    console.log(` datasource key:${bkey} infina `, this.state.dataSource);
     return (
       <ListView
         ref={el => this.lv = el}

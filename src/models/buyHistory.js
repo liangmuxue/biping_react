@@ -22,23 +22,36 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      // 第一次初始化时进行默认查询
-      dispatch({
-        type: 'buyHistory',
-      });
-    },
   },
 
   effects: {
     // 查询订单列表
     *buyHistory({ payload }, { put }) {
-      console.log('query for buyHistory');
+      console.log('query for msgQuery');
       // 在这里拼好filter，然后调用通用的query方法
       yield put({
         type: 'query',
         payload: {
           modelDef: MODEL_DEF,
+          pagination: {
+            current: 0, // 当前页码
+            pageSize: 6, // 默认每页条目
+          },
+        },
+      });
+    },
+    // 返回时加载
+    *active({ payload }, { put }) {
+      console.log('query for msgQuery', payload);
+      // 在这里拼好filter，然后调用通用的query方法
+      yield put({
+        type: 'query',
+        payload: {
+          modelDef: MODEL_DEF,
+          pagination: {
+            current: 0, // 当前页码
+            pageSize: 6, // 默认每页条目
+          },
         },
       });
     },
