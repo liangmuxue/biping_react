@@ -149,6 +149,9 @@ const App = {
       } else if (success && response.flag === 1003) {
         console.log('failautoReg');
         yield put({ type: 'tourLogin' });
+      } else {
+        console.log('faillogin');
+        yield put({ type: 'tourLogin' });
       }
     },
     // 消息详情查看
