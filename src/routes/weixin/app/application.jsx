@@ -24,16 +24,16 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { isTour, attentionModal } = app;
-    console.log('attentionModal', attentionModal);
+    const { attentionModal } = app;
+    console.log(`attentionModal is:${attentionModal}`);
     const modal = (<Modal
       visible={attentionModal}
       transparent
       maskClosable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
     >
-      <div style={{ overflow: 'hidden',width: '5.38rem',height:'5.44rem'}}>
-        <img src="/images/indexImg/wechat.png" style={{ width : '5.38rem', height:'5.44rem'}}/>
+      <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
+        <img src="/images/indexImg/wechat.png" style={{ width: '5.38rem', height: '5.44rem' }} />
       </div>
     </Modal>);
     const { innerPageList } = pageConstruction;
@@ -51,7 +51,6 @@ class HomePage extends Component {
         console.log('item show', item);
         // 注意此处div不能加key，否则会重复渲染
         return (<div name={ckey} className={styles.container}>
-          {modal}
           <MComponent key={item.pageName} params={item.params} />
         </div>);
       }
@@ -60,7 +59,6 @@ class HomePage extends Component {
       };
       // 注意此处div不能加key，否则会重复渲染
       return (<div name={ckey} style={style} className={styles.container}>
-        {modal}
         <MComponent key={item.pageName} params={item.params} />
               </div>);
     });
@@ -68,7 +66,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = <div>{ routeInner }<Footer /></div>;
+      pageContent = <div>{modal}{ routeInner }<Footer /></div>;
     } else {
       pageContent = <div>没有权限查看</div>;
     }
