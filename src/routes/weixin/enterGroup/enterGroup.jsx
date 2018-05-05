@@ -1,15 +1,14 @@
 
 import { connect } from 'dva';
+import React from 'react';
+
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Button from 'antd-mobile/lib/button/index';
 import Modal from 'antd-mobile/lib/modal/index';
 import 'antd-mobile/es/modal/style/index.css';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-// import Hammer from 'react-hammerjs';
-import React from 'react';
 import style from './enterGroup.less';
-import mobileRouteComponent from '../../common/mobileRouteComponent';
 
 
 /**
