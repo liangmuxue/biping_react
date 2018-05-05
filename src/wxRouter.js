@@ -4,8 +4,10 @@ import dynamic from 'dva/dynamic';
 import 'react-hot-loader/patch';
 import { AppContainer } from 'react-hot-loader';
 import styles from './routes/weixin/app/index.less';
+import { urlUtils } from './utils/urlUtil.js';
 
 const { ConnectedRouter } = routerRedux;
+const { analysisParam } = urlUtils;
 export const innerPageDefs = { def: [] };
 
 /*
@@ -213,7 +215,7 @@ function RouterConfig({ history, app }) {
     <AppContainer>
       <ConnectedRouter history={history}>
         <div className={styles.normal} name="jjj">
-          <Route exact path="/" render={() => (<Redirect to={mainpage} />)} />
+          <Route exact path="/" component={MainPage} />
           <Route path="/login" component={LoginPage} />
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
@@ -235,26 +237,6 @@ function RouterConfig({ history, app }) {
       </ConnectedRouter>
     </AppContainer>
   );
-}
-
-// url参数拆分
-function analysisParam(paras) {
-  const url = window.location.href;
-  console.log(`url is:${url}`);
-  const paraString = url.substring(url.indexOf('?') + 1, url.length).split('&');
-  console.log(`paraString is:${paraString}`);
-  const paraObj = {};
-  let i,
-    j;
-  for (i = 0; j = paraString[i]; i++) {
-    paraObj[j.substring(0, j.indexOf('=')).toLowerCase()] = j.substring(j.indexOf('=') + 1, j.length);
-  }
-  const returnValue = paraObj[paras.toLowerCase()];
-  if (typeof (returnValue) === 'undefined') {
-    return null;
-  } else {
-    return returnValue;
-  }
 }
 
 export default RouterConfig;
