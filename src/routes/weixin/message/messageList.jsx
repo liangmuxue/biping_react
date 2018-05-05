@@ -78,14 +78,17 @@ class MessageList extends Component {
     const key = 'messageList';
     return (
       <div>
+        <div style ={{width:'100%', height:".88rem"}}></div>
         <HeaderBar headerText={title} backRouteLink="indexMessage" {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
-        <InfiniteListView
-          bkey={key}
-          {...messageListProps}
-          height={height}
-          pageSize={this.props.paginationDef.pageSize}
-        />
+
+          <InfiniteListView
+            bkey={key}
+            {...messageListProps}
+            height={height}
+            pageSize={this.props.paginationDef.pageSize}
+          />
+
       </div>
     );
   }
