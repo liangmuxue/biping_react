@@ -50,16 +50,16 @@ class MessageList extends Component {
   render() {
     console.log('cd render in indexMessage', this.props);
     const { pagination } = this.props;
-    if (pagination && pagination.totalCount === 0) {
-      return (<div className={styles.empty}>
-        <div><img src="/assets/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
-    }
     const { flag } = this.props;
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
       return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
+    }
+    if (flag && flag === 1002) {
+      return (<div className={styles.empty}>
+        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+      </div>);
     }
 
     // 加工数据
