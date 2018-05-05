@@ -88,8 +88,6 @@ class BasicInput extends Component {
       );
     };
     SwitchExample = createForm()(SwitchExample);
-    const emoji = require('emoji');
-    const name = emoji.unifiedToHTML(userMain.name);
     return (<div>
       <div className={style.mineBox}>
         <div><img src={userMain.headUrl} className={style.minePic} /></div>

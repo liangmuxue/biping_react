@@ -3,6 +3,8 @@ import { parse } from 'qs';
 import { query, logout, autoReg } from '../services/app';
 import * as constants from '../constants/constants';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
+import { config } from '../../config/environment';
+import { urlUtils } from '../utils/urlUtil.js';
 
 /**
 * 全局数据逻辑
@@ -29,18 +31,22 @@ const App = {
     setup({ dispatch, history }) {
       // 清理手机缓存
       // localStorage.clear();
+      // 开发环境忽略
+      const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
-      const ua = navigator.userAgent.toLowerCase();
-      if (ua.match(/MicroMessenger/i) != 'micromessenger') {
+      const ua = window.navigator.userAgent.toLowerCase();
+      if (wxBrowserCheck && ua.match(/MicroMessenger/i) !== 'micromessenger') {
         dispatch({ type: 'noWechat' });
         return;
       }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
-      // const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
-      // const userStr = JSON.stringify(userMoni);
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      // 开发环境模拟用户
+      if (mockUser) {
+        userStr = JSON.stringify(mockUser);
+      }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
@@ -65,7 +71,8 @@ const App = {
           dispatch({ type: 'toTourPage' });
         }
       } else if (userStr != null) {
-        const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+        const { analysisParam } = urlUtils;
+        const code = analysisParam('code');
         const userData = JSON.parse(userStr);
         userData.code = code;
         console.log('userData*****^^', userData);
