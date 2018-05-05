@@ -51,11 +51,19 @@ class MessageList extends Component {
     console.log('cd render in indexMessage', this.props);
     const { pagination } = this.props;
     const { flag } = this.props;
+    // 未开通大类别
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
       return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
     }
+    // 未订阅小类别
     if (flag && flag === 1002) {
+      return (<div className={styles.empty}>
+        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
+        <div className={styles.notread}>暂无消息</div>
+      </div>);
+    }
+    if (flag === 0 && this.props.list.length === 0) {
       return (<div className={styles.empty}>
         <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>暂无消息</div>

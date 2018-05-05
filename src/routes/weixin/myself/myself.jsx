@@ -53,6 +53,14 @@ class BasicInput extends Component {
       payload: { pageName: 'buyHistory' },
     });
   }
+  componentDidMount() {
+    console.log('componentDidMount myself', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'myself/detailQuery',
+      payload: { ...this.props.params },
+    });
+  }
   render() {
     console.log('MsgDetail render', this.props);
     if (!this.props.data) {

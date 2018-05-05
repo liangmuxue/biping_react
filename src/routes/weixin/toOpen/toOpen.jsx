@@ -57,26 +57,29 @@ class toOpenDetail extends Component {
       payload: filter,
     });
   }
-
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'toOpen/toOpenDetail',
+      payload: { ...this.props.params },
+    });
+  }
   render() {
     let isHide = true;
     console.log('toOpenDetail render', this.props);
     const {
       toOpenData, backPath, selectedItem,
     } = this.props.toOpen;
-    // 如果没有数据，需要首先进行查询
-    if (!toOpenData) {
-      this.props.dispatch({
-        type: 'toOpen/toOpenDetail',
-        payload: { ...this.props.params },
-      });
-      return null;
-    }
     if (selectedItem) {
       console.log('selectedItem', selectedItem);
       isHide = false;
     }
+    if (!toOpenData) {
+      return null;
+    }
     const { data } = toOpenData;
+
     console.log('content in subdetail', data);
 
     const subDesc = `订阅${toOpenData.typeName}`;

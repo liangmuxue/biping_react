@@ -44,6 +44,13 @@ class AccountInfo extends Component {
       payload: { pageName: 'subList' },
     });
   }
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'buyHistory/buyHistory',
+    });
+  }
   render() {
     console.log('6666666666', this.props);
     const { buyList } = this.props;

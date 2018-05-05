@@ -22,12 +22,6 @@ export default modelExtend(pageModel, {
   },
 
   subscriptions: {
-    setup({ dispatch, history }) {
-      // 第一次初始化时进行默认查询
-      dispatch({
-        type: 'detailQuery',
-      });
-    },
   },
 
   effects: {

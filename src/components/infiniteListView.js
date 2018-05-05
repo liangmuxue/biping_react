@@ -18,21 +18,6 @@ class InfiniteListView extends React.Component {
       dataSource,
     };
   }
-
-  componentDidMount() {
-    // you can scroll to the specified position
-    // setTimeout(() => this.lv.scrollTo(0, 120), 800);
-
-    // simulate initial Ajax
-    // setTimeout(() => {
-    //   this.rData = genData();
-    //   this.setState({
-    //     dataSource: this.state.dataSource.cloneWithRows(this.rData),
-    //     isLoading: false,
-    //   });
-    // }, 600);
-  }
-
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);
@@ -45,6 +30,7 @@ class InfiniteListView extends React.Component {
       // 这个list是所有的列表数据
       const { list } = nextProps;
       // 转换为listview的数据源
+      console.log('list is:', list);
       this.setState({
         dataSource: this.state.dataSource.cloneWithRows(list),
       });
@@ -54,7 +40,7 @@ class InfiniteListView extends React.Component {
 
   render() {
     const {
-      loading, onEndReached, pageSize, pagination,
+      loading, onEndReached, pagination,
     } = this.props;
     const endReached = (event) => {
       console.log('reach end', event);
@@ -69,7 +55,12 @@ class InfiniteListView extends React.Component {
         key={`${sectionID}-${rowID}`}
       />
     );
-
+    let { pageSize } = this.props;
+    if (pagination) {
+      ({ pageSize } = pagination);
+    }
+    console.log(`pageSize in infi:${pageSize}`);
+    console.log('datasource infina ', this.state.dataSource);
     return (
       <ListView
         ref={el => this.lv = el}
