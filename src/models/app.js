@@ -3,6 +3,8 @@ import { parse } from 'qs';
 import { query, logout, autoReg } from '../services/app';
 import * as constants from '../constants/constants';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
+import { config } from '../../config/environment';
+import { urlUtils } from '../utils/urlUtil.js';
 
 /**
 * 全局数据逻辑
@@ -29,25 +31,28 @@ const App = {
     setup({ dispatch, history }) {
       // 清理手机缓存
       // localStorage.clear();
+      // 开发环境忽略
+      const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
-      // const ua = navigator.userAgent.toLowerCase();
-      // if (ua.match(/MicroMessenger/i) != 'micromessenger') {
-      //   dispatch({ type: 'noWechat' });
-      //   return;
-      // }
+      const ua = window.navigator.userAgent.toLowerCase();
+      if (wxBrowserCheck && ua.match(/MicroMessenger/i) !== 'micromessenger') {
+        dispatch({ type: 'noWechat' });
+        return;
+      }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
-      // const userMoni = { userName: 'j.4i1Y', passWord: '7fcaaa44-5e34-4c61-976d-031e73eeda1c' };
-      // const userStr = JSON.stringify(userMoni);
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      // 开发环境模拟用户
+      if (mockUser) {
+        userStr = JSON.stringify(mockUser);
+      }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') != -1) {
           const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
           dispatch({ type: 'autoReg', payload: { code } });
-          return;
         } else if (hrefUrl && hrefUrl.indexOf('messageId') != -1) {
           const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
@@ -57,7 +62,6 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage' });
-          return;
         } else {
           const backPath = '/messageList';
           dispatch({
@@ -65,11 +69,15 @@ const App = {
             payload: { pageName: 'messageList', params: { backPath } },
           });
           dispatch({ type: 'toTourPage' });
-          return;
         }
+      } else if (userStr != null) {
+        const { analysisParam } = urlUtils;
+        const code = analysisParam('code');
+        const userData = JSON.parse(userStr);
+        userData.code = code;
+        console.log('userData*****^^', userData);
+        dispatch({ type: 'query', payload: userData });
       }
-      const userData = JSON.parse(userStr);
-      dispatch({ type: 'query', payload: userData });
     },
   },
 
@@ -109,7 +117,8 @@ const App = {
           });
         }
       } else {
-        // yield put({ type: 'toLoginPage' });
+        console.log('fail999999999');
+        yield put({ type: 'tourLogin' });
       }
     },
 
@@ -130,13 +139,15 @@ const App = {
           },
         });
         yield put({ type: 'query', payload: systemUser });
-      } else {
-        yield put({ type: 'loginFail' });
+        // code重复使用，用户信息获取失败
+      } else if (success && response.flag === 1003) {
+        console.log('failautoReg');
+        yield put({ type: 'tourLogin' });
       }
     },
     // 消息详情查看
     *openMessage({ payload }, { call, put, select }) {
-      // 成功后把数据存储到全局
+      // 游客身份
       yield put({ type: 'tourLogin' });
     },
     *noWechat({ payload }, { call, put, select }) {
@@ -228,6 +239,7 @@ const App = {
       };
     },
     tourLogin(state, action) {
+      console.log('tourLogin88888');
       const systemUser = { token: 'tourLogin' };
       return {
         ...state, isTour: true, modalVisible: false, attentionModal: true, systemUser,

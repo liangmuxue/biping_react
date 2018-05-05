@@ -16,6 +16,7 @@
     "axios": "^0.18.0",
     "dva": "^2.1.0-0",
     "dva-loading": "^1.0.4",
+    "emoji": "^0.3.2",
     "history": "^4.7.2",
     "kitsu": "^5.1.0",
     "pure-render-decorator": "^1.2.1",

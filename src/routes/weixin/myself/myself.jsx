@@ -88,7 +88,6 @@ class BasicInput extends Component {
       );
     };
     SwitchExample = createForm()(SwitchExample);
-
     return (<div>
       <div className={style.mineBox}>
         <div><img src={userMain.headUrl} className={style.minePic} /></div>
