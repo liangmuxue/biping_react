@@ -72,14 +72,16 @@ class MessageList extends Component {
         );
       },
     });
-    const height = document.documentElement.clientHeight;
+    const height = document.documentElement.clientHeight + 200;
     const { filter } = this.props;
     const title = filter ? filter.tagName : '';
+    const key = 'messageList';
     return (
       <div>
         <HeaderBar headerText={title} backRouteLink="indexMessage" {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView
+          bkey={key}
           {...messageListProps}
           height={height}
           pageSize={this.props.paginationDef.pageSize}

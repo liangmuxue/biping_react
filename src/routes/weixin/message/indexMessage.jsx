@@ -88,10 +88,12 @@ class MessageList extends Component {
       },
     });
     const height = document.documentElement.clientHeight;
+    const key = 'indexMessage';
     return (
       <div>
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView
+          bkey={key}
           {...messageListProps}
           height={height}
           pageSize={this.props.paginationDef.pageSize}
