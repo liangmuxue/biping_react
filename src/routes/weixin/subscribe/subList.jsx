@@ -15,6 +15,13 @@ class subList extends Component {
     console.log('props in subList', props);
     super(props);
   }
+  componentWillMount() {
+    console.log('componentWillMount subList', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'subscribe/subscribeQuery',
+    });
+  }
   remarkClick(typeObj) {
     console.log('remarkClick in,typeObj:', typeObj);
     // 跳转到订阅详情页面
