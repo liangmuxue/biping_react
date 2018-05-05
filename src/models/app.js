@@ -64,7 +64,7 @@ const App = {
           });
           dispatch({ type: 'toTourPage' });
         }
-      } else if (userStr != null && hrefUrl.indexOf('code') != -1) {
+      } else if (userStr != null) {
         const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
         const userData = JSON.parse(userStr);
         userData.code = code;
@@ -135,6 +135,9 @@ const App = {
         // code重复使用，用户信息获取失败
       } else if (success && response.flag === 1003) {
         console.log('failautoReg');
+        yield put({ type: 'tourLogin' });
+      } else {
+        console.log('faillogin');
         yield put({ type: 'tourLogin' });
       }
     },
