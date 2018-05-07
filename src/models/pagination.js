@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import Immutable from 'seamless-immutable';
 import { query } from '../services/common';
+import { timeoutCall } from '../utils/asyncControll';
 
 /**
 * 用于分页的通用处理model
@@ -35,6 +36,7 @@ const pageModel = modelExtend(model, {
     *query({ payload }, { call, put, select }) {
       // 显示加载提示
       yield put({ type: 'showLoading' });
+      yield put({ type: 'app/showPagiLoading' });
       // 通过filter，endpoint以及state里的pagination,进行通用查询
       const {
         filter = {}, modelDef, list = [], pagination = {},
@@ -58,6 +60,10 @@ const pageModel = modelExtend(model, {
       const data = yield call(query, {
         endpoint, filter, list, pagination,
       }, st);
+      // 延时后消掉加载提示
+      console.log('loadingHide call');
+      yield call(timeoutCall, 1000);
+      yield put({ type: 'app/hidePagiLoading' });
       if (data.success) {
         yield put({
           type: 'querySuccess',
@@ -74,7 +80,7 @@ const pageModel = modelExtend(model, {
   },
   reducers: {
     showLoading(state, action) {
-      return { ...state, loading: true };
+      return { ...state, loading: true, loadingShow: true };
     },
     querySuccess(state, {
       payload, modelDef, filter, list, pageSize,
@@ -98,7 +104,7 @@ const pageModel = modelExtend(model, {
           hasMore = false;
         }
       }
-      console.log(`rtn flag:${flag}`);
+      console.log(`rtn hasMore:${hasMore}`);
       return {
         flag,
         ...state,

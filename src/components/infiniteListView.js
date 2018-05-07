@@ -1,5 +1,8 @@
 import React from 'react';
 import ListView from 'antd-mobile/lib/list-view/index';
+import Toast from 'antd-mobile/lib/toast/index';
+import 'antd-mobile/es/toast/style/index.css';
+import style from './infiniteListView.less';
 
 /**
  * 无线滚动长列表，用于移动端使用
@@ -35,8 +38,11 @@ class InfiniteListView extends React.Component {
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);
+    const {
+      loading, loadingShow,
+    } = nextProps;
     // 如果是显示加载信息的内容，则不进行数据比较
-    if (nextProps.loading) {
+    if (loading) {
       return;
     }
     // 有数据则加入到滚动列表
@@ -59,6 +65,8 @@ class InfiniteListView extends React.Component {
     const endReached = (event) => {
       console.log('reach end', event);
       if (loading || !pagination.hasMore) {
+        console.log('end no more');
+        Toast.info('没有更多的内容了', 2);
         return;
       }
       // 调用父级方法，进行分页请求
@@ -74,25 +82,27 @@ class InfiniteListView extends React.Component {
       ({ pageSize } = pagination);
     }
     console.log(`pageSize in infi:${pageSize} with key:${bkey}`);
-    console.log(` datasource key:${bkey} infina `, this.state.dataSource);
-    return (
-      <ListView
-        ref={el => this.lv = el}
-        dataSource={this.state.dataSource}
-        renderRow={this.props.renderRow}
-        renderSeparator={separator}
-        className="am-list"
-        pageSize={pageSize}
-        style={{
-          height: this.props.height,
-          overflow: 'auto',
-        }}
-        onScroll={() => { console.log('scroll'); }}
-        scrollRenderAheadDistance={500}
-        onEndReached={endReached}
-        onEndReachedThreshold={10}
-      />
+    const listView = (
+      <div>
+        <ListView
+          ref={el => this.lv = el}
+          dataSource={this.state.dataSource}
+          renderRow={this.props.renderRow}
+          renderSeparator={separator}
+          className="am-list"
+          pageSize={pageSize}
+          style={{
+            height: this.props.height,
+            overflow: 'auto',
+          }}
+          onScroll={() => { console.log('scroll'); }}
+          scrollRenderAheadDistance={500}
+          onEndReached={endReached}
+          onEndReachedThreshold={10}
+        />
+      </div>
     );
+    return listView;
   }
 }
 

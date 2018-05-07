@@ -259,6 +259,18 @@ const App = {
         ...state, isTour: false, attentionModal: false,
       };
     },
+    showPagiLoading(state) {
+      console.log('showPagiLoading in');
+      return {
+        ...state, pagiLoading: true,
+      };
+    },
+    hidePagiLoading(state) {
+      console.log('hidePagiLoading in');
+      return {
+        ...state, pagiLoading: false,
+      };
+    },
   },
 
 };

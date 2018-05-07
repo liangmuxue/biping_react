@@ -9,8 +9,8 @@ if (process.env.NODE_ENV === 'development') {
   ENV.socketHost = 'http://10.0.109.126';
   // ENV.host = 'http://10.0.107.254:8280';
   // ENV.host = 'http://10.0.106.161:8280';
-  ENV.host = 'http://47.92.25.130';
-  ENV.host = 'http://10.0.109.224:8280';
+  ENV.host = 'http://47.92.25.130:8280';
+  // ENV.host = 'http://10.0.109.224:8280';
   // ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://10.0.106.221:8280';
   ENV.host = 'http://wp.test.tnb99.net';
@@ -20,10 +20,10 @@ if (process.env.NODE_ENV === 'development') {
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = true;
-  // ENV.mockUser = {
-  //   userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
-  //   passWord: '8c43d9ac-b9a6-4e6c-af81-0f6067934b31',
-  // };
+  ENV.mockUser = {
+    userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
+    passWord: '8c43d9ac-b9a6-4e6c-af81-0f6067934b31',
+  };
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';

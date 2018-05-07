@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
           modelDef: MODEL_DEF,
           pagination: {
             current: 0, // 当前页码
-            pageSize: 6, // 默认每页条目
+            pageSize: 10, // 默认每页条目
           },
         },
       });
@@ -48,6 +48,20 @@ export default modelExtend(pageModel, {
       yield put({
         type: 'query',
         payload,
+      });
+    },
+    *active({ params }, { put }) {
+      console.log('active for indexmessage');
+      // 在这里拼好filter，然后调用通用的query方法
+      yield put({
+        type: 'query',
+        payload: {
+          modelDef: MODEL_DEF,
+          pagination: {
+            current: 0, // 当前页码
+            pageSize: 10, // 默认每页条目
+          },
+        },
       });
     },
   },
