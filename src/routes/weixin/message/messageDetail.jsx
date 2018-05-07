@@ -87,7 +87,7 @@ class MsgDetail extends Component {
     const { tagId, tagName } = this.props.msgDetailData;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageList', params: { tagId, tagName, backPath: 'messageDetail' } },
+      payload: { pageName: 'messageList', params: { tagId, tagName } },
     });
   }
 
