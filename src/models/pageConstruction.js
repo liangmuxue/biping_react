@@ -120,13 +120,16 @@ const pcEntity = {
           type: 'showFooter',
         });
       }
-      const { footerHide } = params;
-      if (footerHide) {
-        console.log('foot77777', footerHide);
-        yield put({
-          type: 'hideFooter',
-        });
+      if (params) {
+        const { footerHide } = params;
+        if (footerHide) {
+          console.log('foot77777', footerHide);
+          yield put({
+            type: 'hideFooter',
+          });
+        }
       }
+
       yield put({
         type: 'innerPageSwitched',
         params,

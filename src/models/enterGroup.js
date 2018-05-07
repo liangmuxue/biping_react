@@ -1,7 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
-import QRCode from 'qrcode';
 
 /**
 * 订阅消息详情
