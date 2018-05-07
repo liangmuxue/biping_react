@@ -20,6 +20,7 @@
     "history": "^4.7.2",
     "kitsu": "^5.1.0",
     "pure-render-decorator": "^1.2.1",
+    "qrcode": "^1.2.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-hammerjs": "^1.0.1",
