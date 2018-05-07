@@ -39,6 +39,7 @@ class MessageList extends Component {
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'messageList', params: { ...msgObj } },
     });
+    console.log(msgObj,11111233)
   }
   emptyClick(e) {
     console.log('toSublist55555');
