@@ -46,18 +46,19 @@ const App = {
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
-      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       // 开发环境模拟用户
-      if (mockUser) {
-        userStr = JSON.stringify(mockUser);
-      }
+      // if (mockUser) {
+      //   userStr = JSON.stringify(mockUser);
+      // }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
-        if (hrefUrl && hrefUrl.indexOf('code') != -1) {
-          const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
+        if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
+          const { analysisParam } = urlUtils;
+          const code = analysisParam('code');
           dispatch({ type: 'autoReg', payload: { code } });
-        } else if (hrefUrl && hrefUrl.indexOf('messageId') != -1) {
+        } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const { analysisParam } = urlUtils;
           const messageId = analysisParam('messageId');
           // const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
@@ -67,7 +68,18 @@ const App = {
             type: 'pageConstruction/switchToInnerPage',
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
-          dispatch({ type: 'openMessage' });
+          dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+        } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
+          const { analysisParam } = urlUtils;
+          const sharePaper = analysisParam('sharePaper');
+          const backPath = '/messageList';
+          // 海报分享查看页面
+          if (sharePaper) {
+            dispatch({
+              type: 'pageConstruction/switchToInnerPage',
+              payload: { pageName: 'enterGroup', params: { footerHide: true, backPath } },
+            });
+          }
         } else {
           const backPath = '/messageList';
           dispatch({
@@ -76,20 +88,15 @@ const App = {
           });
           dispatch({ type: 'toTourPage' });
         }
-      } else if (userStr != null && hrefUrl.indexOf('messageId') !== -1) {
-        const { analysisParam } = urlUtils;
-        const messageId = analysisParam('messageId');
-        const backPath = '/messageList';
-        dispatch({
-          type: 'pageConstruction/switchToInnerPage',
-          payload: { pageName: 'messageDetail', params: { messageId, backPath } },
-        });
-        dispatch({ type: 'openMessage', payload: { attentionModal: false } });
       } else if (userStr != null) {
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
         const userData = JSON.parse(userStr);
         userData.code = code;
+        const messageId = analysisParam('messageId');
+        if (messageId) {
+          userData.messageId = messageId;
+        }
         console.log('userData*****^^', userData);
         dispatch({ type: 'query', payload: userData });
       }
@@ -103,6 +110,7 @@ const App = {
     }, { call, put }) {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
       console.log('go query', query);
+      const { messageId } = payload;
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
@@ -118,6 +126,14 @@ const App = {
           },
         });
         console.log('app query suc');
+        if (messageId) {
+          const backPath = '/messageList';
+          yield put({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'messageDetail', params: { messageId, backPath } },
+          });
+          return;
+        }
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
         if (ifVerb === 0) {

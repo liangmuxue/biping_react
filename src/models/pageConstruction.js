@@ -109,6 +109,7 @@ const pcEntity = {
           });
         }
       }
+
       // 支付页面隐藏底部
       if (pageName === 'toOpen') {
         yield put({
@@ -117,6 +118,13 @@ const pcEntity = {
       } else {
         yield put({
           type: 'showFooter',
+        });
+      }
+      const { footerHide } = params;
+      if (footerHide) {
+        console.log('foot77777', footerHide);
+        yield put({
+          type: 'hideFooter',
         });
       }
       yield put({
