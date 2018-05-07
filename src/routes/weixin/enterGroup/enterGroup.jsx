@@ -59,7 +59,7 @@ class Join extends React.Component {
       footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.closeShare.bind(this); } }]}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src={wechatImg} alt="" style={{ width: '5rem', height: '5rem' }} />
+        <img src={wechatImg} alt="" style={{ width: '6rem' }} />
       </div>
     </Modal>);
 

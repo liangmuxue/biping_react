@@ -35,7 +35,7 @@ class MessageCard extends React.Component {
     const { msgObj } = this.props;
 
     return (
-    <div>
+
                 <div className={styles.mesList} >
                   <WhiteSpace size="lg" />
                   <Card full>
@@ -61,7 +61,7 @@ class MessageCard extends React.Component {
                     />
                   </Card>
                 </div>
-        </div>
+
 
     );
   }

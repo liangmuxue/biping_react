@@ -59,6 +59,22 @@ class MsgDetail extends Component {
       type: 'messageDetail/closeShare',
     });
   }
+  // 标签点击，进行条件筛选
+  tagClick(msgObj) {
+    // 跳转到信息详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'messageList', params: { ...msgObj } },
+    });
+    console.log(msgObj ,123432);
+  }
+
+  // 点击标签，进行筛选
+  handleTagTap(e) {
+    console.log('handleTagTap in,props:', this.props);
+    e.preventDefault();
+    this.props.tagClick(this.props.msgObj);
+  }
   likeClick() {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
@@ -158,8 +174,10 @@ class MsgDetail extends Component {
         <div className={style.notice}>
           <div className={style.noticeTitle}>
             <div className={style.times}>{msgObj.time}</div>
-            <div className={style.detail}>{msgObj.verbname}</div>
-          </div>
+            <Hammer >
+            <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+            </Hammer>
+        </div>
 
           <div className={style.caption}>{msgObj.title}</div>
           <div className={style.article}>{msgObj.content}
