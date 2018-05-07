@@ -58,7 +58,9 @@ const App = {
           const code = hrefUrl.substring(hrefUrl.indexOf('code') + 5, hrefUrl.length);
           dispatch({ type: 'autoReg', payload: { code } });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') != -1) {
-          const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
+          const { analysisParam } = urlUtils;
+          const messageId = analysisParam('messageId');
+          // const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
           const backPath = '/messageList';
           dispatch({
@@ -74,6 +76,15 @@ const App = {
           });
           dispatch({ type: 'toTourPage' });
         }
+      } else if (userStr != null && hrefUrl.indexOf('messageId') !== -1) {
+        const { analysisParam } = urlUtils;
+        const messageId = analysisParam('messageId');
+        const backPath = '/messageList';
+        dispatch({
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { pageName: 'messageDetail', params: { messageId, backPath } },
+        });
+        dispatch({ type: 'openMessage', payload: { attentionModal: false } });
       } else if (userStr != null) {
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
@@ -122,7 +133,7 @@ const App = {
         }
       } else {
         console.log('fail999999999');
-        yield put({ type: 'tourLogin' });
+        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
       }
     },
 
@@ -146,16 +157,16 @@ const App = {
         // code重复使用，用户信息获取失败
       } else if (success && response.flag === 1003) {
         console.log('failautoReg');
-        yield put({ type: 'tourLogin' });
+        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
       } else {
         console.log('faillogin');
-        yield put({ type: 'tourLogin' });
+        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
       }
     },
     // 消息详情查看
     *openMessage({ payload }, { call, put, select }) {
       // 游客身份
-      yield put({ type: 'tourLogin' });
+      yield put({ type: 'tourLogin', payload });
     },
     *noWechat({ payload }, { call, put, select }) {
       console.log('未在微信浏览器打开');
@@ -198,7 +209,7 @@ const App = {
     // 跳转到游客页面
     * toTourPage({ payload }, { call, put, select }) {
       console.log('游客身份登录', payload);
-      yield put({ type: 'tourLogin' });
+      yield put({ type: 'tourLogin', payload: { attentionModal: true } });
     },
     // 跳转到登录页
     * toLoginPage({
@@ -246,10 +257,11 @@ const App = {
       };
     },
     tourLogin(state, action) {
-      console.log('tourLogin88888');
+      console.log('tourLogin88888', action.payload);
+      const { attentionModal } = action.payload;
       const systemUser = { token: 'tourLogin' };
       return {
-        ...state, isTour: true, modalVisible: false, attentionModal: true, systemUser,
+        ...state, isTour: true, modalVisible: false, attentionModal, systemUser,
       };
     },
     // 关闭关注提示窗口
