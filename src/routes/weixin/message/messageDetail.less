@@ -3,7 +3,7 @@
 *{
   margin:0;
   padding: 0;
-  font-family: 'PingFangSC-Medium';
+  font-family: 'PingFangSC'!important;
 }
 html{
   font-size:13.333vw;
@@ -92,17 +92,18 @@ body{font-size:0.28rem;}
       left: 50%;
       margin-left: -1.2rem;
       border-radius: .4rem;
-      top: 85%;
+      bottom: 0%;
+      z-index: 99;
+      margin-bottom: 1.2rem;
 }
 .up{
   width: 100%;
-  background: #fff;
   margin: .2rem 0;
 }
 .upCenter{
   width: 7.2rem;
   background: #fff;
-  margin-left: .3rem;
+  padding-left: .3rem;
   text-align: left;
 }
 .upTitle{
@@ -120,6 +121,7 @@ body{font-size:0.28rem;}
   text-align: center;
   padding: .17rem .3rem .16rem;
   color: #888;
+  margin-bottom: .14rem;
   background: #EEE;
   margin-right: .12rem;
   border-radius: .06rem;
@@ -127,6 +129,7 @@ body{font-size:0.28rem;}
 .likesBox{
   position: relative;
   height: .67rem;
+  top: -.15rem;
 }
 .goodImg{
   width: .32rem;
@@ -174,7 +177,12 @@ body{font-size:0.28rem;}
   display: inline-block;
   font-size: .32rem;
   color: #000;
-  padding: .28rem .3rem;
+  padding: 0 .3rem;
   background: #EEEEEE;
   border-radius: .06rem;
+  color: #222;
+}
+.similarList:before{
+  content: '';
+  border:none !important;
 }

@@ -102,8 +102,8 @@ class MsgDetail extends Component {
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
     // 分享消息的图片链接
-    let msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
     const modal = (<Modal
       visible={showMsgShare}
       transparent
@@ -178,8 +178,12 @@ class MsgDetail extends Component {
             <div className={style.upTitle}>所属标签</div>
 
             <ul className={style.labels}>
-              <li className={style.labelsList}>ZRX</li>
-              <li className={style.labelsList}>交易所：火币PRO</li>
+                {msgObj.tagList.map(msg =>
+                  (
+                    <li className={style.labelsList}>
+                        {msg.name}
+                    </li>
+                  ))}
             </ul>
 
             <div className={style.likesBox}>
@@ -199,7 +203,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <a href="/" className={style.similarList}>{msg.title}</a>
+                      <Button onClick={() => this.switchTitle(msg)} className={style.similarList}>{msg.title}</Button>
                     </li>
                   ))}
               </ul>

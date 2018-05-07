@@ -46,7 +46,7 @@ class subList extends Component {
     console.log(`render flag:${busiFlag}`);
     const { subListData } = this.props;
     console.log('subList data', subListData);
-    if (subListData) {
+      if (subListData) {
       return (
         <div>
           {subListData.data.map(item =>
