@@ -39,7 +39,7 @@ const pageModel = modelExtend(model, {
       yield put({ type: 'app/showPagiLoading' });
       // 通过filter，endpoint以及state里的pagination,进行通用查询
       const {
-        filter = {}, modelDef, list = [], pagination = {},
+        filter = {}, modelDef, list = [], pagination = {}, backPath,
       } = payload;
       const st = yield select();
       console.log('st is', st);
@@ -72,6 +72,7 @@ const pageModel = modelExtend(model, {
           filter,
           pageSize: pagination.pageSize,
           list,
+          backPath,
         });
       } else {
         throw data;
@@ -83,10 +84,12 @@ const pageModel = modelExtend(model, {
       return { ...state, loading: true, loadingShow: true };
     },
     querySuccess(state, {
-      payload, modelDef, filter, list, pageSize,
+      payload, modelDef, filter, list, pageSize, backPath,
     }) {
       // 分页模式，服务端统一返回data及meta属性
-      const { data, pager, flag } = payload;
+      const {
+        data, pager, flag,
+      } = payload;
       console.log(`querySuccess flag:${flag}`);
       let pagination = {};
       // 设置是否还有更多内容的标志
@@ -115,6 +118,7 @@ const pageModel = modelExtend(model, {
         loading: false,
         // 返回的data数据
         dataSource: data,
+        backPath,
         // 累加所有新的数据，形成全部的数据列表
         list: list.concat(data),
         // 透传分页数据

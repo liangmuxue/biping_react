@@ -24,6 +24,14 @@ class MsgDetail extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: { ...this.props.params },
+    });
+  }
   // 去开通
   toOpen() {
     const { dispatch, msgDetailData } = this.props;
@@ -51,7 +59,21 @@ class MsgDetail extends Component {
       },
     });
   }
-
+  // 类似消息的点击
+  switchTitle(msg) {
+    console.log('switchTitle in:', this.props);
+    const { tagId, tagName } = this.props.msgDetailData;
+    // event.prventDefault();
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: {
+        messageId: msg.id,
+        backPath: this.props.backPath,
+        tagId,
+        tagName,
+      },
+    });
+  }
   closeShare() {
     const { dispatch } = this.props;
     console.log('closeShare in');
@@ -59,6 +81,16 @@ class MsgDetail extends Component {
       type: 'messageDetail/closeShare',
     });
   }
+  // 跳转到信息类型列表页面
+  tagClick(msgObj) {
+    console.log('props in tagcli', this.props);
+    const { tagId, tagName } = this.props.msgDetailData;
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'messageList', params: { tagId, tagName, backPath: 'messageDetail' } },
+    });
+  }
+
   likeClick() {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
@@ -81,14 +113,6 @@ class MsgDetail extends Component {
       payload: {
         messageId: msgObj.mid,
       },
-    });
-  }
-  componentDidMount() {
-    console.log('componentDidMount messageLisst', this.props);
-    // 初始化时进行查询
-    this.props.dispatch({
-      type: 'messageDetail/detailQuery',
-      payload: { ...this.props.params },
     });
   }
   render() {
@@ -158,7 +182,9 @@ class MsgDetail extends Component {
         <div className={style.notice}>
           <div className={style.noticeTitle}>
             <div className={style.times}>{msgObj.time}</div>
-            <div className={style.detail}>{msgObj.verbname}</div>
+            <Hammer >
+              <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+            </Hammer>
           </div>
 
           <div className={style.caption}>{msgObj.title}</div>
@@ -178,8 +204,12 @@ class MsgDetail extends Component {
             <div className={style.upTitle}>所属标签</div>
 
             <ul className={style.labels}>
-              <li className={style.labelsList}>ZRX</li>
-              <li className={style.labelsList}>交易所：火币PRO</li>
+              {msgObj.tagList.map(msg =>
+                  (
+                    <li className={style.labelsList}>
+                      {msg.name}
+                    </li>
+                  ))}
             </ul>
 
             <div className={style.likesBox}>
@@ -199,7 +229,7 @@ class MsgDetail extends Component {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <a href="/" className={style.similarList}>{msg.title}</a>
+                      <Button onClick={() => this.switchTitle(msg)} className={style.similarList}>{msg.title}</Button>
                     </li>
                   ))}
               </ul>

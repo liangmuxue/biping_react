@@ -18,13 +18,25 @@ class SubDetail extends Component {
   }
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
-    // 发起订阅请求
-    this.props.dispatch({
-      type: 'subDetail/subscribeItem',
-      payload: {
-        subItem: itemObj,
-      },
-    });
+    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    if (remainDate >= 0) {
+      // 发起订阅请求
+      this.props.dispatch({
+        type: 'subDetail/subscribeItem',
+        payload: {
+          subItem: itemObj,
+        },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subDetail' },
+        },
+      });
+    }
   }
   subTypeClick(subTypeObj) {
     console.log('subType in', subTypeObj.typeId);
@@ -51,9 +63,9 @@ class SubDetail extends Component {
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink="subList" {...this.props} />
-  <div className={ style.topBox }>
-       <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} subTypeClick={this.subTypeClick.bind(this)} />
-     </div>
+        <div className={style.topBox}>
+          <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} subTypeClick={this.subTypeClick.bind(this)} />
+        </div>
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理</div>
         {subDetailData.data.content.map(item =>
                     (<SubItem
@@ -61,6 +73,7 @@ class SubDetail extends Component {
                       itemObj={item}
                       subscribeClick={this.subscribeItem.bind(this)}
                     />))}
+        <div className={style.full} />
       </div>
     );
   }

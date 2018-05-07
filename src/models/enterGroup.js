@@ -7,7 +7,6 @@ import { queryNormal } from '../services/common';
 * @author 梁慕学
 * @date  18-04-28
 */
-
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
   modelName: 'enterGroup',
@@ -26,6 +25,14 @@ export default modelExtend(pageModel, {
 
     },
   },
+  effects: {
+    *shareWechat({ payload }, { put, select, call }) {
+      const st = yield select();
+      yield put({
+        type: 'shareWechatSuccess',
+      });
+    },
+  },
 
   reducers: {
     queryDetailSuccess(state, action) {
@@ -40,8 +47,8 @@ export default modelExtend(pageModel, {
       };
     },
     // 分享给好友
-    shareWechat(state) {
-      console.log(22222)
+    shareWechatSuccess(state, action) {
+      console.log(22222, action.payload);
       return {
         ...state,
         showShare: true,
