@@ -51,7 +51,6 @@ const App = {
       if (mockUser) {
         userStr = JSON.stringify(mockUser);
       }
-      // 我要入群页面
       if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
         const { analysisParam } = urlUtils;
         const sharePaper = analysisParam('sharePaper');
@@ -63,6 +62,7 @@ const App = {
             payload: { pageName: 'enterGroup', params: { footerHide: true, backPath } },
           });
         }
+        return;
       }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
