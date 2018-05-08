@@ -50,7 +50,7 @@ class BuyCard extends React.Component {
             <Card full>
               <Card.Header title={<div className={styles.btm_title}>{msgObj.buyContent}{msgObj.validityTime}</div>} />
               <Card.Body>
-                {newContent}
+                {cost}
               </Card.Body>
               <Card.Footer content={<div className={styles.datas}>{msgObj.validity}</div>} />
             </Card>

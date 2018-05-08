@@ -8,10 +8,10 @@ import Button from 'antd-mobile/lib/button/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
-import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
+import style from './messageDetail.less';
 
 /**
 * 老人账号信息页面

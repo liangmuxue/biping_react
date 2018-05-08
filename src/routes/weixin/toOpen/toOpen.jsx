@@ -99,6 +99,7 @@ class toOpenDetail extends Component {
       <div>
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
+        <div className={style.introduceTitle}>套餐介绍</div>
         {data.map(i => (
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.lastList}>
             {`${i.name + i.currentPrice / 100}元`}
