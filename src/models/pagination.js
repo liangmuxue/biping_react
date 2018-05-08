@@ -61,7 +61,7 @@ const pageModel = modelExtend(model, {
       }, st);
       // 延时后消掉加载提示
       console.log('loadingHide call');
-      yield call(timeoutCall, 1000);
+      yield call(timeoutCall, 100);
       yield put({ type: 'app/hidePagiLoading' });
       if (data.success) {
         yield put({
