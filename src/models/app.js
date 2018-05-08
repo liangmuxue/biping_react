@@ -126,6 +126,7 @@ const App = {
           },
         });
         console.log('app query suc');
+        // 推送消息事件进行消息详情查看
         if (messageId) {
           const backPath = '/messageList';
           yield put({
