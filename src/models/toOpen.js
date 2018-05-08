@@ -61,8 +61,12 @@ export default modelExtend(pageModel, {
         endpoint, filter,
       }, st);
       console.log('verbCommodList data', data);
-      data.response.typeId = typeId;
-      data.response.typeName = typeName;
+      if (typeId) {
+        data.response.typeId = typeId;
+      }
+      if (typeName) {
+        data.response.typeName = typeName;
+      }
       data.backPath = payload.backPath;
       yield put({
         type: 'toOpenDetailSuccess',
@@ -126,11 +130,13 @@ export default modelExtend(pageModel, {
       const val = action.payload;
       let selectedItem = null;
       let commId = null;
+      let firstEnter = null;
       state.toOpenData.data.forEach((item) => {
         if (item.commid === val.commid) {
           selectedItem = val.currentPrice / 100;
           commId = val.commid;
           item.checked = true;
+          firstEnter = true;
         } else {
           item.checked = false;
         }
@@ -139,6 +145,7 @@ export default modelExtend(pageModel, {
         ...state,
         selectedItem,
         commId,
+        firstEnter,
       };
     },
   },

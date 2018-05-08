@@ -47,6 +47,9 @@ class toOpenDetail extends Component {
       payload: val,
     });
   }
+  test() {
+    console.log('ddddddddddddddddddddd777777');
+  }
   toPayWechat() {
     const { params } = this.props;
     const { commId } = this.props.toOpen;
@@ -69,8 +72,10 @@ class toOpenDetail extends Component {
     let isHide = true;
     console.log('toOpenDetail render', this.props);
     const {
-      toOpenData, backPath, selectedItem,
+      toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
+    let selectedItem = null;
+    selectedItem = this.props.toOpen.selectedItem;
     if (selectedItem) {
       console.log('selectedItem', selectedItem);
       isHide = false;
@@ -79,7 +84,14 @@ class toOpenDetail extends Component {
       return null;
     }
     const { data } = toOpenData;
-
+    // 判断是不是初次进入此页面
+    if (data && !firstEnter) {
+      console.log('99999999', firstEnter);
+      const { checked } = data[0];
+      data[0].checked = true;
+      isHide = false;
+      selectedItem = data[0].currentPrice / 100;
+    }
     console.log('content in subdetail', data);
 
     const subDesc = `订阅${toOpenData.typeName}`;
@@ -88,7 +100,6 @@ class toOpenDetail extends Component {
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
         <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
         {data.map(i => (
-
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.lastList}>
             {`${i.name + i.currentPrice / 100}元`}
           </CheckboxItem>
