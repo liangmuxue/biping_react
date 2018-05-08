@@ -30,7 +30,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.host = 'http://wp.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
-  ENV.msgShareUrl = 'http://img.test.tnb99.net/msgImages';
+  ENV.msgShareUrl = 'http://img.test.tnb99.net/msg';
   ENV.wxBrowserCheck = true;
 }
 
