@@ -32,11 +32,12 @@ export default modelExtend(pageModel, {
       const st = yield select();
       console.log('query for subscribeDetail,st', st.subDetail);
       const endpoint = 'subscribeDetail';
-      const { typeId } = payload;
+      const { typeId, backPath } = payload;
       const filter = { typeId };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
+      data.backPath = backPath;
       console.log('subscribeQuery data', data);
       yield put({
         type: 'subscribeDetailSuccess',
@@ -94,7 +95,8 @@ export default modelExtend(pageModel, {
   reducers: {
     subscribeDetailSuccess(state, action) {
       console.log('subscribeDetailSuccess in', action.payload);
-      const { response } = action.payload;
+      const { response, backPath } = action.payload;
+      response.backPath = backPath;
       return {
         ...state,
         subDetailData: { ...response },

@@ -24,10 +24,11 @@ class subList extends Component {
   }
   remarkClick(typeObj) {
     console.log('remarkClick in,typeObj:', typeObj);
+    const backPath = 'subList';
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId } },
+      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, backPath } },
     });
   }
   subTypeClick(subTypeObj) {
@@ -46,7 +47,7 @@ class subList extends Component {
     console.log(`render flag:${busiFlag}`);
     const { subListData } = this.props;
     console.log('subList data', subListData);
-      if (subListData) {
+    if (subListData) {
       return (
         <div>
           {subListData.data.map(item =>
