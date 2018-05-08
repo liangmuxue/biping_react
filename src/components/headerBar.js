@@ -26,6 +26,7 @@ class HeaderBar extends React.Component {
 
   render() {
     const { headerText } = this.props;
+    console.log('12345778',this.props);
     return (
       <div className={styles.toptitle}>
         {this.props.headerText}

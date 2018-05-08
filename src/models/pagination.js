@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import Immutable from 'seamless-immutable';
 import { query } from '../services/common';
+import { timeoutCall } from '../utils/asyncControll';
 
 /**
 * 用于分页的通用处理model
@@ -33,11 +34,9 @@ const pageModel = modelExtend(model, {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      // 显示加载提示
-      yield put({ type: 'showLoading' });
       // 通过filter，endpoint以及state里的pagination,进行通用查询
       const {
-        filter = {}, modelDef, list = [], pagination = {},
+        filter = {}, modelDef, list = [], pagination = {}, backPath,
       } = payload;
       const st = yield select();
       console.log('st is', st);
@@ -47,9 +46,11 @@ const pageModel = modelExtend(model, {
       // 如果没有初始化，则使用state中的分页定义
       if (!pagination.pageSize) {
         Object.assign(pagination, paginationDef);
-      } else {
-        // 由于pageSize没有在payload中获取，因此需要自行添加
-        // pagination.pageSize = paginationDef.pageSize;
+      }
+      if (pagination.totalCount > 0) {
+        // 只在分页加载时显示加载提示
+        yield put({ type: 'showLoading' });
+        yield put({ type: 'app/showPagiLoading' });
       }
       // 拼接请求分页参数
       filter.pageSize = pagination.pageSize;
@@ -58,6 +59,10 @@ const pageModel = modelExtend(model, {
       const data = yield call(query, {
         endpoint, filter, list, pagination,
       }, st);
+      // 延时后消掉加载提示
+      console.log('loadingHide call');
+      yield call(timeoutCall, 1000);
+      yield put({ type: 'app/hidePagiLoading' });
       if (data.success) {
         yield put({
           type: 'querySuccess',
@@ -66,6 +71,7 @@ const pageModel = modelExtend(model, {
           filter,
           pageSize: pagination.pageSize,
           list,
+          backPath,
         });
       } else {
         throw data;
@@ -74,13 +80,15 @@ const pageModel = modelExtend(model, {
   },
   reducers: {
     showLoading(state, action) {
-      return { ...state, loading: true };
+      return { ...state, loading: true, loadingShow: true };
     },
     querySuccess(state, {
-      payload, modelDef, filter, list, pageSize,
+      payload, modelDef, filter, list, pageSize, backPath,
     }) {
       // 分页模式，服务端统一返回data及meta属性
-      const { data, pager, flag } = payload;
+      const {
+        data, pager, flag,
+      } = payload;
       console.log(`querySuccess flag:${flag}`);
       let pagination = {};
       // 设置是否还有更多内容的标志
@@ -98,7 +106,7 @@ const pageModel = modelExtend(model, {
           hasMore = false;
         }
       }
-      console.log(`rtn flag:${flag}`);
+      console.log(`rtn hasMore:${hasMore}`);
       return {
         flag,
         ...state,
@@ -109,6 +117,7 @@ const pageModel = modelExtend(model, {
         loading: false,
         // 返回的data数据
         dataSource: data,
+        backPath,
         // 累加所有新的数据，形成全部的数据列表
         list: list.concat(data),
         // 透传分页数据

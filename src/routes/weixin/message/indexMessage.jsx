@@ -34,12 +34,11 @@ class MessageList extends Component {
   }
   // 标签点击，进行条件筛选
   tagClick(msgObj) {
-    // 跳转到信息详情页面
+    // 跳转到信息类型列表页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageList', params: { ...msgObj } },
+      payload: { pageName: 'messageList', params: { ...msgObj, backPath: 'indexMessage' } },
     });
-    console.log(msgObj,11111233)
   }
   emptyClick(e) {
     console.log('toSublist55555');

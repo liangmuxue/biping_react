@@ -24,6 +24,14 @@ class MsgDetail extends Component {
     console.log('props in MsgDetail', props);
     super(props);
   }
+  componentDidMount() {
+    console.log('componentDidMount messageLisst', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: { ...this.props.params },
+    });
+  }
   // 去开通
   toOpen() {
     const { dispatch, msgDetailData } = this.props;
@@ -51,7 +59,21 @@ class MsgDetail extends Component {
       },
     });
   }
-
+  // 类似消息的点击
+  switchTitle(msg) {
+    console.log('switchTitle in:', this.props);
+    const { tagId, tagName } = this.props.msgDetailData;
+    // event.prventDefault();
+    this.props.dispatch({
+      type: 'messageDetail/detailQuery',
+      payload: {
+        messageId: msg.id,
+        backPath: this.props.backPath,
+        tagId,
+        tagName,
+      },
+    });
+  }
   closeShare() {
     const { dispatch } = this.props;
     console.log('closeShare in');
@@ -59,22 +81,16 @@ class MsgDetail extends Component {
       type: 'messageDetail/closeShare',
     });
   }
-  // 标签点击，进行条件筛选
+  // 跳转到信息类型列表页面
   tagClick(msgObj) {
-    // 跳转到信息详情页面
+    console.log('props in tagcli', this.props);
+    const { tagId, tagName } = this.props.msgDetailData;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageList', params: { ...msgObj } },
+      payload: { pageName: 'messageList', params: { tagId, tagName } },
     });
-    console.log(msgObj ,123432);
   }
 
-  // 点击标签，进行筛选
-  handleTagTap(e) {
-    console.log('handleTagTap in,props:', this.props);
-    e.preventDefault();
-    this.props.tagClick(this.props.msgObj);
-  }
   likeClick() {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
@@ -97,14 +113,6 @@ class MsgDetail extends Component {
       payload: {
         messageId: msgObj.mid,
       },
-    });
-  }
-  componentDidMount() {
-    console.log('componentDidMount messageLisst', this.props);
-    // 初始化时进行查询
-    this.props.dispatch({
-      type: 'messageDetail/detailQuery',
-      payload: { ...this.props.params },
     });
   }
   render() {
@@ -175,9 +183,9 @@ class MsgDetail extends Component {
           <div className={style.noticeTitle}>
             <div className={style.times}>{msgObj.time}</div>
             <Hammer >
-            <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+              <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
             </Hammer>
-        </div>
+          </div>
 
           <div className={style.caption}>{msgObj.title}</div>
           <div className={style.article}>{msgObj.content}
@@ -196,10 +204,10 @@ class MsgDetail extends Component {
             <div className={style.upTitle}>所属标签</div>
 
             <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
+              {msgObj.tagList.map(msg =>
                   (
                     <li className={style.labelsList}>
-                        {msg.name}
+                      {msg.name}
                     </li>
                   ))}
             </ul>

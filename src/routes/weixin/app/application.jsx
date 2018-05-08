@@ -24,7 +24,7 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { attentionModal } = app;
+    const { attentionModal, pagiLoading } = app;
     console.log(`attentionModal is:${attentionModal}`);
     const modal = (<Modal
       visible={attentionModal}
@@ -37,7 +37,15 @@ class HomePage extends Component {
       </div>
     </Modal>);
     const { innerPageList } = pageConstruction;
-
+    // 翻页加载提示区域
+    let loadingTip = (
+      <div className={styles.loading}>
+        <img src="/images/loading.gif" alt="" />
+      </div>
+    );
+    if (!pagiLoading) {
+      loadingTip = null;
+    }
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
       const matchItem = innerPageDefs.def.filter((element) => {
@@ -66,7 +74,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = <div>{modal}{ routeInner }<Footer /></div>;
+      pageContent = <div>{modal}{ routeInner }{loadingTip}<Footer /></div>;
     } else {
       pageContent = <div>没有权限查看</div>;
     }
