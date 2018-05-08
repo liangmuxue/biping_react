@@ -34,9 +34,6 @@ const pageModel = modelExtend(model, {
   },
   effects: {
     *query({ payload }, { call, put, select }) {
-      // 显示加载提示
-      yield put({ type: 'showLoading' });
-      yield put({ type: 'app/showPagiLoading' });
       // 通过filter，endpoint以及state里的pagination,进行通用查询
       const {
         filter = {}, modelDef, list = [], pagination = {}, backPath,
@@ -49,9 +46,11 @@ const pageModel = modelExtend(model, {
       // 如果没有初始化，则使用state中的分页定义
       if (!pagination.pageSize) {
         Object.assign(pagination, paginationDef);
-      } else {
-        // 由于pageSize没有在payload中获取，因此需要自行添加
-        // pagination.pageSize = paginationDef.pageSize;
+      }
+      if (pagination.totalCount > 0) {
+        // 只在分页加载时显示加载提示
+        yield put({ type: 'showLoading' });
+        yield put({ type: 'app/showPagiLoading' });
       }
       // 拼接请求分页参数
       filter.pageSize = pagination.pageSize;
