@@ -34,12 +34,9 @@ class OpenCard extends React.Component {
 
         <div className={style.introduce}>
           <img src="/images/toOpen/open_bg.png" className={style.openbg} />
-          <div className={style.introduceTitle}>套餐介绍</div>
-          <div className={style.slogan}>拉好友、<span className={style.colorFont}>免费</span>开通</div>
           <WingBlank className={style.transfrom}>
-            <Button type="primary" className={style.toGret} onClick={this.buttonClick.bind(this)}>去获取</Button><WhiteSpace />
+            <Button type="primary" className={style.toGret} onClick={this.buttonClick.bind(this)}>免费开通</Button><WhiteSpace />
           </WingBlank>
-          <div className={style.matterBox}>每邀请1位好友关注「币评区块链」公众号、免费获得「币事件」服务<span className={style.redData}>30</span>天</div>
         </div>
       </div>
     );
