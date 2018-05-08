@@ -48,7 +48,7 @@ class Join extends React.Component {
     const { showShare } = this.props;
     console.log('msgObj44444', this.props);
     // 分享消息的图片链接
-    const wechatImg = '/images/h5Img/enterGroup.jpg';
+    const wechatImg = '/images/h5Img/enterGroup.png';
     const modal = (<Modal
       visible={showShare}
       transparent
