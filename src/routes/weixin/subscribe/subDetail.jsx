@@ -52,17 +52,19 @@ class SubDetail extends Component {
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
+    const { params } = this.props;
     // 如果没有数据，需要首先进行查询
     if (!subDetailData) {
       this.props.dispatch({
         type: 'subDetail/subscribeDetail',
-        payload: { typeId: this.props.params.typeId },
+        payload: { ...params },
       });
       return null;
     }
+    const { backPath } = subDetailData;
     return (
       <div>
-        <HeaderBar headerText={subDetailData.data.typeName} backRouteLink="subList" {...this.props} />
+        <HeaderBar headerText={subDetailData.data.typeName} backRouteLink={backPath} {...this.props} />
         <div className={style.topBox}>
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} subTypeClick={this.subTypeClick.bind(this)} />
         </div>

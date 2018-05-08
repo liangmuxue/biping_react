@@ -38,14 +38,11 @@ class HomePage extends Component {
     </Modal>);
     const { innerPageList } = pageConstruction;
     // 翻页加载提示区域
-    let loadingTip = (
-      <div className={styles.loading}>
+    const loadingTip = (
+      <div className={pagiLoading ? styles.loading : styles.loadingHide}>
         <img src="/images/loading.gif" alt="" />
       </div>
     );
-    if (!pagiLoading) {
-      loadingTip = null;
-    }
     // 当前已有页面，与内部页面定义进行匹配及显示
     const routeInner = innerPageList.map((item) => {
       const matchItem = innerPageDefs.def.filter((element) => {

@@ -51,6 +51,19 @@ const App = {
       if (mockUser) {
         userStr = JSON.stringify(mockUser);
       }
+      if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
+        const { analysisParam } = urlUtils;
+        const sharePaper = analysisParam('sharePaper');
+        const backPath = '/messageList';
+        // 海报分享查看页面
+        if (sharePaper) {
+          dispatch({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'enterGroup', params: { footerHide: true, backPath } },
+          });
+        }
+        return;
+      }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
@@ -69,17 +82,6 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage', payload: { attentionModal: true } });
-        } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
-          const { analysisParam } = urlUtils;
-          const sharePaper = analysisParam('sharePaper');
-          const backPath = '/messageList';
-          // 海报分享查看页面
-          if (sharePaper) {
-            dispatch({
-              type: 'pageConstruction/switchToInnerPage',
-              payload: { pageName: 'enterGroup', params: { footerHide: true, backPath } },
-            });
-          }
         } else {
           const backPath = '/messageList';
           dispatch({
