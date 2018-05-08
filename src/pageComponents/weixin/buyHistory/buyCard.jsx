@@ -31,26 +31,26 @@ class BuyCard extends React.Component {
     let cost = null;
     cost = costNum != 0 ? (<div className={styles.incident}>￥{msgObj.cost / 100}元,已邀请{msgObj.inviteNum}人</div>) : (<div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>);
     return (
-      <Hammer onTap={this.handleTap.bind(this)}>
-        <div className={styles.historyBox}>
-          <div className={styles.tops}>
-            <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} /></div>
-            <div className={styles.events}>{msgObj.buyType}</div>
-            <div><a href="#" ><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow} /></a>
+        <Hammer onTap={this.handleTap.bind(this)}>
+          <div className={styles.historyBox}>
+            <div className={styles.tops}>
+              <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} /></div>
+              <div className={styles.events}>{msgObj.buyType}</div>
+              <div><a href="#" ><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow} /></a>
+              </div>
+            </div>
+
+            <div className={styles.bottoms}>
+              <Card full>
+                <Card.Header title={<div className={styles.btm_title}>{msgObj.buyContent}{msgObj.validityTime}</div>} />
+                <Card.Body>
+                  {cost}
+                </Card.Body>
+                <Card.Footer content={<div className={styles.datas}>{msgObj.validity}</div>} />
+              </Card>
             </div>
           </div>
-
-          <div className={styles.bottoms}>
-            <Card full>
-              <Card.Header title={<div className={styles.btm_title}>{msgObj.buyContent}{msgObj.validityTime}</div>} />
-              <Card.Body>
-                {cost}
-              </Card.Body>
-              <Card.Footer content={<div className={styles.datas}>{msgObj.validity}</div>} />
-            </Card>
-          </div>
-        </div>
-      </Hammer>
+        </Hammer>
     );
   }
 }

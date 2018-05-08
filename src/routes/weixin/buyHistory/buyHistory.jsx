@@ -79,7 +79,6 @@ class AccountInfo extends Component {
       renderRow: (rowData, sectionID, rowID) => {
         console.log('rowData is', rowData);
         return (
-
           <BuyCard msgObj={rowData} cardClick={this.cardClick.bind(this)} />
         );
       },
@@ -88,6 +87,7 @@ class AccountInfo extends Component {
     const backPath = 'myself';
     return (
       <div>
+        <div className={styles.full}></div>
         <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView {...buyListProps} height={height} />
