@@ -73,7 +73,7 @@ class SubDetail extends BaseComponent {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
     // 如果没有数据，需要首先进行查询
-    if (!subDetailData) {
+    if (!subDetailData || !subDetailData.data || !subDetailData.data.content) {
       return null;
     }
     const { backPath } = subDetailData;

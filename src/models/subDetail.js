@@ -115,8 +115,10 @@ export default modelExtend(pageModel, {
   reducers: {
     emptyData(state, action) {
       console.log('emptyData in');
+      const { subDetailData } = state;
+      subDetailData.data = {};
       return {
-
+        subDetailData,
       };
     },
     subscribeDetailSuccess(state, action) {
