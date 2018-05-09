@@ -17,9 +17,23 @@ class SubDetail extends BaseComponent {
     console.log('props in SubDetail', props);
     super(props);
   }
+  componentWillMount() {
+    console.log('componentWillMount subdetail', this.props);
+    const { params } = this.props;
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'subDetail/subscribeDetail',
+      payload: { ...params },
+    });
+  }
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
     const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    const { preventFlag } = this.props;
+    // 防止误点击
+    if (preventFlag) {
+      return null;
+    }
     if (remainDate >= 0) {
       // 发起订阅请求
       this.props.dispatch({
@@ -58,13 +72,8 @@ class SubDetail extends BaseComponent {
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
-    const { params } = this.props;
     // 如果没有数据，需要首先进行查询
     if (!subDetailData) {
-      this.props.dispatch({
-        type: 'subDetail/subscribeDetail',
-        payload: { ...params },
-      });
       return null;
     }
     const { backPath } = subDetailData;

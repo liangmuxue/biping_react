@@ -106,9 +106,19 @@ export default modelExtend(pageModel, {
         type: 'preventTagClick',
         payload: { preventFlag: true },
       });
+      // 清空本地数据
+      yield put({
+        type: 'emptyData',
+      });
     },
   },
   reducers: {
+    emptyData(state, action) {
+      console.log('emptyData in');
+      return {
+
+      };
+    },
     subscribeDetailSuccess(state, action) {
       console.log('subscribeDetailSuccess in', action.payload);
       const { response, backPath } = action.payload;
