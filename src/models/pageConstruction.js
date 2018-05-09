@@ -43,7 +43,9 @@ const pcEntity = {
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
-      const { pageName, params, direct } = payload;
+      const {
+        pageName, params, direct, backArrow,
+      } = payload;
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // 显示页面加载
       yield put({
@@ -77,6 +79,7 @@ const pcEntity = {
               type: actEvent,
               pageName,
               params,
+              backArrow,
             });
           }
         } else if (innerPageList[i].isShow) {

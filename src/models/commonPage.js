@@ -26,7 +26,10 @@ const pageModel = modelExtend(model, {
     list: Immutable([]), // 用于承载返回的数据列表
   },
   effects: {
-
+    *active({ payload }, { put }) {
+      console.log('active in common');
+      yield put({ type: 'app/hideRouteLoading' });
+    },
   },
   reducers: {
     showLoading(state, action) {

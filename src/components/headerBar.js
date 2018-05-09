@@ -20,20 +20,20 @@ class HeaderBar extends React.Component {
     // 跳转到之前的页面
     dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: backRouteLink },
+      payload: { pageName: backRouteLink, backArrow: true },
     });
   }
 
   render() {
     const { headerText } = this.props;
-    console.log('12345778',this.props);
+    console.log('12345778', this.props);
     return (
       <div className={styles.toptitle}>
         {this.props.headerText}
         <Hammer onTap={this.backTo.bind(this)}>
-            <div className={styles.zone}>
-                  <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
-            </div>
+          <div className={styles.zone}>
+            <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
+          </div>
         </Hammer>
       </div>
     );
