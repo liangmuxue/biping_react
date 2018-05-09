@@ -312,6 +312,7 @@ const App = {
     },
     // 页面加载提示
     showRouteLoading(state) {
+      console.log('showRouteLoading in');
       return {
         ...state, routeLoading: true,
       };
@@ -321,6 +322,7 @@ const App = {
         ...state, routeLoading: false,
       };
     },
+
     showPagiLoading(state) {
       console.log('showPagiLoading in');
       return {
