@@ -46,13 +46,24 @@ const App = {
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
+      const { analysisParam } = urlUtils;
       let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      const mockUserStr = analysisParam('mockUserStr');
+      let mockUserReal = null;
+      if (mockUserStr) {
+        mockUserReal = {
+          userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
+          passWord: '8c43d9ac-b9a6-4e6c-af81-0f6067934b31',
+        };
+      }
       // 开发环境模拟用户
-      if (mockUser) {
+      if (mockUserReal) {
+        userStr = JSON.stringify(mockUserReal);
+      } else if (mockUser) {
         userStr = JSON.stringify(mockUser);
       }
+
       if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
-        const { analysisParam } = urlUtils;
         const sharePaper = analysisParam('sharePaper');
         const backPath = '/messageList';
         // 海报分享查看页面
@@ -68,11 +79,9 @@ const App = {
       if (userStr == null) {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
-          const { analysisParam } = urlUtils;
           const code = analysisParam('code');
           dispatch({ type: 'autoReg', payload: { code } });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
-          const { analysisParam } = urlUtils;
           const messageId = analysisParam('messageId');
           // const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
