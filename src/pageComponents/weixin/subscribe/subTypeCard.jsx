@@ -44,7 +44,12 @@ class SubTypeCard extends React.Component {
     } else {
       const Renew = () => (
         <WingBlank>
-          <Button onClick={this.botonClick.bind(this)} className={styles.Renew}>剩{typeObj.remainDate}天&nbsp;| 续费</Button><WhiteSpace />
+          <Button
+            onClick={this.botonClick.bind(this)}
+            className={styles.Renew}
+          >剩{typeObj.remainDate}天&nbsp;| 续费
+          </Button>
+          <WhiteSpace />
         </WingBlank>
       );
       remainButton = (<Renew />);

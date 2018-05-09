@@ -21,6 +21,7 @@ class BuyCard extends React.Component {
 
   handleTap(e) {
     console.log('handleTap in,props,event:', e);
+    e.preventDefault();
     this.props.cardClick(this.props.msgObj, e);
   }
 
@@ -42,7 +43,7 @@ class BuyCard extends React.Component {
           <div className={styles.tops}>
             <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} /></div>
             <div className={styles.events}>{msgObj.buyType}</div>
-            <div><a href="#" ><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow} /></a>
+            <div><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow} />
             </div>
           </div>
 

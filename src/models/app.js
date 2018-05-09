@@ -63,18 +63,6 @@ const App = {
         userStr = JSON.stringify(mockUser);
       }
 
-      if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
-        const sharePaper = analysisParam('sharePaper');
-        const backPath = '/messageList';
-        // 海报分享查看页面
-        if (sharePaper) {
-          dispatch({
-            type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'enterGroup', params: { footerHide: true, backPath } },
-          });
-        }
-        return;
-      }
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         // 如果存在code
@@ -91,6 +79,15 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+        } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
+          const sharePaper = analysisParam('sharePaper');
+          // 海报分享查看页面
+          if (sharePaper) {
+            dispatch({
+              type: 'pageConstruction/switchToInnerPage',
+              payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup: 0 } },
+            });
+          }
         } else {
           const backPath = '/messageList';
           dispatch({
@@ -108,6 +105,10 @@ const App = {
         if (messageId) {
           userData.messageId = messageId;
         }
+        const sharePaper = analysisParam('sharePaper');
+        if (sharePaper) {
+          userData.sharePaper = sharePaper;
+        }
         console.log('userData*****^^', userData);
         dispatch({ type: 'query', payload: userData });
       }
@@ -122,6 +123,7 @@ const App = {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
       console.log('go query', query);
       const { messageId } = payload;
+      const { sharePaper } = payload;
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
@@ -141,10 +143,17 @@ const App = {
         });
         console.log('app query suc');
         if (messageId) {
-          const backPath = '/messageList';
           yield put({
             type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'messageDetail', params: { messageId, backPath } },
+            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
+          });
+          return;
+        }
+        // 海报分享查看页面
+        if (sharePaper) {
+          yield put({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup } },
           });
           return;
         }
