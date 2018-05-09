@@ -31,7 +31,9 @@ class HeaderBar extends React.Component {
       <div className={styles.toptitle}>
         {this.props.headerText}
         <Hammer onTap={this.backTo.bind(this)}>
-          <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
+            <div className={styles.zone}>
+                  <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
+            </div>
         </Hammer>
       </div>
     );

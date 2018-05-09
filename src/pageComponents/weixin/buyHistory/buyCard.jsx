@@ -28,8 +28,14 @@ class BuyCard extends React.Component {
     const { msgObj } = this.props;
     console.log('msgObj888888', msgObj);
     const costNum = msgObj.cost;
-    let cost = null;
-    cost = costNum != 0 ? (<div className={styles.incident}>￥{msgObj.cost / 100}元,已邀请{msgObj.inviteNum}人</div>) : (<div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>);
+    let newContent = null;
+    if (costNum !== 0 && msgObj.inviteNum !== 0) {
+      newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元,已邀请{msgObj.inviteNum}人</div>;
+    } else if (costNum !== 0 && msgObj.inviteNum === 0) {
+      newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元</div>;
+    } else if (costNum === 0 && msgObj.inviteNum !== 0) {
+      newContent = <div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>;
+    }
     return (
       <Hammer onTap={this.handleTap.bind(this)}>
         <div className={styles.historyBox}>
@@ -44,7 +50,7 @@ class BuyCard extends React.Component {
             <Card full>
               <Card.Header title={<div className={styles.btm_title}>{msgObj.buyContent}{msgObj.validityTime}</div>} />
               <Card.Body>
-                {cost}
+                {newContent}
               </Card.Body>
               <Card.Footer content={<div className={styles.datas}>{msgObj.validity}</div>} />
             </Card>

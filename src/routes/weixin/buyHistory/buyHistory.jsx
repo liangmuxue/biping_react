@@ -11,7 +11,7 @@ import { buildPagiProps } from '../../common/paginationRoute';
 import BuyCard from '../../../pageComponents/weixin/buyHistory/buyCard.jsx';
 import { rebuildBuyList } from '../../../selectors/buyList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-// import style from '../announcement/announcement.less';
+import HeaderBar from '../../../components/headerBar';
 import styles from './buyHistory.less';
 /**
  * 购买历史记录
@@ -32,10 +32,11 @@ class AccountInfo extends Component {
   }
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj.typeId);
+    const backPath = 'buyHistory';
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId } },
+      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath } },
     });
   }
   buttonClick() {
@@ -61,6 +62,7 @@ class AccountInfo extends Component {
       if (flag && flag === 1) {
         return (
           <div className={styles.empty}>
+            <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
             <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>
             <div className={styles.notread}>您还没有买过任何订阅包</div>
             <WingBlank>
@@ -82,9 +84,11 @@ class AccountInfo extends Component {
       },
     });
     const height = document.documentElement.clientHeight;
-
+    const backPath = 'myself';
     return (
       <div>
+        <div className={styles.full}></div>
+        <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView {...buyListProps} height={height} />
       </div>
