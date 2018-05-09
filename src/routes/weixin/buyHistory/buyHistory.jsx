@@ -25,7 +25,6 @@ const Buttongo = () => (
   </WingBlank>
 );
 
-@pureRender
 class AccountInfo extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
@@ -33,11 +32,10 @@ class AccountInfo extends BaseComponent {
   }
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj.typeId);
-    const backPath = 'buyHistory';
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath } },
+      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath: 'buyHistory' } },
     });
   }
   buttonClick() {
