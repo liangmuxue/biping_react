@@ -48,9 +48,9 @@ const App = {
       console.log('7777777777', hrefUrl);
       const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       // 开发环境模拟用户
-      // if (mockUser) {
-      //   userStr = JSON.stringify(mockUser);
-      // }
+      if (mockUser) {
+        userStr = JSON.stringify(mockUser);
+      }
       if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
         const { analysisParam } = urlUtils;
         const sharePaper = analysisParam('sharePaper');
