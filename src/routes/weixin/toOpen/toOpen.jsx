@@ -76,6 +76,7 @@ class toOpenDetail extends BaseComponent {
       toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
     let selectedItem = null;
+    const systemUser = {};
     selectedItem = this.props.toOpen.selectedItem;
     if (selectedItem) {
       console.log('selectedItem', selectedItem);
@@ -99,7 +100,7 @@ class toOpenDetail extends BaseComponent {
     return (
       <div>
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
-        <OpenCard openObj={this.props.systemUser} openClick={this.openClick.bind(this)} />
+        <OpenCard openObj={systemUser} openClick={this.openClick.bind(this)} />
         <div className={style.introduceTitle}>套餐介绍</div>
         {data.map(i => (
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.lastList}>
@@ -120,7 +121,7 @@ class toOpenDetail extends BaseComponent {
 
 function mapStateToProps(state) {
   console.log('dd666666', state);
-  return { toOpen: state.toOpen, systemUser: state.app.systemUser };
+  return { toOpen: state.toOpen };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(toOpenDetail));

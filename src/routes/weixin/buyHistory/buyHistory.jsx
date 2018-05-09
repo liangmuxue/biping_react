@@ -31,13 +31,15 @@ class AccountInfo extends BaseComponent {
     console.log('props in AccountInfo', props);
     super(props);
   }
-  cardClick(msgObj) {
-    console.log('cardClick in,msgObj:', msgObj.typeId);
+  cardClick(msgObj, event) {
+    console.log('cardClick in,event:', event);
+    event.preventDefault();
+    // event.nativeEvent.stopImmediatePropagation();
     const backPath = 'buyHistory';
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath } },
+      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath }, direct: false },
     });
   }
   buttonClick() {

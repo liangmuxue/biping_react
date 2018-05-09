@@ -20,8 +20,8 @@ class BuyCard extends React.Component {
   }
 
   handleTap(e) {
-    console.log('handleTap in,props:', this.props);
-    this.props.cardClick(this.props.msgObj);
+    console.log('handleTap in,props,event:', e);
+    this.props.cardClick(this.props.msgObj, e);
   }
 
   render() {
