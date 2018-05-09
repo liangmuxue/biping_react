@@ -17,10 +17,19 @@ body {
 
 }
 
-
 .normal {
   font-family: Georgia, sans-serif;
   text-align: center;
+}
+.loadBg{
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #000;
+  opacity: .1;
+}
+.loadBgHide{
+  display: none;
 }
 
 .title {
@@ -54,10 +63,8 @@ body {
 }
 .loading{
   position: fixed;
-  bottom: .3rem;
-  height: 100px;
+  bottom: 50%;
   text-align: center;
-  padding-top: .3rem;
   background-color: transparent;
   width: 100%;
 }

@@ -13,7 +13,7 @@ ul li{list-style: none;}
 a{text-decoration: none;
  color: #C7C7CC;
 }
-body{font-size:0.28rem;}
+body{font-size:0.28rem;width: 100% !important;}
 
 .bannerBox{
   width: 6.9rem;
@@ -172,17 +172,21 @@ body{font-size:0.28rem;}
 .similarListUl{
   margin-top: .26rem;
 }
-.similarListLi{
-  margin-bottom: .16rem;
-}
+
 .similarList{
   display: inline-block;
+  margin-bottom: .16rem;
   font-size: .32rem;
   color: #000;
   padding: 0 .3rem;
   background: #EEEEEE;
   border-radius: .06rem;
   color: #222;
+  max-width: 6.3rem;
+  overflow: hidden;
+text-overflow:ellipsis;
+white-space: nowrap;
+text-align: left;
 }
 .similarList:before{
   content: '';
@@ -190,7 +194,4 @@ body{font-size:0.28rem;}
 }
 :global(.am-modal-body){
   padding: 0 !important;
-}
-:global(.am-modal-body img){
-  width: 60%;
 }

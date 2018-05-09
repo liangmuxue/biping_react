@@ -39,8 +39,11 @@ class HomePage extends Component {
     const { innerPageList } = pageConstruction;
     // 加载提示区域
     const loadingTip = (
-      <div className={routeLoading ? styles.loading : styles.loadingHide}>
-        aaa
+      <div>
+        <div className={routeLoading ? styles.loadBg : styles.loadBgHide}></div>
+        <div className={routeLoading ? styles.loading : styles.loadingHide}>
+            <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem' }} />
+        </div>
       </div>
     );
     // 翻页加载提示区域
