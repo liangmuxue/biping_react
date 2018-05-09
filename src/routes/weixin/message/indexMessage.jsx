@@ -21,14 +21,20 @@ import styles from './index.less';
 class MessageList extends BaseComponent {
   // 卡片点击事件，进入详情页
   cardClick(msgObj) {
-    console.log('cardClick in,msgObj:', msgObj);
+    console.log('cardClick in,msgObj:', this.props);
+    const { systemUser } = this.props.systemUser;
+    // 是否入群
+    let ifEnterGroup = 0;
+    if (systemUser) {
+      ifEnterGroup = systemUser.ifEnterGroup;
+    }
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: {
         pageName: 'messageDetail',
         params: {
-          messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName: msgObj.tagName,
+          messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName: msgObj.tagName, ifEnterGroup,
         },
       },
     });
@@ -50,8 +56,12 @@ class MessageList extends BaseComponent {
   }
   render() {
     console.log('cd render in indexMessage', this.props);
-    const { pagination } = this.props;
-    const { flag } = this.props;
+    const { indexMessage } = this.props;
+    if (!indexMessage) {
+      return null;
+    }
+
+    const { flag } = this.props.indexMessage;
     // 未开通大类别
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
@@ -64,7 +74,7 @@ class MessageList extends BaseComponent {
         <div className={styles.notread}>暂无消息</div>
       </div>);
     }
-    if (flag === 0 && this.props.list.length === 0) {
+    if (flag === 0 && this.props.indexMessage.list.length === 0) {
       return (<div className={styles.empty}>
         <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>暂无消息</div>
@@ -72,11 +82,11 @@ class MessageList extends BaseComponent {
     }
 
     // 加工数据
-    const { messageList } = rebuildMessageList({ messageList: this.props });
+    const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
     console.log('messageList', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
-      pageSize: this.props.paginationDef.pageSize,
+      pageSize: this.props.indexMessage.paginationDef.pageSize,
       renderRow: (rowData, sectionID, rowID) => {
         console.log('rowData is', rowData);
         return (
@@ -97,7 +107,7 @@ class MessageList extends BaseComponent {
           bkey={key}
           {...messageListProps}
           height={height}
-          pageSize={this.props.paginationDef.pageSize}
+          pageSize={this.props.indexMessage.paginationDef.pageSize}
         />
       </div>
     );
@@ -106,7 +116,7 @@ class MessageList extends BaseComponent {
 
 function mapStateToProps(state) {
   console.log('mapStateToProps in indexMessage,state', state);
-  return state.indexMessage;
+  return { indexMessage: state.indexMessage, systemUser: state.app };
 }
 
 

@@ -118,7 +118,11 @@ class MsgDetail extends BaseComponent {
   }
   render() {
     console.log('MsgDetail render', this.props);
-    const { msgDetailData, showMsgShare } = this.props;
+    const { msgDetailData, showMsgShare, params } = this.props;
+    let ifEnterGroup = 0;
+    if (params) {
+      ifEnterGroup = params.ifEnterGroup;
+    }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData) {
@@ -171,7 +175,7 @@ class MsgDetail extends BaseComponent {
       <div className={style.contentBox}>
         {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
-        <div className={style.bannerBox}>
+        <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}>
             <WingBlank>

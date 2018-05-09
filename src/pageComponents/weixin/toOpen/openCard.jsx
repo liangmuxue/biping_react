@@ -24,6 +24,10 @@ class OpenCard extends React.Component {
   }
   render() {
     const { openObj } = this.props;
+    let ifEnterGroup = 0;
+    if (openObj) {
+      ifEnterGroup = openObj.ifEnterGroup;
+    }
     console.log('openObj', openObj);
     return (
       <div>
@@ -32,7 +36,7 @@ class OpenCard extends React.Component {
           <div className={style.mineName}>{openObj.name}</div>
         </div>
 
-        <div className={style.introduce}>
+        <div className={ifEnterGroup === 0 ? style.introduce : style.hide}>
           <img src="/images/toOpen/open_bg.png" className={style.openbg} />
           <WingBlank className={style.transfrom}>
             <Button type="primary" className={style.toGret} onClick={this.buttonClick.bind(this)}>免费开通</Button><WhiteSpace />

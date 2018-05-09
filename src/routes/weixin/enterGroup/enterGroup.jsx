@@ -9,6 +9,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './enterGroup.less';
 import BaseComponent from '../baseComponent';
+import Toast from 'antd-mobile/lib/toast/index';
 
 
 /**
@@ -27,13 +28,23 @@ class Join extends BaseComponent {
   shareClick(event) {
     // event.prventDefault();
     const { dispatch } = this.props;
-    console.log('111111111111111111111', this.props);
-    dispatch({
-      type: 'enterGroup/shareWechat',
-      payload: {
+    const { params } = this.props;
+    console.log('111111111111111111111', params);
+    if (params) {
+      const { ifEnterGroup } = params;
+      console.log('2222222', ifEnterGroup);
+      if (ifEnterGroup === 1) {
+        console.log('33333333', ifEnterGroup);
+        Toast.info('您已经加入过我们的群了', 2);
+      } else {
+        dispatch({
+          type: 'enterGroup/shareWechat',
+          payload: {
 
-      },
-    });
+          },
+        });
+      }
+    }
   }
 
   closeShare() {
@@ -46,7 +57,7 @@ class Join extends BaseComponent {
 
   render() {
     const { showShare } = this.props;
-    console.log('msgObj44444', this.props);
+    console.log('enterGroup44444', this.props);
     // 分享消息的图片链接
     const wechatImg = '/images/h5Img/enterGroup.png';
     const modal = (<Modal

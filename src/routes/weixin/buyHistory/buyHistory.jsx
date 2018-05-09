@@ -25,21 +25,17 @@ const Buttongo = () => (
   </WingBlank>
 );
 
-@pureRender
 class AccountInfo extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
   }
-  cardClick(msgObj, event) {
-    console.log('cardClick in,event:', event);
-    event.preventDefault();
-    // event.nativeEvent.stopImmediatePropagation();
-    const backPath = 'buyHistory';
+  cardClick(msgObj) {
+    console.log('cardClick in,msgObj:', msgObj.typeId);
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath }, direct: false },
+      payload: { pageName: 'subDetail', params: { typeId: msgObj.typeId, backPath: 'buyHistory' } },
     });
   }
   buttonClick() {

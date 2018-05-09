@@ -51,9 +51,15 @@ class toOpenDetail extends BaseComponent {
   test() {
     console.log('ddddddddddddddddddddd777777');
   }
-  toPayWechat() {
+  toPayWechat(val) {
     const { params } = this.props;
-    const { commId } = this.props.toOpen;
+    console.log('ddddddddddddddddddddd777777', val);
+    let commId = null;
+    if (val) {
+      commId = val;
+    } else {
+      commId = this.props.toOpen;
+    }
     console.log('toPayWechat in', params);
     const filter = { verbId: params.typeId, commoId: commId };
     this.props.dispatch({
@@ -86,11 +92,13 @@ class toOpenDetail extends BaseComponent {
       return null;
     }
     const { data } = toOpenData;
+    let commId = null;
     // 判断是不是初次进入此页面
     if (data && !firstEnter) {
       console.log('99999999', firstEnter);
       const { checked } = data[0];
       data[0].checked = true;
+      commId = data[0].commid;
       isHide = false;
       selectedItem = data[0].currentPrice / 100;
     }
@@ -110,7 +118,7 @@ class toOpenDetail extends BaseComponent {
         <div className={style.full} />
         <div className={isHide ? style.hide : style.payBottom}>
           <WingBlank className={style.pay}>
-            <Button type="primary" className={style.toPay} onClick={this.toPayWechat.bind(this)}>确认支付</Button><WhiteSpace />
+            <Button type="primary" className={style.toPay} onClick={() => this.toPayWechat(commId)}>确认支付</Button><WhiteSpace />
           </WingBlank>
           <div className={style.payMoney}>支付金额：<span className={style.sum}>{selectedItem}</span>元</div>
         </div>
