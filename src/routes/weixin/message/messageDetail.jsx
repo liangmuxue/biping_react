@@ -170,6 +170,7 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
+    const val = msgObj.content.replace(/ /g, "\u00a0");
     return (
       <div className={style.contentBox}>
         {modal}
@@ -192,7 +193,7 @@ class MsgDetail extends BaseComponent {
           </div>
 
           <div className={style.caption}>{msgObj.title}</div>
-          <div className={style.article}>{msgObj.content}
+          <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} >
           </div>
 
           <div className={style.toFriend}>
