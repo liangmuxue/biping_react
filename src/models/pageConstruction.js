@@ -45,6 +45,10 @@ const pcEntity = {
       // 页面名称，相关的参数
       const { pageName, params, direct } = payload;
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
+      // 显示页面加载
+      yield put({
+        type: 'app/showRouteLoading',
+      });
       // 进行内部页面排列处理
       let matchPage = null;
       for (let i = 0; i < innerPageList.length; i += 1) {

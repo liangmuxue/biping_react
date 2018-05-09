@@ -90,13 +90,6 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/announcement/announcement'),
   });
-  const bEvents = dynamic({
-    app,
-    models: () => [
-      // import('./models/healthInfo'),
-    ],
-    component: () => import('./routes/weixin/bEvents/bEvents'),
-  });
 
   // 我的，个人中心
   const Myself = dynamic({
@@ -107,13 +100,6 @@ function RouterConfig({ history, app }) {
       import('./models/app'),
     ],
     component: () => import('./routes/weixin/myself/myself'),
-  });
-  const result = dynamic({
-    app,
-    models: () => [
-      // import('./models/healthInfo'),
-    ],
-    component: () => import('./routes/weixin/result/result'),
   });
   // 订阅包管理
   const ToOpen = dynamic({
@@ -222,12 +208,10 @@ function RouterConfig({ history, app }) {
           <Route path="/messageDetail" component={MsgDetail} />
           <Route path="/indexMessage" component={IndexMessage} />
           <Route path="/Announcement" component={Announcement} />
-          <Route path="/bEvents" component={bEvents} />
           <Route path="/subList" component={SubList} />
           <Route path="/subDetail" component={SubDetail} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={BuyHistory} />
-          <Route path="/result" component={result} />
           <Route path="/toOpen" component={ToOpen} />
           <Route path="/noWechat" component={NoWechat} />
           <Route path="/enterGroup" component={EnterGroup} />
