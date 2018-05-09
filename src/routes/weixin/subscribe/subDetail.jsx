@@ -5,13 +5,14 @@ import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.js
 import SubItem from '../../../pageComponents/weixin/subscribe/subItem.jsx';
 import HeaderBar from '../../../components/headerBar';
 import style from './subDetail.less';
+import BaseComponent from '../baseComponent';
 /**
 * 订阅详情页面
 * @author 梁慕学
 * @Date  2018-4-25
 */
 
-class SubDetail extends Component {
+class SubDetail extends BaseComponent {
   constructor(props) {
     console.log('props in SubDetail', props);
     super(props);

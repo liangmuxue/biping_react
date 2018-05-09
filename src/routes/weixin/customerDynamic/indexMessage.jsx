@@ -8,6 +8,7 @@ import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
+import BaseComponent from '../baseComponent';
 
 /**
  * 消息列表页面
@@ -16,7 +17,7 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
  */
 
 @pureRender
-class MessageList extends Component {
+class MessageList extends BaseComponent {
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);
     // 请求消息详细信息

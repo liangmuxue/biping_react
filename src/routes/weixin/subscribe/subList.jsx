@@ -3,6 +3,7 @@ import { connect } from 'dva';
 import 'antd-mobile/es/button/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
+import BaseComponent from '../baseComponent';
 
 /**
  * 老人账号信息页面
@@ -10,7 +11,7 @@ import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.js
  * @Date  2017-12-25
  */
 
-class subList extends Component {
+class subList extends BaseComponent {
   constructor(props) {
     console.log('props in subList', props);
     super(props);

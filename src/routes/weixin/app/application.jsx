@@ -4,7 +4,6 @@ import { connect } from 'dva';
 import Modal from 'antd-mobile/lib/modal/index';
 import 'antd-mobile/es/modal/style/index.css';
 import Footer from '../../../pageComponents/weixin/footer/footer';
-import Tour from '../../../pageComponents/weixin/loginError/tour.jsx';
 import { innerPageDefs } from '../../../wxRouter';
 import styles from './index.less';
 
@@ -24,8 +23,9 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { attentionModal, pagiLoading } = app;
+    const { attentionModal, pagiLoading, routeLoading } = app;
     console.log(`attentionModal is:${attentionModal}`);
+    // 阻断提示
     const modal = (<Modal
       visible={attentionModal}
       transparent
@@ -33,12 +33,18 @@ class HomePage extends Component {
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
     >
       <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
-        <img src="/images/indexImg/wechat.png" style={{ width: '5.38rem', height: '5.44rem' }} />
+        <img src="/images/indexImg/wechat.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
       </div>
     </Modal>);
     const { innerPageList } = pageConstruction;
-    // 翻页加载提示区域
+    // 加载提示区域
     const loadingTip = (
+      <div className={routeLoading ? styles.loading : styles.loadingHide}>
+        aaa
+      </div>
+    );
+    // 翻页加载提示区域
+    const pagiLoadingTip = (
       <div className={pagiLoading ? styles.loading : styles.loadingHide}>
         <img src="/images/loading.gif" alt="" />
       </div>
@@ -71,7 +77,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = <div>{modal}{ routeInner }{loadingTip}<Footer /></div>;
+      pageContent = <div>{modal}{loadingTip}{ routeInner }{pagiLoadingTip}<Footer /></div>;
     } else {
       pageContent = <div>没有权限查看</div>;
     }

@@ -9,6 +9,7 @@ import { rebuildMessageList } from '../../../selectors/messageList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
+import BaseComponent from '../baseComponent';
 import styles from './index.less';
 /**
  * 消息列表页面
@@ -17,7 +18,7 @@ import styles from './index.less';
  */
 
 @pureRender
-class MessageList extends Component {
+class MessageList extends BaseComponent {
   // 卡片点击事件，进入详情页
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', msgObj);

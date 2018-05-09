@@ -13,6 +13,7 @@ import { rebuildBuyList } from '../../../selectors/buyList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import HeaderBar from '../../../components/headerBar';
 import styles from './buyHistory.less';
+import BaseComponent from '../baseComponent';
 /**
  * 购买历史记录
  * @author 赵永帅
@@ -25,7 +26,7 @@ const Buttongo = () => (
 );
 
 @pureRender
-class AccountInfo extends Component {
+class AccountInfo extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
@@ -87,7 +88,7 @@ class AccountInfo extends Component {
     const backPath = 'myself';
     return (
       <div>
-        <div className={styles.full}></div>
+        <div className={styles.full} />
         <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView {...buyListProps} height={height} />

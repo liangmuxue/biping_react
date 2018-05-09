@@ -7,7 +7,7 @@ import { connect } from 'dva';
 import List from 'antd-mobile/lib/list/index';
 import Switch from 'antd-mobile/lib/switch/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-// import { List, InputItem, Switch, Stepper, Range, Button } from 'antd-mobile';
+import BaseComponent from '../baseComponent';
 import style from './myself.less';
 /**
 * 个人中心
@@ -22,7 +22,7 @@ function getUserMain(propsAll) {
 
 }
 
-class BasicInput extends Component {
+class BasicInput extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
