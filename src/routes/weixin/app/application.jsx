@@ -42,7 +42,7 @@ class HomePage extends Component {
       <div>
         <div className={routeLoading ? styles.loadBg : styles.loadBgHide} />
         <div className={routeLoading ? styles.loading : styles.loadingHide}>
-          <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem' }} />
+            <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem'}} />
         </div>
       </div>
     );
@@ -80,7 +80,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = <div>{modal}{loadingTip}{ routeInner }{pagiLoadingTip}<Footer /></div>;
+      pageContent = <div>{modal}{loadingTip}{ routeInner }{loadingTip}{pagiLoadingTip}<Footer /></div>;
     } else {
       pageContent = <div>没有权限查看</div>;
     }
