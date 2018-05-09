@@ -46,7 +46,7 @@ const App = {
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       // 开发环境模拟用户
       if (mockUser) {
         userStr = JSON.stringify(mockUser);

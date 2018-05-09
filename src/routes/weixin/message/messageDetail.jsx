@@ -12,6 +12,7 @@ import HeaderBar from '../../../components/headerBar';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './messageDetail.less';
+import BaseComponent from '../baseComponent';
 
 /**
 * 老人账号信息页面
@@ -19,7 +20,7 @@ import style from './messageDetail.less';
 * @Date  2017-12-25
 */
 
-class MsgDetail extends Component {
+class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);

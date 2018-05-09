@@ -10,6 +10,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx';
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import HeaderBar from '../../../components/headerBar';
+import BaseComponent from '../baseComponent';
 
 /**
  * 消息列表页面--某个标签
@@ -18,7 +19,7 @@ import HeaderBar from '../../../components/headerBar';
  */
 
 @pureRender
-class MessageList extends Component {
+class MessageList extends BaseComponent {
   cardClick(msgObj) {
     const backPath = 'messageList';
     console.log(`cardClick in,backPath:${backPath}`);

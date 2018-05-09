@@ -14,6 +14,7 @@ import HeaderBar from '../../../components/headerBar';
 import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './toOpen.less';
+import BaseComponent from '../baseComponent';
 
 /**
  * 订阅包
@@ -26,7 +27,7 @@ const { AgreeItem } = Checkbox;
 const WechatJSSDK = require('weixin-js-sdk');
 
 
-class toOpenDetail extends Component {
+class toOpenDetail extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);

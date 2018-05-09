@@ -9,6 +9,7 @@ import 'antd-mobile/es/modal/style/index.css';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './enterGroup.less';
+import BaseComponent from '../baseComponent';
 
 
 /**
@@ -17,7 +18,7 @@ import style from './enterGroup.less';
 * @author 赵永帅
 */
 
-class Join extends React.Component {
+class Join extends BaseComponent {
   constructor(props) {
     super(props);
     console.log('props in MessageCard', props);

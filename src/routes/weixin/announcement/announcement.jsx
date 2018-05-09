@@ -9,6 +9,7 @@ import 'antd-mobile/es/list/style/index.css';
 import style from './announcement.less';
 import styles from '../subscribe/subList.less';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
+import BaseComponent from '../baseComponent';
 /**
  * 老人账号信息页面
  * @author 梁慕学
@@ -104,7 +105,7 @@ function genDynamics({ dispatch, accountInfo }) {
   );
 }
 
-class AccountInfo extends Component {
+class AccountInfo extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
