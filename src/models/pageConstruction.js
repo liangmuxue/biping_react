@@ -49,22 +49,21 @@ const pcEntity = {
       yield put({
         type: 'app/showRouteLoading',
       });
+      const matchItem = innerPageDefs.def.filter((element) => {
+        return element.name === pageName;
+      })[0];
+      console.log('matched item', matchItem);
       // 进行内部页面排列处理
       let matchPage = null;
       for (let i = 0; i < innerPageList.length; i += 1) {
         // 取得对应的匹配组件定义
-        const matchItem = innerPageDefs.def.filter((element) => {
-          return element.name === innerPageList[i].pageName;
-        })[0];
         let { modelName } = matchItem;
         // 取得对应的model名称，如果没有则默认是页面名称
         if (!modelName) {
           modelName = matchItem.name;
         }
         const st = yield select();
-        const state = st[modelName];
-        console.log(`new currentModel is:${modelName}`);
-        console.log('relate state is:', state);
+        console.log(`page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
           // 从隐藏到显示
@@ -106,6 +105,13 @@ const pcEntity = {
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
         if (pageName === 'subList') {
+          const selectedMenu = footMenus[1];
+          yield put({
+            type: 'footMenuChoiced',
+            payload: { selectedMenu },
+          });
+        }
+        if (pageName === 'subDetail') {
           const selectedMenu = footMenus[1];
           yield put({
             type: 'footMenuChoiced',

@@ -30,7 +30,7 @@ class EmptyBuyCard extends React.Component {
   render() {
     return (
       <div className={styles.empty}>
-        <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>
+        <div><img src="/images/buyHistoryImg/3.png" className={styles.noBuycar} /></div>
         <div className={styles.notread}>您还没有买过任何订阅包</div>
         <Buttongo />
       </div>

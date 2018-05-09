@@ -62,7 +62,7 @@ class AccountInfo extends BaseComponent {
         return (
           <div className={styles.empty}>
             <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
-            <div><img src="/images/buyHistoryImg/3.png" className={styles.buycar} /></div>
+            <div><img src="/images/buyHistoryImg/3.png" className={styles.noBuycar} /></div>
             <div className={styles.notread}>您还没有买过任何订阅包</div>
             <WingBlank>
               <Button type="primary" onClick={this.buttonClick.bind(this)}>去看看订阅包</Button><WhiteSpace />

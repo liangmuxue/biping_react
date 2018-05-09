@@ -311,6 +311,17 @@ const App = {
         ...state, isTour: false, attentionModal: false,
       };
     },
+    // 页面加载提示
+    showRouteLoading(state) {
+      return {
+        ...state, routeLoading: true,
+      };
+    },
+    hideRouteLoading(state) {
+      return {
+        ...state, routeLoading: false,
+      };
+    },
     showPagiLoading(state) {
       console.log('showPagiLoading in');
       return {

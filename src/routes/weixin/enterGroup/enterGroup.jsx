@@ -1,7 +1,6 @@
 
 import { connect } from 'dva';
 import React from 'react';
-
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Button from 'antd-mobile/lib/button/index';
 import Modal from 'antd-mobile/lib/modal/index';

@@ -41,8 +41,7 @@ git pull
 ###################################################################################
 
 #拷贝真正要部署的源配置文件
-cp -f $codePath/app/$index_page $codePath/app/index.html
-cp -f $codePath/config/$env_file $codePath/config/environment.js
+#......
 
 ################################# install and build ##############################################
 cd $codePath
@@ -59,7 +58,8 @@ then
 	echo  "npm run build..."
 	npm run build
 	echo "ok"
-elif [ $choic -eq 3 ]
+else
+	exit 2
 fi
 
 	################################# 打压缩包 ####################################
