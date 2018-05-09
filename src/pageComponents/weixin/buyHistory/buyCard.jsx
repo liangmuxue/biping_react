@@ -21,6 +21,7 @@ class BuyCard extends React.Component {
 
   handleTap(e) {
     console.log('handleTap in,props,event:', e);
+    e.preventDefault();
     this.props.cardClick(this.props.msgObj, e);
   }
 

@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend';
 import Immutable from 'seamless-immutable';
 import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
+import { timeoutCall } from '../utils/asyncControll';
 
 /**
 * 订阅详情model
@@ -85,10 +86,25 @@ export default modelExtend(pageModel, {
         payload: subObj,
       });
     },
-    *active({ params }, { put }) {
+    *active({ params }, { put, call }) {
       yield put({
         type: 'subscribeDetail',
         payload: params,
+      });
+      // 防止重复点击，延时2秒后重置标志
+      yield call(timeoutCall, 2000);
+      console.log('preventFlag open');
+      yield put({
+        type: 'preventTagClick',
+        payload: { preventFlag: false },
+      });
+    },
+    *deactive({ params }, { put }) {
+      console.log('deactive in subdetaiol');
+      // 防止重复点击，设置标志
+      yield put({
+        type: 'preventTagClick',
+        payload: { preventFlag: true },
       });
     },
   },
@@ -105,6 +121,12 @@ export default modelExtend(pageModel, {
     subscribeSuccess(state, action) {
       console.log('subscribeSuccess in', action.payload);
       console.log('subscribeSuccess state', state);
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+    preventTagClick(state, action) {
       return {
         ...state,
         ...action.payload,

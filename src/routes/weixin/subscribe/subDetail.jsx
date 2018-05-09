@@ -41,14 +41,19 @@ class SubDetail extends BaseComponent {
   }
   subTypeClick(subTypeObj) {
     console.log('subType in', subTypeObj.typeId);
-    // 跳转到订阅包页面
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
-        pageName: 'toOpen',
-        params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subDetail' },
-      },
-    });
+    const { preventFlag } = this.props;
+    console.log(`preventFlag is:${preventFlag}`);
+    // 避免重复点击，用标志控制
+    if (!preventFlag) {
+      // 跳转到订阅包页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subDetail' },
+        },
+      });
+    }
   }
   render() {
     console.log('SubDetail render', this.props);
