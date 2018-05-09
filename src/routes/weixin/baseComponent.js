@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { innerPageDefs } from '../../wxRouter';
 
 /**
  * 微信公共父组件
@@ -7,8 +8,15 @@ import React, { Component } from 'react';
 class BaseComponent extends Component {
   componentDidUpdate(props) {
     console.log('componentDidUpdate in base', props);
+    console.log('this is', this);
+    const self = this;
+    const matchItem = innerPageDefs.def.filter((element) => {
+      return element.name === self.props.pageName;
+    })[0];
+    console.log('matchItem is', matchItem);
     props.dispatch({
-      type: 'app/hideRouteLoading',
+      type: 'pageConstruction/hideRouteLoading',
+      pageName: matchItem.name,
     });
   }
 }

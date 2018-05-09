@@ -148,6 +148,29 @@ const pcEntity = {
         params,
       });
     },
+    *hideRouteLoading({ pageName }, { select, put }) {
+      console.log(`hideRouteLoading in:${pageName}`);
+      const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
+      // 根据当前已有页面进行匹配，如果没有，直接进行提示隐藏处理
+      const matchItem = innerPageList.filter((element) => {
+        return element.pageName === pageName;
+      });
+      console.log('matchItem in pagc', matchItem);
+      if (!matchItem || matchItem.length === 0) {
+        yield put({
+          type: 'app/hideRouteLoading',
+        });
+        return;
+      }
+      // 如果是非现实页面，不进行加载提示隐藏
+      if (matchItem.isShow) {
+        return;
+      }
+      // 显示页面加载
+      yield put({
+        type: 'app/hideRouteLoading',
+      });
+    },
   },
 
   reducers: {
