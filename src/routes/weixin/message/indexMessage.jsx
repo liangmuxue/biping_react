@@ -22,7 +22,7 @@ class MessageList extends BaseComponent {
   // 卡片点击事件，进入详情页
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', this.props);
-    const { systemUser } = this.props.systemUser;
+    const { systemUser } = this.props;
     // 是否入群
     let ifEnterGroup = 0;
     if (systemUser) {
@@ -116,7 +116,7 @@ class MessageList extends BaseComponent {
 
 function mapStateToProps(state) {
   console.log('mapStateToProps in indexMessage,state', state);
-  return { indexMessage: state.indexMessage, systemUser: state.app };
+  return { indexMessage: state.indexMessage, systemUser: state.app.systemUser };
 }
 
 
