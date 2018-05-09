@@ -59,10 +59,13 @@ const pcEntity = {
       let matchPage = null;
       for (let i = 0; i < innerPageList.length; i += 1) {
         // 取得对应的匹配组件定义
-        let { modelName } = matchItem;
+        let { modelName } = innerPageList[i];
         // 取得对应的model名称，如果没有则默认是页面名称
         if (!modelName) {
-          modelName = matchItem.name;
+          modelName = innerPageList[i].pageName;
+        }
+        if (modelName === 'subList') {
+          modelName = 'subscribe';
         }
         const st = yield select();
         console.log(`page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
@@ -162,8 +165,8 @@ const pcEntity = {
         });
         return;
       }
-      // 如果是非现实页面，不进行加载提示隐藏
-      if (matchItem.isShow) {
+      // 如果是非显示页面，不进行加载提示隐藏
+      if (!matchItem[0].isShow) {
         return;
       }
       // 显示页面加载
