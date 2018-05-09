@@ -143,10 +143,9 @@ const App = {
         });
         console.log('app query suc');
         if (messageId) {
-          const backPath = '/messageList';
           yield put({
             type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'messageDetail', params: { messageId, backPath } },
+            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
           });
           return;
         }
