@@ -19,9 +19,6 @@ export default modelExtend(pageModel, {
 
   state: {
     endpoint: MODEL_DEF.endpoint,
-    deActive() {
-      console.log('deActive in indexMessage');
-    },
   },
 
   subscriptions: {
@@ -50,19 +47,25 @@ export default modelExtend(pageModel, {
         payload,
       });
     },
-    *active({ params }, { put }) {
-      console.log('active for indexmessage');
-      // 在这里拼好filter，然后调用通用的query方法
-      yield put({
-        type: 'query',
-        payload: {
-          modelDef: MODEL_DEF,
-          pagination: {
-            current: 0, // 当前页码
-            pageSize: 10, // 默认每页条目
+    *active({ backArrow }, { put }) {
+      console.log(`active for indexmessage,backArrow:${backArrow}`);
+      // 如果从其他链接过来，则重新查询，如果从返回箭头过来，则不查
+      if (!backArrow) {
+        yield put({
+          type: 'query',
+          payload: {
+            modelDef: MODEL_DEF,
+            pagination: {
+              current: 0, // 当前页码
+              pageSize: 10, // 默认每页条目
+            },
           },
-        },
-      });
+        });
+      } else {
+        console.log('need hideRouteLoading in active');
+        // 隐藏加载提示
+        yield put({ type: 'app/hideRouteLoading' });
+      }
     },
   },
 

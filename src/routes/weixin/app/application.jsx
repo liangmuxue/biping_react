@@ -40,7 +40,7 @@ class HomePage extends Component {
     // 加载提示区域
     const loadingTip = (
       <div>
-        <div className={routeLoading ? styles.loadBg : styles.loadBgHide}></div>
+        <div className={routeLoading ? styles.loadBg : styles.loadBgHide} />
         <div className={routeLoading ? styles.loading : styles.loadingHide}>
             <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem'}} />
         </div>
@@ -65,7 +65,7 @@ class HomePage extends Component {
         console.log('item show', item);
         // 注意此处div不能加key，否则会重复渲染
         return (<div name={ckey} className={styles.container}>
-          <MComponent key={item.pageName} params={item.params} />
+          <MComponent key={item.pageName} params={item.params} pageName={item.pageName} />
         </div>);
       }
       const style = {
@@ -73,7 +73,7 @@ class HomePage extends Component {
       };
       // 注意此处div不能加key，否则会重复渲染
       return (<div name={ckey} style={style} className={styles.container}>
-        <MComponent key={item.pageName} params={item.params} />
+        <MComponent key={item.pageName} params={item.params} pageName={item.pageName} />
               </div>);
     });
     let pageContent = null;
