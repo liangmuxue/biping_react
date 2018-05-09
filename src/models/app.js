@@ -128,7 +128,10 @@ const App = {
       if (success && response.data && response.flag === 0) {
         const { token, name, headUrl } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
-        const systemUser = { token, name, headUrl };
+        const { ifEnterGroup } = response.data;// 是否已经入群
+        const systemUser = {
+          token, name, headUrl, ifEnterGroup,
+        };
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',
