@@ -91,12 +91,7 @@ export default modelExtend(pageModel, {
       });
     },
 
-    *active({ params }, { put }) {
-      yield put({
-        type: 'toOpenDetail',
-        payload: params,
-      });
-    },
+
   },
 
   reducers: {

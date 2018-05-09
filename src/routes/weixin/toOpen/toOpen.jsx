@@ -35,7 +35,7 @@ class toOpenDetail extends Component {
     console.log('dddddddd', this);
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'enterGroup' },
+      payload: { pageName: 'enterGroup', params: { footerHide: true } },
     });
   }
   switchPayType(val) {
