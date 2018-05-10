@@ -34,7 +34,7 @@ class Join extends BaseComponent {
     if (params) {
       const { ifEnterGroup } = params;
       console.log('2222222', ifEnterGroup);
-      if (ifEnterGroup === 1) {
+      if (ifEnterGroup === 0) {
         console.log('33333333', ifEnterGroup);
         Toast.info('您已经加入过我们的群了', 2);
       } else {
@@ -73,13 +73,13 @@ class Join extends BaseComponent {
     const modal = (<Modal
       visible={showShare}
       transparent
-      maskClosable={false}
-      closable
+      maskClosable
+      closable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src={wechatImg} alt="" style={{ width: '6rem' }} />
+        <img src={wechatImg} alt="" style={{ width: '4.5rem' }} />
       </div>
                    </Modal>);
 
