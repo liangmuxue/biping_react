@@ -29,6 +29,8 @@ class BuyCard extends React.Component {
     const { msgObj } = this.props;
     console.log('msgObj888888', msgObj);
     const costNum = msgObj.cost;
+    const buyTypeCode = msgObj.buyTypeCode;
+    let newLogo = null;
     let newContent = null;
     if (costNum !== 0 && msgObj.inviteNum !== 0) {
       newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元,已邀请{msgObj.inviteNum}人</div>;
@@ -36,12 +38,18 @@ class BuyCard extends React.Component {
       newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元</div>;
     } else if (costNum === 0 && msgObj.inviteNum !== 0) {
       newContent = <div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>;
+    };
+    
+    if(buyTypeCode === 0) {
+      newLogo = <img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} />;
+    }else{
+      <img src="/images/buyHistoryImg/2.png" className={styles.leftlogo} />;
     }
     return (
       <Hammer onTap={this.handleTap.bind(this)}>
         <div className={styles.historyBox}>
           <div className={styles.tops}>
-            <div><img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} /></div>
+            <div>{newLogo}</div>
             <div className={styles.events}>{msgObj.buyType}</div>
             <div><span className={styles.watch}>查看</span><img src="/images/buyHistoryImg/right_arrow.png" className={styles.right_arrow} />
             </div>
@@ -50,7 +58,7 @@ class BuyCard extends React.Component {
           <div className={styles.bottoms}>
             <Card full>
               <Card.Header title={<div className={styles.btm_title}>{msgObj.buyContent}{msgObj.validityTime}</div>} />
-              <Card.Body>
+              <Card.Body style={{height:'.78rem'}}>
                 {newContent}
               </Card.Body>
               <Card.Footer content={<div className={styles.datas}>{msgObj.validity}</div>} />
