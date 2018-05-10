@@ -11,6 +11,7 @@ import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './enterGroup.less';
 import BaseComponent from '../baseComponent';
+import { config } from '../../../../config/environment';
 
 
 /**
@@ -66,6 +67,7 @@ class Join extends BaseComponent {
   }
 
   render() {
+    const { imgUrl } = config.env;
     const { showShare } = this.props;
     console.log('enterGroup44444', this.props);
     // 分享消息的图片链接
@@ -85,7 +87,7 @@ class Join extends BaseComponent {
 
     return (
       <div className={style.H5box}>
-        <div><img src="https://biping.oss-cn-beijing.aliyuncs.com/Static/images/wechat/middle.png" className={style.H5bg} /></div>
+        <div><img src={`${imgUrl}/Static/images/wechat/middle.png`} className={style.H5bg} /></div>
         <WingBlank>
           <Button className={style.joinBtn} onClick={this.shareClick.bind(this)} /><WhiteSpace />
         </WingBlank>
