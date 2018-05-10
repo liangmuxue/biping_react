@@ -52,8 +52,8 @@ const App = {
       let mockUserReal = null;
       if (mockUserStr) {
         mockUserReal = {
-          userName: '9174d49f-7f22-4476-8de4-11807',
-          passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
+          userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
+          passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
         };
       }
       // 开发环境模拟用户
