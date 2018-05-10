@@ -31,6 +31,7 @@ if (process.env.NODE_ENV === 'development') {
     userName: '400f55b9-1af3-4801-ae21-3fd2eb888296',
     passWord: '3376a304-def6-4c8b-8c75-52b044d33ebd',
   };
+  ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
