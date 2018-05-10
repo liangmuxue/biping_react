@@ -100,7 +100,9 @@ const App = {
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
         const userData = JSON.parse(userStr);
-        userData.code = code;
+        if (code) {
+          userData.code = code;
+        }
         const messageId = analysisParam('messageId');
         if (messageId) {
           userData.messageId = messageId;
