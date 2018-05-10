@@ -82,7 +82,7 @@ class MessageList extends BaseComponent {
         <div style={{ width: '100%', height: '.88rem' }} />
         <HeaderBar
           headerText={tagName}
-          backRouteLink={this.props.paramsData.backPath}
+          backRouteLink="indexMessage"
           {...this.props}
         />
         <InfiniteListView
