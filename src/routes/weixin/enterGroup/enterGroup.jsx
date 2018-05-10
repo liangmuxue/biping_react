@@ -57,7 +57,7 @@ class Join extends BaseComponent {
 
   componentWillMount() {
     console.log('componentWillMount in Join:', this.props);
-    // 统一分发请求参数
+    // 由于不请求，所以不走didupdate，所以统一从这里消除加载提示
     this.props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'enterGroup',
