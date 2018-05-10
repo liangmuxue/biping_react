@@ -41,8 +41,9 @@ class MessageList extends BaseComponent {
       payload: { pageName: 'SubList' },
     });
   }
-  componentDidMount() {
+  componentWillMount() {
     console.log('componentDidMount messageLisst', this.props);
+    super.componentWillMount();
     // 初始化时进行查询
     this.props.dispatch({
       type: 'messageList/msgQuery',
@@ -74,15 +75,16 @@ class MessageList extends BaseComponent {
       },
     });
     const height = document.documentElement.clientHeight + 200;
-    const { filter } = this.props;
-    const title = filter ? filter.tagName : '';
+    const { tagName } = this.props.paramsData;
     const key = 'messageList';
     return (
       <div>
         <div style={{ width: '100%', height: '.88rem' }} />
-        <HeaderBar headerText={title} backRouteLink={this.props.backPath} {...this.props} />
-        {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
-
+        <HeaderBar
+          headerText={tagName}
+          backRouteLink={this.props.paramsData.backPath}
+          {...this.props}
+        />
         <InfiniteListView
           bkey={key}
           {...messageListProps}
