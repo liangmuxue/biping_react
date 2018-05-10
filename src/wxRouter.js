@@ -141,6 +141,15 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/enterGroup/enterGroup'),
   });
+  // 付费成功页
+  const Result = dynamic({
+    app,
+    models: () => [
+       import('./models/result'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/result/result'),
+  });
 
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
@@ -176,6 +185,9 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'enterGroup',
     component: EnterGroup,
+  }, {
+    name: 'result',
+    component: Result,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -215,7 +227,7 @@ function RouterConfig({ history, app }) {
           <Route path="/toOpen" component={ToOpen} />
           <Route path="/noWechat" component={NoWechat} />
           <Route path="/enterGroup" component={EnterGroup} />
-
+          <Route path="/result" component={Result} />
           {routeInner}
         </div>
       </ConnectedRouter>

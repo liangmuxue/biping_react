@@ -34,7 +34,7 @@ class Join extends BaseComponent {
     if (params) {
       const { ifEnterGroup } = params;
       console.log('2222222', ifEnterGroup);
-      if (ifEnterGroup === 0) {
+      if (ifEnterGroup === 1) {
         console.log('33333333', ifEnterGroup);
         Toast.info('您已经加入过我们的群了', 2);
       } else {
@@ -85,7 +85,7 @@ class Join extends BaseComponent {
 
     return (
       <div className={style.H5box}>
-        <div><img src="/images/h5Img/H5.png" className={style.H5bg} /></div>
+        <div><img src="https://biping.oss-cn-beijing.aliyuncs.com/Static/images/wechat/middle.png" className={style.H5bg} /></div>
         <WingBlank>
           <Button className={style.joinBtn} onClick={this.shareClick.bind(this)} /><WhiteSpace />
         </WingBlank>
