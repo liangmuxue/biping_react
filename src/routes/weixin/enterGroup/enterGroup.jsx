@@ -73,8 +73,8 @@ class Join extends BaseComponent {
     const modal = (<Modal
       visible={showShare}
       transparent
-      maskClosable={false}
-      closable
+      maskClosable
+      closable={false}
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >
