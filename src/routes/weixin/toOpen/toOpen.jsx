@@ -58,7 +58,8 @@ class toOpenDetail extends BaseComponent {
     if (val) {
       commId = val;
     } else {
-      commId = this.props.toOpen;
+      console.log('ddddddddddddddddddddd888888', this.props);
+      commId = this.props.toOpen.commId;
     }
     console.log('toPayWechat in', params);
     const filter = { verbId: params.typeId, commoId: commId };
