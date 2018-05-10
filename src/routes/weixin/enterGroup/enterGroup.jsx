@@ -55,6 +55,15 @@ class Join extends BaseComponent {
     });
   }
 
+  componentWillMount() {
+    console.log('componentWillMount in Join:', this.props);
+    // 统一分发请求参数
+    this.props.dispatch({
+      type: 'pageConstruction/hideRouteLoading',
+      pageName: 'enterGroup',
+    });
+  }
+
   render() {
     const { showShare } = this.props;
     console.log('enterGroup44444', this.props);
@@ -72,7 +81,7 @@ class Join extends BaseComponent {
       <div style={{ overflow: 'hidden' }}>
         <img src={wechatImg} alt="" style={{ width: '6rem' }} />
       </div>
-    </Modal>);
+                   </Modal>);
 
     return (
       <div className={style.H5box}>
