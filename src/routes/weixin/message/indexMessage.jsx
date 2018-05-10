@@ -93,7 +93,6 @@ class MessageList extends BaseComponent {
           <MessageCard
             msgObj={rowData}
             cardClick={this.cardClick.bind(this)}
-            tagClick={this.tagClick.bind(this)}
           />
         );
       },

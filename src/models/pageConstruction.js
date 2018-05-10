@@ -67,7 +67,6 @@ const pcEntity = {
         if (modelName === 'subList') {
           modelName = 'subscribe';
         }
-        const st = yield select();
         console.log(`page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
@@ -145,10 +144,11 @@ const pcEntity = {
           });
         }
       }
-
+      // 透传请求参数，对应的model名称
       yield put({
         type: 'innerPageSwitched',
         params,
+        modelName: matchItem.modelName,
       });
     },
     *hideRouteLoading({ pageName }, { select, put }) {

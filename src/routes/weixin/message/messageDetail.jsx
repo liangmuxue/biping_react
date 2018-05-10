@@ -25,13 +25,14 @@ class MsgDetail extends BaseComponent {
     console.log('props in MsgDetail', props);
     super(props);
   }
-  componentDidMount() {
-    console.log('componentDidMount messageLisst', this.props);
+  componentWillMount() {
+    console.log('componentWillMount messageDetail', this.props);
     // 初始化时进行查询
     this.props.dispatch({
       type: 'messageDetail/detailQuery',
       payload: { ...this.props.params },
     });
+    super.componentWillMount();
   }
   // 去开通
   toOpen() {
@@ -83,12 +84,12 @@ class MsgDetail extends BaseComponent {
     });
   }
   // 跳转到信息类型列表页面
-  tagClick(msgObj) {
+  tagClick() {
     console.log('props in tagcli', this.props);
     const { tagId, tagName } = this.props.msgDetailData;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'messageList', params: { tagId, tagName } },
+      payload: { pageName: 'messageList', params: { tagId, tagName, backPath: 'messageDetail' } },
     });
   }
 
@@ -142,7 +143,7 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src={msgImgUrl} alt="" />
+          <img src={msgImgUrl} alt="" />
       </div>
     </Modal>);
 
@@ -170,7 +171,7 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-    const val = msgObj.content.replace(/ /g, "\u00a0");
+    const val = msgObj.content.replace(/ /g, '\u00a0');
     return (
       <div className={style.contentBox}>
         {modal}
@@ -193,8 +194,7 @@ class MsgDetail extends BaseComponent {
           </div>
 
           <div className={style.caption}>{msgObj.title}</div>
-          <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} >
-          </div>
+          <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
           <div className={style.toFriend}>
             <Hammer onTap={this.shareClick.bind(this)}>

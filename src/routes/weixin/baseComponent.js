@@ -6,6 +6,16 @@ import { innerPageDefs } from '../../wxRouter';
  * @extends Component
  */
 class BaseComponent extends Component {
+  componentWillMount() {
+    console.log('componentWillMount in base:', this.props);
+    const { modelName } = this.props;
+    const action = `${modelName}/paramsSet`;
+    // 统一分发请求参数
+    this.props.dispatch({
+      type: action,
+      payload: { params: this.props.params },
+    });
+  }
   componentDidUpdate(props) {
     console.log('componentDidUpdate in base', props);
     console.log('this is', this);

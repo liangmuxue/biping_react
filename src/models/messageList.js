@@ -44,20 +44,31 @@ export default modelExtend(pageModel, {
         },
       });
     },
-    *active({ params }, { put }) {
+    *active({ params, backArrow }, { put }) {
       console.log('effects active in messageList ', params);
-      const { tagId, tagName } = params;
+      console.log(`effects active in messageList backArrow:${backArrow}`);
+      // const { tagId, tagName } = params;
       yield put({
-        type: 'query',
-        payload: {
-          filter: { tagId, tagName },
-          modelDef: MODEL_DEF,
-          pagination: {
-            current: 0, // 当前页码
-            pageSize: 6, // 默认每页条目
-          },
-        },
+        type: 'app/hideRouteLoading',
       });
+      yield put({ type: 'paramsSetOk', payload: { params } });
+      // 如果从其他链接过来，则重新查询，如果从返回箭头过来，则不查
+      if (!backArrow) {
+        yield put({
+          type: 'query',
+          payload: {
+            modelDef: MODEL_DEF,
+            pagination: {
+              current: 0, // 当前页码
+              pageSize: 10, // 默认每页条目
+            },
+          },
+        });
+      } else {
+        console.log('need hideRouteLoading in active');
+        // 隐藏加载提示
+        yield put({ type: 'app/hideRouteLoading' });
+      }
     },
   },
 

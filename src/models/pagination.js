@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend';
 import Immutable from 'seamless-immutable';
 import { query } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
+import baseModel from './baseModel';
 
 /**
 * 用于分页的通用处理model
@@ -9,18 +10,8 @@ import { timeoutCall } from '../utils/asyncControll';
 * @date  18-01-11
 */
 
-const model = {
-  reducers: {
-    updateState(state, { payload }) {
-      return {
-        ...state,
-        ...payload,
-      };
-    },
-  },
-};
 
-const pageModel = modelExtend(model, {
+const pageModel = modelExtend(baseModel, {
   state: {
     // endpoint: '', // 子类设置
     filter: {}, // 子类设置
@@ -134,6 +125,6 @@ const pageModel = modelExtend(model, {
 
 
 module.exports = {
-  model,
+  baseModel,
   pageModel,
 };
