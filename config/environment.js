@@ -20,8 +20,8 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = true;
   ENV.mockUser = {
-    userName: '6f92cbe9-4a31-4bcc-8943-3725f9d8a4c6',
-    passWord: '9a5958aa-6c3e-4321-9f66-e5d05735f622',
+    userName: '9174d49f-7f22-4476-8de4-1180702c5c23',
+    passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
   };
   // ENV.mockUser = {
   //   userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
