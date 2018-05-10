@@ -25,13 +25,20 @@ const pcEntity = {
 
   effects: {
     // 底部菜单切换
-    *footMenuChoice({ payload,history }, { call, put }) {  // eslint-disable-line
+    *footMenuChoice({ payload,history }, { call, put ,select}) {  // eslint-disable-line
+      const { code } = payload.selectedMenu;
+      const { isFirst } = payload;
+      const { selectedMenu } = yield select(({ pageConstruction }) => pageConstruction);
+      console.log('selectedMenu is', selectedMenu);
+      // 屏蔽重复点击菜单,第一次进入时不拦截
+      if (selectedMenu.code === code && !isFirst) {
+        return;
+      }
       // 发送菜单切换项
       yield put({
         type: 'footMenuChoiced',
         payload,
       });
-      const { code } = payload.selectedMenu;
       // 进行内部页面跳转
       yield put({
         type: 'switchToInnerPage',

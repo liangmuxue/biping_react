@@ -164,12 +164,12 @@ const App = {
         if (ifVerb === 0) {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: menu },
+            payload: { selectedMenu: menu, isFirst: true },
           });
         } else {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: footMenus[1] },
+            payload: { selectedMenu: footMenus[1], isFirst: true },
           });
         }
       } else if (success && response.flag === 1001) {
