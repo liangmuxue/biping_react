@@ -19,6 +19,10 @@ if (process.env.NODE_ENV === 'development') {
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = true;
+  ENV.mockUser = {
+    userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
+    passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
+  };
   // ENV.mockUser = {
   //   userName: '9174d49f-7f22-4476-8de4-1180702c5c23',
   //   passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
