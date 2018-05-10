@@ -67,7 +67,6 @@ class Join extends BaseComponent {
       closable
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
-      footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.closeShare.bind(this); } }]}
     >
       <div style={{ overflow: 'hidden' }}>
         <img src={wechatImg} alt="" style={{ width: '6rem' }} />
