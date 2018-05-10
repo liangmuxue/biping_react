@@ -19,10 +19,10 @@ if (process.env.NODE_ENV === 'development') {
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = true;
-  ENV.mockUser = {
-    userName: '9174d49f-7f22-4476-8de4-1180702c5c23',
-    passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
-  };
+  // ENV.mockUser = {
+  //   userName: '9174d49f-7f22-4476-8de4-1180702c5c23',
+  //   passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
+  // };
   // ENV.mockUser = {
   //   userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
   //   passWord: '8c43d9ac-b9a6-4e6c-af81-0f6067934b31',
