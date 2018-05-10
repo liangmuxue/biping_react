@@ -82,7 +82,7 @@ class toOpenDetail extends BaseComponent {
       toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
     let selectedItem = null;
-    const systemUser = {};
+    const systemUser = this.props.systemUser;
     selectedItem = this.props.toOpen.selectedItem;
     if (selectedItem) {
       console.log('selectedItem', selectedItem);
@@ -129,7 +129,7 @@ class toOpenDetail extends BaseComponent {
 
 function mapStateToProps(state) {
   console.log('dd666666', state);
-  return { toOpen: state.toOpen };
+  return { toOpen: state.toOpen, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(toOpenDetail));

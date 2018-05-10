@@ -170,6 +170,11 @@ const App = {
             payload: { selectedMenu: footMenus[1] },
           });
         }
+      } else if (success && response.flag === 1001) {
+        const codenow = response.msg;
+        console.log('reconnect autoReg', codenow);
+        // 用户信息查询失败，重新进入注册流程
+        yield put({ type: 'autoReg', payload: { code: codenow } });
       } else {
         console.log('fail999999999');
         yield put({ type: 'tourLogin', payload: { attentionModal: true } });
