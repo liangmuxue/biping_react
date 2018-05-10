@@ -63,12 +63,12 @@ class MessageList extends BaseComponent {
 
     const { flag, list } = this.props.indexMessage;
     // 未开通大类别,需要判断list为空
-    if (flag && flag === 1001 && (!list || list.length === 0)) {
+    if (flag && flag === 1001) {
       console.log('pagination2222', flag);
       return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
     }
     // 未订阅小类别,需要判断list为空
-    if (flag && flag === 1002 && (!list || list.length === 0)) {
+    if (flag && flag === 1002) {
       return (<div className={styles.empty}>
         <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>暂无消息</div>
