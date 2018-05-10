@@ -70,6 +70,13 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    deactiveOk(state) {
+      console.log('deactive in indexmessage', state);
+      return {
+        ...state,
+        flag: 0,
+      };
+    },
   },
 
 });
