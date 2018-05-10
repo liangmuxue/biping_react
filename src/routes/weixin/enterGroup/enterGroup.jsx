@@ -5,11 +5,12 @@ import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Button from 'antd-mobile/lib/button/index';
 import Modal from 'antd-mobile/lib/modal/index';
 import 'antd-mobile/es/modal/style/index.css';
+import 'antd-mobile/es/toast/style/index.css';
+import Toast from 'antd-mobile/lib/toast/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './enterGroup.less';
 import BaseComponent from '../baseComponent';
-import Toast from 'antd-mobile/lib/toast/index';
 
 
 /**
@@ -76,7 +77,6 @@ class Join extends BaseComponent {
       closable
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
-      footer={[{ text: 'Ok', onPress: () => { console.log('ok'); this.closeShare.bind(this); } }]}
     >
       <div style={{ overflow: 'hidden' }}>
         <img src={wechatImg} alt="" style={{ width: '6rem' }} />

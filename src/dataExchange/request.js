@@ -1,5 +1,4 @@
 import axios from 'axios';
-import Kitsu from 'kitsu';
 import MockAdapter from 'axios-mock-adapter';
 import { config } from '../../config/environment';
 
