@@ -47,7 +47,7 @@ const App = {
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
       const { analysisParam } = urlUtils;
-      const userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
       if (mockUserStr) {
@@ -57,11 +57,11 @@ const App = {
         };
       }
       // 开发环境模拟用户
-      // if (mockUserReal) {
-      //   userStr = JSON.stringify(mockUserReal);
-      // } else if (mockUser) {
-      //   userStr = JSON.stringify(mockUser);
-      // }
+      if (mockUserReal) {
+        userStr = JSON.stringify(mockUserReal);
+      } else if (mockUser) {
+        userStr = JSON.stringify(mockUser);
+      }
 
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
