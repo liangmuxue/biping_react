@@ -30,7 +30,7 @@ class SubItem extends React.Component {
     console.log('itemObj is', itemObj);
     const extraBtn = (<Button
 
-      style={itemObj.isSub ? { background: '#DDDDDD', color: '#353535',width:'1.42rem', padding:0,lineHeight:".66rem"} : { width:'1.42rem', background: '#428BFF', color: '#fff', padding:0,lineHeight:'.65rem' }}
+      style={itemObj.isSub ? { background: '#DDDDDD', height: '.66rem',color: '#353535',width:'1.42rem', padding:0,lineHeight:".66rem"} : { width:'1.42rem',  height: '.66rem',background: '#428BFF', color: '#fff', padding:0,lineHeight:'.66rem' }}
       size="small"
       inline
       className={style.unreadBtn}

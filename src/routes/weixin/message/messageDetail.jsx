@@ -176,7 +176,7 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-    const val = msgObj.content.replace(/ /g, '\u00a0');
+    const val = msgObj.content.replace(/＆nbsp;/g,' ');
     return (
       <div className={style.contentBox}>
         {modal}
