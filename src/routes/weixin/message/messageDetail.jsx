@@ -142,7 +142,7 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div style={{ overflow: 'hidden' }}>
-        <img src={msgImgUrl} alt="" />
+          <img src={msgImgUrl} alt="" />
       </div>
     </Modal>);
 
