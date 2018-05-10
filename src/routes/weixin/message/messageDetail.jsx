@@ -39,14 +39,19 @@ class MsgDetail extends BaseComponent {
     const { dispatch, msgDetailData } = this.props;
     const { tagId, tagName } = msgDetailData;
     console.log('to open in md', this.props);
-    // 跳转到订阅包页面
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
-        pageName: 'toOpen',
-        params: { typeId: tagId, typeName: tagName, backPath: 'messageDetail' },
-      },
-    });
+    const { preventFlag } = this.props;
+    console.log(`preventFlag is:${preventFlag}`);
+    // 避免重复点击，用标志控制
+    if (!preventFlag) {
+      // 跳转到订阅包页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId: tagId, typeName: tagName, backPath: 'messageDetail' },
+        },
+      });
+    }
   }
   // 分享点击
   shareClick(event) {
@@ -143,7 +148,7 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div style={{ overflow: 'hidden' }}>
-          <img src={msgImgUrl} alt="" />
+        <img src={msgImgUrl} alt="" />
       </div>
     </Modal>);
 

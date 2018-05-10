@@ -52,8 +52,8 @@ const App = {
       let mockUserReal = null;
       if (mockUserStr) {
         mockUserReal = {
-          userName: 'a23edc92-5360-49cd-bffc-6bb3eabb2aa0',
-          passWord: '8c43d9ac-b9a6-4e6c-af81-0f6067934b31',
+          userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
+          passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
         };
       }
       // 开发环境模拟用户
@@ -100,7 +100,9 @@ const App = {
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
         const userData = JSON.parse(userStr);
-        userData.code = code;
+        if (code) {
+          userData.code = code;
+        }
         const messageId = analysisParam('messageId');
         if (messageId) {
           userData.messageId = messageId;

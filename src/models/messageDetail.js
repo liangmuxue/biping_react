@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
+import { timeoutCall } from '../utils/asyncControll';
 
 /**
 * 订阅消息详情
@@ -122,10 +123,37 @@ export default modelExtend(pageModel, {
         type: 'detailQuery',
         payload: params,
       });
+      // 防止重复点击，延时2秒后重置标志
+      yield call(timeoutCall, 2000);
+      console.log('preventFlag open');
+      yield put({
+        type: 'preventTagClick',
+        payload: { preventFlag: false },
+      });
+    },
+    *deactive({ params }, { put }) {
+      console.log('deactive in msgDetail');
+      // 防止重复点击，设置标志
+      yield put({
+        type: 'preventTagClick',
+        payload: { preventFlag: true },
+      });
+      // 清空本地数据
+      yield put({
+        type: 'emptyData',
+      });
     },
   },
 
   reducers: {
+    emptyData(state, action) {
+      console.log('emptyData in');
+      const { msgDetailData } = state;
+      msgDetailData.data = {};
+      return {
+        msgDetailData,
+      };
+    },
     queryDetailSuccess(state, action) {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);
@@ -156,6 +184,12 @@ export default modelExtend(pageModel, {
     msgLikeSuccess(state, action) {
       console.log('msgLikeSuccess in', action.payload);
       console.log('msgLikeSuccess state', state);
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+    preventTagClick(state, action) {
       return {
         ...state,
         ...action.payload,
