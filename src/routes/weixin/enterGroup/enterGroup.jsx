@@ -85,7 +85,7 @@ class Join extends BaseComponent {
 
     return (
       <div className={style.H5box}>
-        <div><img src="/images/h5Img/H5.png" className={style.H5bg} /></div>
+        <div><img src="https://biping.oss-cn-beijing.aliyuncs.com/Static/images/wechat/middle.png" className={style.H5bg} /></div>
         <WingBlank>
           <Button className={style.joinBtn} onClick={this.shareClick.bind(this)} /><WhiteSpace />
         </WingBlank>
