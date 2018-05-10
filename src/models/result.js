@@ -29,15 +29,7 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
-    queryDetailSuccess(state, action) {
-      console.log('queryDetailSuccess in', action.payload);
-      console.log('queryDetailSuccess state', state);
-      const { response } = action.payload;
-      return {
-        ...state,
-        ...response,
-      };
-    },
+
   },
 
 });
