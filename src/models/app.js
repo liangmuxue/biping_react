@@ -40,7 +40,7 @@ const App = {
         match = true;
       }
       console.log(`match is:${match}`);
-      if (wxBrowserCheck && match) {
+      if (wxBrowserCheck && !match) {
         dispatch({ type: 'noWechat' });
         dispatch({
           type: 'analysis',
