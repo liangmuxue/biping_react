@@ -36,11 +36,13 @@ function wechatPay(config) {
       (res) => {
         // alert(res.err_msg);
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
+          console.log('get_brand_wcpay_request:ok');
           result = 1;
         } // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
       },
     );
   }
+  console.log('get_brand_wcpay_request:no');
   return result;
 }
 export default modelExtend(pageModel, {
@@ -95,6 +97,7 @@ export default modelExtend(pageModel, {
       if (datanow && datanow.timeStamp) {
         const config = datanow;
         resultno = wechatPay(config);
+        console.log('777777779999999', resultno);
         if (resultno === 1) {
           console.log('777777777888888888');
           yield put({
