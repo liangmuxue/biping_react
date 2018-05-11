@@ -118,6 +118,13 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *shareMsg({ params }, { put, call }) {
+      yield call(timeoutCall, 200);
+      yield put({
+        type: 'shareMsgSuc',
+        payload: params,
+      });
+    },
     *active({ params }, { put, call }) {
       yield put({
         type: 'detailQuery',
@@ -168,7 +175,7 @@ export default modelExtend(pageModel, {
       };
     },
     // 分享给好友
-    shareMsg(state) {
+    shareMsgSuc(state) {
       return {
         ...state,
         showMsgShare: true,
