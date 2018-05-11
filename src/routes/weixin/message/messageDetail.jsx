@@ -134,7 +134,7 @@ class MsgDetail extends BaseComponent {
   render() {
     console.log('MsgDetail render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl,
+      msgDetailData, showMsgShare, params, imgUrl, imgDataStr,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -293,7 +293,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
-              <img src={imgShareUrl} crossOrigin="anonymous" alt="" />
+              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
             </div>
 
             <div className={style.bottomName}>【币评】</div>
