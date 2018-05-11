@@ -3,15 +3,17 @@ import ReactGA from 'react-ga';
 /**
 * 流量统计分析
 */
-export const analysis = {
+export const siteAnalysis = {
   init() {
     ReactGA.initialize('UA-117280811-2');
   },
 
-  pushEvent(category, action, optLabel, optValue) {
+  pushEvent(page, action, opt) {
+    console.log(`action is:${action}`);
     ReactGA.event({
-      category,
+      category: page,
       action,
+      opt,
     });
   },
 };

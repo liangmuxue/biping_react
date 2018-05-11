@@ -1,10 +1,11 @@
 import React from 'react';
-import { Switch, Route, Link, Redirect, routerRedux } from 'dva/router';
+import { Route, routerRedux } from 'dva/router';
 import dynamic from 'dva/dynamic';
 import 'react-hot-loader/patch';
 import { AppContainer } from 'react-hot-loader';
 import styles from './routes/weixin/app/index.less';
 import { urlUtils } from './utils/urlUtil.js';
+import { siteAnalysis } from './utils/siteAnalysis.js';
 
 const { ConnectedRouter } = routerRedux;
 const { analysisParam } = urlUtils;
@@ -208,6 +209,8 @@ function RouterConfig({ history, app }) {
   if (paramFix.length > 8) {
     mainpage += paramFix;
   }
+  // 流量分析系统初始化
+  siteAnalysis.init();
   // 路由定义，默认进入子路由mainpage
   return (
     <AppContainer>
