@@ -59,7 +59,6 @@ class MsgDetail extends BaseComponent {
     let imgUrl = null;
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
-    console.log('imgUrl', imgUrl);
     document.getElementById('showShare').style.display = 'block';
     html2canvas(document.getElementById('showShare')).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
