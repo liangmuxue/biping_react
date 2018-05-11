@@ -142,7 +142,9 @@ class MsgDetail extends BaseComponent {
     // 分享消息的图片链接
     const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+
     const modal = (<Modal
+      className={style.shareBg}
       visible={showMsgShare}
       transparent
       maskClosable={false}
@@ -150,9 +152,14 @@ class MsgDetail extends BaseComponent {
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >
-      <div style={{ overflow: 'hidden' }}>
+      <div>
+        <div style={{lineHeight:'.7rem'}}>
+              <span className={style.titleTips}>长按图片发送好友</span>
+                <img src='/images/msgImages/1.png' alt="" className={style.finger}/>
+            </div>
         <img src={msgImgUrl} alt="" />
       </div>
+
     </Modal>);
 
 
