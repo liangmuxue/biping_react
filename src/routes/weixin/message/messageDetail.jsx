@@ -61,24 +61,8 @@ class MsgDetail extends BaseComponent {
     const msgObj = msgDetailData.data;
     console.log('imgUrl', imgUrl);
     document.getElementById('showShare').style.display = 'block';
-    const defaultOptions = {
-      async: true,
-      allowTaint: true,
-      backgroundColor: '#ffffff',
-      imageTimeout: 15000,
-      logging: true,
-      proxy: null,
-      removeContainer: true,
-      foreignObjectRendering: false,
-      scale: defaultView.devicePixelRatio || 1,
-      target: new _CanvasRenderer2.default(config.canvas),
-      useCORS: false,
-      windowWidth: defaultView.innerWidth,
-      windowHeight: defaultView.innerHeight,
-      scrollX: defaultView.pageXOffset,
-      scrollY: defaultView.pageYOffset,
-    };
-    html2canvas(document.getElementById('showShare'), defaultOptions).then((canvas) => {
+
+    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('showShare').style.display = 'none';
       dispatch({
@@ -309,7 +293,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
-              <img src={imgShareUrl} alt="" />
+              <img src={imgShareUrl} crossOrigin="anonymous" alt="" />
             </div>
 
             <div className={style.bottomName}>【币评】</div>

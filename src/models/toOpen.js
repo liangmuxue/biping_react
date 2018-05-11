@@ -13,17 +13,10 @@ export const MODEL_DEF = {
   modelName: 'toOpen',
   endpoint: '',
 };
-function wechatPay(config) {
+async function wechatPay(config) {
   console.log('config111111', config);
-  let result = 0;
-  if (typeof WeixinJSBridge === 'undefined') {
-    if (document.addEventListener) {
-      // document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-    } else if (document.attachEvent) {
-      // document.attachEvent('WeixinJSBridgeReady', onBridgeReady);
-      // document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-    }
-  } else {
+  const result = 0;
+  return new Promise((resolve) => {
     WeixinJSBridge.invoke(
       'getBrandWCPayRequest', {
         appId: config.appId, // 公众号名称，由商户传入
@@ -36,12 +29,13 @@ function wechatPay(config) {
       (res) => {
         // alert(res.err_msg);
         if (res.err_msg === 'get_brand_wcpay_request:ok') {
-          result = 1;
-        } // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+          resolve(1);
+          return;
+        }
+        resolve(0);
       },
     );
-  }
-  return result;
+  });
 }
 export default modelExtend(pageModel, {
   namespace: MODEL_DEF.modelName,
@@ -94,7 +88,7 @@ export default modelExtend(pageModel, {
       let resultno = 0;
       if (datanow && datanow.timeStamp) {
         const config = datanow;
-        resultno = wechatPay(config);
+        resultno = yield call(wechatPay, config);
         if (resultno === 1) {
           console.log('777777777888888888');
           yield put({
@@ -127,23 +121,7 @@ export default modelExtend(pageModel, {
         paySuccess: false,
       };
     },
-    toOpenPayDetailSuccess(state, action) {
-      console.log('toOpenDetailSuccess in', action.payload);
-      const { data } = action.payload.response;
-      let result = 0;
-      if (data && data.timeStamp) {
-        const config = data;
-        result = wechatPay(config);
-        // WechatJSSDK.chooseWXPay();
-      }
-      const { response } = action.payload;
-      return {
-        ...state,
-        ...response,
-        routeActive: false, // 重置routeActive标志，避免重复查询
-        result,
-      };
-    },
+
     // 切换支付类别
     payTypeChange(state, action) {
       console.log('payTypeChange val', action.payload);

@@ -36,6 +36,13 @@ export const query = async function query(
   });
 };
 
+export const wechatPay = async function wechatPay(config) {
+  console.log('wechatPay in', config);
+  return new Promise((resolve) => {
+    resolve(1);
+  });
+};
+
 
 /**
 * @date        2018-04-22
