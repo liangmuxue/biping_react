@@ -1,8 +1,9 @@
 import React from 'react';
 import ListView from 'antd-mobile/lib/list-view/index';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator/index';
+import PullToRefresh from 'antd-mobile/lib/pull-to-refresh/index';
 import Toast from 'antd-mobile/lib/toast/index';
 import 'antd-mobile/es/toast/style/index.css';
-import style from './infiniteListView.less';
 
 /**
  * 无线滚动长列表，用于移动端使用
@@ -39,7 +40,7 @@ class InfiniteListView extends React.Component {
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);
     const {
-      loading, loadingShow,
+      loading,
     } = nextProps;
     // 如果是显示加载信息的内容，则不进行数据比较
     if (loading) {
@@ -59,7 +60,7 @@ class InfiniteListView extends React.Component {
 
   render() {
     const {
-      loading, onEndReached, pagination, bkey,
+      loading, onEndReached, pagination, bkey, onRefresh,
     } = this.props;
     console.log('render in infi', this.props);
     const endReached = (event) => {
@@ -71,6 +72,17 @@ class InfiniteListView extends React.Component {
       }
       // 调用父级方法，进行分页请求
       onEndReached();
+    };
+    const onRefreshAct = (event) => {
+      console.log('onRefreshAct in', event);
+      const dataSource = new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2,
+      });
+      this.state = {
+        dataSource,
+      };
+      // 调用父级方法，进行刷新请求
+      onRefresh();
     };
     const separator = (sectionID, rowID) => (
       <div
@@ -95,6 +107,15 @@ class InfiniteListView extends React.Component {
             height: this.props.height,
             overflow: 'auto',
           }}
+          pullToRefresh={<PullToRefresh
+            onRefresh={onRefreshAct}
+            distanceToRefresh={25}
+            indicator={{
+              release: <ActivityIndicator text="正在加载" size="samll" />,
+              finish: <div />,
+            }}
+
+          />}
           onScroll={() => { console.log('scroll'); }}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}

@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
-  ENV.wxBrowserCheck = true;
+  ENV.wxBrowserCheck = false;
   ENV.mockUser = {
     userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
     passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',

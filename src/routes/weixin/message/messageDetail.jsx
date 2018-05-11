@@ -127,7 +127,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, showMsgShare, params } = this.props;
     let ifEnterGroup = 0;
     if (params) {
-      ifEnterGroup = params.ifEnterGroup;
+      ({ ifEnterGroup } = params);
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
@@ -136,6 +136,9 @@ class MsgDetail extends BaseComponent {
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
+    if (!msgObj.mid) {
+      return null;
+    }
     // 分享消息的图片链接
     const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
