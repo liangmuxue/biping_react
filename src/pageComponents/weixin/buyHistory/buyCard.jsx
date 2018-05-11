@@ -39,11 +39,11 @@ class BuyCard extends React.Component {
     } else if (costNum === 0 && msgObj.inviteNum !== 0) {
       newContent = <div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>;
     };
-    
+
     if(buyTypeCode === 0) {
-      newLogo = <img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} />;
+      newLogo = <img src="/images/buyHistoryImg/2.png" className={styles.leftlogo} />;
     }else{
-      <img src="/images/buyHistoryImg/2.png" className={styles.leftlogo} />;
+      newLogo =  <img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} />;
     }
     return (
       <Hammer onTap={this.handleTap.bind(this)}>

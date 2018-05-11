@@ -23,7 +23,7 @@ class BaseComponent extends Component {
     const matchItem = innerPageDefs.def.filter((element) => {
       return element.name === self.props.pageName;
     })[0];
-    console.log('matchItem is', matchItem);
+    console.log('matchItem is', matchItem.name);
     props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: matchItem.name,

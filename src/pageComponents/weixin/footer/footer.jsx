@@ -40,6 +40,7 @@ function genFooterMenus({ dispatch, pageConstruction }) {
             icon={<div style={{
               width: '21px',
               height: '21px',
+              margin: '-0.1rem 0 0 0',
               background: menu.icon,
 }}
             />
@@ -47,6 +48,7 @@ function genFooterMenus({ dispatch, pageConstruction }) {
             selectedIcon={<div style={{
               width: '21px',
               height: '21px',
+              margin: '-0.1rem 0 0 0',
               background: menu.selectedIcon,
 }}
             />

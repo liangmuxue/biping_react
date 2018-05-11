@@ -53,6 +53,7 @@ const pcEntity = {
       const {
         pageName, params, direct, backArrow,
       } = payload;
+      console.log('switchToInnerPage55555', pageName);
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // 显示页面加载
       yield put({
@@ -117,6 +118,7 @@ const pcEntity = {
       }
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
+        console.log('pageConstruction66666666', pageName);
         if (pageName === 'subList') {
           const selectedMenu = footMenus[1];
           yield put({
@@ -126,6 +128,13 @@ const pcEntity = {
         }
         if (pageName === 'subDetail') {
           const selectedMenu = footMenus[1];
+          yield put({
+            type: 'footMenuChoiced',
+            payload: { selectedMenu },
+          });
+        }
+        if (pageName === 'indexMessage') {
+          const selectedMenu = footMenus[0];
           yield put({
             type: 'footMenuChoiced',
             payload: { selectedMenu },
