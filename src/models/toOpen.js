@@ -88,7 +88,12 @@ export default modelExtend(pageModel, {
       let resultno = 0;
       if (datanow && datanow.timeStamp) {
         const config = datanow;
+<<<<<<< HEAD
         resultno = yield call(wechatPay, config);
+=======
+        resultno = wechatPay(config);
+        console.log('777777779999999', resultno);
+>>>>>>> fdc86d9698b0c76e502cc396a2ecf16880d341c0
         if (resultno === 1) {
           console.log('777777777888888888');
           yield put({
