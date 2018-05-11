@@ -13,6 +13,7 @@ import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './messageDetail.less';
 import BaseComponent from '../baseComponent';
+import html2canvas from 'html2canvas';
 
 /**
 * 老人账号信息页面
@@ -55,16 +56,22 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick(event) {
+    let imgUrl = null;
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
-    console.log(`shareClick in:${msgObj.mid}`, event);
-    // event.prventDefault();
-    dispatch({
-      type: 'messageDetail/shareMsg',
-      payload: {
-        messageId: msgObj.mid,
-      },
+    console.log('imgUrl', imgUrl);
+    html2canvas(document.body).then((canvas) => {
+      console.log('dddddddddd');
+      imgUrl = canvas.toDataURL('image/png');
+      dispatch({
+        type: 'messageDetail/shareMsg',
+        payload: {
+          messageId: msgObj.mid,
+          imgUrl,
+        },
+      });
     });
+    // event.prventDefault();
   }
   // 类似消息的点击
   switchTitle(msg) {
@@ -124,7 +131,9 @@ class MsgDetail extends BaseComponent {
   }
   render() {
     console.log('MsgDetail render', this.props);
-    const { msgDetailData, showMsgShare, params } = this.props;
+    const {
+      msgDetailData, showMsgShare, params, imgUrl,
+    } = this.props;
     let ifEnterGroup = 0;
     if (params) {
       ({ ifEnterGroup } = params);
@@ -140,8 +149,9 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 分享消息的图片链接
-    // const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    const msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    const msgImgUrl = imgUrl;
+    console.log('msgImgUrl', msgImgUrl);
+    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
 
     const modal = (<Modal
       className={style.shareBg}
@@ -196,80 +206,99 @@ class MsgDetail extends BaseComponent {
     // 需要调到头部
     window.scrollTo(0, 0);
     return (
-      <div className={style.contentBox}>
-        {modal}
-        <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
-        <div className={style.fullBox} />
-        <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
-          <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
-          <div className={style.btnBox}>
-            <WingBlank>
-              <Button type="primary" onClick={this.toOpen.bind(this)} className={style.toButton}>去开通</Button><WhiteSpace />
-            </WingBlank>
+      // <div className={style.contentBox}>
+      //   {modal}
+      //   <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
+      //   <div className={style.fullBox} />
+      //   <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
+      //     <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
+      //     <div className={style.btnBox}>
+      //       <WingBlank>
+      //         <Button type="primary" onClick={this.toOpen.bind(this)} className={style.toButton}>去开通</Button><WhiteSpace />
+      //       </WingBlank>
+      //     </div>
+      //   </div>
+      //
+      //   <div className={style.notice}>
+      //     <div className={style.noticeTitle}>
+      //       <div className={style.times}>{msgObj.time}</div>
+      //       <Hammer >
+      //         <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+      //       </Hammer>
+      //     </div>
+      //
+      //     <div className={style.caption}>{msgObj.title}</div>
+      //     <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+      //
+      //     <div className={style.friendBox}>
+      //       <div className={style.toFriend}></div>
+      //       <Hammer onTap={this.shareClick.bind(this)}>
+      //         <a className={style.tofriends}>分享给好友</a>
+      //       </Hammer>
+      //     </div>
+      //
+      //   </div>
+      //
+      //   <div className={style.up}>
+      //     <div className={style.upCenter}>
+      //       <div className={style.upTitle}>所属标签</div>
+      //
+      //       <ul className={style.labels}>
+      //         {msgObj.tagList.map(msg =>
+      //             (
+      //               <li className={style.labelsList}>
+      //                 {msg.name}
+      //               </li>
+      //             ))}
+      //       </ul>
+      //
+      //       <div className={style.likesBox}>
+      //         <div className={style.like}>
+      //           {likeArea}
+      //         </div>
+      //         <div className={style.unlike}>
+      //           {unlikeArea}
+      //         </div>
+      //       </div>
+      //     </div>
+      //
+      //     <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
+      //       <div className={style.similarCenter}>
+      //         <div className={style.similarTitle}>类似消息</div>
+      //         <ul className={style.similarListUl}>
+      //           {msgObj.relateMsg.map(msg =>
+      //             (
+      //               <li className={style.similarListLi}>
+      //                 <Button
+      //                   onClick={() => this.switchTitle(msg)}
+      //                   className={style.similarList}
+      //                 >{msg.title}
+      //                 </Button>
+      //               </li>
+      //             ))}
+      //         </ul>
+      //       </div>
+      //     </div>
+      //   </div>
+      // </div>
+
+      <div>
+        <div className={style.picBox}>
+          <div className={style.picKinds}><span >交易所公告&nbsp;|&nbsp; 火币PRO</span></div>
+
+          <div className={style.picTitle}>火币全球专业站将于4月11日18:00上线ZRX/ETH交易</div>
+          <div className={style.picFonts}>火币全球专业站定于新加坡时间4月11日18:00在创新区开放ZRX/ETH交易。
           </div>
-        </div>
 
-        <div className={style.notice}>
-          <div className={style.noticeTitle}>
-            <div className={style.times}>{msgObj.time}</div>
-            <Hammer >
-              <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-            </Hammer>
+          <div className={style.wechatBox}>
+            <img src="/images/indexImg/wechat.png" alt="" />
           </div>
 
-          <div className={style.caption}>{msgObj.title}</div>
-          <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-
-          <div className={style.toFriend}>
-            <Hammer onTap={this.shareClick.bind(this)}>
-              <a>分享给好友</a>
-            </Hammer>
-          </div>
-
-        </div>
-
-        <div className={style.up}>
-          <div className={style.upCenter}>
-            <div className={style.upTitle}>所属标签</div>
-
-            <ul className={style.labels}>
-              {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                      {msg.name}
-                    </li>
-                  ))}
-            </ul>
-
-            <div className={style.likesBox}>
-              <div className={style.like}>
-                {likeArea}
-              </div>
-              <div className={style.unlike}>
-                {unlikeArea}
-              </div>
-            </div>
-          </div>
-
-          <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
-            <div className={style.similarCenter}>
-              <div className={style.similarTitle}>类似消息</div>
-              <ul className={style.similarListUl}>
-                {msgObj.relateMsg.map(msg =>
-                  (
-                    <li className={style.similarListLi}>
-                      <Button
-                        onClick={() => this.switchTitle(msg)}
-                        className={style.similarList}
-                      >{msg.title}
-                      </Button>
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </div>
+          <div className={style.bottomName}>【币评】</div>
+          <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
         </div>
       </div>
+
     );
   }
 }

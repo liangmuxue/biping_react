@@ -175,10 +175,13 @@ export default modelExtend(pageModel, {
       };
     },
     // 分享给好友
-    shareMsgSuc(state) {
+    shareMsg(state, action) {
+      const params = action.payload;
+      const { imgUrl } = params;
       return {
         ...state,
         showMsgShare: true,
+        imgUrl,
       };
     },
     // 关闭分享弹层

@@ -84,21 +84,31 @@ body{font-size:0.28rem;width: 100% !important;}
 .article span{
   font-size: .32rem !important;
 }
+.friendBox{
+  position: fixed;
+  left: 50%;
+  margin-left: -1.2rem;
+  bottom: 0%;
+  z-index: 99;
+        margin-bottom: 1.2rem;
+}
 .toFriend{
-      display: block;
-      position: fixed;
       width: 2.4rem;
       height: .8rem;
       background: #000000;
       opacity: .7;
       text-align: center;
-      line-height: .8rem;
-      left: 50%;
-      margin-left: -1.2rem;
       border-radius: .4rem;
-      bottom: 0%;
-      z-index: 99;
-      margin-bottom: 1.2rem;
+
+}
+.tofriends{
+  position: absolute;
+  top: 0;
+  color: #fff;
+  width: 2.4rem;
+  height: .8rem;
+  text-align: center;
+    line-height: .8rem;
 }
 .up{
   width: 100%;
@@ -236,4 +246,60 @@ body{font-size:0.28rem;width: 100% !important;}
   top: 0.2rem;
 	width: .28rem !important;
 	height: .32rem !important;
+}
+
+
+.picBox {
+    width: calc(744px * .4);
+    margin: 0 auto;
+    max-height: 500px;
+    background: url(/img/wx/dabai.png) no-repeat center;
+    background-size: calc(744px * .4) 986px;
+    color: #000;
+    padding-bottom: calc(66px * .4);
+    font-size: calc(36px * .4);
+    word-wrap:break-word;
+    background: #fff;
+}
+
+.picKinds {
+    font-size: calc(32px * .4);
+    color: #333;
+    margin-left: calc(72px * .4);
+    padding-top: calc(60px * .4);
+    margin-bottom: calc(20px * .4);
+
+}
+
+.picTitle {
+    width: calc(556px * .4);
+    margin: 0 calc(72px * .4) calc(40px * .4);
+    line-height: calc(66px * .4);
+    font-size: calc(44px * .4) !important;
+}
+
+
+.picFonts {
+    width: calc(556px * .4);
+    line-height: calc(54px * .4);
+    margin-left: calc(72px * .4);
+    height: 210px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    overflow: hidden;
+}
+
+
+.wechatBox {
+    margin: calc(60px * .4) auto calc(36px * .4);
+}
+
+.wechatBox, .wechatBox img {
+    width: calc(218px * .4) !important;
+    height: auto;
+}
+
+.content .bottomName, .content .bottomStation {
+    text-align: center;
 }
