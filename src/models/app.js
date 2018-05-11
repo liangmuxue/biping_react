@@ -36,22 +36,22 @@ const App = {
       const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
       let match = false;
-      if (window.WeixinJSBridge !== 'undefined') {
-        match = true;
-      }
-      console.log(`match is:${match}`);
-      if (wxBrowserCheck && match) {
-        dispatch({ type: 'noWechat' });
-        dispatch({
-          type: 'analysis',
-          payload: {
-            page: '消息列表页',
-            action: '未在微信端打开',
-            opt: { type: 'exc' },
-          },
-        });
-        return;
-      }
+      // if (window.WeixinJSBridge !== 'undefined') {
+      //   match = true;
+      // }
+      // console.log(`match is:${match}`);
+      // if (wxBrowserCheck && match) {
+      //   dispatch({ type: 'noWechat' });
+      //   dispatch({
+      //     type: 'analysis',
+      //     payload: {
+      //       page: '消息列表页',
+      //       action: '未在微信端打开',
+      //       opt: { type: 'exc' },
+      //     },
+      //   });
+      //   return;
+      // }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
@@ -232,7 +232,7 @@ const App = {
         pathname: '/noWechat',
       }));
     },
-    
+
     // 登录页面登录请求
     * login({
       payload,

@@ -181,7 +181,7 @@ class MsgDetail extends BaseComponent {
       <div className={style.contentBox}>
         {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
-        <div className={style.fullBox}>1111111111</div>
+        <div className={style.fullBox}></div>
         <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}>
