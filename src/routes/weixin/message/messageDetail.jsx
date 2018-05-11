@@ -13,6 +13,7 @@ import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './messageDetail.less';
 import BaseComponent from '../baseComponent';
+import html2canvas from 'html2canvas';
 
 /**
 * 老人账号信息页面
@@ -55,16 +56,22 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick(event) {
+    let imgUrl = null;
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
-    console.log(`shareClick in:${msgObj.mid}`, event);
-    // event.prventDefault();
-    dispatch({
-      type: 'messageDetail/shareMsg',
-      payload: {
-        messageId: msgObj.mid,
-      },
+    console.log('imgUrl', imgUrl);
+    html2canvas(document.body).then((canvas) => {
+      console.log('dddddddddd');
+      imgUrl = canvas.toDataURL('image/png');
+      dispatch({
+        type: 'messageDetail/shareMsg',
+        payload: {
+          messageId: msgObj.mid,
+          imgUrl,
+        },
+      });
     });
+    // event.prventDefault();
   }
   // 类似消息的点击
   switchTitle(msg) {
@@ -124,7 +131,9 @@ class MsgDetail extends BaseComponent {
   }
   render() {
     console.log('MsgDetail render', this.props);
-    const { msgDetailData, showMsgShare, params } = this.props;
+    const {
+      msgDetailData, showMsgShare, params, imgUrl,
+    } = this.props;
     let ifEnterGroup = 0;
     if (params) {
       ({ ifEnterGroup } = params);
@@ -140,7 +149,8 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 分享消息的图片链接
-    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    const msgImgUrl = imgUrl;
+    console.log('msgImgUrl', msgImgUrl);
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
 
     const modal = (<Modal
