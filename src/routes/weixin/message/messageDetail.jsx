@@ -61,8 +61,7 @@ class MsgDetail extends BaseComponent {
     const msgObj = msgDetailData.data;
     console.log('imgUrl', imgUrl);
     document.getElementById('showShare').style.display = 'block';
-    html2canvas(document.getElementById('showShare')).then((canvas) => {
-      console.log('dddddddddd');
+    html2canvas(document.getElementById('showShare'), { allowTaint: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('showShare').style.display = 'none';
       dispatch({
