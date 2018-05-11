@@ -60,7 +60,8 @@ class MsgDetail extends BaseComponent {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
     document.getElementById('showShare').style.display = 'block';
-    html2canvas(document.getElementById('showShare')).then((canvas) => {
+
+    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('showShare').style.display = 'none';
       dispatch({
@@ -132,7 +133,7 @@ class MsgDetail extends BaseComponent {
   render() {
     console.log('MsgDetail render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl,
+      msgDetailData, showMsgShare, params, imgUrl, imgDataStr,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -291,7 +292,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
-              <img src={imgShareUrl} alt="" />
+              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
             </div>
 
             <div className={style.bottomName}>【币评】</div>

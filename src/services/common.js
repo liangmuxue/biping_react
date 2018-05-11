@@ -1,4 +1,5 @@
 import request from '../dataExchange/request';
+import axios from 'axios';
 
 /**
  * 通用请求处理，封装filter，分页等
@@ -34,6 +35,17 @@ export const query = async function query(
     page,
     systemUser,
   });
+};
+
+/**
+ * 取得图片的base64字符串
+ */
+export const getImgString = async function getBase64(url) {
+  return axios
+    .get(url, {
+      responseType: 'arraybuffer',
+    })
+    .then(response => Buffer.from(response.data, 'binary').toString('base64'));
 };
 
 

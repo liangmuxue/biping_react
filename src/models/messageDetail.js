@@ -1,7 +1,8 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal } from '../services/common';
+import { queryNormal, getImgString } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
+import { config } from '../../config/environment';
 
 /**
 * 订阅消息详情
@@ -103,6 +104,10 @@ export default modelExtend(pageModel, {
       const {
         messageId, backPath, tagId, tagName,
       } = payload;
+      const imgShareUrl = `${config.env.imgShareUrl}/qrcode/${messageId}.png`;
+      let imgDataStr = yield call(getImgString, imgShareUrl);
+      console.log(`imgDataStr:${imgDataStr}`);
+      imgDataStr = `data:image/png;base64,${imgDataStr}`;
       const st = yield select();
       const endpoint = 'messageDetail';
       const filter = { messageId };
@@ -113,11 +118,13 @@ export default modelExtend(pageModel, {
       data.backPath = backPath;
       data.tagId = tagId;
       data.tagName = tagName;
+      data.imgDataStr = imgDataStr;
       yield put({
         type: 'queryDetailSuccess',
         payload: data,
       });
     },
+
     *shareMsg({ params }, { put, call }) {
       yield call(timeoutCall, 200);
       yield put({
@@ -165,10 +172,11 @@ export default modelExtend(pageModel, {
       console.log('queryDetailSuccess in', action.payload);
       console.log('queryDetailSuccess state', state);
       const {
-        response, backPath, tagId, tagName,
+        response, backPath, tagId, tagName, imgDataStr,
       } = action.payload;
       return {
         ...state,
+        imgDataStr,
         msgDetailData: { ...response, tagId, tagName },
         routeActive: false, // 重置routeActive标志，避免重复查询
         backPath,

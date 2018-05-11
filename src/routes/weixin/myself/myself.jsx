@@ -6,10 +6,9 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import List from 'antd-mobile/lib/list/index';
 import Switch from 'antd-mobile/lib/switch/index';
-import style from './myself.less';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
-
+import style from './myself.less';
 /**
 * 个人中心
 * @author 梁慕学
