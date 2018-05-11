@@ -166,14 +166,13 @@ const App = {
         });
         // 关注状态
         console.log('app query subscribe', subscribe);
-        let attentionModal = false;
         if (subscribe === 0) {
-          attentionModal = true;
+          yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
         if (messageId) {
           yield put({
             type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' }, attentionModal },
+            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
           });
           return;
         }
