@@ -232,6 +232,7 @@ const App = {
         pathname: '/noWechat',
       }));
     },
+    
     // 登录页面登录请求
     * login({
       payload,
