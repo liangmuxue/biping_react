@@ -142,28 +142,13 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid,
+          token, name, headUrl, uid, subscribe,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid,
+          token, name, headUrl, ifEnterGroup, uid, subscribe,
         };
-        // 成功后把用户数据存储到全局
-        yield put({
-          type: 'sysUserSet',
-          payload: {
-            systemUser,
-          },
-        });
-        console.log('app query suc');
-        if (messageId) {
-          yield put({
-            type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
-          });
-          return;
-        }
         // 海报分享查看页面
         if (sharePaper) {
           yield put({
@@ -172,6 +157,27 @@ const App = {
           });
           return;
         }
+        // 成功后把用户数据存储到全局
+        yield put({
+          type: 'sysUserSet',
+          payload: {
+            systemUser,
+          },
+        });
+        // 关注状态
+        console.log('app query subscribe', subscribe);
+        let attentionModal = false;
+        if (subscribe === 0) {
+          attentionModal = true;
+        }
+        if (messageId) {
+          yield put({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' }, attentionModal },
+          });
+          return;
+        }
+
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
         if (ifVerb === 0) {
