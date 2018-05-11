@@ -178,9 +178,14 @@ class MsgDetail extends BaseComponent {
         <span className={style.numbers}>不喜欢</span>
       </div>
                         </Hammer>);
-    let val = '';
-    if (msgObj.content) {
-      val = msgObj.content.replace(/＆nbsp;/g, ' ');
+
+    const val = msgObj.content.replace(/＆nbsp;/g, ' ');
+    // 类似消息不存在，隐藏
+    let hideRelateMsg = 0;
+    const { relateMsg } = msgObj;
+    console.log('relateMsg', relateMsg);
+    if (relateMsg === null) {
+      hideRelateMsg = 1;
     }
     return (
       <div className={style.contentBox}>
@@ -238,7 +243,7 @@ class MsgDetail extends BaseComponent {
             </div>
           </div>
 
-          <div className={style.similarBox}>
+          <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
             <div className={style.similarCenter}>
               <div className={style.similarTitle}>类似消息</div>
               <ul className={style.similarListUl}>
