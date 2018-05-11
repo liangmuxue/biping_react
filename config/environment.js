@@ -38,6 +38,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.socketHost = 'http://47.93.78.97:7090';
   ENV.host = 'http://wp.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
+  ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.msgShareUrl = 'http://img.test.tnb99.net/msg';
   ENV.wxBrowserCheck = true;

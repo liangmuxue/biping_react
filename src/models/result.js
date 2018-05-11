@@ -29,6 +29,13 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    resultSuccess(state, action) {
+      console.log('payTypeChange val', action.payload);
+      return {
+        ...state,
+        result: action.payload,
+      };
+    },
 
   },
 
