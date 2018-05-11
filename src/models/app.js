@@ -39,7 +39,7 @@ const App = {
       if (window.WeixinJSBridge !== 'undefined') {
         match = true;
       }
-      console.log(`match is:${match}`);
+      console.log(`match is1221212:${match}`);
       if (wxBrowserCheck && !match) {
         dispatch({ type: 'noWechat' });
         dispatch({
