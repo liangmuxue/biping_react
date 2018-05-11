@@ -108,11 +108,19 @@ export default modelExtend(pageModel, {
         // }
       }
     },
-
-
+    *active({ payload }, { put }) {
+      yield put({ type: 'app/hideRouteLoading' });
+      yield put({ type: 'toOpenDetailDirect' });
+    },
   },
 
   reducers: {
+    toOpenDetailDirect(state) {
+      return {
+        ...state,
+        paySuccess: false,
+      };
+    },
     toOpenDetailSuccess(state, action) {
       console.log('toOpenDetailSuccess in', action.payload);
       const { response, backPath } = action.payload;
