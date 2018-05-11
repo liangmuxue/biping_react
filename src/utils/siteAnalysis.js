@@ -1,6 +1,9 @@
 import ReactGA from 'react-ga';
 
-export const anaDataDefine = {
+/**
+* 流量统计分析
+*/
+export const siteAnalysis = {
   pageConst: {
     MAINPAGE: {
       code: 'main',
@@ -19,24 +22,6 @@ export const anaDataDefine = {
     BROWSE: {
       code: 'browse',
       zh: '正常打开',
-    },
-  },
-};
-
-/**
-* 流量统计分析
-*/
-export const siteAnalysis = {
-  pageConst: {
-    MAINPAGE: {
-      code: 'main',
-      zh: '首页面',
-    },
-  },
-  actConst: {
-    NOWECHAT: {
-      code: 'nowechat',
-      zh: '未在微信端打开',
     },
   },
 

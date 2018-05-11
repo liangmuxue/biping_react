@@ -65,7 +65,8 @@ const pageModel = modelExtend(baseModel, {
           list,
           backPath,
         });
-        if (endpoint === 'messageList' && payload.flag === 0) {
+        // 埋点：正常浏览
+        if (endpoint === 'messageList' && data.response.flag === 0) {
           yield put({
             type: 'app/analysis',
             payload: {
