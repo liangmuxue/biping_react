@@ -118,7 +118,14 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
-    *active({ params }, { put }) {
+    *shareMsg({ params }, { put, call }) {
+      yield call(timeoutCall, 200);
+      yield put({
+        type: 'shareMsgSuc',
+        payload: params,
+      });
+    },
+    *active({ params }, { put, call }) {
       yield put({
         type: 'detailQuery',
         payload: params,

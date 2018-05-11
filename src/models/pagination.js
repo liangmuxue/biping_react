@@ -3,6 +3,7 @@ import Immutable from 'seamless-immutable';
 import { query } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 import baseModel from './baseModel';
+import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
 * 用于分页的通用处理model
@@ -64,6 +65,15 @@ const pageModel = modelExtend(baseModel, {
           list,
           backPath,
         });
+        if (endpoint === 'messageList' && payload.flag === 0) {
+          yield put({
+            type: 'app/analysis',
+            payload: {
+              page: siteAnalysis.pageConst.MAINPAGE,
+              action: siteAnalysis.actConst.BROWSE,
+            },
+          });
+        }
       } else {
         throw data;
       }
