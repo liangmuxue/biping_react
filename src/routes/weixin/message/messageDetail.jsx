@@ -140,15 +140,14 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 分享消息的图片链接
-    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    // const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    const msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
 
     const modal = (<Modal
       className={style.shareBg}
       visible={showMsgShare}
       transparent
-      maskClosable={false}
-      closable
+      maskClosable
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >

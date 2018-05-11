@@ -40,14 +40,20 @@ const App = {
         match = true;
       }
       console.log(`match is1221212:${match}`);
+      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
+      let uid = null;
+      if (userStr) {
+        const user = JSON.parse(userStr);
+        ({ uid } = user);
+      }
       if (wxBrowserCheck && !match) {
         dispatch({ type: 'noWechat' });
         dispatch({
           type: 'analysis',
           payload: {
-            page: '消息列表页',
-            action: '未在微信端打开',
-            opt: { type: 'exc' },
+            page: siteAnalysis.pageConst.MAINPAGE,
+            action: siteAnalysis.actConst.NOWECHAT,
+            opt: { type: 'exc', uid },
           },
         });
         return;
@@ -56,7 +62,6 @@ const App = {
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
       const { analysisParam } = urlUtils;
-      let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
       if (mockUserStr) {
@@ -166,14 +171,13 @@ const App = {
         });
         // 关注状态
         console.log('app query subscribe', subscribe);
-        let attentionModal = false;
         if (subscribe === 0) {
-          attentionModal = true;
+          yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
         if (messageId) {
           yield put({
             type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' }, attentionModal },
+            payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
           });
           return;
         }
@@ -297,12 +301,15 @@ const App = {
         throw (data);
       }
     },
+    // ga调用
     *analysis({ payload }, { call, put, select }) {
       const { page, action, opt } = payload;
-      // const { systemUser } = yield select(({ app }) => app);
-      // opt.uid = systemUser.id;
+      const { systemUser } = yield select(({ app }) => app);
+      if (systemUser) {
+        opt.uid = systemUser.uid;
+      }
       const pageReal = `wx_${page}`;
-      siteAnalysis.pushEvent(pageReal, action, opt);
+      siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
   },

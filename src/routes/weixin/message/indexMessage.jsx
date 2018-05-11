@@ -11,6 +11,8 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
+
+
 /**
  * 消息列表页面
  * @author 梁慕学
