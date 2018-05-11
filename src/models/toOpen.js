@@ -83,21 +83,23 @@ export default modelExtend(pageModel, {
       const st = yield select();
       const filter = payload;
       const endpoint = 'subscribeverb';
-      const { verbId, commoId } = payload;
-      const params = { verbId, commoId };
+      const { verbId, commoId, typeName } = payload;
+      const data = { verbId, commoId };
+      console.log('query for toOpenPayDetail8888888', data);
       const dataReturn = yield call(queryNormal, {
-        endpoint, filter, params, method: 'POST',
+        endpoint, filter, data, method: 'POST',
       }, st);
-      console.log('verbCommodList data', data);
-      const { data } = dataReturn.response;
-      let result = 0;
-      if (data && data.timeStamp) {
-        const config = data;
-        result = wechatPay(config);
-        if (result === 0) {
+      console.log('verbCommodList data', dataReturn);
+      const datanow = dataReturn.response.data;
+      let resultno = 0;
+      if (datanow && datanow.timeStamp) {
+        const config = datanow;
+        resultno = wechatPay(config);
+        if (resultno === 0) {
+          console.log('777777777888888888');
           yield put({
             type: 'pageConstruction/switchToInnerPage',
-            payload: { pageName: 'result' },
+            payload: { pageName: 'result', params: { typeName } },
           });
         }
       }
@@ -140,12 +142,14 @@ export default modelExtend(pageModel, {
       let selectedItem = null;
       let commId = null;
       let firstEnter = null;
+      let typeName = null;
       state.toOpenData.data.forEach((item) => {
         if (item.commid === val.commid) {
           selectedItem = val.currentPrice / 100;
           commId = val.commid;
           item.checked = true;
           firstEnter = true;
+          typeName = val.name;
         } else {
           item.checked = false;
         }
@@ -155,6 +159,7 @@ export default modelExtend(pageModel, {
         selectedItem,
         commId,
         firstEnter,
+        typeName,
       };
     },
   },

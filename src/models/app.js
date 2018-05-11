@@ -130,11 +130,13 @@ const App = {
       console.log('ret in app query', ret);
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
-        const { token, name, headUrl } = response.data;
+        const {
+          token, name, headUrl, uid,
+        } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup,
+          token, name, headUrl, ifEnterGroup, uid,
         };
         // 成功后把用户数据存储到全局
         yield put({
@@ -220,7 +222,7 @@ const App = {
         pathname: '/noWechat',
       }));
     },
-    
+
     // 登录页面登录请求
     * login({
       payload,
@@ -292,6 +294,7 @@ const App = {
       const userInfo = {
         userName: systemUser.userName,
         passWord: systemUser.passWord,
+        uid: systemUser.uid,
       };
       window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
       return {
