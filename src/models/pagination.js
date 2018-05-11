@@ -68,6 +68,18 @@ const pageModel = modelExtend(baseModel, {
         throw data;
       }
     },
+    // 重新查询
+    *reQuery({ payload }, { put }) {
+      const {
+        modelDef,
+      } = payload;
+      console.log(`currentModel is:${modelDef.modelName}`);
+      /* eslint no-param-reassign: ["error", { "props": false }] */
+      // 清空分页信息以及原数据
+      payload.pagination = {};
+      payload.list = [];
+      yield put({ type: 'query', payload });
+    },
   },
   reducers: {
     showLoading(state, action) {
