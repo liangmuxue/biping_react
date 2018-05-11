@@ -79,30 +79,31 @@ const pcEntity = {
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
           // 从隐藏到显示
-          if (!matchPage.isShow) {
-            matchPage.isShow = true;
-            // 如果由非激活状态转变为激活状态，要进行页面通知
-            const actEvent = `${modelName}/active`;
-            console.log(`act name:${actEvent}`);
-            console.log('act params:', params);
-            yield put({
-              type: actEvent,
-              pageName,
-              params,
-              backArrow,
-            });
-          }
-        } else if (innerPageList[i].isShow) {
-          // 从显示到隐藏
-          innerPageList[i].isShow = false;
-          // 如果由激活状态转变为非激活状态，要进行页面通知
-          const deActive = `${modelName}/deactive`;
-          console.log(`need send deactive:${deActive}`);
+          matchPage.isShow = true;
+          // 如果由非激活状态转变为激活状态，要进行页面通知
+          const actEvent = `${modelName}/active`;
+          console.log(`act name:${actEvent}`);
+          console.log('act params:', params);
           yield put({
-            type: deActive,
+            type: actEvent,
             pageName,
             params,
+            backArrow,
           });
+        } else if (innerPageList[i].isShow) {
+          // 如果同一页面进出，不隐藏
+          if (innerPageList[i].pageName !== matchItem.pageName) {
+            // 从显示到隐藏
+            innerPageList[i].isShow = false;
+            // 如果由激活状态转变为非激活状态，要进行页面通知
+            const deActive = `${modelName}/deactive`;
+            console.log(`need send deactive:${deActive}`);
+            yield put({
+              type: deActive,
+              pageName,
+              params,
+            });
+          }
         }
       }
       // 如果没有匹配，则初始化此页面组件

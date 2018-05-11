@@ -72,12 +72,12 @@ class MsgDetail extends BaseComponent {
     const { tagId, tagName } = this.props.msgDetailData;
     // event.prventDefault();
     this.props.dispatch({
-      type: 'messageDetail/detailQuery',
+      type: 'pageConstruction/switchToInnerPage',
       payload: {
-        messageId: msg.id,
-        backPath: this.props.backPath,
-        tagId,
-        tagName,
+        pageName: 'messageDetail',
+        params: {
+          messageId: msg.id, backPath: this.props.backPath, tagId, tagName,
+        },
       },
     });
   }
@@ -187,11 +187,13 @@ class MsgDetail extends BaseComponent {
     if (relateMsg === null) {
       hideRelateMsg = 1;
     }
+    // 需要调到头部
+    window.scrollTo(0, 0);
     return (
       <div className={style.contentBox}>
         {modal}
         <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
-        <div className={style.fullBox}>1111111111</div>
+        <div className={style.fullBox}></div>
         <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
           <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
           <div className={style.btnBox}>
@@ -250,7 +252,11 @@ class MsgDetail extends BaseComponent {
                 {msgObj.relateMsg.map(msg =>
                   (
                     <li className={style.similarListLi}>
-                      <Button onClick={() => this.switchTitle(msg)} className={style.similarList}>{msg.title}</Button>
+                      <Button
+                        onClick={() => this.switchTitle(msg)}
+                        className={style.similarList}
+                      >{msg.title}
+                      </Button>
                     </li>
                   ))}
               </ul>

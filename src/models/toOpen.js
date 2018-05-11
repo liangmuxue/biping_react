@@ -91,28 +91,32 @@ export default modelExtend(pageModel, {
       }, st);
       console.log('verbCommodList data', dataReturn);
       const datanow = dataReturn.response.data;
-      const resultno = 0;
+      let resultno = 0;
       if (datanow && datanow.timeStamp) {
-        yield put({
-          type: 'pageConstruction/switchToInnerPage',
-          payload: { pageName: 'result', params: { typeName } },
-        });
-        // const config = datanow;
-        // resultno = wechatPay(config);
-        // if (resultno === 0) {
-        //   console.log('777777777888888888');
-        //   yield put({
-        //     type: 'pageConstruction/switchToInnerPage',
-        //     payload: { pageName: 'result', params: { typeName } },
-        //   });
-        // }
+        const config = datanow;
+        resultno = wechatPay(config);
+        if (resultno === 0) {
+          console.log('777777777888888888');
+          yield put({
+            type: 'paySuccess',
+            payload: { typeName },
+          });
+        }
       }
     },
-
-
+    *active({ payload }, { put }) {
+      yield put({ type: 'app/hideRouteLoading' });
+      yield put({ type: 'toOpenDetailDirect' });
+    },
   },
 
   reducers: {
+    toOpenDetailDirect(state) {
+      return {
+        ...state,
+        paySuccess: false,
+      };
+    },
     toOpenDetailSuccess(state, action) {
       console.log('toOpenDetailSuccess in', action.payload);
       const { response, backPath } = action.payload;
@@ -120,6 +124,7 @@ export default modelExtend(pageModel, {
         ...state,
         toOpenData: { ...response },
         backPath,
+        paySuccess: false,
       };
     },
     toOpenPayDetailSuccess(state, action) {
@@ -164,6 +169,19 @@ export default modelExtend(pageModel, {
         commId,
         firstEnter,
         typeName,
+      };
+    },
+    paySuccess(state, action) {
+      return {
+        ...state,
+        paySuccess: true,
+        ...action.payload,
+      };
+    },
+    resetPayFlag(state) {
+      return {
+        ...state,
+        paySuccess: false,
       };
     },
   },
