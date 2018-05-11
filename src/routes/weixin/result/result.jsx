@@ -9,6 +9,7 @@ import 'antd-mobile/es/result/style/index.css';
 import 'antd-mobile/es/icon/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './result.less';
+import BaseComponent from '../baseComponent';
 /**
  * 支付成功页面
  * @author 董超
@@ -16,40 +17,50 @@ import style from './result.less';
  */
 
 
-function genDynamics({ dispatch, accountInfo }) {
-  // const { customerName } = accountInfo;
-
-  return (
-    <div>
-      <div className={style.successPic}>
-        <img src="/images/result/result.png" />
-      </div>
-      <div className={style.successful}>购买成功</div>
-      <div className={style.successTip}>你已购买「交易所公告」3个月礼包</div>
-      <div className={style.toIndex}>
-        <WingBlank>
-          <Button type="primary" className={style.toButton} style={{ width: '6.9rem', height: '.88rem' }}>回首页</Button><WhiteSpace />
-        </WingBlank>
-      </div>
-    </div>
-
-
-  );
-}
-
-class AccountInfo extends Component {
+class AccountInfo extends BaseComponent {
   constructor(props) {
     console.log('props in AccountInfo', props);
     super(props);
   }
+  buttonClick() {
+    console.log('result to indexMessage');
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'indexMessage' },
+    });
+  }
+  componentWillMount() {
+    console.log('componentWillMount in result:', this.props);
+    // 由于不请求，所以不走didupdate，所以统一从这里消除加载提示
+    this.props.dispatch({
+      type: 'pageConstruction/hideRouteLoading',
+      pageName: 'result',
+    });
+  }
   render() {
-    console.log('AccountInfo render');
-    return genDynamics(this.props);
+    console.log('result payDetailSuccess', this.props);
+    const { params } = this.props;
+    const { typeName } = params;
+    console.log('result111111 payDetailSuccess', typeName);
+    return (
+      <div>
+        <div className={style.successPic}>
+          <img src="/images/result/result.png" />
+        </div>
+        <div className={style.successful}>购买成功</div>
+        <div className={style.successTip}>你已购买{typeName}</div>
+        <div className={style.toIndex}>
+          <WingBlank>
+            <Button type="primary" onClick={this.buttonClick.bind(this)} className={style.toButton} style={{ width: '6.9rem', height: '.88rem' }}>回首页</Button><WhiteSpace />
+          </WingBlank>
+        </div>
+      </div>
+    );
   }
 }
 
-function mapStateToProps({ state }) {
-  return { state };
+function mapStateToProps(state) {
+  return state;
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(AccountInfo));

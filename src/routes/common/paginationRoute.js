@@ -28,6 +28,24 @@ export function buildPagiProps(dispatch, config) {
         loading: config.loading,
       });
     },
+    // 定义下拉刷新的处理
+    onRefresh() {
+      const { modelName } = config.modelDef;
+      // 请求名的通用拼法
+      const disPatchType = `${modelName}/reQuery`;
+      // payload中需要连带modelDef和filter，用于后续分页查询
+      const payload = {
+        filter: config.filter,
+        pagination: config.pagination,
+        modelDef: config.modelDef,
+        list: config.list, // 透传全部数据集合
+      };
+      dispatch({
+        type: disPatchType,
+        payload,
+        loading: config.loading,
+      });
+    },
   });
   return props;
 }

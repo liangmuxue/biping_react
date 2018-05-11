@@ -4,7 +4,7 @@ import { queryNormal } from '../services/common';
 
 /**
 * 付费成功部分
-* @author 梁慕学
+* @author 赵永帅
 * @date  18-05-12
 */
 
@@ -29,6 +29,13 @@ export default modelExtend(pageModel, {
   },
 
   reducers: {
+    resultSuccess(state, action) {
+      console.log('payTypeChange val', action.payload);
+      return {
+        ...state,
+        result: action.payload,
+      };
+    },
 
   },
 

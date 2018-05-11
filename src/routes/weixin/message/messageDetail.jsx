@@ -127,7 +127,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, showMsgShare, params } = this.props;
     let ifEnterGroup = 0;
     if (params) {
-      ifEnterGroup = params.ifEnterGroup;
+      ({ ifEnterGroup } = params);
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
@@ -136,6 +136,9 @@ class MsgDetail extends BaseComponent {
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgObj);
+    if (!msgObj.mid) {
+      return null;
+    }
     // 分享消息的图片链接
     const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
@@ -176,7 +179,14 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-    const val = msgObj.content.replace(/＆nbsp;/g,' ');
+    const val = msgObj.content.replace(/＆nbsp;/g, ' ');
+    // 类似消息不存在，隐藏
+    let hideRelateMsg = 0;
+    const { relateMsg } = msgObj;
+    console.log('relateMsg', relateMsg);
+    if (relateMsg === null) {
+      hideRelateMsg = 1;
+    }
     return (
       <div className={style.contentBox}>
         {modal}
@@ -233,7 +243,7 @@ class MsgDetail extends BaseComponent {
             </div>
           </div>
 
-          <div className={style.similarBox}>
+          <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
             <div className={style.similarCenter}>
               <div className={style.similarTitle}>类似消息</div>
               <ul className={style.similarListUl}>

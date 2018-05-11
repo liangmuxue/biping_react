@@ -36,22 +36,22 @@ const App = {
       const { wxBrowserCheck, mockUser } = config.env;
       // 判断是否在微信浏览器打开
       let match = false;
-      // if (window.WeixinJSBridge !== 'undefined') {
-      //   match = true;
-      // }
-      // console.log(`match is:${match}`);
-      // if (wxBrowserCheck && match) {
-      //   dispatch({ type: 'noWechat' });
-      //   dispatch({
-      //     type: 'analysis',
-      //     payload: {
-      //       page: '消息列表页',
-      //       action: '未在微信端打开',
-      //       opt: { type: 'exc' },
-      //     },
-      //   });
-      //   return;
-      // }
+      if (window.WeixinJSBridge !== 'undefined') {
+        match = true;
+      }
+      console.log(`match is1221212:${match}`);
+      if (wxBrowserCheck && !match) {
+        dispatch({ type: 'noWechat' });
+        dispatch({
+          type: 'analysis',
+          payload: {
+            page: '消息列表页',
+            action: '未在微信端打开',
+            opt: { type: 'exc' },
+          },
+        });
+        return;
+      }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log('7777777777', hrefUrl);
@@ -141,11 +141,13 @@ const App = {
       console.log('ret in app query', ret);
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
-        const { token, name, headUrl } = response.data;
+        const {
+          token, name, headUrl, uid,
+        } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup,
+          token, name, headUrl, ifEnterGroup, uid,
         };
         // 成功后把用户数据存储到全局
         yield put({
@@ -312,6 +314,7 @@ const App = {
       const userInfo = {
         userName: systemUser.userName,
         passWord: systemUser.passWord,
+        uid: systemUser.uid,
       };
       window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
       return {
