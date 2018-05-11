@@ -95,7 +95,7 @@ export default modelExtend(pageModel, {
       if (datanow && datanow.timeStamp) {
         const config = datanow;
         resultno = wechatPay(config);
-        if (resultno === 0) {
+        if (resultno === 1) {
           console.log('777777777888888888');
           yield put({
             type: 'paySuccess',
