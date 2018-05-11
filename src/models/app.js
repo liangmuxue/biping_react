@@ -5,6 +5,7 @@ import * as constants from '../constants/constants';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { config } from '../../config/environment';
 import { urlUtils } from '../utils/urlUtil.js';
+import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
 * 全局数据逻辑
@@ -39,8 +40,16 @@ const App = {
         match = true;
       }
       console.log(`match is:${match}`);
-      if (wxBrowserCheck && !match) {
+      if (wxBrowserCheck && match) {
         dispatch({ type: 'noWechat' });
+        dispatch({
+          type: 'analysis',
+          payload: {
+            page: '消息列表页',
+            action: '未在微信端打开',
+            opt: { type: 'exc' },
+          },
+        });
         return;
       }
       // 进入主页面前，先进行身份识别
@@ -83,6 +92,8 @@ const App = {
           const sharePaper = analysisParam('sharePaper');
           // 海报分享查看页面
           if (sharePaper) {
+            // 埋点扫码进入中间页
+            siteAnalysis.pushEvent(0, '海报进入中间页', 'enter');
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
               payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup: 0 } },
@@ -218,6 +229,7 @@ const App = {
     },
     *noWechat({ payload }, { call, put, select }) {
       console.log('未在微信浏览器打开');
+
       yield put(routerRedux.push({
         pathname: '/noWechat',
       }));
@@ -278,6 +290,14 @@ const App = {
       } else {
         throw (data);
       }
+    },
+    *analysis({ payload }, { call, put, select }) {
+      const { page, action, opt } = payload;
+      // const { systemUser } = yield select(({ app }) => app);
+      // opt.uid = systemUser.id;
+      const pageReal = `wx_${page}`;
+      siteAnalysis.pushEvent(pageReal, action, opt);
+      yield 0;
     },
   },
   reducers: {
