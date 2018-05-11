@@ -68,6 +68,8 @@ class Join extends BaseComponent {
 
   render() {
     const { imgUrl } = config.env;
+    const nowUrl = `${imgUrl}/Static/images/wechat/middle.png`;
+    console.log('imgUrl', nowUrl);
     const { showShare } = this.props;
     console.log('enterGroup44444', this.props);
     // 分享消息的图片链接
@@ -87,7 +89,7 @@ class Join extends BaseComponent {
 
     return (
       <div className={style.H5box}>
-        <div><img src={`${imgUrl}/Static/images/wechat/middle.png`} className={style.H5bg} /></div>
+        <div><img src={nowUrl} className={style.H5bg} alt="暂无图片" /></div>
         <WingBlank>
           <Button className={style.joinBtn} onClick={this.shareClick.bind(this)} /><WhiteSpace />
         </WingBlank>
