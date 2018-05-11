@@ -171,7 +171,7 @@ const App = {
         });
         // 关注状态
         console.log('app query subscribe', subscribe);
-        if (subscribe === 0) {
+        if (subscribe === 1) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
         if (messageId) {
@@ -303,8 +303,11 @@ const App = {
     },
     // ga调用
     *analysis({ payload }, { call, put, select }) {
-      const { page, action, opt } = payload;
-      const { systemUser } = yield select(({ app }) => app);
+      const { page, action, opt = {} } = payload;
+      const st = yield select();
+      const { app } = st;
+      console.log('app in ana', app);
+      const { systemUser } = app;
       if (systemUser) {
         opt.uid = systemUser.uid;
       }
