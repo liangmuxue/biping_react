@@ -51,8 +51,8 @@ const App = {
         dispatch({
           type: 'analysis',
           payload: {
-            page: '消息列表页',
-            action: '未在微信端打开',
+            page: siteAnalysis.pageConst.MAINPAGE,
+            action: siteAnalysis.actConst.NOWECHAT,
             opt: { type: 'exc', uid },
           },
         });
@@ -310,7 +310,7 @@ const App = {
         opt.uid = systemUser.uid;
       }
       const pageReal = `wx_${page}`;
-      siteAnalysis.pushEvent(pageReal, action, opt);
+      siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
   },

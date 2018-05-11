@@ -11,6 +11,8 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
+import { siteAnalysis } from '../../../utils/siteAnalysis.js';
+
 /**
  * 消息列表页面
  * @author 梁慕学
@@ -69,6 +71,13 @@ class MessageList extends BaseComponent {
     }
     // 未订阅小类别,需要判断list为空
     if (flag && flag === 1002) {
+      this.props.dispatch({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.MAINPAGE,
+          action: siteAnalysis.actConst.NOOPEN,
+        },
+      });
       return (<div className={styles.empty}>
         <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>暂无消息</div>
