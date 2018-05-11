@@ -84,7 +84,14 @@ class HomePage extends Component {
     } else {
       pageContent = <div>没有权限查看</div>;
     }
-
+    // 弹层时禁止屏幕滑动
+    if (attentionModal) {
+      console.log('need disable scroll');
+      document.body.addEventListener('touchmove', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      }, false);
+    }
     return pageContent;
   }
 }

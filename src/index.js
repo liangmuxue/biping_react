@@ -32,8 +32,8 @@ app.router(require('./wxRouter').default);
 app.start('#root');
 
 // 去除href跳转链接
-function delateHerf() {
-  const aHerf = document.getElementByTagName('a');
-  aHerf.removeAttribute('href');
-}
-window.onload = delateHerf();
+// function delateHerf() {
+//   const aHerf = document.getElementByTagName('a');
+//   aHerf.removeAttribute('href');
+// }
+// window.onload = delateHerf();
