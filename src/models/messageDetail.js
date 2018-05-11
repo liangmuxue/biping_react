@@ -118,7 +118,7 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
-    *active({ params }, { put }) {
+    *active({ params }, { put, call }) {
       yield put({
         type: 'detailQuery',
         payload: params,
