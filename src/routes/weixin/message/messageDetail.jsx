@@ -8,10 +8,10 @@ import Button from 'antd-mobile/lib/button/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
+import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import style from './messageDetail.less';
 import BaseComponent from '../baseComponent';
 
 /**
@@ -140,8 +140,8 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 分享消息的图片链接
-    // const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
-    const msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
+    const msgImgUrl = `${config.env.msgShareUrl}/${msgObj.mid}.png`;
+    // const msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
 
     const modal = (<Modal
       className={style.shareBg}
