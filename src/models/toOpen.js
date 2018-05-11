@@ -94,8 +94,8 @@ export default modelExtend(pageModel, {
       const resultno = 0;
       if (datanow && datanow.timeStamp) {
         yield put({
-          type: 'pageConstruction/switchToInnerPage',
-          payload: { pageName: 'result', params: { typeName } },
+          type: 'paySuccess',
+          payload: { typeName },
         });
         // const config = datanow;
         // resultno = wechatPay(config);
@@ -120,6 +120,7 @@ export default modelExtend(pageModel, {
         ...state,
         toOpenData: { ...response },
         backPath,
+        paySuccess: false,
       };
     },
     toOpenPayDetailSuccess(state, action) {
@@ -164,6 +165,19 @@ export default modelExtend(pageModel, {
         commId,
         firstEnter,
         typeName,
+      };
+    },
+    paySuccess(state, action) {
+      return {
+        ...state,
+        paySuccess: true,
+        ...action.payload,
+      };
+    },
+    resetPayFlag(state) {
+      return {
+        ...state,
+        paySuccess: false,
       };
     },
   },

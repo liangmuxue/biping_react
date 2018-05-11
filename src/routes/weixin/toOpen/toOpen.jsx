@@ -14,6 +14,7 @@ import HeaderBar from '../../../components/headerBar';
 import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './toOpen.less';
+import styleResult from '../result/result.less';
 import BaseComponent from '../baseComponent';
 
 /**
@@ -48,9 +49,6 @@ class toOpenDetail extends BaseComponent {
       payload: val,
     });
   }
-  test() {
-    console.log('ddddddddddddddddddddd777777');
-  }
   toPayWechat(val) {
     const { params } = this.props;
     console.log('ddddddddddddddddddddd777777', val);
@@ -71,6 +69,13 @@ class toOpenDetail extends BaseComponent {
       payload: filter,
     });
   }
+  backButtonClick() {
+    console.log('result to indexMessage');
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'indexMessage' },
+    });
+  }
   componentDidMount() {
     console.log('componentDidMount messageLisst', this.props);
     // 初始化时进行查询
@@ -85,9 +90,32 @@ class toOpenDetail extends BaseComponent {
     const {
       toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
-    let selectedItem = null;
-    const systemUser = this.props.systemUser;
-    selectedItem = this.props.toOpen.selectedItem;
+    let { selectedItem } = this.props.toOpen;
+    const { paySuccess, typeName } = this.props.toOpen;
+    const { systemUser } = this.props;
+    // 如果是支付成功标志，则跳转到成功页面
+    if (paySuccess) {
+      return (
+        <div>
+          <div className={styleResult.successPic}>
+            <img src="/images/result/result.png" />
+          </div>
+          <div className={styleResult.successful}>购买成功</div>
+          <div className={styleResult.successTip}>你已购买{typeName}</div>
+          <div className={styleResult.toIndex}>
+            <WingBlank>
+              <Button
+                type="primary"
+                onClick={this.backButtonClick.bind(this)}
+                className={styleResult.toButton}
+                style={{ width: '6.9rem', height: '.88rem' }}
+              >回首页
+              </Button><WhiteSpace />
+            </WingBlank>
+          </div>
+        </div>
+      );
+    }
     if (selectedItem) {
       console.log('selectedItem', selectedItem);
       isHide = false;
