@@ -91,21 +91,17 @@ export default modelExtend(pageModel, {
       }, st);
       console.log('verbCommodList data', dataReturn);
       const datanow = dataReturn.response.data;
-      const resultno = 0;
+      let resultno = 0;
       if (datanow && datanow.timeStamp) {
-        yield put({
-          type: 'paySuccess',
-          payload: { typeName },
-        });
-        // const config = datanow;
-        // resultno = wechatPay(config);
-        // if (resultno === 0) {
-        //   console.log('777777777888888888');
-        //   yield put({
-        //     type: 'pageConstruction/switchToInnerPage',
-        //     payload: { pageName: 'result', params: { typeName } },
-        //   });
-        // }
+        const config = datanow;
+        resultno = wechatPay(config);
+        if (resultno === 0) {
+          console.log('777777777888888888');
+          yield put({
+            type: 'paySuccess',
+            payload: { typeName },
+          });
+        }
       }
     },
     *active({ payload }, { put }) {
