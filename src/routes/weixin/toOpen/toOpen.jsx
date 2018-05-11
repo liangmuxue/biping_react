@@ -96,19 +96,18 @@ class toOpenDetail extends BaseComponent {
     // 如果是支付成功标志，则跳转到成功页面
     if (paySuccess) {
       return (
-        <div>
-          <div className={styleResult.successPic}>
+        <div className={style.successBox}>
+          <div className={style.successPic}>
             <img src="/images/result/result.png" />
           </div>
-          <div className={styleResult.successful}>购买成功</div>
-          <div className={styleResult.successTip}>你已购买{typeName}</div>
-          <div className={styleResult.toIndex}>
+          <div className={style.successful}>购买成功</div>
+          <div className={style.successTip}>你已购买{typeName}</div>
+          <div className={style.toIndex}>
             <WingBlank>
               <Button
                 type="primary"
                 onClick={this.backButtonClick.bind(this)}
-                className={styleResult.toButton}
-                style={{ width: '6.9rem', height: '.88rem' }}
+                className={style.toIndex}
               >回首页
               </Button><WhiteSpace />
             </WingBlank>

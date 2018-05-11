@@ -153,10 +153,10 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div>
-        <div style={{lineHeight:'.7rem'}}>
-              <span className={style.titleTips}>长按图片发送好友</span>
-                <img src='/images/msgImages/1.png' alt="" className={style.finger}/>
-            </div>
+        <div style={{ lineHeight: '.7rem' }}>
+          <span className={style.titleTips}>长按图片发送好友</span>
+          <img src="/images/msgImages/1.png" alt="" className={style.finger} />
+        </div>
         <img src={msgImgUrl} alt="" />
       </div>
 
@@ -190,8 +190,8 @@ class MsgDetail extends BaseComponent {
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
-    console.log('relateMsg', relateMsg);
-    if (relateMsg === null) {
+    console.log('relateMsg', relateMsg.length);
+    if (relateMsg.length === 0) {
       hideRelateMsg = 1;
     }
     // 需要调到头部
