@@ -171,7 +171,7 @@ const App = {
         });
         // 关注状态
         console.log('app query subscribe', subscribe);
-        if (subscribe === 0) {
+        if (subscribe === 1) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
         if (messageId) {
