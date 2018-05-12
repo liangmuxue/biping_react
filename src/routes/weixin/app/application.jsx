@@ -49,7 +49,7 @@ class HomePage extends Component {
     // 翻页加载提示区域
     const pagiLoadingTip = (
       <div className={pagiLoading ? styles.loading : styles.loadingHide}>
-        <img src="/images/loading.gif" alt="" />
+        <img src="/images/loading.gif" style={{ width: '.4rem', height: '.4rem' }} />
       </div>
     );
     // 当前已有页面，与内部页面定义进行匹配及显示

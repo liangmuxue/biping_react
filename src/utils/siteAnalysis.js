@@ -87,9 +87,13 @@ export const siteAnalysis = {
 
   pushEvent(pageDef, actionDef, opt) {
     ReactGA.event({
-      category: pageDef.code,
+      category: `wx_${pageDef.code}`,
       action: actionDef.code,
       opt,
     });
+  },
+
+  setField(key, value) {
+    ReactGA.set({ [key]: value });
   },
 };

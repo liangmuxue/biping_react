@@ -1,7 +1,8 @@
-set ssh_string tiannianbao@47.93.78.97
+set ssh_string root@47.75.50.237
 spawn ssh $ssh_string
+
 expect "~]$"
-send "cd webapp\r"
+send "cd /data/biping-webapp \r"
 expect "~]$"
 send "unzip -o webapp.zip\r"
 expect eof

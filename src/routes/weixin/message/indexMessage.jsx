@@ -90,7 +90,7 @@ class MessageList extends BaseComponent {
       ...messageList,
       pageSize: this.props.indexMessage.paginationDef.pageSize,
       renderRow: (rowData, sectionID, rowID) => {
-        console.log('rowData is', rowData);
+        // console.log('rowData is', rowData);
         return (
           <MessageCard
             msgObj={rowData}
