@@ -30,6 +30,8 @@ const App = {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      // 流量分析系统初始化
+      siteAnalysis.init();
       // 清理手机缓存
       // localStorage.clear();
       // 开发环境忽略
@@ -169,6 +171,8 @@ const App = {
             systemUser,
           },
         });
+        // 初始化ga中的uid
+        siteAnalysis.setField('uid', systemUser.uid);
         // 关注状态
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
