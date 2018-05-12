@@ -235,7 +235,7 @@ class MsgDetail extends BaseComponent {
             </div>
 
             <div className={style.caption}>{msgObj.title}</div>
-            <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+            <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.friendBox}>
               <div className={style.toFriend} />
