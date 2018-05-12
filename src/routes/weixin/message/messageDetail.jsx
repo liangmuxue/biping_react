@@ -208,103 +208,25 @@ class MsgDetail extends BaseComponent {
     // 需要调到头部
     window.scrollTo(0, 0);
     return (
-      <div>
-        <div className={style.contentBox}>
-          {modal}
-          <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
-          <div className={style.fullBox} />
-          <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
-            <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
-            <div className={style.btnBox}>
-              <WingBlank>
-                <Button type="primary" onClick={this.toOpen.bind(this)} className={style.toButton}>去开通</Button><WhiteSpace />
-              </WingBlank>
-            </div>
+      <div id="showShare">
+        <div className={style.alertBg}>
+          <div style={{ lineHeight: '1.07rem', height: '1.07rem' }}>
+            <span className={style.titleTips}>长按图片发送好友</span>
+            <img src="/images/msgImages/1.png" alt="" className={style.finger} />
           </div>
+          <div className={style.picBox}>
+            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
 
-          <div className={style.notice}>
-            <div className={style.noticeTitle}>
-              <div className={style.times}>{msgObj.time}</div>
-              <Hammer >
-                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-              </Hammer>
+            <div className={style.picTitle}>{msgObj.title}</div>
+            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
+
+            <div className={style.wechatBox}>
+              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
             </div>
 
-            <div className={style.caption}>{msgObj.title}</div>
-            <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-
-            <div className={style.friendBox}>
-              <div className={style.toFriend} />
-              <Hammer onTap={this.shareClick.bind(this)}>
-                <a className={style.tofriends}>分享给好友</a>
-              </Hammer>
-            </div>
-
+            <div className={style.bottomName}>【币评】</div>
+            <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
           </div>
-
-          <div className={style.up}>
-            <div className={style.upCenter}>
-              <div className={style.upTitle}>所属标签</div>
-
-              <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                      {msg.name}
-                    </li>
-                  ))}
-              </ul>
-
-              <div className={style.likesBox}>
-                <div className={style.like}>
-                  {likeArea}
-                </div>
-                <div className={style.unlike}>
-                  {unlikeArea}
-                </div>
-              </div>
-            </div>
-
-            <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
-              <div className={style.similarCenter}>
-                <div className={style.similarTitle}>类似消息</div>
-                <ul className={style.similarListUl}>
-                  {msgObj.relateMsg.map(msg =>
-                  (
-                    <li className={style.similarListLi}>
-                      <Button
-                        onClick={() => this.switchTitle(msg)}
-                        className={style.similarList}
-                      >{msg.title}
-                      </Button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div  className={style.hide} id="showShare">
-            <div className={style.alertBg}>
-              <div style={{ lineHeight: '1.07rem', height: '1.07rem' }}>
-                <span className={style.titleTips}>长按图片发送好友</span>
-                <img src="/images/msgImages/1.png" alt="" className={style.finger} />
-              </div>
-              <div className={style.picBox}>
-                <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
-
-                <div className={style.picTitle}>{msgObj.title}</div>
-                <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
-
-                <div className={style.wechatBox}>
-                  <img src={imgDataStr} crossOrigin="anonymous" alt="" />
-                </div>
-
-                <div className={style.bottomName}>【币评】</div>
-                <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
-              </div>
-            </div>
         </div>
       </div>
 
