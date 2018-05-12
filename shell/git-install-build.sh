@@ -1,3 +1,5 @@
+#!/bin/bash
+
 codePath="/data/biping_react"
 homePath="/data/biping_react"
 shellPath="/data/biping_react/shell"
@@ -15,7 +17,7 @@ read -p  "生产库（1） 测试环境(2) 退出（3）" choic
 if [ $choic -eq 1 ]
 then
         echo "打包 生产库"
-        deploy_path="/data/biping-webapp"
+        deploy_path="/data/productserver/biping-webapp"
         env_file="product_env.js"
         expectitem="product"
 elif [ $choic -eq 2 ]
