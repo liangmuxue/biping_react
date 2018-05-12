@@ -33,8 +33,8 @@ if (process.env.NODE_ENV === 'development') {
   //   passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
   // };
   ENV.mockUser = {
-    userName: '400f55b9-1af3-4801-ae21-3fd2eb888296',
-    passWord: '3376a304-def6-4c8b-8c75-52b044d33ebd',
+    userName: 'f21116fa-9f1d-4b18-8ccf-a43d76fe4903',
+    passWord: 'e5585b3b-6f21-4c98-997f-9c2fb1d338b4',
   };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
 }
