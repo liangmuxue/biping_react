@@ -75,9 +75,17 @@ export const siteAnalysis = {
       code: 'nousersmtmessagedetail',
       zh: '非用户扫码进入消息详情',
     },
+    USERTOMIDDLE: {
+      code: 'usertogroup',
+      zh: '关注用户进中间页',
+    },
+    NOUSERTOMIDDLE: {
+      code: 'usertogroup',
+      zh: '非关注用户进中间页',
+    },
     GROUPTOUSER: {
       code: 'grouptouser',
-      zh: '群用户转化',
+      zh: '群裂变开通权限用户',
     },
   },
 

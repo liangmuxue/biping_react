@@ -95,6 +95,14 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+          // 非关注用户扫码进消息详情埋点
+          dispatch({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.MESSAGEDETAIL,
+              action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+            },
+          });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
           const sharePaper = analysisParam('sharePaper');
           // 海报分享查看页面
@@ -104,6 +112,14 @@ const App = {
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
               payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup: 0 } },
+            });
+            // 非关注用户扫码进中间页
+            dispatch({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.ENTERGROUP,
+                action: siteAnalysis.actConst.NOUSERTOMIDDLE,
+              },
             });
           }
         } else {
@@ -149,18 +165,36 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe,
+          token, name, headUrl, uid, subscribe, isFirstEnter,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
           token, name, headUrl, ifEnterGroup, uid, subscribe,
         };
+        // 群裂变开通权限用户
+        if (isFirstEnter && isFirstEnter === 'yes') {
+          yield put({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.INDEXMESSAGE,
+              action: siteAnalysis.actConst.GROUPTOUSER,
+            },
+          });
+        }
         // 海报分享查看页面
         if (sharePaper) {
           yield put({
             type: 'pageConstruction/switchToInnerPage',
             payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup } },
+          });
+          // 关注用户扫码进中间页
+          yield put({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.ENTERGROUP,
+              action: siteAnalysis.actConst.USERTOMIDDLE,
+            },
           });
           return;
         }

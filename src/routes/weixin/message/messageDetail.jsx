@@ -160,7 +160,7 @@ class MsgDetail extends BaseComponent {
       }, false);
     }
     const modal = (<Modal
-      className={style.delateBg}
+      className={style.shareBg}
       visible={showMsgShare}
       transparent
       maskClosable
@@ -168,6 +168,12 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div>
+        <div>
+          <div className={style.shareBox}>
+            <h2>长按图片发送给好友 <img src="images/msgImages/1.png" style={{ width: '.24rem', height: '.28rem' }} /></h2>
+
+          </div>
+        </div>
         <img src={msgImgUrl} alt="" />
       </div>
 
@@ -208,12 +214,85 @@ class MsgDetail extends BaseComponent {
     // 需要调到头部
     window.scrollTo(0, 0);
     return (
-      <div id="showShare">
-        <div className={style.alertBg}>
-          <div style={{ lineHeight: '1.07rem', height: '1.07rem' }}>
-            <span className={style.titleTips}>长按图片发送好友</span>
-            <img src="/images/msgImages/1.png" alt="" className={style.finger} />
+      <div>
+        <div className={style.contentBox}>
+          {modal}
+          <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
+          <div className={style.fullBox} />
+          <div className={ifEnterGroup === 0 ? style.bannerBox : style.hide}>
+            <div><img src="/images/details/banner.png" className={style.bannerPic} /></div>
+            <div className={style.btnBox}>
+              <WingBlank>
+                <Button type="primary" onClick={this.toOpen.bind(this)} className={style.toButton}>去开通</Button><WhiteSpace />
+              </WingBlank>
+            </div>
           </div>
+
+          <div className={style.notice}>
+            <div className={style.noticeTitle}>
+              <div className={style.times}>{msgObj.time}</div>
+              <Hammer >
+                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+              </Hammer>
+            </div>
+
+            <div className={style.caption}>{msgObj.title}</div>
+            <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+
+            <div className={style.friendBox}>
+              <div className={style.toFriend} />
+              <Hammer onTap={this.shareClick.bind(this)}>
+                <a className={style.tofriends}>分享给好友</a>
+              </Hammer>
+            </div>
+
+          </div>
+
+          <div className={style.up}>
+            <div className={style.upCenter}>
+              <div className={style.upTitle}>所属标签</div>
+
+              <ul className={style.labels}>
+                {msgObj.tagList.map(msg =>
+                  (
+                    <li className={style.labelsList}>
+                      {msg.name}
+                    </li>
+                  ))}
+              </ul>
+
+              <div className={style.likesBox}>
+                <div className={style.like}>
+                  {likeArea}
+                </div>
+                <div className={style.unlike}>
+                  {unlikeArea}
+                </div>
+              </div>
+            </div>
+
+            <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
+              <div className={style.similarCenter}>
+                <div className={style.similarTitle}>类似消息</div>
+                <ul className={style.similarListUl}>
+                  {msgObj.relateMsg.map(msg =>
+                  (
+                    <li className={style.similarListLi}>
+                      <Button
+                        onClick={() => this.switchTitle(msg)}
+                        className={style.similarList}
+                      >{msg.title}
+                      </Button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="showShare">
+
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
 
@@ -224,8 +303,15 @@ class MsgDetail extends BaseComponent {
               <img src={imgDataStr} crossOrigin="anonymous" alt="" />
             </div>
 
-            <div className={style.bottomName}>【币评】</div>
-            <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
+            <div className={style.bottomCopy}>
+              <div>
+                <div className={style.copytop}>
+                  <img src="/images/msgImages/copy.png" style={{ width: '.35rem', height: '.4rem' }} />&nbsp;biping.io
+                </div>
+
+                <div>【币评】你最想要的币市信息</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

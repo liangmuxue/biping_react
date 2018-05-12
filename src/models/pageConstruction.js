@@ -55,7 +55,10 @@ const pcEntity = {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
       // 页面名称转大写
-      const upPageName = pageName.toUpperCase();
+      let upPageName = null;
+      if (pageName) {
+        upPageName = pageName.toUpperCase();
+      }
       console.log('currentPage', currentPage);
       let fromPath = null;
       if (params) {
