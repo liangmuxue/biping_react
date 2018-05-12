@@ -9,6 +9,10 @@ export const siteAnalysis = {
       code: 'main',
       zh: '首页面',
     },
+    MSGDETAIL: {
+      code: 'messageDetail',
+      zh: '消息详情',
+    },
   },
   actConst: {
     NOWECHAT: {
@@ -22,6 +26,10 @@ export const siteAnalysis = {
     BROWSE: {
       code: 'browse',
       zh: '正常打开',
+    },
+    MSGLISTTAG: {
+      code: 'msgListTag',
+      zh: '点击消息类别标签',
     },
   },
 
