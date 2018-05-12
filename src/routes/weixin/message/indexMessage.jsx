@@ -64,6 +64,7 @@ class MessageList extends BaseComponent {
     }
 
     const { flag, list } = this.props.indexMessage;
+    console.log(`flag inx is:${flag}`);
     // 未开通大类别,需要判断list为空
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
