@@ -57,7 +57,7 @@ class MessageList extends BaseComponent {
     });
   }
   render() {
-    console.log('cd render in indexMessage', this.props);
+    console.log('cd renders in indexMessage', this.props);
     const { indexMessage } = this.props;
     if (!indexMessage) {
       return null;

@@ -28,14 +28,14 @@ if (process.env.NODE_ENV === 'development') {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
   //   passWord: '20165a11-0c4e-490b-83a7-162d914e17a5',
   // };
-  // ENV.mockUser = {
-  //   userName: '9174d49f-7f22-4476-8de4-1180702c5c23',
-  //   passWord: '227abf4f-5a6f-43f9-b3a2-9a89cfb1510f',
-  // };
   ENV.mockUser = {
-    userName: 'f21116fa-9f1d-4b18-8ccf-a43d76fe4903',
-    passWord: 'e5585b3b-6f21-4c98-997f-9c2fb1d338b4',
+    userName: 'ffc475f2-7f9f-4509-9dea-56fe9dab76bc',
+    passWord: '9afb6ab3-1fb3-4833-8286-9b33512eaa78',
   };
+  // ENV.mockUser = {
+  //   userName: 'f21116fa-9f1d-4b18-8ccf-a43d76fe4903',
+  //   passWord: 'e5585b3b-6f21-4c98-997f-9c2fb1d338b4',
+  // };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
