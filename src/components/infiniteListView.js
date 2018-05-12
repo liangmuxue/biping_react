@@ -2,8 +2,8 @@ import React from 'react';
 import ListView from 'antd-mobile/lib/list-view/index';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator/index';
 import PullToRefresh from 'antd-mobile/lib/pull-to-refresh/index';
-import Toast from 'antd-mobile/lib/toast/index';
 import 'antd-mobile/es/toast/style/index.css';
+import styles from './infiniteListView.less';
 
 /**
  * 无线滚动长列表，用于移动端使用
@@ -104,7 +104,7 @@ class InfiniteListView extends React.Component {
     const renderRowInner = (rowData, sectionID, rowID) => {
       console.log('renderRowInner rowData:', rowData);
       if (rowData.noMoreTip && rowData.noMoreTip === 1) {
-        return <div>没有更多内容了</div>;
+        return <div className={styles.noMoreTip}>没有更多内容了</div>;
       } else {
         return renderRow(rowData, sectionID, rowID);
       }
