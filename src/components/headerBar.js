@@ -15,12 +15,13 @@ class HeaderBar extends React.Component {
     super(props);
   }
   backTo() {
-    const { dispatch, backRouteLink } = this.props;
-    console.log(`need back to:${backRouteLink}`);
+    const { dispatch, backRouteLink, pageName } = this.props;
+    console.log('currentPath', this.props);
+    const currentPage = pageName;
     // 跳转到之前的页面
     dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: backRouteLink, backArrow: true },
+      payload: { pageName: backRouteLink, backArrow: true, currentPage },
     });
   }
 

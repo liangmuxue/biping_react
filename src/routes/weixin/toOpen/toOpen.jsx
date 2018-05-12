@@ -24,9 +24,6 @@ import BaseComponent from '../baseComponent';
  */
 
 const { CheckboxItem } = Checkbox;
-const { AgreeItem } = Checkbox;
-const WechatJSSDK = require('weixin-js-sdk');
-
 
 class toOpenDetail extends BaseComponent {
   constructor(props) {

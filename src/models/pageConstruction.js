@@ -1,5 +1,6 @@
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { innerPageDefs } from '../wxRouter';
+import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
 * 总体页面状态及跳转逻辑
@@ -51,8 +52,45 @@ const pcEntity = {
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
       const {
-        pageName, params, direct, backArrow,
+        pageName, params, direct, backArrow, currentPage,
       } = payload;
+      // 页面名称转大写
+      const upPageName = pageName.toUpperCase();
+      console.log('currentPage', currentPage);
+      let fromPath = null;
+      if (params) {
+        fromPath = params.backPath;
+        console.log('switchToInnerPageupPageName', fromPath);
+      }
+      if (fromPath === null) {
+        fromPath = pageName;
+      }
+      let opt = null;
+      // 埋点：正常浏览，点击进入
+      if (!backArrow) {
+        opt = { fromPath };
+        yield put({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst[upPageName],
+            action: siteAnalysis.actConst.BROWSE,
+            opt,
+          },
+        });
+      }
+      // 上导航返回
+      if (backArrow) {
+        fromPath = currentPage;
+        opt = { fromPath };
+        yield put({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst[upPageName],
+            action: siteAnalysis.actConst.BACK,
+            opt,
+          },
+        });
+      }
       console.log('switchToInnerPage55555', pageName);
       const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // 显示页面加载
@@ -135,6 +173,13 @@ const pcEntity = {
         }
         if (pageName === 'indexMessage') {
           const selectedMenu = footMenus[0];
+          yield put({
+            type: 'footMenuChoiced',
+            payload: { selectedMenu },
+          });
+        }
+        if (pageName === 'buyHistory') {
+          const selectedMenu = footMenus[2];
           yield put({
             type: 'footMenuChoiced',
             payload: { selectedMenu },

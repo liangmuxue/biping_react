@@ -179,6 +179,25 @@ const App = {
             type: 'pageConstruction/switchToInnerPage',
             payload: { pageName: 'messageDetail', params: { messageId, backPath: 'indexMessage' } },
           });
+          if (subscribe === 0) {
+            // 非关注用户扫码进消息详情埋点
+            yield put({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.MESSAGEDETAIL,
+                action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+              },
+            });
+          } else if (subscribe === 1) {
+            // 关注用户扫码进消息详情埋点
+            yield put({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.MESSAGEDETAIL,
+                action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+              },
+            });
+          }
           return;
         }
 
