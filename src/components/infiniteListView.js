@@ -60,18 +60,26 @@ class InfiniteListView extends React.Component {
 
   render() {
     const {
-      loading, onEndReached, pagination, bkey, onRefresh,
+      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list,
     } = this.props;
     console.log('render in infi', this.props);
     const endReached = (event) => {
       console.log('reach end', event);
       if (loading || !pagination.hasMore) {
-        console.log('end no more');
-        Toast.info('没有更多的内容了', 2);
-        return;
+        console.log('end no more,list', list);
+        if (this.state.noMoreTipShow) {
+          return;
+        }
+        // 直接在组件state中添加提示没有更多
+        list.push({ noMoreTip: 1 });
+        this.setState({
+          dataSource: this.state.dataSource.cloneWithRows(list),
+          noMoreTipShow: true,
+        });
+      } else {
+        // 调用父级方法，进行分页请求
+        onEndReached();
       }
-      // 调用父级方法，进行分页请求
-      onEndReached();
     };
     const onRefreshAct = (event) => {
       console.log('onRefreshAct in', event);
@@ -93,13 +101,20 @@ class InfiniteListView extends React.Component {
     if (pagination) {
       ({ pageSize } = pagination);
     }
-    console.log(`pageSize in infi:${pageSize} with key:${bkey}`);
+    const renderRowInner = (rowData, sectionID, rowID) => {
+      console.log('renderRowInner rowData:', rowData);
+      if (rowData.noMoreTip && rowData.noMoreTip === 1) {
+        return <div>没有更多内容了</div>;
+      } else {
+        return renderRow(rowData, sectionID, rowID);
+      }
+    };
     const listView = (
       <div>
         <ListView
           ref={el => this.lv = el}
           dataSource={this.state.dataSource}
-          renderRow={this.props.renderRow}
+          renderRow={renderRowInner}
           renderSeparator={separator}
           className="am-list"
           pageSize={pageSize}
@@ -121,6 +136,7 @@ class InfiniteListView extends React.Component {
           onEndReached={endReached}
           onEndReachedThreshold={10}
         />
+        {this.state.noMoreTip}
       </div>
     );
     return listView;
