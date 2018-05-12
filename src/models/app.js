@@ -95,6 +95,14 @@ const App = {
             payload: { pageName: 'messageDetail', params: { messageId, backPath } },
           });
           dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+          // 非关注用户扫码进消息详情埋点
+          dispatch({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.MESSAGEDETAIL,
+              action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+            },
+          });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
           const sharePaper = analysisParam('sharePaper');
           // 海报分享查看页面
@@ -104,6 +112,14 @@ const App = {
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
               payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup: 0 } },
+            });
+            // 非关注用户扫码进中间页
+            dispatch({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.ENTERGROUP,
+                action: siteAnalysis.actConst.NOUSERTOMIDDLE,
+              },
             });
           }
         } else {
@@ -161,6 +177,14 @@ const App = {
           yield put({
             type: 'pageConstruction/switchToInnerPage',
             payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup } },
+          });
+          // 非关注用户扫码进中间页
+          yield put({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.ENTERGROUP,
+              action: siteAnalysis.actConst.USERTOMIDDLE,
+            },
           });
           return;
         }
