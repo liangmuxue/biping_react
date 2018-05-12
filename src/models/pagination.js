@@ -97,8 +97,10 @@ const pageModel = modelExtend(baseModel, {
       let pagination = {};
       // 设置是否还有更多内容的标志
       let hasMore = true;
+      const flagReal = parseInt(flag);
+      console.log(`flag Realis:${flagReal}`);
       // 只有flag为0，才有分页信息
-      if (parseInt(flag, 0) === 0) {
+      if (flagReal === 0) {
         // 根据服务器返回的分页属性，重置本地分页信息
         pagination = {
           current: pager.number,
@@ -112,7 +114,7 @@ const pageModel = modelExtend(baseModel, {
       }
       console.log(`rtn hasMore:${hasMore}`);
       return {
-        flag,
+        flag: flagReal,
         ...state,
         // 透传当前的filter和基本定义
         filter,

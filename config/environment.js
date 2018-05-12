@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
-  ENV.wxBrowserCheck = true;
+  ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   // ENV.mockUser = {
   //   userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
@@ -37,6 +37,9 @@ if (process.env.NODE_ENV === 'development') {
     passWord: 'e5585b3b-6f21-4c98-997f-9c2fb1d338b4',
   };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
+  ENV.wxScanurl = 'http://localhost:4200/index.html';
+  ENV.imgShareUrl = 'http://img.test.tnb99.net';
+  ENV.wxBrowserCheck = true;
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
