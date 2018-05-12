@@ -114,7 +114,6 @@ const pageModel = modelExtend(baseModel, {
       }
       console.log(`rtn hasMore:${hasMore}`);
       return {
-        flag: flagReal,
         ...state,
         // 透传当前的filter和基本定义
         filter,
@@ -132,6 +131,7 @@ const pageModel = modelExtend(baseModel, {
           ...pagination,
           hasMore,
         },
+        flag,
       };
     },
   },
