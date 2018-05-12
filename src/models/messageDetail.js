@@ -126,7 +126,7 @@ export default modelExtend(pageModel, {
     },
 
     *shareMsg({ params }, { put, call }) {
-      yield call(timeoutCall, 200);
+      yield call(timeoutCall, 50);
       yield put({
         type: 'shareMsgSuc',
         payload: params,

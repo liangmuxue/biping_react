@@ -153,7 +153,12 @@ class MsgDetail extends BaseComponent {
     const msgImgUrl = imgUrl;
     const imgShareUrl = `${config.env.imgShareUrl}/qrcode/${msgObj.mid}.png`;
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
-
+    if (showMsgShare) {
+      document.body.addEventListener('touchmove', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+      }, false);
+    }
     const modal = (<Modal
       className={style.shareBg}
       visible={showMsgShare}
