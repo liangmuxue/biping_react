@@ -83,6 +83,10 @@ export const siteAnalysis = {
       code: 'usertogroup',
       zh: '非关注用户进中间页',
     },
+    GROUPTOUSER: {
+      code: 'grouptouser',
+      zh: '群裂变开通权限用户',
+    },
   },
 
   init() {
