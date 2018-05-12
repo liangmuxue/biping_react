@@ -219,8 +219,7 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 .shareBg{
   background: #1D3D70;
-  border-radius: .08rem;
-  padding:0rem .62rem .5rem;
+  padding:0rem .62rem 0rem;
   box-sizing: border-box;
   position: relative;
 }
@@ -238,10 +237,14 @@ body{font-size:0.28rem;width: 100% !important;}
   color: #fff;
   text-align: left;
 }
+.delateBg{
+  background: none!important;
+  border:none;
+}
 .finger{
   position: absolute;
-  right: .9rem;
-  top: 0.5rem;
+  right: 2.1rem;
+  top: 0.37rem;
 	width: .28rem !important;
 	height: .32rem !important;
 }
@@ -271,17 +274,21 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 
 .picTitle {
-    width: calc(556px * .4);
+    box-sizing: border-box;
     margin: 0 calc(72px * .4) calc(40px * .4);
     line-height: calc(66px * .4);
     font-size: calc(44px * .4) !important;
+    height: 1.1rem;
+    overflow: hidden;
+    word-break: break-all;
+
 }
 
 
 .picFonts {
-    width: calc(556px * .4);
+    box-sizing: border-box;
     line-height: calc(54px * .4);
-    margin-left: calc(72px * .4);
+    margin: 0 calc(72px * .4);
     height: 210px;
     word-break: break-all;
     -webkit-box-orient: vertical;
@@ -305,4 +312,11 @@ body{font-size:0.28rem;width: 100% !important;}
 
 .content .bottomName, .content .bottomStation {
     text-align: center;
+}
+.alertBg{
+    box-sizing: border-box;
+  background: #1D3D70;
+  padding:0rem .62rem .5rem;
+
+  position: relative;
 }

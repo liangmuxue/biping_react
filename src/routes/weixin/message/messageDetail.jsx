@@ -155,7 +155,7 @@ class MsgDetail extends BaseComponent {
     // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
 
     const modal = (<Modal
-      className={style.shareBg}
+      className={style.delateBg}
       visible={showMsgShare}
       transparent
       maskClosable
@@ -163,10 +163,6 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div>
-        <div style={{ lineHeight: '.7rem' }}>
-          <span className={style.titleTips}>长按图片发送好友</span>
-          <img src="/images/msgImages/1.png" alt="" className={style.finger} />
-        </div>
         <img src={msgImgUrl} alt="" />
       </div>
 
@@ -284,20 +280,26 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div className={style.hide} id="showShare">
-          <div className={style.picBox}>
-            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
+        <div  className={style.hide} id="showShare">
+            <div className={style.alertBg}>
+              <div style={{ lineHeight: '1.07rem', height: '1.07rem' }}>
+                <span className={style.titleTips}>长按图片发送好友</span>
+                <img src="/images/msgImages/1.png" alt="" className={style.finger} />
+              </div>
+              <div className={style.picBox}>
+                <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
 
-            <div className={style.picTitle}>{msgObj.title}</div>
-            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
+                <div className={style.picTitle}>{msgObj.title}</div>
+                <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
-            <div className={style.wechatBox}>
-              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
+                <div className={style.wechatBox}>
+                  <img src={imgDataStr} crossOrigin="anonymous" alt="" />
+                </div>
+
+                <div className={style.bottomName}>【币评】</div>
+                <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
+              </div>
             </div>
-
-            <div className={style.bottomName}>【币评】</div>
-            <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
-          </div>
         </div>
       </div>
 
