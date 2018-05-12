@@ -40,7 +40,6 @@ class HomePage extends Component {
     // 加载提示区域
     const loadingTip = (
       <div>
-        <div className={routeLoading ? styles.loadBg : styles.loadBgHide} />
         <div className={routeLoading ? styles.loading : styles.loadingHide}>
           <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem' }} />
         </div>
@@ -48,7 +47,7 @@ class HomePage extends Component {
     );
     // 翻页加载提示区域
     const pagiLoadingTip = (
-      <div className={pagiLoading ? styles.loading : styles.loadingHide}>
+      <div className={pagiLoading ? styles.load : styles.loadingHide}>
         <img src="/images/loading.gif" style={{ width: '.4rem', height: '.4rem' }} />
       </div>
     );
