@@ -6,6 +6,7 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import List from 'antd-mobile/lib/list/index';
 import Switch from 'antd-mobile/lib/switch/index';
+import Hammer from 'react-hammerjs';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import style from './myself.less';
@@ -53,6 +54,11 @@ class BasicInput extends BaseComponent {
       payload: { pageName: 'buyHistory' },
     });
   }
+
+  clearStorage() {
+    console.log('clear store in');
+    localStorage.clear();
+  }
   componentDidMount() {
     console.log('componentDidMount myself', this.props);
     // 初始化时进行查询
@@ -82,10 +88,10 @@ class BasicInput extends BaseComponent {
               })}
               onClick={(checked) => {
                 dispatch({
-                type: 'myself/ifpush',
-                payload: { ifpush: checked },
-              });
-            }}
+                  type: 'myself/ifpush',
+                  payload: { ifpush: checked },
+                });
+              }}
             />}
           >
             <div>
@@ -109,8 +115,10 @@ class BasicInput extends BaseComponent {
       </List>
 
       <SwitchExample />
-      <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
-            </div>);
+      <Hammer onDoubleTap={this.clearStorage.bind(this)}>
+        <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
+      </Hammer>
+    </div>);
   }
 }
 

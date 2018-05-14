@@ -168,11 +168,9 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div>
-        <div>
-            <div className={style.shareBox}>
-                <h2>长按图片发送给好友 <img src='images/msgImages/1.png' style={{width:'.24rem', height:'.28rem'}}/></h2>
-
-            </div>
+        <div style={{ lineHeight: '.7rem' }}>
+          <span className={style.titleTips}>长按图片发送好友</span>
+          <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
         <img src={msgImgUrl} alt="" />
       </div>
@@ -237,7 +235,7 @@ class MsgDetail extends BaseComponent {
             </div>
 
             <div className={style.caption}>{msgObj.title}</div>
-            <div className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+            <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.friendBox}>
               <div className={style.toFriend} />
@@ -291,30 +289,22 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div   id="showShare">
+        <div className={style.hide} id="showShare">
+          <div className={style.picBox}>
+            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
 
-              <div className={style.picBox}>
-                <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
+            <div className={style.picTitle}>{msgObj.title}</div>
+            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
-                <div className={style.picTitle}>{msgObj.title}</div>
-                <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
-
-                <div className={style.wechatBox}>
-                  <img src={imgDataStr} crossOrigin="anonymous" alt="" />
-                </div>
-
-                <div className={style.bottomCopy}>
-                    <div>
-                      <div className={style.copytop}>
-                              <img src="/images/msgImages/copy.png" style={{width:'.35rem',height:'.4rem'}}/>&nbsp;biping.io
-                      </div>
-
-                      <div>【币评】你最想要的币市信息</div>
-                    </div>
-                  </div>
-              </div>
+            <div className={style.wechatBox}>
+              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
             </div>
+
+            <div className={style.bottomName}>【币评】</div>
+            <div className={style.bottomStation}>国内领先的区块链行业综合网站</div>
+          </div>
         </div>
+      </div>
 
     );
   }

@@ -57,13 +57,14 @@ class MessageList extends BaseComponent {
     });
   }
   render() {
-    console.log('cd render in indexMessage', this.props);
+    console.log('cd renders in indexMessage', this.props);
     const { indexMessage } = this.props;
     if (!indexMessage) {
       return null;
     }
 
     const { flag, list } = this.props.indexMessage;
+    console.log(`flag inx is:${flag}`);
     // 未开通大类别,需要判断list为空
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
