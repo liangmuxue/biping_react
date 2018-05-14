@@ -20,10 +20,10 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
-  ENV.mockUser = {
-    userName: '7654d1b1-0bdf-4135-974d-d8b3c86bfa94',
-    passWord: '2b6c7bbd-d6f8-45f6-b6fb-234d4e31d873',
-  };
+  // ENV.mockUser = {
+  //   userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+  //   passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
+  // };
   // ENV.mockUser = {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
   //   passWord: '20165a11-0c4e-490b-83a7-162d914e17a5',
