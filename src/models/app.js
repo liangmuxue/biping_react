@@ -451,6 +451,13 @@ const App = {
         ...state, pagiLoading: false,
       };
     },
+    // touchMove标志处理
+    touchMoveFlagProc(state, action) {
+      const { touchMoveDisable } = action.payload;
+      return {
+        ...state, touchMoveDisable,
+      };
+    },
   },
 
 };
