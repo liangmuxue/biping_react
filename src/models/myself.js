@@ -1,6 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
 import { queryNormal } from '../services/common';
+import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
 * 消息详情处理
@@ -46,6 +47,16 @@ export default modelExtend(pageModel, {
       const endpoint = 'ifpush';
       let ifpush = null;
       ({ ifpush } = payload);
+      if (!ifpush) {
+        // 取消推送埋点
+        yield put({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MYSELF,
+            action: siteAnalysis.actConst.CANCLEPUSH,
+          },
+        });
+      }
       const filter = { ifpush };
       const data = yield call(queryNormal, {
         endpoint, filter,

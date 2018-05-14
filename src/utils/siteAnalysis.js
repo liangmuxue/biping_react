@@ -87,6 +87,22 @@ export const siteAnalysis = {
       code: 'grouptouser',
       zh: '群裂变开通权限用户',
     },
+    LIKEMESSAGE: {
+      code: 'likemessage',
+      zh: '喜欢消息',
+    },
+    UNLIKEMESSAGE: {
+      code: 'unlikemessage',
+      zh: '不喜欢消息',
+    },
+    SHAREMESSAGE: {
+      code: 'sharemessage',
+      zh: '分享消息',
+    },
+    CANCLEPUSH: {
+      code: 'canclepush',
+      zh: '取消推送',
+    },
   },
 
   init() {

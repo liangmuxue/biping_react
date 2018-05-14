@@ -14,6 +14,7 @@ import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import html2canvas from 'html2canvas';
+import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
 /**
 * 老人账号信息页面
@@ -71,6 +72,15 @@ class MsgDetail extends BaseComponent {
           imgUrl,
         },
       });
+      // 分享消息埋点
+      dispatch({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.MESSAGEDETAIL,
+          action: siteAnalysis.actConst.SHAREMESSAGE,
+          opt: { messageTitle: msgObj.title },
+        },
+      });
     });
     // event.prventDefault();
   }
@@ -109,12 +119,21 @@ class MsgDetail extends BaseComponent {
   likeClick() {
     const { dispatch, msgDetailData } = this.props;
     const msgObj = msgDetailData.data;
-    console.log(`likeClick in:${msgObj.mid}`);
+    console.log(`likeClick in:${msgObj.title}`);
     dispatch({
       type: 'messageDetail/msgLike',
       // 不需要传是否喜欢，model中根据原数据判断
       payload: {
         messageId: msgObj.mid,
+      },
+    });
+    // 喜欢消息埋点
+    dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.LIKEMESSAGE,
+        opt: { messageTitle: msgObj.title },
       },
     });
   }
@@ -127,6 +146,15 @@ class MsgDetail extends BaseComponent {
       // 不需要传是否喜欢，model中根据原数据判断
       payload: {
         messageId: msgObj.mid,
+      },
+    });
+    // 不喜欢消息埋点
+    dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.UNLIKEMESSAGE,
+        opt: { messageTitle: msgObj.title },
       },
     });
   }
@@ -177,7 +205,7 @@ class MsgDetail extends BaseComponent {
 
     </Modal>);
 
-
+    // 喜欢
     const likeArea = (<Hammer onTap={this.likeClick.bind(this)}>
       <div>
         <img
