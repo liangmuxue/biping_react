@@ -28,6 +28,13 @@ export default modelExtend(pageModel, {
   effects: {
     *shareWechat({ payload }, { put, select, call }) {
       const st = yield select();
+      // 禁止屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: true,
+        },
+      });
       yield put({
         type: 'shareWechatSuccess',
       });

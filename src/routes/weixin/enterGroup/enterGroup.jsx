@@ -71,6 +71,12 @@ class Join extends BaseComponent {
     const nowUrl = `${imgUrl}/Static/images/wechat/middle.png`;
     console.log('imgUrl', nowUrl);
     const { showShare } = this.props;
+    this.tmListener = null;
+    // 关闭弹层允许滑动
+    if (!showShare) {
+      console.log('touchmove rm', this.tmListener);
+      document.body.removeEventListener('touchmove', this.tmListener);
+    }
     console.log('enterGroup44444', this.props);
     // 分享消息的图片链接
     const wechatImg = '/images/h5Img/enterGroup.png';

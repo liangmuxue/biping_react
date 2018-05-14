@@ -34,7 +34,10 @@ export default modelExtend(pageModel, {
       console.log('query for subscribeDetail,st', st.subDetail);
       const endpoint = 'subscribeDetail';
       const { typeId, backPath } = payload;
-      const filter = { typeId };
+      let filter = {};
+      if (typeId) {
+        filter = { typeId };
+      }
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
@@ -87,10 +90,14 @@ export default modelExtend(pageModel, {
       });
     },
     *active({ params }, { put, call }) {
-      yield put({
-        type: 'subscribeDetail',
-        payload: params,
-      });
+      const { typeId } = params;
+      if (typeId) {
+        // 初始化时进行查询
+        yield put({
+          type: 'subscribeDetail',
+          payload: params,
+        });
+      }
       // 防止重复点击，延时2秒后重置标志
       yield call(timeoutCall, 2000);
       console.log('preventFlag open');
