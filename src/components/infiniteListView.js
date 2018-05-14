@@ -131,7 +131,7 @@ class InfiniteListView extends React.Component {
             }}
 
           />}
-          onScroll={() => { console.log('scroll'); }}
+          onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
