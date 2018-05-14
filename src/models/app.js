@@ -87,6 +87,14 @@ const App = {
           dispatch({ type: 'autoReg', payload: { code } });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
+          if (messageId === 'list') {
+            dispatch({
+              type: 'pageConstruction/switchToInnerPage',
+              payload: { pageName: 'indexMessage' },
+            });
+            dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+            return;
+          }
           // const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
           const backPath = '/messageList';
@@ -212,6 +220,13 @@ const App = {
         if (subscribe === 0) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
+        if (messageId && messageId === 'list') {
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: footMenus[0], isFirst: true },
+          });
+          return;
+        }
         if (messageId) {
           yield put({
             type: 'pageConstruction/switchToInnerPage',
@@ -257,6 +272,12 @@ const App = {
         console.log('reconnect autoReg', codenow);
         // 用户信息查询失败，重新进入注册流程
         yield put({ type: 'autoReg', payload: { code: codenow } });
+      } else if (success && response.flag === 0 && !response.data) {
+        // 用户密码登录失败,重置缓存
+        window.localStorage.clear();
+        console.log(`need reset for:${window.location.href}`);
+        const curHref = window.location.href;
+        window.location.href = `${curHref}&111`;
       } else if (!success) {
         console.log('fail999999999');
         const netError = true;
