@@ -337,6 +337,7 @@ class MsgDetail extends BaseComponent {
 
             <div className={style.wechatBox}>
               <img src={imgDataStr} crossOrigin="anonymous" alt="" />
+              <div className={style.readAll}>扫码阅读全文</div>
             </div>
 
             <div className={style.bottomCopy}>
