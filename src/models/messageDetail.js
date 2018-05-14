@@ -106,7 +106,7 @@ export default modelExtend(pageModel, {
       } = payload;
       const imgShareUrl = `${config.env.imgShareUrl}/qrcode/${messageId}.png`;
       let imgDataStr = yield call(getImgString, imgShareUrl);
-      console.log(`imgDataStr:${imgDataStr}`);
+      // console.log(`imgDataStr:${imgDataStr}`);
       imgDataStr = `data:image/png;base64,${imgDataStr}`;
       const st = yield select();
       const endpoint = 'messageDetail';
@@ -125,11 +125,31 @@ export default modelExtend(pageModel, {
       });
     },
 
-    *shareMsg({ params }, { put, call }) {
+    *shareMsg({ payload }, { put, call }) {
+      // 禁止屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: true,
+        },
+      });
       yield call(timeoutCall, 50);
       yield put({
         type: 'shareMsgSuc',
-        payload: params,
+        payload,
+      });
+    },
+    *closeShare({ payload }, { put, call }) {
+      // 放开屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: false,
+        },
+      });
+      yield put({
+        type: 'closeShareSuc',
+        payload,
       });
     },
     *active({ params }, { put, call }) {
@@ -180,23 +200,25 @@ export default modelExtend(pageModel, {
         msgDetailData: { ...response, tagId, tagName },
         routeActive: false, // 重置routeActive标志，避免重复查询
         backPath,
+        curAct: 'queryDetail', // 记录当前操作，页面判断使用
       };
     },
     // 分享给好友
-    shareMsg(state, action) {
+    shareMsgSuc(state, action) {
       const params = action.payload;
-      const { imgUrl } = params;
       return {
         ...state,
         showMsgShare: true,
-        imgUrl,
+        curAct: 'shareMsg',
+        ...params,
       };
     },
     // 关闭分享弹层
-    closeShare(state) {
+    closeShareSuc(state) {
       return {
         ...state,
         showMsgShare: false,
+        curAct: 'closeShare',
       };
     },
     msgLikeSuccess(state, action) {
@@ -205,12 +227,14 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
+        curAct: 'msgLike',
       };
     },
     preventTagClick(state, action) {
       return {
         ...state,
         ...action.payload,
+        curAct: 'preventTagClick',
       };
     },
   },
