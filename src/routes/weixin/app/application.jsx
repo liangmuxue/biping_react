@@ -129,7 +129,7 @@ class HomePage extends Component {
     }
     document.body.addEventListener('touchmove', (event) => {
       const touchMoveDisableFlag = this.getAttr('touchMoveDisableFlag');
-      console.log(`touchMoveDisableFlag is:${touchMoveDisableFlag}`);
+      // console.log(`touchMoveDisableFlag is:${touchMoveDisableFlag}`);
       if (touchMoveDisableFlag && touchMoveDisableFlag === 'yes') {
         event.preventDefault();
         event.stopPropagation();

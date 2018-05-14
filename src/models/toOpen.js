@@ -98,17 +98,20 @@ export default modelExtend(pageModel, {
         }
       }
     },
-    *active({ payload }, { put }) {
+    *active({ params, backArrow }, { put }) {
       yield put({ type: 'app/hideRouteLoading' });
-      yield put({ type: 'toOpenDetailDirect' });
+      // console.log("active in toopen",params);
+      yield put({ type: 'toOpenDetailDirect', payload: { params, backArrow } });
     },
   },
 
   reducers: {
-    toOpenDetailDirect(state) {
+    toOpenDetailDirect(state, action) {
       return {
         ...state,
+        params: action.payload.params,
         paySuccess: false,
+        actType: 'toOpenDetailDirect',
       };
     },
     toOpenDetailSuccess(state, action) {
@@ -119,6 +122,7 @@ export default modelExtend(pageModel, {
         toOpenData: { ...response },
         backPath,
         paySuccess: false,
+        actType: 'toOpenDetailSuccess',
       };
     },
 
@@ -147,6 +151,7 @@ export default modelExtend(pageModel, {
         commId,
         firstEnter,
         typeName,
+        actType: 'payTypeChange',
       };
     },
     paySuccess(state, action) {
