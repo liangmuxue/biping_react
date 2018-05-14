@@ -257,6 +257,12 @@ const App = {
         console.log('reconnect autoReg', codenow);
         // 用户信息查询失败，重新进入注册流程
         yield put({ type: 'autoReg', payload: { code: codenow } });
+      } else if (success && response.flag === 0 && !response.data) {
+        // 用户密码登录失败,重置缓存
+        window.localStorage.clear();
+        console.log(`need reset for:${window.location.href}`);
+        const curHref = window.location.href;
+        window.location.href = `${curHref}&111`;
       } else if (!success) {
         console.log('fail999999999');
         const netError = true;
