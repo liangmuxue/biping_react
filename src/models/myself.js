@@ -56,6 +56,15 @@ export default modelExtend(pageModel, {
             action: siteAnalysis.actConst.CANCLEPUSH,
           },
         });
+      } else if (ifpush) {
+        // 打开推送埋点
+        yield put({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MYSELF,
+            action: siteAnalysis.actConst.OPENPUSH,
+          },
+        });
       }
       const filter = { ifpush };
       const data = yield call(queryNormal, {
