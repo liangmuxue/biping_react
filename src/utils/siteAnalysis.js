@@ -103,6 +103,10 @@ export const siteAnalysis = {
       code: 'canclepush',
       zh: '取消推送',
     },
+    OPENPUSH: {
+      code: 'openpush',
+      zh: '打开推送',
+    },
   },
 
   init() {
