@@ -306,6 +306,8 @@ class MsgDetail extends BaseComponent {
               </div>
             </div>
 
+            <div className={hideRelateMsg === 0 ? style.hide:style.showBox }></div>
+
             <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
               <div className={style.similarCenter}>
                 <div className={style.similarTitle}>类似消息</div>
@@ -335,6 +337,7 @@ class MsgDetail extends BaseComponent {
 
             <div className={style.wechatBox}>
               <img src={imgDataStr} crossOrigin="anonymous" alt="" />
+              <div className={style.readAll}>扫码阅读全文</div>
             </div>
 
             <div className={style.bottomCopy}>

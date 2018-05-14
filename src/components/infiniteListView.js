@@ -126,7 +126,7 @@ class InfiniteListView extends React.Component {
             onRefresh={onRefreshAct}
             distanceToRefresh={25}
             indicator={{
-              release: <ActivityIndicator text="正在加载" size="samll" />,
+              release: <ActivityIndicator text="正在加载" size="samll"/>,
               finish: <div />,
             }}
 

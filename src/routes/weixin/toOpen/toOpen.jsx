@@ -60,7 +60,12 @@ class toOpenDetail extends BaseComponent {
       typeName = this.props.toOpen.typeName;
     }
     console.log('toPayWechat in', params);
-    const filter = { verbId: params.typeId, commoId: commId, typeName };
+    let verbId = params.typeId;
+    // 直接打开模式，需要从另外的地方拿参数
+    if (this.props.toOpen.actType === 'toOpenDetailDirect') {
+      verbId = this.props.toOpen.params.typeId;
+    }
+    const filter = { verbId, commoId: commId, typeName };
     this.props.dispatch({
       type: 'toOpen/toOpenPayDetail',
       payload: filter,
@@ -87,7 +92,7 @@ class toOpenDetail extends BaseComponent {
     const {
       toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
-    let { selectedItem } = this.props.toOpen;
+    let { selectedItem, params } = this.props.toOpen;
     const { paySuccess, typeName } = this.props.toOpen;
     const { systemUser } = this.props;
     // 如果是支付成功标志，则跳转到成功页面
@@ -131,8 +136,10 @@ class toOpenDetail extends BaseComponent {
       selectedItem = data[0].currentPrice / 100;
     }
     console.log('content in subdetail', data);
-
-    const subDesc = `订阅${toOpenData.typeName}`;
+    let subDesc = `订阅${toOpenData.typeName}`;
+    if (this.props.toOpen.actType === 'toOpenDetailDirect') {
+      subDesc = `订阅${params.typeName}`;
+    }
     return (
       <div>
         <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
