@@ -257,9 +257,10 @@ const App = {
         console.log('reconnect autoReg', codenow);
         // 用户信息查询失败，重新进入注册流程
         yield put({ type: 'autoReg', payload: { code: codenow } });
-      } else {
+      } else if (!success) {
         console.log('fail999999999');
-        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
+        const netError = true;
+        yield put({ type: 'netError', payload: { netError } });
       }
     },
 
@@ -284,9 +285,10 @@ const App = {
       } else if (success && response.flag === 1003) {
         console.log('failautoReg');
         yield put({ type: 'tourLogin', payload: { attentionModal: true } });
-      } else {
-        console.log('faillogin');
-        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
+      } else if (!success) {
+        console.log('fail999999999');
+        const netError = true;
+        yield put({ type: 'netError', payload: { netError } });
       }
     },
     // 消息详情查看
@@ -399,12 +401,22 @@ const App = {
         ...state, isLoginFail: true, modalVisible: false,
       };
     },
+    // 未关注公众号
     tourLogin(state, action) {
       console.log('tourLogin88888', action.payload);
       const { attentionModal } = action.payload;
       const systemUser = { token: 'tourLogin' };
       return {
         ...state, isTour: true, modalVisible: false, attentionModal, systemUser,
+      };
+    },
+    // 网络连接错误
+    netError(state, action) {
+      console.log('netError', action.payload);
+      const { netError } = action.payload;
+      const systemUser = { token: 'netError' };
+      return {
+        ...state, isTour: true, modalVisible: false, netError, systemUser,
       };
     },
     // 关闭关注提示窗口

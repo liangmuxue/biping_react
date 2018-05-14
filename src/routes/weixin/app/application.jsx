@@ -23,19 +23,36 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { attentionModal, pagiLoading, routeLoading } = app;
+    const {
+      attentionModal, pagiLoading, routeLoading, netError,
+    } = app;
     console.log(`attentionModal is:${attentionModal}`);
-    // 阻断提示
-    const modal = (<Modal
-      visible={attentionModal}
-      transparent
-      maskClosable={false}
-      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-    >
-      <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
-        <img src="/images/indexImg/wechat.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
-      </div>
-    </Modal>);
+    let modal = null;
+    if (attentionModal) {
+      // 阻断提示 未关注
+      modal = (<Modal
+        visible={attentionModal}
+        transparent
+        maskClosable={false}
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+      >
+        <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
+          <img src="/images/indexImg/wechat.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
+        </div>
+      </Modal>);
+    } else if (netError) {
+      // 阻断提示 网络连接错误
+      modal = (<Modal
+        visible={netError}
+        transparent
+        maskClosable={false}
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+      >
+        <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
+          <img src="/images/indexImg/netError.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
+        </div>
+      </Modal>);
+    }
     const { innerPageList } = pageConstruction;
     // 加载提示区域
     const loadingTip = (
