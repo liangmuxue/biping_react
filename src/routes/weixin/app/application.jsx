@@ -23,7 +23,9 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
-    const { attentionModal, pagiLoading, routeLoading } = app;
+    const {
+      attentionModal, pagiLoading, routeLoading, touchMoveDisable,
+    } = app;
     console.log(`attentionModal is:${attentionModal}`);
     // 阻断提示
     const modal = (<Modal
@@ -91,6 +93,19 @@ class HomePage extends Component {
         event.stopPropagation();
       }, false);
     }
+    document.body.addEventListener('touchmove', (event) => {
+      // 本级弹层时禁止屏幕滑动
+      if (attentionModal) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      // 内页弹层时禁止屏幕滑动
+      if (touchMoveDisable) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+    }, false);
+
     return pageContent;
   }
 }

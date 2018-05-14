@@ -25,7 +25,18 @@ class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
+    this.tmListener = null;
+    const self = this;
+    this.pageDef = null;
+    // this.setPageRef = (element) => {
+    //   // 根据变量决定是否允许滑动
+    //   this.pageDef = element;
+    //   this.tmListener = document.body.addEventListener('touchmove', (event) => {
+    //     self.touchMoveJudge(event);
+    //   }, false);
+    // };
   }
+
   componentWillMount() {
     console.log('componentWillMount messageDetail', this.props);
     // 初始化时进行查询
@@ -133,7 +144,7 @@ class MsgDetail extends BaseComponent {
   render() {
     console.log('MsgDetail render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl, imgDataStr,
+      msgDetailData, showMsgShare, params, imgUrl, imgDataStr, curAct,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -149,16 +160,12 @@ class MsgDetail extends BaseComponent {
     if (!msgObj.mid) {
       return null;
     }
+    if (!showMsgShare) {
+      console.log('touchmove rm', this.tmListener);
+      document.body.removeEventListener('touchmove', this.tmListener);
+    }
     // 分享消息的图片链接
     const msgImgUrl = imgUrl;
-    const imgShareUrl = `${config.env.imgShareUrl}/qrcode/${msgObj.mid}.png`;
-    // msgImgUrl = `${config.env.msgShareUrl}/gim_test_tnb99_net.png`;
-    if (showMsgShare) {
-      document.body.addEventListener('touchmove', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      }, false);
-    }
     const modal = (<Modal
       className={style.shareBg}
       visible={showMsgShare}
@@ -209,10 +216,12 @@ class MsgDetail extends BaseComponent {
     if (relateMsg.length === 0) {
       hideRelateMsg = 1;
     }
-    // 需要调到头部
-    window.scrollTo(0, 0);
+    // 进入的时候需要跳到头部
+    if (curAct && curAct === 'queryDetail') {
+      window.scrollTo(0, 0);
+    }
     return (
-      <div>
+      <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
           {modal}
           <HeaderBar headerText="详情" backRouteLink={this.props.backPath} {...this.props} />
