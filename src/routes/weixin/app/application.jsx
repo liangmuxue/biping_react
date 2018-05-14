@@ -8,8 +8,27 @@ import { innerPageDefs } from '../../../wxRouter';
 import styles from './index.less';
 
 class HomePage extends Component {
+  constructor(props) {
+    console.log('props in HomePage', props);
+    super(props);
+    this.pageDef = null;
+    this.setPageRef = (element) => {
+      this.pageDef = element;
+    };
+  }
   componentDidMount() {
     console.log('componentDidMount in,innerPageDefs', innerPageDefs);
+  }
+  setAttr(key, value) {
+    if (this.pageDef) {
+      this.pageDef.setAttribute(key, value);
+    }
+  }
+  getAttr(key) {
+    if (this.pageDef) {
+      return this.pageDef.getAttribute(key);
+    }
+    return null;
   }
   closeAttenModal() {
     this.props.dispatch({
@@ -96,7 +115,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = <div>{modal}{loadingTip}{ routeInner }{loadingTip}{pagiLoadingTip}<Footer /></div>;
+      pageContent = <div ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }{loadingTip}{pagiLoadingTip}<Footer /></div>;
     } else {
       pageContent = <div>没有权限查看</div>;
     }
@@ -109,18 +128,18 @@ class HomePage extends Component {
       }, false);
     }
     document.body.addEventListener('touchmove', (event) => {
-      // 本级弹层时禁止屏幕滑动
-      if (attentionModal) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-      // 内页弹层时禁止屏幕滑动
-      if (touchMoveDisable) {
+      const touchMoveDisableFlag = this.getAttr('touchMoveDisableFlag');
+      console.log(`touchMoveDisableFlag is:${touchMoveDisableFlag}`);
+      if (touchMoveDisableFlag && touchMoveDisableFlag === 'yes') {
         event.preventDefault();
         event.stopPropagation();
       }
     }, false);
-
+    if (touchMoveDisable) {
+      this.setAttr('touchMoveDisableFlag', 'yes');
+    } else {
+      this.setAttr('touchMoveDisableFlag', 'no');
+    }
     return pageContent;
   }
 }
