@@ -21,8 +21,8 @@ if (process.env.NODE_ENV === 'development') {
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.mockUser = {
-    userName: 'e5464e7c-e852-4263-9881-8b56583b6b96',
-    passWord: 'ef6aad0f-f6bb-44a0-8d91-919624ee1582',
+    userName: '9d7b632a-9f42-4f83-87b3-f2fa777f5ad0',
+    passWord: 'c95ee8d4-ff80-491d-be73-ed6bb6ee9efd',
   };
   // ENV.mockUser = {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
