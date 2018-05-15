@@ -206,7 +206,7 @@ const App = {
           },
         });
         // 初始化ga中的uid
-        siteAnalysis.setField('uid', systemUser.uid);
+        siteAnalysis.setField('userId', systemUser.uid);
         // 关注状态
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
