@@ -87,6 +87,14 @@ const App = {
           dispatch({ type: 'autoReg', payload: { code } });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
+          if (messageId === 'list') {
+            dispatch({
+              type: 'pageConstruction/switchToInnerPage',
+              payload: { pageName: 'indexMessage' },
+            });
+            dispatch({ type: 'openMessage', payload: { attentionModal: true } });
+            return;
+          }
           // const messageId = hrefUrl.substring(hrefUrl.indexOf('messageId') + 10, hrefUrl.length);
           console.log('游客身份访问消息详情！！', messageId);
           const backPath = '/messageList';
@@ -211,6 +219,13 @@ const App = {
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
+        }
+        if (messageId && messageId === 'list') {
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: footMenus[0], isFirst: true },
+          });
+          return;
         }
         if (messageId) {
           yield put({
