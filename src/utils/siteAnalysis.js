@@ -121,6 +121,7 @@ export const siteAnalysis = {
     });
     zhuge.track(`wx_${pageDef.code}`, {
       action: actionDef.code,
+      ...opt,
     });
   },
 
