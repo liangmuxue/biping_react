@@ -215,6 +215,14 @@ const App = {
         });
         // 初始化ga中的uid
         siteAnalysis.setField('userId', systemUser.uid);
+        // 发送打开主页的埋点
+        yield put({
+          type: 'analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MAINPAGE,
+            action: siteAnalysis.actConst.BROWSE,
+          },
+        });
         // 关注状态
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
