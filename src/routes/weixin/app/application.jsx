@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Throttle } from 'react-throttle';
 import { connect } from 'dva';
 import Modal from 'antd-mobile/lib/modal/index';
 import 'antd-mobile/es/modal/style/index.css';
