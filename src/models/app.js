@@ -222,7 +222,15 @@ const App = {
           },
         });
         // 初始化ga中的uid
-        siteAnalysis.setField('uid', systemUser.uid);
+        siteAnalysis.setField('userId', systemUser.uid);
+        // 发送打开主页的埋点
+        yield put({
+          type: 'analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MAINPAGE,
+            action: siteAnalysis.actConst.BROWSE,
+          },
+        });
         // 关注状态
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
@@ -408,6 +416,8 @@ const App = {
   },
   reducers: {
     sysUserSet(state, { payload }) {
+      // 清除重连标志
+      window.localStorage.setItem('reconnectFlag', 0);
       console.log('sysUserSet in', payload);
       return {
         ...state,
@@ -446,6 +456,23 @@ const App = {
       console.log('netError', action.payload);
       const { netError } = action.payload;
       const systemUser = { token: 'netError' };
+      console.log('net error and refresh');
+      // 重定向标志判断
+      let reconnectFlag = window.localStorage.getItem('reconnectFlag');
+      if (reconnectFlag) {
+        reconnectFlag = parseInt(reconnectFlag, 0) + 1;
+      } else {
+        reconnectFlag = 1;
+      }
+      console.log(`reconnectFlag now:${reconnectFlag}`);
+      window.localStorage.setItem('reconnectFlag', reconnectFlag);
+      // 如果多次都不成，弹出错误提示
+      if (reconnectFlag <= 3) {
+        const curHref = window.location.href;
+        window.location.href = `${curHref}`;
+        return;
+      }
+
       return {
         ...state, isTour: true, modalVisible: false, netError, systemUser,
       };

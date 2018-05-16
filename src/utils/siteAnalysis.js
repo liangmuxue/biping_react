@@ -80,7 +80,7 @@ export const siteAnalysis = {
       zh: '关注用户进中间页',
     },
     NOUSERTOMIDDLE: {
-      code: 'usertogroup',
+      code: 'nousertogroup',
       zh: '非关注用户进中间页',
     },
     GROUPTOUSER: {
