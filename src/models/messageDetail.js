@@ -1,9 +1,7 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal, getImgString } from '../services/common';
+import { queryNormal } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
-import { config } from '../../config/environment';
-
 /**
 * 订阅消息详情
 * @author 梁慕学
@@ -104,10 +102,7 @@ export default modelExtend(pageModel, {
       const {
         messageId, backPath, tagId, tagName,
       } = payload;
-      const imgShareUrl = `${config.env.imgShareUrl}/qrcode/${messageId}.png`;
-      let imgDataStr = yield call(getImgString, imgShareUrl);
       // console.log(`imgDataStr:${imgDataStr}`);
-      imgDataStr = `data:image/png;base64,${imgDataStr}`;
       const st = yield select();
       const endpoint = 'messageDetail';
       const filter = { messageId };
@@ -118,7 +113,6 @@ export default modelExtend(pageModel, {
       data.backPath = backPath;
       data.tagId = tagId;
       data.tagName = tagName;
-      data.imgDataStr = imgDataStr;
       yield put({
         type: 'queryDetailSuccess',
         payload: data,

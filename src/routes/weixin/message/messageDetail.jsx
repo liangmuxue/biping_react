@@ -15,6 +15,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
+import QrCodeWithLogo from 'qr-code-with-logo';
 
 /**
 * 老人账号信息页面
@@ -68,31 +69,47 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick(event) {
+    const { messageHost } = config.env;
     let imgUrl = null;
-    const { dispatch, msgDetailData } = this.props;
+    console.log('this.props', this.props);
+    const { dispatch, msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
+    console.log('params1111', params);
+    const { uid } = params;
+    const url = `${messageHost}/?messageId=${msgObj.mid}&fromUser=${uid}`;
+    console.log('url1111', url);
     document.getElementById('showShare').style.display = 'block';
-
-    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
-      imgUrl = canvas.toDataURL('image/png');
-      document.getElementById('showShare').style.display = 'none';
-      dispatch({
-        type: 'messageDetail/shareMsg',
-        payload: {
-          messageId: msgObj.mid,
-          imgUrl,
-        },
-      });
-      // 分享消息埋点
-      dispatch({
-        type: 'app/analysis',
-        payload: {
-          page: siteAnalysis.pageConst.MESSAGEDETAIL,
-          action: siteAnalysis.actConst.SHAREMESSAGE,
-          opt: { messageTitle: msgObj.title },
-        },
+    QrCodeWithLogo.toImage({
+      image: document.getElementById('ewmImg'),
+      content: url,
+      width: 380,
+      logo: {
+        src: '/images/msgImages/copy.png',
+      },
+    }).then(() => {
+      console.log('success777');
+      html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
+        imgUrl = canvas.toDataURL('image/png');
+        document.getElementById('showShare').style.display = 'none';
+        dispatch({
+          type: 'messageDetail/shareMsg',
+          payload: {
+            messageId: msgObj.mid,
+            imgUrl,
+          },
+        });
+        // 分享消息埋点
+        dispatch({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MESSAGEDETAIL,
+            action: siteAnalysis.actConst.SHAREMESSAGE,
+            opt: { messageTitle: msgObj.title },
+          },
+        });
       });
     });
+
     // event.prventDefault();
   }
   // 类似消息的点击
@@ -172,7 +189,7 @@ class MsgDetail extends BaseComponent {
   render() {
     console.log('MsgDetail render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl, imgDataStr, curAct,
+      msgDetailData, showMsgShare, params, imgUrl, curAct,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -306,7 +323,7 @@ class MsgDetail extends BaseComponent {
               </div>
             </div>
 
-            <div className={hideRelateMsg === 0 ? style.hide:style.showBox }></div>
+            <div className={hideRelateMsg === 0 ? style.hide : style.showBox} />
 
             <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
               <div className={style.similarCenter}>
@@ -328,7 +345,7 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div  className={style.hide} id="showShare">
+        <div className={style.hide} id="showShare">
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
 
@@ -336,19 +353,19 @@ class MsgDetail extends BaseComponent {
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
-              <img src={imgDataStr} crossOrigin="anonymous" alt="" />
+              <img id="ewmImg" crossOrigin="anonymous" alt="" />
               <div className={style.readAll}>扫码阅读全文</div>
             </div>
 
             <div className={style.bottomCopy}>
-                <div>
-                  <div className={style.copytop}>
-                          <img src="/images/msgImages/copy.png" style={{width:'.35rem',height:'.4rem'}}/>&nbsp;biping.io
-                  </div>
-
-                  <div>【币评】你最想要的币市信息</div>
+              <div>
+                <div className={style.copytop}>
+                  <img src="/images/msgImages/copy.png" style={{ width: '.35rem', height: '.4rem' }} />&nbsp;biping.io
                 </div>
+
+                <div>【币评】你最想要的币市信息</div>
               </div>
+            </div>
           </div>
         </div>
       </div>
