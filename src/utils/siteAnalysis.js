@@ -119,6 +119,9 @@ export const siteAnalysis = {
       action: actionDef.code,
       opt,
     });
+    zhuge.track(`wx_${pageDef.code}`, {
+      action: actionDef.code,
+    });
   },
 
   setField(key, value) {
