@@ -14,7 +14,7 @@ if (process.env.NODE_ENV === 'development') {
   ENV.host = 'http://wp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
-  // ENV.imgHost = 'http://img.tnb99.cn';
+  ENV.messageHost = 'http://wx.test.tnb99.net';
   // ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
@@ -45,6 +45,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
   ENV.host = 'http://wp.test.tnb99.net';
+  ENV.messageHost = 'http://wx.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';

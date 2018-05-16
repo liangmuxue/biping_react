@@ -27,8 +27,10 @@ class MessageList extends BaseComponent {
     const { systemUser } = this.props;
     // 是否入群
     let ifEnterGroup = 0;
+    let uid = null;
     if (systemUser) {
       ifEnterGroup = systemUser.ifEnterGroup;
+      uid = systemUser.uid;
     }
     // 跳转到信息详情页面
     this.props.dispatch({
@@ -36,7 +38,7 @@ class MessageList extends BaseComponent {
       payload: {
         pageName: 'messageDetail',
         params: {
-          messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName: msgObj.tagName, ifEnterGroup,
+          messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName: msgObj.tagName, ifEnterGroup, uid,
         },
       },
     });

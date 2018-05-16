@@ -87,6 +87,7 @@ const App = {
           dispatch({ type: 'autoReg', payload: { code } });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
+          const fromUser = analysisParam('fromUser');
           if (messageId === 'list') {
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
@@ -109,6 +110,7 @@ const App = {
             payload: {
               page: siteAnalysis.pageConst.MESSAGEDETAIL,
               action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+              opt: { fromUser },
             },
           });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
@@ -149,6 +151,11 @@ const App = {
         if (messageId) {
           userData.messageId = messageId;
         }
+        // 从哪个用户分享的海报进来
+        const fromUser = analysisParam('fromUser');
+        if (fromUser) {
+          userData.fromUser = fromUser;
+        }
         const sharePaper = analysisParam('sharePaper');
         if (sharePaper) {
           userData.sharePaper = sharePaper;
@@ -168,6 +175,7 @@ const App = {
       console.log('go query', query);
       const { messageId } = payload;
       const { sharePaper } = payload;
+      const { fromUser } = payload;
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
@@ -247,6 +255,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+                opt: { fromUser },
               },
             });
           } else if (subscribe === 1) {
@@ -256,6 +265,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+                opt: { fromUser },
               },
             });
           }
