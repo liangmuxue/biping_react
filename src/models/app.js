@@ -172,7 +172,6 @@ const App = {
       payload,
     }, { call, put }) {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
-      console.log('go query', query);
       const { messageId } = payload;
       const { sharePaper } = payload;
       const { fromUser } = payload;
@@ -260,11 +259,15 @@ const App = {
             });
           } else if (subscribe === 1) {
             // 关注用户扫码进消息详情埋点
+            let actionReal = siteAnalysis.actConst.USERSMTMESSAGEDETAIL;
+            if (!fromUser) {
+              actionReal = siteAnalysis.actConst.PUSHMSGTODETAIL;
+            }
             yield put({
               type: 'analysis',
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
-                action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+                action: actionReal,
                 opt: { fromUser },
               },
             });

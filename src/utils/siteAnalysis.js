@@ -71,6 +71,10 @@ export const siteAnalysis = {
       code: 'usersmtmessagedetail',
       zh: '用户扫码进入消息详情',
     },
+    PUSHMSGTODETAIL: {
+      code: 'pushMsgToDetail',
+      zh: '通过推送进入消息详情',
+    },
     NOUSERSMTMESSAGEDETAIL: {
       code: 'nousersmtmessagedetail',
       zh: '非用户扫码进入消息详情',
@@ -119,6 +123,7 @@ export const siteAnalysis = {
       action: actionDef.code,
       opt,
     });
+    console.log('track opt', opt);
     zhuge.track(`wx_${pageDef.code}`, {
       action: actionDef.code,
       ...opt,
