@@ -161,6 +161,13 @@ const App = {
           userData.sharePaper = sharePaper;
         }
         console.log('userData*****^^', userData);
+        // 失败跳转
+        const reconnectFlag = window.localStorage.getItem('reconnectFlag');
+        if (reconnectFlag && reconnectFlag > 3) {
+          // 如果发现标志超过，直接发错误
+          dispatch({ type: 'netError', payload: { netError: true } });
+          return;
+        }
         dispatch({ type: 'query', payload: userData });
       }
     },
@@ -475,7 +482,7 @@ const App = {
         window.location.href = `${curHref}`;
         return;
       }
-
+      window.localStorage.setItem('reconnectFlag', 0);
       return {
         ...state, isTour: true, modalVisible: false, netError, systemUser,
       };
