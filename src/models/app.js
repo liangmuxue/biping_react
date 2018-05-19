@@ -302,10 +302,13 @@ const App = {
         yield put({ type: 'autoReg', payload: { code: codenow } });
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
-        window.localStorage.clear();
-        console.log(`need reset for:${window.location.href}`);
-        const curHref = window.location.href;
-        window.location.href = `${curHref}&111`;
+        const { mockUser } = config.env;
+        if (!mockUser) {
+          window.localStorage.clear();
+          console.log(`need reset for:${window.location.href}`);
+          const curHref = window.location.href;
+          window.location.href = curHref;
+        }
       } else if (!success) {
         console.log('fail999999999');
         const netError = true;
