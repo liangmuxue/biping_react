@@ -81,6 +81,7 @@ const App = {
 
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
+        console.log('nouserStr');
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
@@ -89,10 +90,11 @@ const App = {
           let fromUser = null;
           if (state && state !== 'STAT') {
             if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
-              messageId = state.substring(`messageId${8}`, state.indexOf('fromUser'));
-              fromUser = state.substring(`fromUser${7}`, state.length);
+              messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+              fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+              console.log('messageId', messageId, 'fromUser', fromUser);
             } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
-              messageId = state.substring(`messageId${8}`, state.length);
+              messageId = state.substring(state.indexOf('messageId') + 9, state.length);
             }
           }
           let payData = {};
@@ -160,9 +162,12 @@ const App = {
           dispatch({ type: 'toTourPage' });
         }
       } else if (userStr != null) {
+        console.log('userStr');
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
         const state = analysisParam('state');
+        const userData = JSON.parse(userStr);
+        console.log('state', state);
         if (code) {
           userData.code = code;
         }
@@ -170,13 +175,13 @@ const App = {
         let fromUser = null;
         if (state && state !== 'STAT') {
           if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
-            messageId = state.substring(`messageId${8}`, state.indexOf('fromUser'));
-            fromUser = state.substring(`fromUser${7}`, state.length);
+            messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+            fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+            console.log('messageId', messageId, 'fromUser', fromUser);
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
-            messageId = state.substring(`messageId${8}`, state.length);
+            messageId = state.substring(state.indexOf('messageId') + 9, state.length);
           }
         }
-        const userData = JSON.parse(userStr);
         if (messageId) {
           userData.messageId = messageId;
         }
