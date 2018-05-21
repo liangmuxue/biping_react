@@ -84,8 +84,17 @@ const App = {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
-          const messageId = analysisParam('messageId');
-          const fromUser = analysisParam('fromUser');
+          const state = analysisParam('state');
+          let messageId = null;
+          let fromUser = null;
+          if (state && state !== 'STAT') {
+            if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+              messageId = state.substring(`messageId${8}`, state.indexOf('fromUser'));
+              fromUser = state.substring(`fromUser${7}`, state.length);
+            } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+              messageId = state.substring(`messageId${8}`, state.length);
+            }
+          }
           let payData = {};
           if (messageId) {
             payData = { code, messageId };
