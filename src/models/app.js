@@ -162,16 +162,25 @@ const App = {
       } else if (userStr != null) {
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
-        const userData = JSON.parse(userStr);
+        const state = analysisParam('state');
         if (code) {
           userData.code = code;
         }
-        const messageId = analysisParam('messageId');
+        let messageId = null;
+        let fromUser = null;
+        if (state && state !== 'STAT') {
+          if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+            messageId = state.substring(`messageId${8}`, state.indexOf('fromUser'));
+            fromUser = state.substring(`fromUser${7}`, state.length);
+          } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+            messageId = state.substring(`messageId${8}`, state.length);
+          }
+        }
+        const userData = JSON.parse(userStr);
         if (messageId) {
           userData.messageId = messageId;
         }
         // 从哪个用户分享的海报进来
-        const fromUser = analysisParam('fromUser');
         if (fromUser) {
           userData.fromUser = fromUser;
         }
@@ -337,7 +346,7 @@ const App = {
 
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
-      console.log('go autoReg', autoReg);
+      console.log('go autoReg', payload);
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
       const { success, response } = ret;

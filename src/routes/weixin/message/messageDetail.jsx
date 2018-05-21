@@ -77,7 +77,7 @@ class MsgDetail extends BaseComponent {
     const msgObj = msgDetailData.data;
     console.log('params1111', params);
     const { uid } = params;
-    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=STAT&messageId=${msgObj.mid}&fromUser=${uid}#wechat_redirect`;
+    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
     console.log('url1111', url);
     document.getElementById('showShare').style.display = 'block';
     QrCodeWithLogo.toImage({
