@@ -84,7 +84,17 @@ const App = {
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
-          dispatch({ type: 'autoReg', payload: { code } });
+          const messageId = analysisParam('messageId');
+          const fromUser = analysisParam('fromUser');
+          let payData = {};
+          if (messageId) {
+            payData = { code, messageId };
+          } else if (messageId && fromUser) {
+            payData = { code, messageId, fromUser };
+          } else {
+            payData = { code };
+          }
+          dispatch({ type: 'autoReg', payload: payData });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
           const fromUser = analysisParam('fromUser');
