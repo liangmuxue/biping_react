@@ -37,6 +37,7 @@
     "globals": {
       "window": true,
       "document": true,
-      "location":true
+      "location":true,
+      "zhuge":true,
     }
 }

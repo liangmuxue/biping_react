@@ -9,7 +9,7 @@ if (process.env.NODE_ENV === 'development') {
   ENV.socketHost = 'http://10.0.109.126';
   // ENV.host = 'http://10.0.107.254:8280';
   // ENV.host = 'http://10.0.106.161:8280';
-  // ENV.host = 'http://10.0.106.161:8280';
+  ENV.host = 'http://47.92.25.130:8280';
   //  ENV.host = 'http://10.0.109.224:8280';
   ENV.host = 'http://wp.test.tnb99.net';
   ENV.host = 'http://twp.test.tnb99.net';
@@ -24,8 +24,8 @@ if (process.env.NODE_ENV === 'development') {
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.mockUser = {
-    userName: '9d7b632a-9f42-4f83-87b3-f2fa777f5ad0',
-    passWord: 'c95ee8d4-ff80-491d-be73-ed6bb6ee9efd',
+    userName: '7f5a83e9-852d-4d5f-b3ab-85a9169ee8aa',
+    passWord: '2c7134c7-1e83-4dd9-bf18-862461f4e894',
   };
   // ENV.mockUser = {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',

@@ -71,6 +71,7 @@ class HomePage extends Component {
           <img src="/images/indexImg/netError.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
         </div>
       </Modal>);
+      return (<div>{modal}</div>);
     }
     const { innerPageList } = pageConstruction;
     // 加载提示区域

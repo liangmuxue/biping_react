@@ -171,6 +171,13 @@ const App = {
           userData.sharePaper = sharePaper;
         }
         console.log('userData*****^^', userData);
+        // 失败跳转
+        const reconnectFlag = window.localStorage.getItem('reconnectFlag');
+        if (reconnectFlag && reconnectFlag > 3) {
+          // 如果发现标志超过，直接发错误
+          dispatch({ type: 'netError', payload: { netError: true } });
+          return;
+        }
         dispatch({ type: 'query', payload: userData });
       }
     },
@@ -182,7 +189,6 @@ const App = {
       payload,
     }, { call, put }) {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
-      console.log('go query', query);
       const { messageId } = payload;
       const { sharePaper } = payload;
       const { fromUser } = payload;
@@ -270,11 +276,15 @@ const App = {
             });
           } else if (subscribe === 1) {
             // 关注用户扫码进消息详情埋点
+            let actionReal = siteAnalysis.actConst.USERSMTMESSAGEDETAIL;
+            if (!fromUser) {
+              actionReal = siteAnalysis.actConst.PUSHMSGTODETAIL;
+            }
             yield put({
               type: 'analysis',
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
-                action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+                action: actionReal,
                 opt: { fromUser },
               },
             });
@@ -302,10 +312,13 @@ const App = {
         yield put({ type: 'autoReg', payload: { code: codenow } });
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
-        window.localStorage.clear();
-        console.log(`need reset for:${window.location.href}`);
-        const curHref = window.location.href;
-        window.location.href = `${curHref}&111`;
+        const { mockUser } = config.env;
+        if (!mockUser) {
+          window.localStorage.clear();
+          console.log(`need reset for:${window.location.href}`);
+          const curHref = window.location.href;
+          window.location.href = curHref;
+        }
       } else if (!success) {
         console.log('fail999999999');
         const netError = true;
@@ -482,7 +495,7 @@ const App = {
         window.location.href = `${curHref}`;
         return;
       }
-
+      window.localStorage.setItem('reconnectFlag', 0);
       return {
         ...state, isTour: true, modalVisible: false, netError, systemUser,
       };

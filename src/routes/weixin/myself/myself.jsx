@@ -51,7 +51,7 @@ class BasicInput extends BaseComponent {
     // 跳转到购买记录页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'buyHistory' },
+      payload: { pageName: 'buyHistory', params: { backPath: 'myself' } },
     });
   }
 
