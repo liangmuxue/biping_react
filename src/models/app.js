@@ -181,6 +181,9 @@ const App = {
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.length);
           }
+        } else {
+          messageId = analysisParam('messageId');
+          fromUser = analysisParam('fromUser');
         }
         if (messageId) {
           userData.messageId = messageId;
