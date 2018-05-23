@@ -34,7 +34,7 @@ const fetch = (endpoint, options) => {
     // If config does not exist or the retry option is not set, reject
     if (!config || !axiosConfig.retry) return Promise.reject(err);
     // Check if we've maxed out the total number of retries
-    console.log(`retryCnt now:${retryCnt}`);
+    console.log(`retryCnt is now:${retryCnt}`);
     if (retryCnt >= 3) {
       retryCnt = 0;
       // 多次失败，刷新页面,直接把标志提到提示错误的级别
