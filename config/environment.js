@@ -44,6 +44,24 @@ if (process.env.NODE_ENV === 'development') {
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
 }
+if (process.env.NODE_ENV === 'test') {
+  ENV.resourceHost = 'http://resource.tnb99.net';
+  ENV.socketHost = 'http://47.93.78.97:7090';
+  ENV.host = 'http://wp.test.tnb99.net';
+  //  ENV.host = 'http://twp.test.tnb99.net';
+  ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
+  ENV.messageHost = 'http://wx.test.tnb99.net';
+  //  ENV.messageHost = 'http://twx.test.tnb99.net';
+  ENV.imgHost = 'http://img.tnb99.cn';
+  ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
+  ENV.wxScanurl = 'http://localhost:4200/index.html';
+  ENV.imgShareUrl = 'http://img.test.tnb99.net';
+  ENV.wxBrowserCheck = true;
+  ENV.mockUser = {
+    userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
+    passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
+  };
+}
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
