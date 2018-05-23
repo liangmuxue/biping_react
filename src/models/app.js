@@ -67,10 +67,7 @@ const App = {
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
       if (mockUserStr) {
-        mockUserReal = {
-          userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
-          passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
-        };
+        mockUserReal = config.env.mockUser;
       }
       // 开发环境模拟用户
       if (mockUserReal) {
