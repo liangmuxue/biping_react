@@ -1,5 +1,4 @@
 import request from '../dataExchange/request';
-import axios from 'axios';
 
 /**
  * 通用请求处理，封装filter，分页等

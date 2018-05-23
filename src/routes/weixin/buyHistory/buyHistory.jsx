@@ -61,7 +61,7 @@ class AccountInfo extends BaseComponent {
       if (flag && flag === 1) {
         return (
           <div className={styles.empty}>
-            <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
+            <HeaderBar headerText="购买记录" backRouteLink="myself" {...this.props} />
             <div><img src="/images/buyHistoryImg/3.png" className={styles.noBuycar} /></div>
             <div className={styles.notread}>您还没有买过任何订阅包</div>
             <WingBlank>
@@ -87,7 +87,7 @@ class AccountInfo extends BaseComponent {
     return (
       <div>
         <div className={styles.full} />
-        <HeaderBar headerText="购买记录" backRouteLink={backPath} {...this.props} />
+        <HeaderBar headerText="购买记录" backRouteLink="myself" {...this.props} />
         {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
         <InfiniteListView {...buyListProps} height={height} />
       </div>

@@ -81,12 +81,34 @@ const App = {
 
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
+        console.log('nouserStr');
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
-          dispatch({ type: 'autoReg', payload: { code } });
+          const state = analysisParam('state');
+          let messageId = null;
+          let fromUser = null;
+          if (state && state !== 'STAT') {
+            if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+              messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+              fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+              console.log('messageId', messageId, 'fromUser', fromUser);
+            } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+              messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+            }
+          }
+          let payData = {};
+          if (messageId) {
+            payData = { code, messageId };
+          } else if (messageId && fromUser) {
+            payData = { code, messageId, fromUser };
+          } else {
+            payData = { code };
+          }
+          dispatch({ type: 'autoReg', payload: payData });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
+          const fromUser = analysisParam('fromUser');
           if (messageId === 'list') {
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
@@ -109,6 +131,7 @@ const App = {
             payload: {
               page: siteAnalysis.pageConst.MESSAGEDETAIL,
               action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+              opt: { fromUser },
             },
           });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
@@ -139,21 +162,48 @@ const App = {
           dispatch({ type: 'toTourPage' });
         }
       } else if (userStr != null) {
+        console.log('userStr');
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
+        const state = analysisParam('state');
         const userData = JSON.parse(userStr);
+        console.log('state', state);
         if (code) {
           userData.code = code;
         }
-        const messageId = analysisParam('messageId');
+        let messageId = null;
+        let fromUser = null;
+        if (state && state !== 'STAT') {
+          if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+            messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+            fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+            console.log('messageId', messageId, 'fromUser', fromUser);
+          } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+            messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+          }
+        } else {
+          messageId = analysisParam('messageId');
+          fromUser = analysisParam('fromUser');
+        }
         if (messageId) {
           userData.messageId = messageId;
+        }
+        // 从哪个用户分享的海报进来
+        if (fromUser) {
+          userData.fromUser = fromUser;
         }
         const sharePaper = analysisParam('sharePaper');
         if (sharePaper) {
           userData.sharePaper = sharePaper;
         }
         console.log('userData*****^^', userData);
+        // 失败跳转
+        const reconnectFlag = window.localStorage.getItem('reconnectFlag');
+        if (reconnectFlag && reconnectFlag > 3) {
+          // 如果发现标志超过，直接发错误
+          dispatch({ type: 'netError', payload: { netError: true } });
+          return;
+        }
         dispatch({ type: 'query', payload: userData });
       }
     },
@@ -165,9 +215,9 @@ const App = {
       payload,
     }, { call, put }) {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
-      console.log('go query', query);
       const { messageId } = payload;
       const { sharePaper } = payload;
+      const { fromUser } = payload;
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
@@ -214,7 +264,15 @@ const App = {
           },
         });
         // 初始化ga中的uid
-        siteAnalysis.setField('uid', systemUser.uid);
+        siteAnalysis.setField('userId', systemUser.uid);
+        // 发送打开主页的埋点
+        yield put({
+          type: 'analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MAINPAGE,
+            action: siteAnalysis.actConst.BROWSE,
+          },
+        });
         // 关注状态
         console.log('app query subscribe', subscribe);
         if (subscribe === 0) {
@@ -239,15 +297,21 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+                opt: { fromUser },
               },
             });
           } else if (subscribe === 1) {
             // 关注用户扫码进消息详情埋点
+            let actionReal = siteAnalysis.actConst.USERSMTMESSAGEDETAIL;
+            if (!fromUser) {
+              actionReal = siteAnalysis.actConst.PUSHMSGTODETAIL;
+            }
             yield put({
               type: 'analysis',
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
-                action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+                action: actionReal,
+                opt: { fromUser },
               },
             });
           }
@@ -274,10 +338,13 @@ const App = {
         yield put({ type: 'autoReg', payload: { code: codenow } });
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
-        window.localStorage.clear();
-        console.log(`need reset for:${window.location.href}`);
-        const curHref = window.location.href;
-        window.location.href = `${curHref}&111`;
+        const { mockUser } = config.env;
+        if (!mockUser) {
+          window.localStorage.clear();
+          console.log(`need reset for:${window.location.href}`);
+          const curHref = window.location.href;
+          window.location.href = curHref;
+        }
       } else if (!success) {
         console.log('fail999999999');
         const netError = true;
@@ -287,7 +354,7 @@ const App = {
 
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
-      console.log('go autoReg', autoReg);
+      console.log('go autoReg', payload);
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
       const { success, response } = ret;
@@ -398,6 +465,8 @@ const App = {
   },
   reducers: {
     sysUserSet(state, { payload }) {
+      // 清除重连标志
+      window.localStorage.setItem('reconnectFlag', 0);
       console.log('sysUserSet in', payload);
       return {
         ...state,
@@ -436,6 +505,23 @@ const App = {
       console.log('netError', action.payload);
       const { netError } = action.payload;
       const systemUser = { token: 'netError' };
+      console.log('net error and refresh');
+      // 重定向标志判断
+      let reconnectFlag = window.localStorage.getItem('reconnectFlag');
+      if (reconnectFlag) {
+        reconnectFlag = parseInt(reconnectFlag, 0) + 1;
+      } else {
+        reconnectFlag = 1;
+      }
+      console.log(`reconnectFlag now:${reconnectFlag}`);
+      window.localStorage.setItem('reconnectFlag', reconnectFlag);
+      // 如果多次都不成，弹出错误提示
+      if (reconnectFlag <= 3) {
+        const curHref = window.location.href;
+        window.location.href = `${curHref}`;
+        return;
+      }
+      window.localStorage.setItem('reconnectFlag', 0);
       return {
         ...state, isTour: true, modalVisible: false, netError, systemUser,
       };
