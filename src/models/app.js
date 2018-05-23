@@ -81,10 +81,31 @@ const App = {
 
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
+        console.log('nouserStr');
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
-          dispatch({ type: 'autoReg', payload: { code } });
+          const state = analysisParam('state');
+          let messageId = null;
+          let fromUser = null;
+          if (state && state !== 'STAT') {
+            if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+              messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+              fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+              console.log('messageId', messageId, 'fromUser', fromUser);
+            } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+              messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+            }
+          }
+          let payData = {};
+          if (messageId) {
+            payData = { code, messageId };
+          } else if (messageId && fromUser) {
+            payData = { code, messageId, fromUser };
+          } else {
+            payData = { code };
+          }
+          dispatch({ type: 'autoReg', payload: payData });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
           const fromUser = analysisParam('fromUser');
@@ -141,18 +162,33 @@ const App = {
           dispatch({ type: 'toTourPage' });
         }
       } else if (userStr != null) {
+        console.log('userStr');
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
+        const state = analysisParam('state');
         const userData = JSON.parse(userStr);
+        console.log('state', state);
         if (code) {
           userData.code = code;
         }
-        const messageId = analysisParam('messageId');
+        let messageId = null;
+        let fromUser = null;
+        if (state && state !== 'STAT') {
+          if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
+            messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
+            fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+            console.log('messageId', messageId, 'fromUser', fromUser);
+          } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
+            messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+          }
+        } else {
+          messageId = analysisParam('messageId');
+          fromUser = analysisParam('fromUser');
+        }
         if (messageId) {
           userData.messageId = messageId;
         }
         // 从哪个用户分享的海报进来
-        const fromUser = analysisParam('fromUser');
         if (fromUser) {
           userData.fromUser = fromUser;
         }
@@ -318,7 +354,7 @@ const App = {
 
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
-      console.log('go autoReg', autoReg);
+      console.log('go autoReg', payload);
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
       const { success, response } = ret;

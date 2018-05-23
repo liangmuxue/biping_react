@@ -70,13 +70,14 @@ class MsgDetail extends BaseComponent {
   // 分享点击
   shareClick(event) {
     const { messageHost } = config.env;
+    const { wechatHost } = config.env;
     let imgUrl = null;
     console.log('this.props', this.props);
     const { dispatch, msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     console.log('params1111', params);
     const { uid } = params;
-    const url = `${messageHost}/?messageId=${msgObj.mid}&fromUser=${uid}`;
+    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
     console.log('url1111', url);
     document.getElementById('showShare').style.display = 'block';
     QrCodeWithLogo.toImage({
