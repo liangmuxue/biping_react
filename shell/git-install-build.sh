@@ -69,5 +69,16 @@ fi
 	echo  "产生对应压缩包..."
 	zip -rq webapp.zip *
 	cp webapp.zip $deploy_path/webapp.zip
-	expect $shellPath/expect_deploy_$expectitem.sh
-echo  "ok..."
+	if [ $choic -eq 1 ]
+	then
+		echo  "npm run build..."
+	  npm run build
+		echo "ok"
+		expect $shellPath/expect_deploy_$expectitem.sh
+	elif [ $choic -eq 2 ]
+	then
+		echo "cp over"
+	else
+		exit 2
+	fi	
+	
