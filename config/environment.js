@@ -1,7 +1,7 @@
 // /* jshint node: true */
 
 const ENV = {
-  modulePrefix: 'tiannianbao',
+  modulePrefix: 'biping',
 };
 
 if (process.env.NODE_ENV === 'development') {

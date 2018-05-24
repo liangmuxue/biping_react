@@ -10,7 +10,7 @@
   "author": "lmx",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
-    "test": "cross-env BABEL_ENV=production NODE_ENV=test webpack --colors --progress --config ./webpack/webpack.config.prod.js",
+    "test": "cross-env BABEL_ENV=production NODE_ENV=test webpack --colors --progress --config ./webpack/webpack.config.test.js",
     "build": "cross-env BABEL_ENV=production NODE_ENV=production webpack --colors --progress --config ./webpack/webpack.config.prod.js"
   },
   "dependencies": {
