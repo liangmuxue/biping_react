@@ -41,7 +41,7 @@ const App = {
       if (window.WeixinJSBridge !== 'undefined') {
         match = true;
       }
-      console.log(`match is1221212:${match}`);
+      console.log(`match issss:${match}`);
       let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       let uid = null;
       if (userStr) {
@@ -62,7 +62,7 @@ const App = {
       }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
-      console.log('7777777777', hrefUrl);
+      console.log(`hrefUrl iss:${hrefUrl}`);
       const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
