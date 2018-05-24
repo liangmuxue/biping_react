@@ -69,6 +69,7 @@ const App = {
       if (mockUserStr) {
         mockUserReal = config.env.mockUser;
       }
+      console.log('mockUserReal is', mockUserReal);
       // 开发环境模拟用户
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
