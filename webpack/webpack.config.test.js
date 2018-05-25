@@ -2,14 +2,15 @@ const webpack = require('webpack');
 const path = require('path');
 const merge = require('webpack-merge');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const Uglify = require('uglifyjs-webpack-plugin');
+const AliyunOSSPlugin = require('aliyun-oss-webpack-plugin');
 
 module.exports = merge(require('./webpack.config'), {
   devtool: 'none',
 
   output: {
     path: path.join(__dirname, '../docs'),
+    publicPath: 'https://biping.oss-cn-beijing.aliyuncs.com/webapp',
   },
 
   plugins: [
@@ -26,7 +27,15 @@ module.exports = merge(require('./webpack.config'), {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('test'),
     }),
-
+    new AliyunOSSPlugin({
+      accessKeyId: 'LTAIvAQwnZS1DyZE',
+      accessKeySecret: 'akWYSJarftuqGat4tDUxlmcq7qr7UW',
+      region: 'oss-cn-beijing',
+      bucket: biping
+      headers: {
+        'Cache-Control': 'max-age=3600',
+      },
+    }),
     new Uglify(),
   ],
 });
