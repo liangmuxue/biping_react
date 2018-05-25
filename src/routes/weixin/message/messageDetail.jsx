@@ -348,7 +348,7 @@ class MsgDetail extends BaseComponent {
 
         <div className={style.hide} id="showShare">
           <div className={style.picBox}>
-            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
+            <div className={style.picKinds}><span>{msgObj.verbname}</span></div>
 
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
@@ -359,13 +359,16 @@ class MsgDetail extends BaseComponent {
             </div>
 
             <div className={style.bottomCopy}>
-              <div>
-                <div className={style.copytop}>
-                  <img src="/images/msgImages/copy.png" style={{ width: '.35rem', height: '.4rem' }} />&nbsp;biping.io
-                </div>
 
-                <div>【币评】你最想要的币市信息</div>
-              </div>
+                <div>
+                    <div className={style.copytop}>
+                          <img src="/images/msgImages/copy.png" />
+                      </div>
+
+                  <div className={style.logotop}>【币评】你最想要的币市信息</div>
+                  <div className={style.logobottom}>biping.io <i style={{"color":"#032c4c"}}>扫码阅读全文</i></div>
+
+
             </div>
           </div>
         </div>
@@ -376,7 +379,7 @@ class MsgDetail extends BaseComponent {
 }
 
 function mapStateToProps(state) {
-  console.log('mapStateToPropsmessageDetail', state);
+  console.log('mapStateToPropsmessageDetail', state)
   // 直接返回本model
   // const { messageDetail, app } = state;
   return state.messageDetail;
