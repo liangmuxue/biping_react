@@ -4,6 +4,7 @@
   margin:0;
   padding: 0;
     font-family: 'PingFangSC',"Microsoft YaHei" !important;
+    list-style: none;
 }
 html{
   font-size:13.333vw;
@@ -80,7 +81,7 @@ body{font-size:0.28rem;width: 100% !important;}
   margin-right: .3rem;
   margin-left: .3rem;
   padding-bottom: .47rem;
-  word-break: break-all;
+  word-wrap: break-word;
   line-height: .64rem;
   text-align: left;
 }
@@ -261,36 +262,38 @@ body{font-size:0.28rem;width: 100% !important;}
 
 .picBox {
     width: 100%;
-    max-height: 550px;
-    background: url(/images/msgImages/dabai.png) #fff no-repeat center;
-    background-size: 100%;
+    height:13rem;
+    background: url(/images/msgImages/dabai.png) #fff no-repeat top;
+    background-size: 100% ;
     color: #000;
     font-size: calc(36px * .4);
     word-wrap:break-word;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
     position: relative;
+    overflow: hidden;
 }
 
 .picKinds {
     font-size: .26rem;
     color: #666;
     margin-left: calc(72px * .4);
-    padding-top: calc(60px * .4);
-    margin-bottom: calc(20px * .4);
     text-align: left;
+    position: absolute;
+    top: 3.1rem
 
 }
 
 .picTitle {
     box-sizing: border-box;
-    margin: 0 calc(72px * .4) calc(40px * .4);
+    margin: 0 calc(72px * .4) 0;
     line-height: calc(66px * .4);
     font-size: .44rem;
-    height: 1.1rem;
+    // height: 1.1rem;
     overflow: hidden;
-    word-break: break-all;
+    word-wrap: break-word;
     text-align: left;
     font-weight: bold;
+    margin-top: 4.14rem;
 
 }
 
@@ -298,16 +301,17 @@ body{font-size:0.28rem;width: 100% !important;}
 .picFonts {
     box-sizing: border-box;
     line-height: calc(54px * .4);
-    margin: 0 .5rem;
+    margin: .5rem .5rem 0;
     height: 242px;
-    word-break: break-all;
+    word-wrap: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 9;
     overflow: hidden;
-     word-break: break-all;
      font-size: .36rem;
      line-height: .64rem;
      text-align: left;
+     // position: absolute;
+
 }
 :global(#innerContent img){
   display:none;
@@ -317,12 +321,18 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 
 .wechatBox {
-    margin: calc(60px * .4) auto calc(36px * .4);
-    background: url('/images/msgImages/wechatBorder.png');
-    background-size: 2.08rem 2.58rem;
-    width: 2.08rem;
-    height: 2.58rem;
-    position: relative;
+    // margin: calc(60px * .4) auto calc(36px * .4);
+    // background: url('/images/msgImages/wechatBorder.png');
+    // background-size: 2.08rem 2.58rem;
+    // width: 2rem;
+    // height: 2rem;
+    position: absolute;
+    bottom: 12px;
+    right: 17px;
+    border: 2px solid #5191FC;
+    border-radius: .06px;
+    z-index: 999
+
 }
 
  .wechatBox img {
@@ -344,7 +354,7 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 .bottomCopy{
   width: 100%;
-  height: 1.4rem;
+  height: 1.9rem;
   background: #F6F6F6;
   color: #666;
   font-size: .26rem;
@@ -353,14 +363,19 @@ body{font-size:0.28rem;width: 100% !important;}
   bottom: 0;
   left: 0;
   letter-spacing: .03rem;
+  display: flex;
 }
 .copytop{
-  width: 1.85rem;
-  height: .4rem;
-  margin:.3rem auto .1rem;
+  float: left;
+  width: 1rem;
+  height: 1.1rem;
+  margin-top: .4rem;
+  margin-left: .15rem
 }
 .copytop img{
   float: left;
+  width: 1rem;
+  height: 1.1rem;
 }
 .shareBox h2{
   font-weight: normal;
@@ -394,4 +409,14 @@ table{
   left: 50%;
   margin-left: -50%;
   color: #fff;
+  display: none
+}
+.logotop{
+  float: left;
+  margin-top: .58rem
+}
+
+.logobottom i{
+  float: right;
+  margin-right: .1rem;
 }
