@@ -33,7 +33,7 @@ module.exports = merge(require('./webpack.config'), {
       region: 'oss-cn-beijing',
       bucket: 'biping-webapp',
       headers: {
-        'Cache-Control': 'max-age=3600',
+        'Cache-Control': 'max-age=3600000',
       },
     }),
     new Uglify(),
