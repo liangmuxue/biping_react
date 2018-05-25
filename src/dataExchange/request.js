@@ -19,7 +19,7 @@ const fetch = (endpoint, options) => {
   const axiosInst = axios.create({
     baseURL: `${API_ROOT}/webInterface`,
     timeout: 3000,
-    retry: 4,
+    retry: 3,
     retryDelay: 1000,
     headers: {
       type: 'wechat',
@@ -38,13 +38,8 @@ const fetch = (endpoint, options) => {
     if (retryCnt >= 3) {
       retryCnt = 0;
       // 多次失败，刷新页面,直接把标志提到提示错误的级别
-      if (endpoint === 'userLogin') {
-        return Promise.reject(err);
-      }
-      window.localStorage.setItem('reconnectFlag', 5);
-      window.location.href = window.location.href;
-      // Reject with the error
-      // return Promise.reject(err);
+      const error = { errCode: '1', message: 'timeout error' };
+      throw error;
     }
     retryCnt += 1;
 

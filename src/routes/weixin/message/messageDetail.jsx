@@ -361,7 +361,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.bottomCopy}>
               <div>
                 <div className={style.copytop}>
-                  <img src="/images/msgImages/copy.png"  />
+                  <img src="/images/msgImages/copy.png" />
                 </div>
 
                 <div className={style.logotop}>【币评】你最想要的币市信息</div>

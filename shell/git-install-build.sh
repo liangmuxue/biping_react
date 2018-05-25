@@ -69,5 +69,15 @@ fi
 	echo  "产生对应压缩包..."
 	zip -rq webapp.zip *
 	cp webapp.zip $deploy_path/webapp.zip
-	expect $shellPath/expect_deploy_$expectitem.sh
+	if [ $choic -eq 1 ]
+	then
+		expect $shellPath/expect_deploy_$expectitem.sh
+	elif [ $choic -eq 2 ]
+	then
+		cd $deploy_path
+		unzip -o webapp.zip
+	else
+		exit 2
+	fi	
+	
 echo  "ok..."
