@@ -9,6 +9,7 @@ module.exports = {
 
   entry: {
     app: './index.js',
+    vendor: ['react', 'axios', 'dva', 'emoji'],
   },
   output: {
     filename: '[name]-bundle.js',
@@ -69,31 +70,14 @@ module.exports = {
     }),
 
     new webpack.optimize.CommonsChunkPlugin({
-      name: ['vendor', 'manifest'],
-      minChunks: ({ resource }) => (
-        resource &&
-      resource.indexOf('node_modules') >= 0 &&
-      resource.match(/\.js$/)
-      ),
-    }),
-
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'app',
-      async: 'echarts',
-      minChunks: ({ resource } = {}) => (
-        resource &&
-      resource.includes('node_modules') &&
-      /echarts|zrender/.test(resource)
-      ),
+      name: 'vendor',
+      minChunks(module) {
+      // 该配置假定你引入的 vendor 存在于 node_modules 目录中
+        return module.context && module.context.indexOf('node_modules') !== -1;
+      },
     }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: 'app',
-      async: 'lodash',
-      minChunks: ({ resource } = {}) => (
-        resource &&
-      resource.includes('node_modules') &&
-      /lodash/.test(resource)
-      ),
+      name: 'manifest',
     }),
     new CopyWebpackPlugin([
       { from: 'assets/', to: '' },

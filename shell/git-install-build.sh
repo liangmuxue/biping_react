@@ -71,12 +71,14 @@ fi
 	cp webapp.zip $deploy_path/webapp.zip
 	if [ $choic -eq 1 ]
 	then
-		echo "go exp"
 		expect $shellPath/expect_deploy_$expectitem.sh
 	elif [ $choic -eq 2 ]
 	then
-		echo "cp over"
+		cd $deploy_path
+		unzip -o webapp.zip
 	else
 		exit 2
 	fi	
-	
+
+echo  "ok..."
+
