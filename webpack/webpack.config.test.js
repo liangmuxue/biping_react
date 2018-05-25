@@ -31,7 +31,7 @@ module.exports = merge(require('./webpack.config'), {
       accessKeyId: 'LTAIvAQwnZS1DyZE',
       accessKeySecret: 'akWYSJarftuqGat4tDUxlmcq7qr7UW',
       region: 'oss-cn-beijing',
-      bucket: biping
+      bucket: 'biping',
       headers: {
         'Cache-Control': 'max-age=3600',
       },

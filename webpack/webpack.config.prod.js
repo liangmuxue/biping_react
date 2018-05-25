@@ -10,7 +10,7 @@ module.exports = merge(require('./webpack.config'), {
 
   output: {
     path: path.join(__dirname, '../docs'),
-    publicPath: 'https://biping.oss-cn-beijing.aliyuncs.com/webapp',
+    publicPath: 'http://webapp.closerhearts.net.cn/',
   },
 
   plugins: [
@@ -28,10 +28,10 @@ module.exports = merge(require('./webpack.config'), {
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
     new AliyunOSSPlugin({
-      accessKeyId: '*****',
-      accessKeySecret: '*****',
-      region: 'oss-cn-hangzhou',
-      bucket: '*****',
+      accessKeyId: 'LTAIvAQwnZS1DyZE',
+      accessKeySecret: 'akWYSJarftuqGat4tDUxlmcq7qr7UW',
+      region: 'oss-cn-beijing',
+      bucket: 'biping-webapp',
       headers: {
         'Cache-Control': 'max-age=3600',
       },
