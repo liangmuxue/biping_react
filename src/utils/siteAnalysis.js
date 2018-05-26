@@ -132,5 +132,9 @@ export const siteAnalysis = {
 
   setField(key, value) {
     ReactGA.set({ [key]: value });
+    if(key==='userId'){
+      console.log("identify uid:" + value);
+      zhuge.identify(value);
+    }
   },
 };
