@@ -137,4 +137,10 @@ export const siteAnalysis = {
       zhuge.identify(value);
     }
   },
+  setUser(systemUser){
+    ReactGA.set({ "userId": systemUser.uid });
+    zhuge.identify(systemUser.uid,{
+      typeCode:systemUser.typeCode
+    });
+  }
 };
