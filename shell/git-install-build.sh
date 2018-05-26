@@ -57,8 +57,8 @@ then
 	echo "ok"
 elif [ $choic -eq 2 ]
 then
-	echo  "npm run build..."
-	npm run build
+	echo  "npm run test..."
+	npm run test
 	echo "ok"
 else
 	exit 2
@@ -79,5 +79,6 @@ fi
 	else
 		exit 2
 	fi	
-	
+
 echo  "ok..."
+

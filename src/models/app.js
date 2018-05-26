@@ -41,7 +41,7 @@ const App = {
       if (window.WeixinJSBridge !== 'undefined') {
         match = true;
       }
-      console.log(`match is1221212:${match}`);
+      console.log(`match issss:${match}`);
       let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       let uid = null;
       if (userStr) {
@@ -62,16 +62,14 @@ const App = {
       }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
-      console.log('7777777777', hrefUrl);
+      console.log(`hrefUrl iss:${hrefUrl}`);
       const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
       if (mockUserStr) {
-        mockUserReal = {
-          userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
-          passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
-        };
+        mockUserReal = config.env.mockUser;
       }
+      console.log('mockUserReal is', mockUserReal);
       // 开发环境模拟用户
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
