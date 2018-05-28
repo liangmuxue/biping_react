@@ -41,24 +41,19 @@ class MessageCard extends React.Component {
                   <Card full>
                     <Hammer onTap={this.handleTap.bind(this)}>
                       <div>
-                        <Card.Header title={<div className={styles.cardtitle}> {msgObj.title}</div>} />
+                        <Card.Header title={
+                          <div className={styles.cardtitle}>
+                              <div className={styles.listLogo}><img src={msgObj.img}/></div>
+                              <div className={styles.logoNameBox}>
+                                <div className={styles.logoName}>Gate.io</div>
+                                <div className={styles.logoFrom}>来自订阅：{msgObj.tagName} · {msgObj.time}</div>
+                              </div>
+                          </div>} />
                         <Card.Body>
-                          <div className={styles.cardContent}>{msgObj.content}</div>
+                          <div className={styles.cardtitle}> {msgObj.title}</div>
                         </Card.Body>
                       </div>
                     </Hammer>
-                    <Card.Footer
-                      content={
-                        <div className={styles.cardFooter}>
-                          <Hammer onTap={this.handleTagTap.bind(this)}>
-                            <span className={styles.event}>#{msgObj.tagName}</span>
-                          </Hammer>
-                          <span className={styles.readNum}>{msgObj.readCnt}阅读</span>
-                          <span className={styles.times}>{msgObj.time}</span>
-                        </div>
-                        }
-                      extra
-                    />
                   </Card>
                 </div>
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import ListView from 'antd-mobile/lib/list-view/index';
 import ActivityIndicator from 'antd-mobile/lib/activity-indicator/index';
 import PullToRefresh from 'antd-mobile/lib/pull-to-refresh/index';
@@ -22,6 +23,7 @@ class InfiniteListView extends React.Component {
       dataSource,
     };
   }
+
   componentWillMount() {
     console.log('componentWillMount infi', this.props);
     // // 有数据则加入到滚动列表
@@ -35,6 +37,18 @@ class InfiniteListView extends React.Component {
       });
     }
   }
+
+  componentDidMount() {
+    console.log(123456, this.props)
+     const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+    console.log(hei, 12333)
+    setTimeout(() => {
+      this.setState({
+        height:hei,
+      });
+    }, 1500);
+  }
+
 
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
@@ -88,6 +102,7 @@ class InfiniteListView extends React.Component {
       });
       this.state = {
         dataSource,
+
       };
       // 调用父级方法，进行刷新请求
       onRefresh();
@@ -104,7 +119,7 @@ class InfiniteListView extends React.Component {
     const renderRowInner = (rowData, sectionID, rowID) => {
       console.log('renderRowInner rowData:', rowData);
       if (rowData.noMoreTip && rowData.noMoreTip === 1) {
-        return <div className={styles.noMoreTip}>没有更多内容了</div>;
+        return <div className={styles.noMoreTip}>没有更多啦</div>;
       } else {
         return renderRow(rowData, sectionID, rowID);
       }
