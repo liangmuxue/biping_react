@@ -72,6 +72,10 @@ const pcEntity = {
       // 埋点：正常浏览，点击进入
       if (!backArrow) {
         opt = { fromPath };
+        // 埋点记录消息id
+        if(pageName==='messageDetail'){
+          opt.messageId = params.messageId;
+        }
         yield put({
           type: 'app/analysis',
           payload: {
