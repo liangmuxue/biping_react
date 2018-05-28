@@ -1,4 +1,4 @@
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
+// import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Card from 'antd-mobile/lib/card/index';
 import Hammer from 'react-hammerjs';
 // import 'antd-mobile/es/card/style/index.css';
@@ -37,7 +37,6 @@ class MessageCard extends React.Component {
     return (
 
                 <div className={styles.mesList} >
-                  <WhiteSpace size="lg" />
                   <Card full>
                     <Hammer onTap={this.handleTap.bind(this)}>
                       <div>
@@ -51,7 +50,9 @@ class MessageCard extends React.Component {
                           </div>} />
                         <Card.Body>
                           <div className={styles.cardtitle}> {msgObj.title}</div>
+                          <span className={msgObj.tagName ===  "币事件" ? styles.eventStrat : styles.hide}>事件开始日期：{msgObj.startTime}</span>
                         </Card.Body>
+
                       </div>
                     </Hammer>
                   </Card>
