@@ -8,8 +8,8 @@ import Button from 'antd-mobile/lib/button/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
-import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
+import style from './messageDetail.less';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
@@ -221,7 +221,7 @@ class MsgDetail extends BaseComponent {
       onClose={this.closeShare.bind(this)}
     >
       <div>
-        <div style={{ lineHeight: '1.07rem' }}>
+        <div style={{ lineHeight: '1.08rem' }}>
           <span className={style.titleTips}>长按图片发送好友</span>
           <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
@@ -282,14 +282,14 @@ class MsgDetail extends BaseComponent {
           </div>
 
           <div className={style.notice}>
+            <div className={style.caption}>{msgObj.title}</div>
             <div className={style.noticeTitle}>
               <div className={style.times}>{msgObj.time}</div>
               <Hammer >
                 <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
               </Hammer>
             </div>
-
-            <div className={style.caption}>{msgObj.title}</div>
+            <div className={style.startTimes}>事件开始日期：{msgObj.startTime}</div>
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.friendBox}>
@@ -349,8 +349,8 @@ class MsgDetail extends BaseComponent {
         <div className={style.hide} id="showShare">
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
-
             <div className={style.picTitle}>{msgObj.title}</div>
+            <div className={style.startTimes}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
