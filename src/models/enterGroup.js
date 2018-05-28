@@ -35,6 +35,15 @@ export default modelExtend(pageModel, {
           touchMoveDisable: true,
         },
       });
+      // 埋点
+      yield put({
+        type: 'analysis',
+        payload: {
+          page: siteAnalysis.pageConst.ENTERGROUP,
+          action: siteAnalysis.actConst.GROUPWECHAT,
+        },
+      });
+      // 返回
       yield put({
         type: 'shareWechatSuccess',
       });
