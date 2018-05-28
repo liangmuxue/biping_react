@@ -44,7 +44,7 @@ class MessageCard extends React.Component {
                           <div className={styles.cardtitle}>
                               <div className={styles.listLogo}><img src={msgObj.img}/></div>
                               <div className={styles.logoNameBox}>
-                                <div className={styles.logoName}>Gate.io</div>
+                                <div className={styles.logoName}>{msgObj.name}</div>
                                 <div className={styles.logoFrom}>来自订阅：{msgObj.tagName} · {msgObj.time}</div>
                               </div>
                           </div>} />
