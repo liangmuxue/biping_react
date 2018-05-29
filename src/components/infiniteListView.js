@@ -39,9 +39,8 @@ class InfiniteListView extends React.Component {
   }
 
   componentDidMount() {
-    console.log(123456, this.props)
      const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-    console.log(hei, 12333)
+    console.log("hei is:" + hei);
     setTimeout(() => {
       this.setState({
         height:hei,
@@ -100,9 +99,11 @@ class InfiniteListView extends React.Component {
       const dataSource = new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       });
+      const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
+      console.log("hei is:" + hei)      
       this.state = {
         dataSource,
-
+        height:500
       };
       // 调用父级方法，进行刷新请求
       onRefresh();
@@ -141,7 +142,7 @@ class InfiniteListView extends React.Component {
             onRefresh={onRefreshAct}
             distanceToRefresh={25}
             indicator={{
-              release: <ActivityIndicator text="正在加载" size="samll"/>,
+              release: <ActivityIndicator text="正在加载" size="small"/>,
               finish: <div />,
             }}
 
