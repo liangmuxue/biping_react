@@ -1,5 +1,9 @@
 import List from 'antd-mobile/lib/list/index';
 import Button from 'antd-mobile/lib/button/index';
+import Switch from 'antd-mobile/lib/switch/index';
+import 'antd-mobile/es/switch/style/index.css';
+
+import { createForm } from 'rc-form';
 import 'antd-mobile/es/button/style/index.css';
 import React from 'react';
 import style from './subItem.less';
@@ -24,27 +28,37 @@ class SubItem extends React.Component {
     this.props.subscribeClick(this.props.itemObj);
 
   }
-
   render() {
-    const { itemObj } = this.props;
+    const { itemObj, dispatch, flag } = this.props;
     console.log('itemObj is', itemObj);
-    const extraBtn = (<Button
+    let SwitchExample = (props) => {
+      const { getFieldProps } = props.form;
 
-      style={itemObj.isSub ? { background: '#DDDDDD', height: '.66rem',color: '#353535',width:'1.42rem', padding:0,lineHeight:".66rem"} : { width:'1.42rem',  height: '.66rem',background: '#428BFF', color: '#fff', padding:0,lineHeight:'.66rem' }}
-      size="small"
-      inline
-      className={style.unreadBtn}
-      onClick={this.subscribe.bind(this)}
-    >{itemObj.isSub ? '已订阅' : '订阅'}
-                      </Button>);
+      return (
+        <List>
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch1', {
+                initialValue: true,
+                valuePropName: 'checked',
+              })}
+              onClick={(checked) => {
+                console.log(checked)
+              }}
+            />}
+          >
+            <div>
+              <img src={'http://'+itemObj.headImg} className={style.subItemLogo} alt="" />
+              <span className={style.toMsg}>{itemObj.typeName} </span>
+            </div>
+          </List.Item>
+        </List>
+      );
+    };
+    SwitchExample = createForm()(SwitchExample);
     return (
-      <List.Item
-        extra={extraBtn}
-        multipleLine
-      >
-        {'# '+ itemObj.typeName}
-      </List.Item>
-    );
+      <SwitchExample/>
+    )
   }
 }
 
