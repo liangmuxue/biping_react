@@ -9,9 +9,9 @@ if (process.env.NODE_ENV === 'development') {
   ENV.socketHost = 'http://10.0.109.126';
   // ENV.host = 'http://10.0.107.254:8280';
   // ENV.host = 'http://10.0.106.161:8280';
-  ENV.host = 'http://47.92.25.130:8280';
+  // ENV.host = 'http://47.92.25.130:8280';
   //  ENV.host = 'http://10.0.109.224:8280';
-  // ENV.host = 'http://wp.test.tnb99.net';
+  ENV.host = 'http://wp.test.tnb99.net';
   // ENV.host = 'http://twp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
@@ -23,9 +23,13 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
+  // ENV.mockUser = {
+  //   userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
+  //   passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
+  // };
   ENV.mockUser = {
-    userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
-    passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
+    userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
+    passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
   };
   // ENV.mockUser = {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',

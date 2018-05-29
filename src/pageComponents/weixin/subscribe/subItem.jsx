@@ -33,6 +33,7 @@ class SubItem extends React.Component {
     console.log('itemObj is', itemObj);
     let SwitchExample = (props) => {
       const { getFieldProps } = props.form;
+
       return (
         <List>
           <List.Item
