@@ -103,6 +103,10 @@ export const siteAnalysis = {
       code: 'sharemessage',
       zh: '分享消息',
     },
+    GROUPWECHAT: {
+      code: 'groupWechat',
+      zh: '我要入群点击',
+    },
     CANCLEPUSH: {
       code: 'canclepush',
       zh: '取消推送',
@@ -137,4 +141,10 @@ export const siteAnalysis = {
       zhuge.identify(value);
     }
   },
+  setUser(systemUser){
+    ReactGA.set({ "userId": systemUser.uid });
+    zhuge.identify(systemUser.uid,{
+      typeCode:systemUser.typeCode
+    });
+  }
 };

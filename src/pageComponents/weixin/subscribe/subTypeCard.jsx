@@ -63,7 +63,7 @@ class SubTypeCard extends React.Component {
           <h1 className={styles.titles}>{typeObj.typeName}</h1>
           <div className={styles.contents}>{typeObj.tagDesc}</div>
           <Hammer onTap={this.handleRemarkTap.bind(this)}>
-            <div className={flag === undefined ?  styles.bottomBtn : styles.hide }>{typeObj.typeRemark}<img alt="right_arrow" src="/images/messageListImg/right_arrow.png" className={styles.arrowRight} /></div>
+            <div className={flag === undefined ? styles.bottomBtn : styles.hide }>{typeObj.typeRemark}<img alt="right_arrow" src="/images/messageListImg/right_arrow.png" className={styles.arrowRight} /></div>
           </Hammer>
         </div>
       </div>
