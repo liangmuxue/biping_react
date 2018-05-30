@@ -23,17 +23,17 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
-  ENV.mockUser = {
-    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
-    passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
-  };
+  // ENV.mockUser = {
+  //   userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+  //   passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
+  // };
   // ENV.mockUser = {
   //   userName: 'd53dc5b5-3e0b-473f-a514-1c0fa846d275',
   //   passWord: 'f1d4864a-d080-4f9a-ac3c-313821fb56f8',
   // };
   ENV.mockUser = {
-    userName: '4b8d6d07-ef96-48f2-bb34-7267c2eabaaa',
-    passWord: '3ecf1f31-e8f8-4d17-bb35-34b5a73d0cf7',
+    userName: 'bef871a6-04c1-4725-b5c6-e07ea718f020',
+    passWord: 'd5983016-10ca-4579-b959-f6689efd0c0f',
   };
   // ENV.mockUser = {
   //   userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
@@ -58,8 +58,8 @@ if (process.env.NODE_ENV === 'test') {
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
   ENV.mockUser = {
-    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
-    passWord: '4da817d1-547e-4558-b895-c52beeb0efda',
+    userName: 'b5ab5b6c-89b7-4bd2-84d1-e52b8e88939d',
+    passWord: '8d213933-939f-4869-a117-72cd7708e259',
   };
 }
 if (process.env.NODE_ENV === 'production') {
