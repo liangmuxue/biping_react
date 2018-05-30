@@ -26,7 +26,6 @@ class SubItem extends React.Component {
   subscribe(e) {
     console.log('subscribe in,props:', this.props);
     this.props.subscribeClick(this.props.itemObj);
-
   }
   render() {
     const { itemObj, dispatch, flag } = this.props;
@@ -42,13 +41,11 @@ class SubItem extends React.Component {
                 initialValue: true,
                 valuePropName: 'checked',
               })}
-              onClick={(checked) => {
-                console.log(checked)
-              }}
+              onClick={this.subscribe.bind(this)}
             />}
           >
             <div>
-              <img src={'http://'+itemObj.headImg} className={style.subItemLogo} alt="" />
+              <img src={`http://${itemObj.headImg}`} className={style.subItemLogo} alt="" />
               <span className={style.toMsg}>{itemObj.typeName} </span>
             </div>
           </List.Item>
@@ -57,8 +54,8 @@ class SubItem extends React.Component {
     };
     SwitchExample = createForm()(SwitchExample);
     return (
-      <SwitchExample/>
-    )
+      <SwitchExample />
+    );
   }
 }
 
