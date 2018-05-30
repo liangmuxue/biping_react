@@ -11,8 +11,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130:8280';
   //  ENV.host = 'http://10.0.109.224:8280';
-  ENV.host = 'http://wp.test.tnb99.net';
-  // ENV.host = 'http://twp.test.tnb99.net';
+  // ENV.host = 'http://wp.test.tnb99.net';
+  ENV.host = 'http://twp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
@@ -28,17 +28,17 @@ if (process.env.NODE_ENV === 'development') {
   //   passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
   // };
   // ENV.mockUser = {
-  //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
-  //   passWord: '20165a11-0c4e-490b-83a7-162d914e17a5',
-  // };
-  // ENV.mockUser = {
-  //   userName: 'ffc475f2-7f9f-4509-9dea-56fe9dab76bc',
-  //   passWord: '9afb6ab3-1fb3-4833-8286-9b33512eaa78',
+  //   userName: 'd53dc5b5-3e0b-473f-a514-1c0fa846d275',
+  //   passWord: 'f1d4864a-d080-4f9a-ac3c-313821fb56f8',
   // };
   ENV.mockUser = {
-    userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
-    passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
+    userName: '4b8d6d07-ef96-48f2-bb34-7267c2eabaaa',
+    passWord: '3ecf1f31-e8f8-4d17-bb35-34b5a73d0cf7',
   };
+  // ENV.mockUser = {
+  //   userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
+  //   passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
+  // };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
