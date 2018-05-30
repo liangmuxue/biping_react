@@ -23,10 +23,10 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
-  // ENV.mockUser = {
-  //   userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
-  //   passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
-  // };
+  ENV.mockUser = {
+    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+    passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
+  };
   // ENV.mockUser = {
   //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
   //   passWord: '20165a11-0c4e-490b-83a7-162d914e17a5',
@@ -58,8 +58,8 @@ if (process.env.NODE_ENV === 'test') {
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
   ENV.mockUser = {
-    userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
-    passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
+    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+    passWord: '4da817d1-547e-4558-b895-c52beeb0efda',
   };
 }
 if (process.env.NODE_ENV === 'production') {
