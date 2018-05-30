@@ -160,11 +160,12 @@ const App = {
           dispatch({ type: 'toTourPage' });
         }
       } else if (userStr != null) {
-        console.log('userStr');
+        console.log(`userStr${userStr}`);
         const { analysisParam } = urlUtils;
         const code = analysisParam('code');
         const state = analysisParam('state');
         const userData = JSON.parse(userStr);
+        console.log('userData', userData);
         console.log('state', state);
         if (code) {
           userData.code = code;
@@ -216,17 +217,18 @@ const App = {
       const { messageId } = payload;
       const { sharePaper } = payload;
       const { fromUser } = payload;
+      console.log('ret555query', payload);
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe, isFirstEnter,typeCode
+          token, name, headUrl, uid, subscribe, isFirstEnter, typeCode,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid, subscribe,typeCode
+          token, name, headUrl, ifEnterGroup, uid, subscribe, typeCode,
         };
         // 群裂变开通权限用户
         if (isFirstEnter && isFirstEnter === 'yes') {
@@ -481,6 +483,7 @@ const App = {
         passWord: systemUser.passWord,
         uid: systemUser.uid,
       };
+      console.log('afterAutoReg', JSON.stringify(userInfo));
       window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
       return {
         ...state, ...systemUser, isLogin: true, modalVisible: false,
