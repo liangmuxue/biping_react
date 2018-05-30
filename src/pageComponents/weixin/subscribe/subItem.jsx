@@ -45,7 +45,7 @@ class SubItem extends React.Component {
             />}
           >
             <div>
-              <img src={`http://${itemObj.headImg}`} className={style.subItemLogo} alt="" />
+              <img src={itemObj.headImg} className={style.subItemLogo} alt="" />
               <span className={style.toMsg}>{itemObj.typeName} </span>
             </div>
           </List.Item>
