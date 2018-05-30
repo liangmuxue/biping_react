@@ -48,6 +48,36 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 订阅所有类别
+    *subscribeAll({ payload }, { put, select, call }) {
+      const st = yield select();
+      const { typeId } = payload;
+      const endpoint = 'subscribeinfos';
+      const filter = {};
+      const { subDetail } = st;
+      // 发起订阅请求
+      yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          typeId,
+          open: 1,
+        },
+      }, st);
+      // 修改页面状态，把所有数据变为已订阅
+      const subObj = subDetail.subDetailData.data;
+      const newContent = [];
+      subObj.content.map((item) => {
+        newContent.push(Immutable.merge(item, { isSub: 1 }));
+        return item;
+      });
+      subObj.content = newContent;
+      yield put({
+        type: 'subscribeSuccess',
+        payload: subObj,
+      });
+    },
     // 订阅小类别
     *subscribeItem({ payload }, { put, select, call }) {
       const st = yield select();

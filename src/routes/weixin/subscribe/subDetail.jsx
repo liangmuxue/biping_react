@@ -26,6 +26,15 @@ class SubDetail extends BaseComponent {
       payload: { ...params },
     });
   }
+  // 订阅所有
+  subscribeAll() {
+    const { typeId } = this.props.subDetailData.data;
+    this.props.dispatch({
+      type: 'subDetail/subscribeAll',
+      payload: { typeId },
+    });
+  }
+  // 订阅某小类
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
     const { remainDate, typeId, typeName } = this.props.subDetailData.data;
@@ -84,14 +93,13 @@ class SubDetail extends BaseComponent {
         <div className={style.topBox}>
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
-        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll}  >打开所有</button></div>
+        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
         {subDetailData.data.content.map(item =>
-                    (<SubItem
-                      key={item.typeId}
-                      itemObj={item}
-                      subscribeClick={this.subscribeItem.bind(this)}
-
-                    />))}
+                (<SubItem
+                  key={item.typeId}
+                  itemObj={item}
+                  subscribeClick={this.subscribeItem.bind(this)}
+                />))}
         <div className={style.full} />
       </div>
     );
