@@ -38,7 +38,7 @@ class SubItem extends React.Component {
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
-                initialValue: true,
+                initialValue: itemObj.isSub === 0,
                 valuePropName: 'checked',
               })}
               onClick={this.subscribe.bind(this)}

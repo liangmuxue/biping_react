@@ -42,7 +42,7 @@ class MessageCard extends React.Component {
             <div>
               <Card.Header title={
                 <div className={styles.cardtitle}>
-                  <div className={styles.listLogo}>{msgObj.img === '' ? <div /> : <img src={msgObj.img} /> }</div>
+                  <div className={styles.listLogo}>{msgObj.img === '' ?  <div></div> : <img src={msgObj.img} /> }</div>
                   <div className={styles.logoNameBox}>
                     <div className={styles.logoName}>{msgObj.name}</div>
                     <div className={styles.logoFrom}>来自订阅：{msgObj.tagName} · {msgObj.time}</div>
@@ -51,7 +51,7 @@ class MessageCard extends React.Component {
                 </div>}
               />
               <Card.Body>
-                <div className={styles.cardtitle}> {msgObj.title}</div>
+                <div className={styles.cardtitles}> {msgObj.title}</div>
                 <span className={msgObj.tagName === '币事件' ? styles.eventStrat : styles.hide}>事件开始日期：{msgObj.startTime}</span>
               </Card.Body>
 
