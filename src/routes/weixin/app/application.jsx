@@ -87,10 +87,10 @@ class HomePage extends Component {
         <div className={routeLoading ? styles.loading : styles.loadingHide}>
 
           <div className="loading-container" style={{ display: 'flex', justifyContent: 'flex-start' }}>
-            <div className="loading-example" style={{ display: 'flex', flexDirection: 'column' }}>
+            <div className="loading-example" style={{ display: 'flex', flexDirection: 'column', color: '#ccc' }}>
               <div className="align">
                 <ActivityIndicator size="large" />
-                <span style={{ marginTop: 8 }}>正在加载</span>
+                <span style={{ marginTop: 8, color: '#ccc' }}>正在加载</span>
               </div>
             </div>
           </div>
@@ -105,7 +105,7 @@ class HomePage extends Component {
         <div className="loading-example">
           <div className="align">
             <ActivityIndicator size="large" />
-            <span style={{ marginTop: 8 }}>正在加载</span>
+            <span style={{ marginTop: 8, color: '#ccc' }}>正在加载</span>
           </div>
         </div>
       </div>
