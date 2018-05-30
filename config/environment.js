@@ -11,8 +11,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130:8280';
   //  ENV.host = 'http://10.0.109.224:8280';
-  ENV.host = 'http://wp.test.tnb99.net';
-  // ENV.host = 'http://twp.test.tnb99.net';
+  // ENV.host = 'http://wp.test.tnb99.net';
+  ENV.host = 'http://twp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
@@ -36,8 +36,8 @@ if (process.env.NODE_ENV === 'development') {
   //   passWord: '9afb6ab3-1fb3-4833-8286-9b33512eaa78',
   // };
   ENV.mockUser = {
-    userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
-    passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
+    userName: '7adcfb43-8ed1-42f2-9b97-1a7143ab886c',
+    passWord: '97782c72-79fb-4c77-b086-a3f1811853e9',
   };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
