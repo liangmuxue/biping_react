@@ -31,10 +31,12 @@ if (process.env.NODE_ENV === 'development') {
     userName: '67aabb9c-7083-489d-bd96-d166ee03e4b0',
     passWord: 'a8571dd1-6f65-42f6-b419-6051f8fd8fc9',
   };
+
   // ENV.mockUser = {
   //   userName: 'd53dc5b5-3e0b-473f-a514-1c0fa846d275',
   //   passWord: 'f1d4864a-d080-4f9a-ac3c-313821fb56f8',
   // };
+
   // ENV.mockUser = {
   //   userName: 'ec26584d-06ea-40bb-a04e-6ba589f94c2c',
   //   passWord: '6fbf3a44-fba6-4441-a213-adb1303a1cea',
@@ -62,8 +64,8 @@ if (process.env.NODE_ENV === 'test') {
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
   ENV.mockUser = {
-    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
-    passWord: '4da817d1-547e-4558-b895-c52beeb0efda',
+    userName: 'b5ab5b6c-89b7-4bd2-84d1-e52b8e88939d',
+    passWord: '8d213933-939f-4869-a117-72cd7708e259',
   };
 }
 if (process.env.NODE_ENV === 'production') {
