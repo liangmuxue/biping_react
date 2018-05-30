@@ -63,10 +63,6 @@ if (process.env.NODE_ENV === 'test') {
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
-  ENV.mockUser = {
-    userName: 'bef871a6-04c1-4725-b5c6-e07ea718f020',
-    passWord: 'd5983016-10ca-4579-b959-f6689efd0c0f',
-  };
 }
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
