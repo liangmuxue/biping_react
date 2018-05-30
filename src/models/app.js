@@ -66,8 +66,14 @@ const App = {
       const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
+      // 模拟用户
       if (mockUserStr) {
-        mockUserReal = config.env.mockUser;
+        const userName = analysisParam('userName');
+        const passWord = analysisParam('passWord');
+        mockUserReal = {
+          userName,
+          passWord
+        };
       }
       console.log('mockUserReal is', mockUserReal);
       // 开发环境模拟用户
