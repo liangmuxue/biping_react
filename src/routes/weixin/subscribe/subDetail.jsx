@@ -94,7 +94,11 @@ class SubDetail extends BaseComponent {
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll}  >打开所有</button></div>
+=======
+        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
+>>>>>>> e515ae6d1853d966ef83b4c20ffac4b06aae2ce1
 =======
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
 >>>>>>> e515ae6d1853d966ef83b4c20ffac4b06aae2ce1
