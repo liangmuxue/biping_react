@@ -43,7 +43,7 @@ class MessageCard extends React.Component {
             <div>
               <Card.Header title={
                 <div className={styles.cardtitle}>
-                  <div className={styles.listLogo}> <img src={msgObj.img}  onError="this.src='/assets/images//buyHistoryImg/3.png'" /> </div>
+                  <div className={styles.listLogo}> <img src={msgObj.img}   /> </div>
                   <div className={styles.logoNameBox}>
                     <div className={styles.logoName}>{msgObj.name}</div>
                     <div className={styles.logoFrom}>来自订阅：{msgObj.tagName} · {msgObj.time}</div>
