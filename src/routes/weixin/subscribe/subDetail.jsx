@@ -69,6 +69,7 @@ class SubDetail extends BaseComponent {
       });
     }
   }
+
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -83,7 +84,7 @@ class SubDetail extends BaseComponent {
         <div className={style.topBox}>
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
-        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll}>打开所有</button></div>
+        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll}  >打开所有</button></div>
         {subDetailData.data.content.map(item =>
                     (<SubItem
                       key={item.typeId}

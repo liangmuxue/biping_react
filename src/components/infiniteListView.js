@@ -38,17 +38,6 @@ class InfiniteListView extends React.Component {
     }
   }
 
-  componentDidMount() {
-     const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-    console.log("hei is:" + hei);
-    setTimeout(() => {
-      this.setState({
-        height:hei,
-      });
-    }, 1500);
-  }
-
-
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);
@@ -99,12 +88,10 @@ class InfiniteListView extends React.Component {
       const dataSource = new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       });
-      const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-      console.log("hei is:" + hei)      
-      this.state = {
-        dataSource,
-        height:500
-      };
+      // 需要手工调整indecate间距
+      const lvDom =  ReactDOM.findDOMNode(this.lv);
+      const ind = lvDom.getElementsByClassName("am-pull-to-refresh-transition")[0];
+      ind.style.webkitTransform = "translate3d(0px, 20px, 0px)";
       // 调用父级方法，进行刷新请求
       onRefresh();
     };

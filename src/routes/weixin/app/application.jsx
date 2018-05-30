@@ -74,7 +74,7 @@ class HomePage extends Component {
           </div>
           <div className={styles.tipError}> 网络不给力~ </div>
           <div className={styles.refresh}>
-            <Button>点击重试</Button>
+            <Button onClick={window.location.reload()}>点击重试</Button>
           </div>
         </div>
       );
