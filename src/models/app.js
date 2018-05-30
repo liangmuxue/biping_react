@@ -221,12 +221,12 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe, isFirstEnter,
+          token, name, headUrl, uid, subscribe, isFirstEnter,exchange,event
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid, subscribe,
+          token, name, headUrl, ifEnterGroup, uid, subscribe,exchange,event
         };
         // 群裂变开通权限用户
         if (isFirstEnter && isFirstEnter === 'yes') {
@@ -261,8 +261,9 @@ const App = {
             systemUser,
           },
         });
-        // 初始化ga中的uid
-        siteAnalysis.setField('userId', systemUser.uid);
+        // 初始化用户标识
+        // siteAnalysis.setField('userId', systemUser.uid);
+        siteAnalysis.setUser(systemUser);
         // 发送打开主页的埋点
         yield put({
           type: 'analysis',
@@ -453,8 +454,14 @@ const App = {
       const { app } = st;
       console.log('app in ana', app);
       const { systemUser } = app;
+      // 埋点判断是否开通订阅的用户
+      let hasSubcribe = 0;
+      if(systemUser.exchange==1||systemUser.event==1){
+        hasSubcribe = 1;
+      }
       if (systemUser) {
         opt.uid = systemUser.uid;
+        opt.hasSubcribe = hasSubcribe;
       }
       const pageReal = `wx_${page}`;
       siteAnalysis.pushEvent(page, action, opt);

@@ -38,17 +38,6 @@ class InfiniteListView extends React.Component {
     }
   }
 
-  componentDidMount() {
-     const hei = this.state.height - ReactDOM.findDOMNode(this.lv).offsetTop;
-    console.log("hei is:" + hei);
-    setTimeout(() => {
-      this.setState({
-        height:hei,
-      });
-    }, 1500);
-  }
-
-
   // If you use redux, the data maybe at props, you need use `componentWillReceiveProps`
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);

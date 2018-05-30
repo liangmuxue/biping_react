@@ -23,22 +23,22 @@ if (process.env.NODE_ENV === 'development') {
   ENV.msgShareUrl = 'http://localhost:9000/images/msgImages';
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
+  ENV.mockUser = {
+    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+    passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
+  };
   // ENV.mockUser = {
-  //   userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
-  //   passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
-  // };
-  // ENV.mockUser = {
-  //   userName: 'ed18c1a1-4470-4db0-b060-a3d44827993f ',
-  //   passWord: '20165a11-0c4e-490b-83a7-162d914e17a5',
-  // };
-  // ENV.mockUser = {
-  //   userName: 'ffc475f2-7f9f-4509-9dea-56fe9dab76bc',
-  //   passWord: '9afb6ab3-1fb3-4833-8286-9b33512eaa78',
+  //   userName: 'd53dc5b5-3e0b-473f-a514-1c0fa846d275',
+  //   passWord: 'f1d4864a-d080-4f9a-ac3c-313821fb56f8',
   // };
   ENV.mockUser = {
-    userName: '7adcfb43-8ed1-42f2-9b97-1a7143ab886c',
-    passWord: '97782c72-79fb-4c77-b086-a3f1811853e9',
+    userName: '4b8d6d07-ef96-48f2-bb34-7267c2eabaaa',
+    passWord: '3ecf1f31-e8f8-4d17-bb35-34b5a73d0cf7',
   };
+  // ENV.mockUser = {
+  //   userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
+  //   passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
+  // };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
@@ -58,8 +58,8 @@ if (process.env.NODE_ENV === 'test') {
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
   ENV.mockUser = {
-    userName: '46cadb3d-44a4-4635-b912-f486fb95e44c',
-    passWord: 'c1a46aa1-8081-45cb-8aa3-9d666fbaa255',
+    userName: '3b42abd7-205a-4b3f-b93d-cdcf5c5670c2',
+    passWord: '4da817d1-547e-4558-b895-c52beeb0efda',
   };
 }
 if (process.env.NODE_ENV === 'production') {
