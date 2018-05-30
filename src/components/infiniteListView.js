@@ -21,6 +21,7 @@ class InfiniteListView extends React.Component {
     });
     this.state = {
       dataSource,
+      useBodyScroll: false,
     };
   }
 
@@ -83,6 +84,8 @@ class InfiniteListView extends React.Component {
         onEndReached();
       }
     };
+
+
     const onRefreshAct = (event) => {
       console.log('onRefreshAct in', event);
       const dataSource = new ListView.DataSource({
@@ -119,6 +122,8 @@ class InfiniteListView extends React.Component {
           dataSource={this.state.dataSource}
           renderRow={renderRowInner}
           renderSeparator={separator}
+          renderHeader={() => {}}
+          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}></div>)}
           className="am-list"
           pageSize={pageSize}
           style={{
@@ -127,6 +132,7 @@ class InfiniteListView extends React.Component {
           }}
           pullToRefresh={<PullToRefresh
             onRefresh={onRefreshAct}
+            damping={30}
             distanceToRefresh={25}
             indicator={{
               release: <ActivityIndicator text="正在加载" size="small"/>,
@@ -138,6 +144,7 @@ class InfiniteListView extends React.Component {
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
+
         />
         {this.state.noMoreTip}
       </div>

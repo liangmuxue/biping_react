@@ -24,12 +24,13 @@ class MessageCard extends React.Component {
     console.log('handleTap in,props:', this.props);
     this.props.cardClick(this.props.msgObj);
   }
-  // 点击标签，进行筛选
   handleTagTap(e) {
+  // 点击标签，进行筛选
     console.log('handleTagTap in,props:', this.props);
     e.preventDefault();
     this.props.tagClick(this.props.msgObj);
   }
+
 
   render() {
     const { msgObj } = this.props;
@@ -42,7 +43,7 @@ class MessageCard extends React.Component {
             <div>
               <Card.Header title={
                 <div className={styles.cardtitle}>
-                  <div className={styles.listLogo}>{msgObj.img === '' ?  <div></div> : <img src={msgObj.img} /> }</div>
+                  <div className={styles.listLogo}> <img src={msgObj.img}  onError="this.src='/assets/images//buyHistoryImg/3.png'" /> </div>
                   <div className={styles.logoNameBox}>
                     <div className={styles.logoName}>{msgObj.name}</div>
                     <div className={styles.logoFrom}>来自订阅：{msgObj.tagName} · {msgObj.time}</div>
