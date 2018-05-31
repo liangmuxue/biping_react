@@ -118,6 +118,10 @@ class BasicInput extends BaseComponent {
       <Hammer onDoubleTap={this.clearStorage.bind(this)}>
         <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
       </Hammer>
+      <div className={style.version}>
+        <div>@ 2018 biping.io</div>
+        <div>V1.0</div>
+      </div>
     </div>);
   }
 }

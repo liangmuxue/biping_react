@@ -1,21 +1,31 @@
 .mesList{
-  width: 100%;
-  height: 2.48rem;
   background: #fff;
-  margin-top: 0.2rem;
+  margin: .3rem .3rem 0;
   text-align: left;
   overflow: hidden;
+  border-radius: .1rem;
   position: relative;
+  box-sizing: border-box;
+  padding-bottom: .4rem;
+  box-shadow:4px 0px 16px rgba(114,114,114,0.12);
 }
 .cardtitle{
   color: #222222;
   font-size: 0.36rem;
-  width: 6.9rem;
-  margin-left: 0.3rem;
+  font-weight: 800;
+  margin: .2rem .3rem 0;
+}
+.cardtitles{
+  color: #000;
+  font-size: 0.36rem;
+  font-weight: 400;
+  margin: .2rem .3rem 0;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
   overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
-
+  text-overflow: ellipsis;
+  max-width: 70%;
 }
 .cardContent{
   width: 6.9rem;
@@ -27,10 +37,10 @@
   color: #888888;
   font-size: 0.3rem;
   display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-overflow: hidden;
-line-height: .43rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: .43rem;
 }
 .event{
   color: #B2B2B2;
@@ -69,6 +79,45 @@ line-height: .43rem;
   position: absolute;
   left: 0;top: 0;right: 0;bottom: 0;
   margin: auto;
+}
+.listLogo{
+  float: left;
+  width: .8rem;
+  height: .8rem;
+  margin-right: .2rem;
+  border-radius: 50%;
+  overflow: hidden;
+}
+.listLogo img{
+  width: .8rem;
+  height: .8rem;
+}
+.logoName{
+  color: #828A92;
+  font-size: .3rem;
+  height: .4rem;
+  font-weight: normal;
+}
+.logoFrom{
+  color: #828A92;
+  font-size: .24rem;
+  font-weight: normal;
+}
+.eventStrat{
+  display: inline-block;
+  font-size: .28rem;
+  padding: .13rem;
+  color: #333;
+  background: #F0F0F0;
+  border-radius: .06rem;
+  margin-left: .3rem;
+  margin-top: .2rem;
+}
+.hide{
+  display: none;
+}
+.clear{
+  clear: both;
 }
 :global(.list-view-section-body){
   margin-bottom: 1.2rem;

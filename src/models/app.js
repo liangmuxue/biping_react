@@ -35,7 +35,7 @@ const App = {
       // 清理手机缓存
       // localStorage.clear();
       // 开发环境忽略
-      const { wxBrowserCheck, mockUser } = config.env;
+      const { wxBrowserCheck } = config.env;
       // 判断是否在微信浏览器打开
       let match = false;
       if (window.WeixinJSBridge !== 'undefined') {
@@ -66,15 +66,19 @@ const App = {
       const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
+      // 模拟用户
       if (mockUserStr) {
-        mockUserReal = config.env.mockUser;
+        const userName = analysisParam('userName');
+        const passWord = analysisParam('passWord');
+        mockUserReal = {
+          userName,
+          passWord,
+        };
       }
       console.log('mockUserReal is', mockUserReal);
       // 开发环境模拟用户
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
-      } else if (mockUser) {
-        userStr = JSON.stringify(mockUser);
       }
 
       // 如果本地没有登录数据，则通过code进入登录页
@@ -221,12 +225,12 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe, isFirstEnter,typeCode
+          token, name, headUrl, uid, subscribe, isFirstEnter, exchange, event,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid, subscribe,typeCode
+          token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event,
         };
         // 群裂变开通权限用户
         if (isFirstEnter && isFirstEnter === 'yes') {
@@ -454,11 +458,15 @@ const App = {
       const { app } = st;
       console.log('app in ana', app);
       const { systemUser } = app;
+      // 埋点判断是否开通订阅的用户
+      let hasSubcribe = 0;
       if (systemUser) {
         opt.uid = systemUser.uid;
-        opt.typeCode = systemUser.typeCode;
+        opt.hasSubcribe = hasSubcribe;
+        if (systemUser.exchange == 1 || systemUser.event == 1) {
+          hasSubcribe = 1;
+        }
       }
-      const pageReal = `wx_${page}`;
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
