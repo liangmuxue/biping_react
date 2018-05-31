@@ -79,7 +79,7 @@ class Join extends BaseComponent {
     }
     console.log('enterGroup44444', this.props);
     // 分享消息的图片链接
-    const wechatImg = `${imgUrl}/Static/images/wechat/enterGroup.png`;
+    const wechatImg = `${imgUrl}/Static/images/wechat/enterGroup.png?${Math.random()}`;
     const modal = (<Modal
       visible={showShare}
       transparent
