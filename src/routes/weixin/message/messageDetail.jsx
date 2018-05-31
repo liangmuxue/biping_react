@@ -207,7 +207,7 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     if (!showMsgShare) {
-    console.log('touchmove rm', this.tmListener);
+      console.log('touchmove rm', this.tmListener);
       document.body.removeEventListener('touchmove', this.tmListener);
     }
     // 分享消息的图片链接
@@ -290,7 +290,7 @@ class MsgDetail extends BaseComponent {
                 <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
               </Hammer>
             </div>
-            <div className={msgObj.verbname ===  "币事件" ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.friendBox}>
@@ -350,7 +350,7 @@ class MsgDetail extends BaseComponent {
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
-            <div className={msgObj.verbname ===  "币事件" ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
