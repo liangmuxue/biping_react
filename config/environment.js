@@ -28,8 +28,8 @@ if (process.env.NODE_ENV === 'development') {
   //   passWord: '7b4bf910-18ce-4faf-be40-3eaef27b31b1',
   // };
   ENV.mockUser = {
-    userName: '67aabb9c-7083-489d-bd96-d166ee03e4b0',
-    passWord: 'a8571dd1-6f65-42f6-b419-6051f8fd8fc9',
+    userName: '09ed8703-3b76-4799-8054-97dc9848a68f',
+    passWord: '03fd2342-7d5f-4f30-a9aa-34dce1eacf42',
   };
 
   // ENV.mockUser = {
