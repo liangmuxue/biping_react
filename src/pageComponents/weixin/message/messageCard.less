@@ -14,14 +14,18 @@
   font-size: 0.36rem;
   font-weight: 800;
   margin: .2rem .3rem 0;
-
 }
 .cardtitles{
   color: #000;
   font-size: 0.36rem;
   font-weight: 400;
   margin: .2rem .3rem 0;
-
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
 }
 .cardContent{
   width: 6.9rem;
@@ -33,10 +37,10 @@
   color: #888888;
   font-size: 0.3rem;
   display: -webkit-box;
--webkit-box-orient: vertical;
--webkit-line-clamp: 2;
-overflow: hidden;
-line-height: .43rem;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  line-height: .43rem;
 }
 .event{
   color: #B2B2B2;

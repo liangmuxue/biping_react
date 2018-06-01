@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
-  ENV.messageHost = 'http://wx.test.tnb99.net';
+  ENV.messageHost = 'http://twx.test.tnb99.net';
   // ENV.messageHost = 'http://twx.test.tnb99.net';
   // ENV.wxScanurl = 'http://localhost:4200/index.html';
   // 分享消息页面对应的网址
@@ -55,8 +55,8 @@ if (process.env.NODE_ENV === 'test') {
   ENV.socketHost = 'http://47.93.78.97:7090';
   ENV.host = 'http://twp.test.tnb99.net';
   //  ENV.host = 'http://twp.test.tnb99.net';
-  ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
-  ENV.messageHost = 'http://wx.test.tnb99.net';
+  ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd4795144c135bdd&redirect_uri=';
+  ENV.messageHost = 'http://twx.test.tnb99.net';
   //  ENV.messageHost = 'http://twx.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
