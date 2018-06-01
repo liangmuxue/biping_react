@@ -63,7 +63,7 @@ class InfiniteListView extends React.Component {
 
   render() {
     const {
-      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list,
+      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list, needChange,
     } = this.props;
     console.log('render in infi', this.props);
     const endReached = (event) => {
@@ -91,13 +91,20 @@ class InfiniteListView extends React.Component {
       // 需要手工限制indecate间距
       const lvDom = ReactDOM.findDOMNode(this.lv);
       const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
+      const needLv = lvDom.getElementsByClassName('am-list-view-scrollview')[0];
+      const delateMargin = lvDom.getElementsByClassName('list-view-section-body')[0];
       console.log(`ind.style.transform:${ind.style.transform}`);
       const ta = ind.style.transform.split(',');
       let yp = ta[1];
       yp = yp.substr(0, yp.length - 2);
       console.log(`yp in:${yp}`);
-      if (yp > 30) {
-        ind.style.webkitTransform = 'translate3d(0px, 30px, 0px)';
+      if (yp > 0) {
+        ind.style.webkitTransform = 'translate3d(0px, 40px, 0px)';
+      }
+      if (needChange) {
+        console.log('delateMargin', delateMargin);
+        delateMargin.style.marginTop = '0rem';
+        needLv.style.top = '1rem';
       }
     };
     const onRefreshAct = (event) => {
@@ -130,7 +137,7 @@ class InfiniteListView extends React.Component {
       }
     };
     const listView = (
-      <div onTouchMove={touchMoveAct}>
+      <div onTouchMove={touchMoveAct} className={styles.touchMove}>
         <ListView
           ref={el => this.lv = el}
           dataSource={this.state.dataSource}
@@ -142,7 +149,7 @@ class InfiniteListView extends React.Component {
           pageSize={pageSize}
           style={{
             height: this.props.height,
-            overflow: 'auto',
+
           }}
           pullToRefresh={<PullToRefresh
             onRefresh={onRefreshAct}
