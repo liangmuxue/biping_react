@@ -68,8 +68,7 @@ class InfiniteListView extends React.Component {
     console.log('render in infi', this.props);
     const endReached = (event) => {
       console.log('reach end', event);
-      console.log('reach end pagination', pagination);
-      if (!pagination.hasMore) {
+      if (loading || !pagination.hasMore) {
         console.log('end no more,list', list);
         if (this.state.noMoreTipShow) {
           return;
@@ -93,9 +92,9 @@ class InfiniteListView extends React.Component {
         rowHasChanged: (row1, row2) => row1 !== row2,
       });
       // 需要手工调整indecate间距
-      const lvDom = ReactDOM.findDOMNode(this.lv);
-      const ind = lvDom.getElementsByClassName('am-pull-to-refresh-transition')[0];
-      ind.style.webkitTransform = 'translate3d(0px, 20px, 0px)';
+      const lvDom =  ReactDOM.findDOMNode(this.lv);
+      const ind = lvDom.getElementsByClassName("am-pull-to-refresh-transition")[0];
+      ind.style.webkitTransform = "translate3d(0px, 20px, 0px)";
       // 调用父级方法，进行刷新请求
       onRefresh();
     };
@@ -124,7 +123,7 @@ class InfiniteListView extends React.Component {
           renderRow={renderRowInner}
           renderSeparator={separator}
           renderHeader={() => {}}
-          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
+          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}></div>)}
           className="am-list"
           pageSize={pageSize}
           style={{
@@ -133,9 +132,10 @@ class InfiniteListView extends React.Component {
           }}
           pullToRefresh={<PullToRefresh
             onRefresh={onRefreshAct}
+            damping={30}
             distanceToRefresh={25}
             indicator={{
-              release: <ActivityIndicator text="正在加载" size="small" />,
+              release: <ActivityIndicator text="正在加载" size="small"/>,
               finish: <div />,
             }}
 
