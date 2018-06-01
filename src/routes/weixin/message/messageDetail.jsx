@@ -292,7 +292,15 @@ class MsgDetail extends BaseComponent {
             </div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-
+            <div className={style.transactionCoin} >
+              <div>预警时间：<span>2018-05-24 21:26</span></div>
+              <div>异动类型：<u className={style.toUp}>上涨</u></div>
+              <div>交易所：<span>火币pro</span></div>
+              <div>当前价格：<span>EOS/USDT<br />12.6599(≈¥82.3344）</span></div>
+              <div>5分钟交易：<span>买入85，000USDT,卖出2,000USDT</span></div>
+              <div>5分钟内净流入：<span>83，000USDT</span></div>
+              <div>5分钟内净流入：<span>+4.16%</span></div>
+            </div>
             <div className={style.friendBox}>
               <div className={style.toFriend} />
               <Hammer onTap={this.shareClick.bind(this)}>

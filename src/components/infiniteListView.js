@@ -85,29 +85,16 @@ class InfiniteListView extends React.Component {
       }
     };
 
-    const touchMoveAct = (event) => {
-      console.log('onTouchMove in', event);
-      // 需要手工限制indecate间距
-      const lvDom = ReactDOM.findDOMNode(this.lv);
-      const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
-      console.log(`ind.style.transform:${ind.style.transform}`);
-      const ta = ind.style.transform.split(',');
-      let yp = ta[1];
-      yp = yp.substr(0, yp.length - 2);
-      console.log(`yp in:${yp}`);
-      if (yp > 30) {
-        ind.style.webkitTransform = 'translate3d(0px, 30px, 0px)';
-      }
-    };
+
     const onRefreshAct = (event) => {
       console.log('onRefreshAct in', event);
       const dataSource = new ListView.DataSource({
         rowHasChanged: (row1, row2) => row1 !== row2,
       });
       // 需要手工调整indecate间距
-      const lvDom =  ReactDOM.findDOMNode(this.lv);
-      const ind = lvDom.getElementsByClassName("am-pull-to-refresh-transition")[0];
-      ind.style.webkitTransform = "translate3d(0px, 20px, 0px)";
+      const lvDom = ReactDOM.findDOMNode(this.lv);
+      const ind = lvDom.getElementsByClassName('am-pull-to-refresh-transition')[0];
+      ind.style.webkitTransform = 'translate3d(0px, 20px, 0px)';
       // 调用父级方法，进行刷新请求
       onRefresh();
     };
@@ -129,14 +116,14 @@ class InfiniteListView extends React.Component {
       }
     };
     const listView = (
-      <div onTouchMove={touchMoveAct}>
+      <div>
         <ListView
           ref={el => this.lv = el}
           dataSource={this.state.dataSource}
           renderRow={renderRowInner}
           renderSeparator={separator}
           renderHeader={() => {}}
-          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }}></div>)}
+          renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
           className="am-list"
           pageSize={pageSize}
           style={{
@@ -148,14 +135,16 @@ class InfiniteListView extends React.Component {
             damping={30}
             distanceToRefresh={25}
             indicator={{
-              release: <ActivityIndicator text="正在加载" size="small"/>,
+              release: <ActivityIndicator text="正在加载" size="small" />,
               finish: <div />,
             }}
+
           />}
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
+
         />
         {this.state.noMoreTip}
       </div>
