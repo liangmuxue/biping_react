@@ -74,7 +74,7 @@ class MessageList extends BaseComponent {
         );
       },
     });
-    const height = document.documentElement.clientHeight + 200;
+    const height = document.documentElement.clientHeight;
     const { tagName } = this.props.paramsData;
     const key = 'messageList';
     return (

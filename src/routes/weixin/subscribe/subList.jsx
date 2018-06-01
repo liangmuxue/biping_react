@@ -4,7 +4,7 @@ import 'antd-mobile/es/button/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
 import BaseComponent from '../baseComponent';
-
+import style from './subList.less';
 /**
  * 老人账号信息页面
  * @author 梁慕学
