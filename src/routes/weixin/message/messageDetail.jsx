@@ -291,6 +291,7 @@ class MsgDetail extends BaseComponent {
               </Hammer>
             </div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.friendBox}>
@@ -351,6 +352,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>
