@@ -291,15 +291,28 @@ class MsgDetail extends BaseComponent {
               </Hammer>
             </div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-            <div className={style.transactionCoin} >
-              <div>预警时间：<span>2018-05-24 21:26</span></div>
-              <div>异动类型：<u className={style.toUp}>上涨</u></div>
-              <div>交易所：<span>火币pro</span></div>
-              <div>当前价格：<span>EOS/USDT<br />12.6599(≈¥82.3344）</span></div>
-              <div>5分钟交易：<span>买入85，000USDT,卖出2,000USDT</span></div>
-              <div>5分钟内净流入：<span>83，000USDT</span></div>
-              <div>5分钟内净流入：<span>+4.16%</span></div>
+            <div className={style.transactionCoinBox}>
+              <div className={style.transactionCoin} >
+                <div>预警时间：<span>2018-05-24 21:26</span></div>
+                <div>异动类型：<u className={style.toUp}>上涨</u></div>
+                <div>交易所：<span>火币pro</span></div>
+                <div>当前价格：<span>EOS/USDT <br /><b className={style.convert}>12.6599(≈¥82.3344）</b></span></div>
+                <div>5分钟交易：<span>买入85，000USDT,卖出2,000USDT</span></div>
+                <div>5分钟内净流入：<span>83，000USDT</span></div>
+                <div>5分钟内净流入：<span className={style.toUp}>+4.16%</span></div>
+              </div>
+
+              <div className={style.coinTable} >
+                <div className={style.coinTitle} >异动数据（单位：USDT)</div>
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>时间</div>
+                  <div className={style.tablePrice}>单价</div>
+                  <div className={style.tableChg}>涨跌幅</div>
+                  <div className={style.tableIncome}>净流入</div>
+                </div>
+              </div>
             </div>
             <div className={style.friendBox}>
               <div className={style.toFriend} />
@@ -359,6 +372,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>

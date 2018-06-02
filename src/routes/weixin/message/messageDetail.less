@@ -15,7 +15,9 @@ a{text-decoration: none;
  color: #C7C7CC;
 }
 body{font-size:0.28rem;width: 100% !important;}
-
+.clear{
+  clear: both;
+}
 .bannerBox{
   width: 6.9rem;
   height: 2.4rem;
@@ -48,7 +50,7 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 
 .times{
-  color: #BBBBBB;
+  color: #999;
   font-size: .28rem;
   margin-left:.3rem;
   display: inline;
@@ -66,11 +68,11 @@ body{font-size:0.28rem;width: 100% !important;}
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     text-align: left;
     color: #222;
-    margin:.5rem .3rem .5rem;
+    margin:.5rem .3rem .4rem;
 }
 
 .article{
@@ -87,14 +89,13 @@ body{font-size:0.28rem;width: 100% !important;}
   font-size: .32rem !important;
 }
 .startTimes{
-  display: block;
-  width: 4.12rem;
+  float: left;
   padding: .14rem .16rem;
   background: #F0F0F0;
   color: #333333;
   font-size: .28rem;
   border-radius: .06rem;
-  margin: .5rem .3rem 0;
+  margin: .4rem .3rem ;
 }
 .picBox .startTimes{
   margin: .45rem .3rem 0 .5rem;
@@ -448,27 +449,91 @@ table{
   margin-right: .1rem;
 }
 
-// 异动币
-.transactionCoin{
+
+//异动币
+.transactionCoinBox{
   display: none;
-  margin: .7rem .9rem .7rem .3rem;
 }
 .transactionCoin{
   font-size: .36rem;
+  box-sizing: border-box;
+  padding-left: .3rem;
   color: #000;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid #EBEBEB;
 }
 .transactionCoin div{
-  margin-bottom: .2rem;
+  margin-bottom: .3rem;
+  width: 6.9rem;
+  word-break: break-all;
 }
 .transactionCoin span{
-  color: #666;
+  color: #666666;
   line-height: .54rem;
 }
 .transactionCoin .toUp{
   text-decoration: none;
   color: #4CA364;
 }
-.transactionCoin .toUnder{
+.transactionCoin .toDown{
   text-decoration: none;
   color: #FF0101;
+}
+.transactionCoin .convert{
+  padding-left: 1.8rem;
+  font-weight: normal;
+}
+
+
+//数据表格
+.coinTitle{
+  padding-left: .3rem;
+  margin: .7rem 0 .3rem;
+  color: #000;
+  font-size: .34rem;
+}
+.tableTitle{
+  background: #EFF5FF;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+.tableTime{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 1.26rem;
+  box-sizing: border-box;
+  padding-left: .3rem;
+}
+.tablePrice{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 2rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .2rem;
+}
+.tableChg{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 1.96rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .2rem;
+}
+.tableIncome{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 2.28rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .3rem;
 }
