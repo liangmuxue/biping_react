@@ -313,6 +313,43 @@ class MsgDetail extends BaseComponent {
                   <div className={style.tableIncome}>净流入</div>
                 </div>
               </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
             </div>
             <div className={style.friendBox}>
               <div className={style.toFriend} />

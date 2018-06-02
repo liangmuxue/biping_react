@@ -452,7 +452,8 @@ table{
 
 //异动币
 .transactionCoinBox{
-  display: none;
+  display:block;
+  margin-bottom: .7rem;
 }
 .transactionCoin{
   font-size: .36rem;
@@ -488,11 +489,12 @@ table{
 //数据表格
 .coinTitle{
   padding-left: .3rem;
-  margin: .7rem 0 .3rem;
+  margin: .69rem 0 .3rem;
   color: #000;
   font-size: .34rem;
+  font-weight: 800;
 }
-.tableTitle{
+.tableTitle,.coinLists{
   background: #EFF5FF;
   width: 100%;
   overflow: hidden;
@@ -536,4 +538,7 @@ table{
   text-align: right;
   box-sizing: border-box;
   padding-right: .3rem;
+}
+.coinLists .tableTitle{
+  background: #fff;
 }
