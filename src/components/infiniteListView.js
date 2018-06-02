@@ -104,7 +104,7 @@ class InfiniteListView extends React.Component {
       if (needChange) {
         console.log('delateMargin', delateMargin);
         delateMargin.style.marginTop = '0rem';
-        needLv.style.top = '1rem';
+        // needLv.style.top = '1rem';
       }
     };
     const onRefreshAct = (event) => {
