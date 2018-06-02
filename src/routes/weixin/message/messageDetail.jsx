@@ -295,13 +295,14 @@ class MsgDetail extends BaseComponent {
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
             <div className={style.transactionCoinBox}>
               <div className={style.transactionCoin} >
-                <div>预警时间：<span>2018-05-24 21:26</span></div>
+                <div>时间段：<span>12:14 - 12:17</span></div>
                 <div>异动类型：<u className={style.toUp}>上涨</u></div>
                 <div>交易所：<span>火币pro</span></div>
-                <div>当前价格：<span>EOS/USDT <br /><b className={style.convert}>12.6599(≈¥82.3344）</b></span></div>
-                <div>5分钟交易：<span>买入85，000USDT,卖出2,000USDT</span></div>
-                <div>5分钟内净流入：<span>83，000USDT</span></div>
-                <div>5分钟内净流入：<span className={style.toUp}>+4.16%</span></div>
+                <div>交易对：<span>HT/USDT</span></div>
+                <div>当前价格：<span>588.88 USDT <br /><b className={style.convert}>(≈ 人民币3,735.88）</b></span></div>
+                <div>5分钟内成交量：<span>659，其中买入600、卖出59</span></div>
+                <div>5分钟内净流入量：<span>541</span></div>
+                <div>5分钟内涨幅：<span className={style.toUp}>+15.41%</span></div>
               </div>
 
               <div className={style.coinTable} >
