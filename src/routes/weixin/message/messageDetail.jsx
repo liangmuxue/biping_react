@@ -299,8 +299,67 @@ class MsgDetail extends BaseComponent {
               </Hammer>
             </div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+            <div className={style.transactionCoinBox}>
+              <div className={style.transactionCoin} >
+                <div>时间段：<span>12:14 - 12:17</span></div>
+                <div>异动类型：<u className={style.toUp}>上涨</u></div>
+                <div>交易所：<span>火币pro</span></div>
+                <div>交易对：<span>HT/USDT</span></div>
+                <div>当前价格：<span>588.88 USDT <br /><b className={style.convert}>(≈ 人民币3,735.88）</b></span></div>
+                <div>5分钟内成交量：<span>659，其中买入600、卖出59</span></div>
+                <div>5分钟内净流入量：<span>541</span></div>
+                <div>5分钟内涨幅：<span className={style.toUp}>+15.41%</span></div>
+              </div>
 
+              <div className={style.coinTable} >
+                <div className={style.coinTitle} >异动数据（单位：USDT)</div>
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>时间</div>
+                  <div className={style.tablePrice}>单价</div>
+                  <div className={style.tableChg}>涨跌幅</div>
+                  <div className={style.tableIncome}>净流入</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+              <div className={style.coinLists} >
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}>21:21</div>
+                  <div className={style.tablePrice}>72.8</div>
+                  <div className={style.tableChg}><span>0.12%</span></div>
+                  <div className={style.tableIncome}>-322000</div>
+                </div>
+              </div>
+
+            </div>
             <div className={style.friendBox}>
               <div className={style.toFriend} />
               <Hammer onTap={this.shareClick.bind(this)}>
@@ -359,6 +418,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
             <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
 
             <div className={style.wechatBox}>

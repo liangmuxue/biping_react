@@ -124,7 +124,6 @@ export const siteAnalysis = {
   init() {
     ReactGA.initialize('UA-117280811-2');
   },
-
   pushEvent(pageDef, actionDef, opt) {
     ReactGA.event({
       category: `wx_${pageDef.code}`,

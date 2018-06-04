@@ -68,8 +68,7 @@ class InfiniteListView extends React.Component {
     console.log('render in infi', this.props);
     const endReached = (event) => {
       console.log('reach end', event);
-      console.log('reach end pagination', pagination);
-      if (!pagination.hasMore) {
+      if (loading || !pagination.hasMore) {
         console.log('end no more,list', list);
         if (this.state.noMoreTipShow) {
           return;
@@ -86,20 +85,7 @@ class InfiniteListView extends React.Component {
       }
     };
 
-    const touchMoveAct = (event) => {
-      console.log('onTouchMove in', event);
-      // 需要手工限制indecate间距
-      const lvDom = ReactDOM.findDOMNode(this.lv);
-      const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
-      console.log(`ind.style.transform:${ind.style.transform}`);
-      const ta = ind.style.transform.split(',');
-      let yp = ta[1];
-      yp = yp.substr(0, yp.length - 2);
-      console.log(`yp in:${yp}`);
-      if (yp > 30) {
-        ind.style.webkitTransform = 'translate3d(0px, 30px, 0px)';
-      }
-    };
+
     const onRefreshAct = (event) => {
       console.log('onRefreshAct in', event);
       const dataSource = new ListView.DataSource({
@@ -130,7 +116,7 @@ class InfiniteListView extends React.Component {
       }
     };
     const listView = (
-      <div onTouchMove={touchMoveAct}>
+      <div>
         <ListView
           ref={el => this.lv = el}
           dataSource={this.state.dataSource}
@@ -146,16 +132,19 @@ class InfiniteListView extends React.Component {
           }}
           pullToRefresh={<PullToRefresh
             onRefresh={onRefreshAct}
+            damping={30}
             distanceToRefresh={25}
             indicator={{
               release: <ActivityIndicator text="正在加载" size="small" />,
               finish: <div />,
             }}
+
           />}
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
+
         />
         {this.state.noMoreTip}
       </div>
