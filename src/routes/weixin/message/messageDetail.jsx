@@ -301,7 +301,7 @@ class MsgDetail extends BaseComponent {
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
             <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-            <div className={style.transactionCoinBox}>
+            <div className={style.hide}>
               <div className={style.transactionCoin} >
                 <div>时间段：<span>12:14 - 12:17</span></div>
                 <div>异动类型：<u className={style.toUp}>上涨</u></div>
