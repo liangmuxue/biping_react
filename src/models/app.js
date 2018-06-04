@@ -90,14 +90,27 @@ const App = {
           const state = analysisParam('state');
           let messageId = null;
           let fromUser = null;
+          // 进入消息详情的场景(推送，分享)
+          let enterMessageCase = null;
           if (state && state !== 'STAT') {
             if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
               fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+              enterMessageCase = 'shareCase';
               console.log('messageId', messageId, 'fromUser', fromUser);
             } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+              enterMessageCase = 'pushCase';
             }
+            // 非关注用户扫码进消息详情埋点
+            dispatch({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.MESSAGEDETAIL,
+                action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+                opt: { fromUser, enterMessageCase },
+              },
+            });
           }
           let payData = {};
           if (messageId) {
@@ -108,6 +121,14 @@ const App = {
             payData = { code };
           }
           dispatch({ type: 'autoReg', payload: payData });
+          dispatch({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.MAINPAGE,
+              action: siteAnalysis.actConst.BROWSE,
+              opt: { firstEnter: '1' },
+            },
+          });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
           const fromUser = analysisParam('fromUser');
@@ -174,18 +195,26 @@ const App = {
           userData.code = code;
         }
         let messageId = null;
+        // 从哪个用户分享过来
         let fromUser = null;
+        // 进入消息详情的场景(推送，分享)
+        let enterMessageCase = null;
         if (state && state !== 'STAT') {
           if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
             fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+            enterMessageCase = 'shareCase';
             console.log('messageId', messageId, 'fromUser', fromUser);
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+            enterMessageCase = 'pushCase';
           }
         } else {
           messageId = analysisParam('messageId');
           fromUser = analysisParam('fromUser');
+        }
+        if (enterMessageCase) {
+          userData.enterMessageCase = enterMessageCase;
         }
         if (messageId) {
           userData.messageId = messageId;
@@ -220,6 +249,9 @@ const App = {
       const { messageId } = payload;
       const { sharePaper } = payload;
       const { fromUser } = payload;
+      // 判断进入消息详情的场景
+      const { enterMessageCase } = payload;
+      console.log(`enterMessageCase${enterMessageCase}`);
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
@@ -300,7 +332,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-                opt: { fromUser },
+                opt: { fromUser, enterMessageCase },
               },
             });
           } else if (subscribe === 1) {
@@ -314,7 +346,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: actionReal,
-                opt: { fromUser },
+                opt: { fromUser, enterMessageCase },
               },
             });
           }
@@ -462,11 +494,11 @@ const App = {
       let hasSubcribe = 0;
       if (systemUser) {
         opt.uid = systemUser.uid;
-        opt.hasSubcribe = hasSubcribe;
-        if (systemUser.exchange == 1 || systemUser.event == 1) {
+        if (systemUser.exchange === 1 || systemUser.event === 1) {
           hasSubcribe = 1;
         }
       }
+      opt.hasSubcribe = hasSubcribe;
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },

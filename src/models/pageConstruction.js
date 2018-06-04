@@ -27,6 +27,7 @@ const pcEntity = {
   effects: {
     // 底部菜单切换
     *footMenuChoice({ payload,history }, { call, put ,select}) {  // eslint-disable-line
+      console.log('payload', payload, 'history', history);
       const { code } = payload.selectedMenu;
       const { isFirst } = payload;
       const { selectedMenu } = yield select(({ pageConstruction }) => pageConstruction);
@@ -48,12 +49,23 @@ const pcEntity = {
           direct: true,
         },
       });
+      // 底部菜单切换埋点
+      const opt = { footName: code };
+      yield put({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.FOOTMENU,
+          action: siteAnalysis.actConst.BROWSE,
+          opt,
+        },
+      });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
       const {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
+      console.log('payloadswitch', payload);
       // 页面名称转大写
       let upPageName = null;
       if (pageName) {
@@ -73,8 +85,16 @@ const pcEntity = {
       if (!backArrow) {
         opt = { fromPath };
         // 埋点记录消息id
-        if(pageName==='messageDetail'){
+        if (pageName === 'messageDetail') {
           opt.messageId = params.messageId;
+        }
+        // 判断是交易所公告还是币事件详情(701 币事件,702交易所公告)
+        if (pageName && pageName === 'subDetail') {
+          opt.typeId = params.typeId;
+        }
+        // 判断是交易所公告还是币事件详情(701 币事件,702交易所公告)
+        if (pageName && pageName === 'toOpen') {
+          opt.typeId = params.typeId;
         }
         yield put({
           type: 'app/analysis',

@@ -49,6 +49,10 @@ export const siteAnalysis = {
       code: 'result',
       zh: '购买成功',
     },
+    FOOTMENU: {
+      code: 'footMenu',
+      zh: '底部菜单',
+    },
   },
   actConst: {
     NOWECHAT: {
@@ -136,15 +140,15 @@ export const siteAnalysis = {
 
   setField(key, value) {
     ReactGA.set({ [key]: value });
-    if(key==='userId'){
-      console.log("identify uid:" + value);
+    if (key === 'userId') {
+      console.log(`identify uid:${value}`);
       zhuge.identify(value);
     }
   },
-  setUser(systemUser){
-    ReactGA.set({ "userId": systemUser.uid });
-    zhuge.identify(systemUser.uid,{
-      typeCode:systemUser.typeCode
+  setUser(systemUser) {
+    ReactGA.set({ userId: systemUser.uid });
+    zhuge.identify(systemUser.uid, {
+      typeCode: systemUser.typeCode,
     });
-  }
+  },
 };

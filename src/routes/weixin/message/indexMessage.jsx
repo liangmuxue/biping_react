@@ -11,7 +11,7 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
-
+import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
 /**
  * 消息列表页面
@@ -40,6 +40,15 @@ class MessageList extends BaseComponent {
         params: {
           messageId: msgObj.mid, backPath: 'indexMessage', tagId: msgObj.tagId, tagName: msgObj.tagName, ifEnterGroup, uid,
         },
+      },
+    });
+    // 进入详情埋点，feed类型
+    this.props.dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+        opt: { enterMessageCase: 'feedCase' },
       },
     });
   }
