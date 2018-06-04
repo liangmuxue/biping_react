@@ -63,12 +63,13 @@ class InfiniteListView extends React.Component {
 
   render() {
     const {
-      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list,
+      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list, needChange,
     } = this.props;
     console.log('render in infi', this.props);
     const endReached = (event) => {
       console.log('reach end', event);
-      if (loading || !pagination.hasMore) {
+      console.log('reach end pagination', pagination);
+      if (!pagination.hasMore) {
         console.log('end no more,list', list);
         if (this.state.noMoreTipShow) {
           return;
@@ -85,7 +86,27 @@ class InfiniteListView extends React.Component {
       }
     };
 
-
+    const touchMoveAct = (event) => {
+      console.log('onTouchMove in', event);
+      // 需要手工限制indecate间距
+      const lvDom = ReactDOM.findDOMNode(this.lv);
+      const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
+      const needLv = lvDom.getElementsByClassName('am-list-view-scrollview')[0];
+      const delateMargin = lvDom.getElementsByClassName('list-view-section-body')[0];
+      console.log(`ind.style.transform:${ind.style.transform}`);
+      const ta = ind.style.transform.split(',');
+      let yp = ta[1];
+      yp = yp.substr(0, yp.length - 2);
+      console.log(`yp in:${yp}`);
+      if (yp > 0) {
+        ind.style.webkitTransform = 'translate3d(0px, 40px, 0px)';
+      }
+      if (needChange) {
+        console.log('delateMargin', delateMargin);
+        delateMargin.style.marginTop = '0rem';
+        // needLv.style.top = '1rem';
+      }
+    };
     const onRefreshAct = (event) => {
       console.log('onRefreshAct in', event);
       const dataSource = new ListView.DataSource({
@@ -116,35 +137,31 @@ class InfiniteListView extends React.Component {
       }
     };
     const listView = (
-      <div>
+      <div onTouchMove={touchMoveAct} className={styles.touchMove}>
         <ListView
           ref={el => this.lv = el}
           dataSource={this.state.dataSource}
           renderRow={renderRowInner}
           renderSeparator={separator}
-          renderHeader={() => {}}
           renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
           className="am-list"
           pageSize={pageSize}
           style={{
             height: this.props.height,
-            overflow: 'auto',
+
           }}
           pullToRefresh={<PullToRefresh
             onRefresh={onRefreshAct}
-            damping={30}
             distanceToRefresh={25}
             indicator={{
               release: <ActivityIndicator text="正在加载" size="small" />,
               finish: <div />,
             }}
-
           />}
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
-
         />
         {this.state.noMoreTip}
       </div>

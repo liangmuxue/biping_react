@@ -44,10 +44,9 @@ class SubItem extends React.Component {
               onClick={this.subscribe.bind(this)}
             />}
           >
-            <div>
-              {itemObj.headImg === '' ? <span>#</span> : <img src={itemObj.headImg} className={style.subItemLogo} alt="" />}
-              <span className={style.toMsg}>{itemObj.typeName} </span>
-            </div>
+
+            {itemObj.headImg === '' ? <span>#</span> : <img src={itemObj.headImg} className={style.subItemLogo} alt="" />}
+            <span className={style.toMsg}>{itemObj.typeName} </span>
           </List.Item>
         </List>
       );
