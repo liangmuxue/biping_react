@@ -13,7 +13,7 @@ export default {
     pathname: '/',
     logupModalVisible: false,
   },
-
+ 
   subscriptions: {
     setup({ dispatch, history }) {
       history.listen((location) => {
