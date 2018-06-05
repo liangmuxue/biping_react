@@ -16,7 +16,6 @@ import BaseComponent from '../baseComponent';
 import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import QrCodeWithLogo from 'qr-code-with-logo';
-
 /**
 * 老人账号信息页面
 * @author 梁慕学
@@ -105,7 +104,7 @@ class MsgDetail extends BaseComponent {
           payload: {
             page: siteAnalysis.pageConst.MESSAGEDETAIL,
             action: siteAnalysis.actConst.SHAREMESSAGE,
-            opt: { messageTitle: msgObj.title },
+            opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
           },
         });
       });
@@ -125,6 +124,15 @@ class MsgDetail extends BaseComponent {
         params: {
           messageId: msg.id, backPath: this.props.backPath, tagId, tagName,
         },
+      },
+    });
+    // 进入详情埋点，same类型
+    this.props.dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.BROWSE,
+        opt: { enterMessageCase: 'sameCase' },
       },
     });
   }

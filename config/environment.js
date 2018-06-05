@@ -24,27 +24,10 @@ if (process.env.NODE_ENV === 'development') {
   ENV.wxBrowserCheck = false;
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.mockUser = {
-    userName: '78f8c02c-15f2-4ccd-928a-d7b115c9863b',
-    passWord: 'cf7a5219-bfd7-442c-99fd-52fd5cdc49f3',
+    userName: '836566ff-1788-41bb-8156-a2f9385657b1',
+    passWord: '9d296af7-22e8-4119-a86f-ae0725c9014c',
   };
-  // ENV.mockUser = {
-  //   userName: '67aabb9c-7083-489d-bd96-d166ee03e4b0',
-  //   passWord: 'a8571dd1-6f65-42f6-b419-6051f8fd8fc9',
-  // };
 
-  // ENV.mockUser = {
-  //   userName: 'd53dc5b5-3e0b-473f-a514-1c0fa846d275',
-  //   passWord: 'f1d4864a-d080-4f9a-ac3c-313821fb56f8',
-  // };
-
-  // ENV.mockUser = {
-  //   userName: 'ec26584d-06ea-40bb-a04e-6ba589f94c2c',
-  //   passWord: '6fbf3a44-fba6-4441-a213-adb1303a1cea',
-  // };
-  // ENV.mockUser = {
-  //   userName: '02fb7818-dec5-4602-9ef4-42b22af75936',
-  //   passWord: '60b6bb31-5d5b-4b38-8785-cc025737bed8',
-  // };
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';

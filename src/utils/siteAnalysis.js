@@ -49,6 +49,10 @@ export const siteAnalysis = {
       code: 'result',
       zh: '购买成功',
     },
+    FOOTMENU: {
+      code: 'footMenu',
+      zh: '底部菜单',
+    },
   },
   actConst: {
     NOWECHAT: {
