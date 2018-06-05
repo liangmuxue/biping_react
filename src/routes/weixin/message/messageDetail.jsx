@@ -291,17 +291,19 @@ class MsgDetail extends BaseComponent {
           </div>
 
           <div className={style.notice}>
-            <div className={style.caption}>{msgObj.title}</div>
-            <div className={style.noticeTitle}>
-              <div className={style.times}>{msgObj.time}</div>
-              <Hammer >
-                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-              </Hammer>
-            </div>
-            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
-            <div className={style.clear} />
-            <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
             <div className={style.hide}>
+              <div className={style.caption}>{msgObj.title}</div>
+              <div className={style.noticeTitle}>
+                <div className={style.times}>{msgObj.time}</div>
+                <Hammer >
+                  <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+                </Hammer>
+              </div>
+              <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+              <div className={style.clear} />
+              <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+            </div>
+            <div >
               <div className={style.transactionCoin} >
                 <div>时间段：<span>12:14 - 12:17</span></div>
                 <div>异动类型：<u className={style.toUp}>上涨</u></div>
