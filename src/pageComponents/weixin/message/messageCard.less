@@ -6,23 +6,23 @@
   border-radius: .1rem;
   position: relative;
   box-sizing: border-box;
-  padding-bottom: .25rem;
+  padding-bottom: .35rem;
   box-shadow:4px 0px 16px rgba(114,114,114,0.12);
 }
 .cardtitle{
   color: #222222;
   font-size: 0.36rem;
   font-weight: 800;
-  margin: .2rem .3rem 0;
+  margin: .25rem .3rem 0;
 }
 .cardtitles{
   color: #000;
   font-size: 0.36rem;
   font-weight: 400;
-  margin: 0rem .3rem ;
+  margin: .1rem .3rem 0;
   display: -webkit-box;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   overflow: hidden;
   text-overflow: ellipsis;
 }
@@ -123,4 +123,17 @@
 }
 :global(.am-list-body){
   background: none !important;
+}
+:global(.am-list-body::before){
+  background: none !important;
+  position: static !important;
+  height: 0 !important;
+}
+:global(.am-list-body::after){
+  background: none !important;
+  position: static;
+  margin-top: 3rem;
+}
+.fullBox{
+  margin-top: .88rem;
 }

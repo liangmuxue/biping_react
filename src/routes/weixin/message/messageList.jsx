@@ -11,6 +11,7 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import HeaderBar from '../../../components/headerBar';
 import BaseComponent from '../baseComponent';
+import style from './messageList.less';
 
 /**
  * 消息列表页面--某个标签
@@ -74,25 +75,29 @@ class MessageList extends BaseComponent {
         );
       },
     });
-    const height = document.documentElement.clientHeight + 200;
+    const height = document.documentElement.clientHeight;
+    console.log('height is', height);
     const { tagName } = this.props.paramsData;
     const key = 'messageList';
     return (
       <div>
-        <div style={{ width: '100%', height: '.88rem' }} />
         <HeaderBar
           headerText={tagName}
           backRouteLink="indexMessage"
           {...this.props}
         />
-        <InfiniteListView
-          bkey={key}
-          {...messageListProps}
-          height={height}
-          pageSize={this.props.paginationDef.pageSize}
-        />
-
+        <div className={style.fullBox}>
+          <InfiniteListView
+            bkey={key}
+            needChange
+            {...messageListProps}
+            height={height}
+            pageSize={this.props.paginationDef.pageSize}
+          />
+        </div>
       </div>
+
+
     );
   }
 }

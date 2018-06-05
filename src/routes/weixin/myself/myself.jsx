@@ -94,7 +94,7 @@ class BasicInput extends BaseComponent {
               }}
             />}
           >
-            <div>
+            <div className={style.toMsg}>
               <img src="/images/myselfImg/1.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>推送消息  </span>
             </div>
           </List.Item>
