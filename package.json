@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "aliyun-oss-webpack-plugin": "^2.0.1",
+    "antd-mobile-demo-data": "^0.2.0",
     "axios": "^0.18.0",
     "dva": "^2.1.0-0",
     "dva-loading": "^1.0.4",

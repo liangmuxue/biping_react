@@ -150,42 +150,54 @@ class SubDetail extends BaseComponent {
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
-        <div>
-          <NoticeBar marqueeProps={{ loop: true, style: { textAligin: 'left', padding: '0 7.5px' } }}>
-            目前仅支持火币和HADAX两个交易所
-          </NoticeBar>
-        </div>
-        <div>
-          <Tabs
-            tabs={tabs}
-            initialPage={1}
-            onChange={(tab, index) => { console.log('onChange', index, tab); }}
-            onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
-          >
-            <div style={{
-       backgroundColor: '#fff',
-      }}
-            >  {subDetailData.data.content.map(item =>
+        <div style={{ display: 'none' }}>
+          {subDetailData.data.content.map(item =>
                         (<SubItem
                           abnormal={1}
                           key={item.typeId}
                           itemObj={item}
                           subscribeClick={this.subscribeItem.bind(this)}
                         />))}
-            </div>
-            <div >
-              <div className={style.coinSet}>异动时间段选择</div>
-              <CheckTime />
-              <div className={style.coinSet}>涨跌幅设置</div>
-              <ChooseTime/>
-            </div>
-            <div >
-              <div className={style.coinSet}>交易量异动设置</div>
-              <SwitchTab3 />
-              <div className={style.dealTips}>注：根据币评大数据显示，90%以上的超过60万人民币的单笔交易代表庄家要控盘的信号</div>
-            </div>
-          </Tabs>
-          <WhiteSpace />
+        </div>
+
+        <div >
+          <div>
+            <NoticeBar marqueeProps={{ loop: true, style: { textAligin: 'left', padding: '0 7.5px' } }}>
+              目前仅支持火币和HADAX两个交易所
+            </NoticeBar>
+          </div>
+          <div>
+            <Tabs
+              tabs={tabs}
+              initialPage={1}
+              onChange={(tab, index) => { console.log('onChange', index, tab); }}
+              onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+            >
+              <div style={{
+         backgroundColor: '#fff',
+        }}
+              >  {subDetailData.data.content.map(item =>
+                          (<SubItem
+                            abnormal={1}
+                            key={item.typeId}
+                            itemObj={item}
+                            subscribeClick={this.subscribeItem.bind(this)}
+                          />))}
+              </div>
+              <div >
+                <div className={style.coinSet}>异动时间段选择</div>
+                <CheckTime />
+                <div className={style.coinSet}>涨跌幅设置</div>
+                <ChooseTime />
+              </div>
+              <div >
+                <div className={style.coinSet}>交易量异动设置</div>
+                <SwitchTab3 />
+                <div className={style.dealTips}>注：根据币评大数据显示，90%以上的超过60万人民币的单笔交易代表庄家要控盘的信号</div>
+              </div>
+            </Tabs>
+            <WhiteSpace />
+          </div>
         </div>
 
 
