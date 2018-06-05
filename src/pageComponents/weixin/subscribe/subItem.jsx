@@ -2,7 +2,6 @@ import List from 'antd-mobile/lib/list/index';
 import Button from 'antd-mobile/lib/button/index';
 import Switch from 'antd-mobile/lib/switch/index';
 import 'antd-mobile/es/switch/style/index.css';
-
 import { createForm } from 'rc-form';
 import 'antd-mobile/es/button/style/index.css';
 import React from 'react';
@@ -28,21 +27,23 @@ class SubItem extends React.Component {
     this.props.subscribeClick(this.props.itemObj);
   }
   render() {
-    const { itemObj, dispatch, flag } = this.props;
+    const {
+      itemObj, dispatch, flag, abnormal,
+    } = this.props;
     console.log('itemObj is', itemObj);
     let SwitchExample = (props) => {
       const { getFieldProps } = props.form;
-
       return (
         <List>
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
-                initialValue: itemObj.isSub === 1,
-                valuePropName: 'checked',
-              })}
+                  initialValue: itemObj.isSub === 1,
+                  valuePropName: 'checked',
+                })}
               onClick={this.subscribe.bind(this)}
-            />}
+            /> // 敬请期待
+          }
           >
             <div>
               {itemObj.headImg === '' ? <span>#</span> : <img src={itemObj.headImg} className={style.subItemLogo} alt="" />}

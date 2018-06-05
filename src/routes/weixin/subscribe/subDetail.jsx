@@ -1,8 +1,19 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
+import { createForm } from 'rc-form';
+import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
+import { NoticeBar, Icon } from 'antd-mobile';
+import 'antd-mobile/es/list/style/index.css';
+import 'antd-mobile/es/switch/style/index.css';
+import List from 'antd-mobile/lib/list/index';
+import Switch from 'antd-mobile/lib/switch/index';
+import 'antd-mobile/es/notice-bar/style/index.css';
+import 'antd-mobile/es/icon/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
 import SubItem from '../../../pageComponents/weixin/subscribe/subItem.jsx';
+import ChooseTime from '../../../pageComponents/weixin/subscribe/ChooseTime.jsx';
+import CheckTime from '../../../pageComponents/weixin/subscribe/CheckTime.jsx';
 import HeaderBar from '../../../components/headerBar';
 import style from './subDetail.less';
 import BaseComponent from '../baseComponent';
@@ -79,6 +90,7 @@ class SubDetail extends BaseComponent {
     }
   }
 
+
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -86,7 +98,51 @@ class SubDetail extends BaseComponent {
     if (!subDetailData || !subDetailData.data || !subDetailData.data.content) {
       return null;
     }
+    const tabs = [
+      { title: <Badge >交易所</Badge>, sub: '1' },
+      { title: <Badge >涨跌幅</Badge> },
+      { title: <Badge >成交量</Badge> },
+    ];
     const { backPath } = subDetailData;
+
+    let SwitchTab3 = (props) => {
+      const { getFieldProps } = props.form;
+      return (
+        <List>
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch1', {
+                 initialValue: true,
+                valuePropName: 'checked',
+              })}
+              onClick={(checked) => {
+              console.log('checked is', checked);
+              }}
+            />}
+          >
+            <div>
+              <span className={style.buyOnce}>单笔买入量  </span> <span className={style.passMoney}>超过60万人民币</span>
+            </div>
+          </List.Item>
+
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch2', {
+           initialValue: true,
+           valuePropName: 'checked',
+         })}
+              onClick={(checked) => { console.log(checked); }}
+            />}
+          >
+            <div>
+              <span className={style.buyOnce}>单笔卖出量  </span> <span className={style.passMoney}>超过60万人民币</span>
+            </div>
+          </List.Item>
+        </List>
+      );
+    };
+    SwitchTab3 = createForm()(SwitchTab3);
+
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink={backPath} {...this.props} />
@@ -94,12 +150,45 @@ class SubDetail extends BaseComponent {
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
         <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
-        {subDetailData.data.content.map(item =>
-                (<SubItem
-                  key={item.typeId}
-                  itemObj={item}
-                  subscribeClick={this.subscribeItem.bind(this)}
-                />))}
+        <div>
+          <NoticeBar marqueeProps={{ loop: true, style: { textAligin: 'left', padding: '0 7.5px' } }}>
+            目前仅支持火币和HADAX两个交易所
+          </NoticeBar>
+        </div>
+        <div>
+          <Tabs
+            tabs={tabs}
+            initialPage={1}
+            onChange={(tab, index) => { console.log('onChange', index, tab); }}
+            onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          >
+            <div style={{
+       backgroundColor: '#fff',
+      }}
+            >  {subDetailData.data.content.map(item =>
+                        (<SubItem
+                          abnormal={1}
+                          key={item.typeId}
+                          itemObj={item}
+                          subscribeClick={this.subscribeItem.bind(this)}
+                        />))}
+            </div>
+            <div >
+              <div className={style.coinSet}>异动时间段选择</div>
+              <CheckTime />
+              <div className={style.coinSet}>涨跌幅设置</div>
+              <ChooseTime/>
+            </div>
+            <div >
+              <div className={style.coinSet}>交易量异动设置</div>
+              <SwitchTab3 />
+              <div className={style.dealTips}>注：根据币评大数据显示，90%以上的超过60万人民币的单笔交易代表庄家要控盘的信号</div>
+            </div>
+          </Tabs>
+          <WhiteSpace />
+        </div>
+
+
         <div className={style.full} />
       </div>
     );
