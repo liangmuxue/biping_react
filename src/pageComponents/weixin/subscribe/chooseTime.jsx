@@ -1,11 +1,11 @@
 import React from 'react';
 import { Picker, List } from 'antd-mobile';
-import arrayTreeFilter from 'array-tree-filter';
-import { district } from 'antd-mobile-demo-data';
+import 'antd-mobile/es/picker-view/style/index.css';
 import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
-import style from './ChooseTime.less';
+import './ChooseTime.less';
+// import 'antd-mobile/dist/antd-mobile.css';
 
 
 /**
@@ -13,7 +13,6 @@ import style from './ChooseTime.less';
 * @date        2018-04-20
 * @author 梁慕学
 */
-
 class ChooseTime extends React.Component {
   constructor(props) {
     super(props);
@@ -22,39 +21,7 @@ class ChooseTime extends React.Component {
     };
   }
 
-
-  setVal() {
-    this.props.form.setFieldsValue({
-      district: ['>2%', '>3%', '>5%', '>8%'],
-    });
-  }
-  getSel() {
-    const value = this.state.pickerValue;
-    if (!value) {
-      return '';
-    }
-    const treeChildren = arrayTreeFilter(district, (c, level) => c.value === value[level]);
-    return treeChildren.map(v => v.label).join(',');
-  }
-
-
   render() {
-    // 如果不是使用 List.Item 作为 children
-    const CustomChildren = props => (
-      <div
-        onClick={props.onClick}
-        style={{ backgroundColor: '#fff', paddingLeft: 15 }}
-      >
-        <div className="test" style={{ display: 'flex', height: '45px', lineHeight: '45px' }}>
-          <div style={{
- flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-}}
-          >{props.children}
-          </div>
-          <div style={{ textAlign: 'right', color: '#888', marginRight: 15 }}>{props.extra}</div>
-        </div>
-      </div>
-    );
     const district = [{
       label: '>2%',
       value: '>2%',
@@ -82,19 +49,17 @@ class ChooseTime extends React.Component {
       value: '<-8%',
     }];
 
-    return (<div >
+    return (
       <List style={{ backgroundColor: 'white' }} className="picker-list">
         <Picker data={district} cols={1} title="涨幅"className="forss">
           <List.Item arrow="horizontal">涨幅</List.Item>
         </Picker>
-      </List>
-      <List style={{ backgroundColor: 'white' }} className="picker-list">
-        <Picker data={downdistrict} cols={1} title="涨幅"className="forss">
+        <Picker data={downdistrict} cols={1} title="跌幅" className="forss">
           <List.Item arrow="horizontal">跌幅</List.Item>
         </Picker>
       </List>
-    </div>);
+
+    );
   }
 }
-
 export default ChooseTime;

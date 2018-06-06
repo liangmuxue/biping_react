@@ -90,13 +90,14 @@ class SubDetail extends BaseComponent {
       });
     }
   }
+  // 弹出时间选择框
   shareClick(event) {
     console.log('777777', this.props);
     this.props.dispatch({
       type: 'subDetail/chooseTime',
     });
   }
-
+  // 关闭时间选择框
   closeShare() {
     const { dispatch } = this.props;
     console.log('closeShare in');
