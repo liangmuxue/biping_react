@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Modal, List, Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import Modal from 'antd-mobile/lib/modal/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
 import 'antd-mobile/es/button/style/index.css';
@@ -291,14 +293,15 @@ class MsgDetail extends BaseComponent {
 
 
           <div className={style.notice}>
+
+            <div className={style.caption}>{msgObj.title}</div>
+            <div className={style.noticeTitle}>
+              <div className={style.times}>{msgObj.time}</div>
+              <Hammer >
+                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+              </Hammer>
+            </div>
             <div className={style.hide}>
-              <div className={style.caption}>{msgObj.title}</div>
-              <div className={style.noticeTitle}>
-                <div className={style.times}>{msgObj.time}</div>
-                <Hammer >
-                  <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-                </Hammer>
-              </div>
               <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
               <div className={style.clear} />
               <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
