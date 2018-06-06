@@ -1,11 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
-import { Tabs, WhiteSpace, Badge } from 'antd-mobile';
-import { NoticeBar, Icon } from 'antd-mobile';
+import { NoticeBar, Modal, List, Button, WhiteSpace, WingBlank, Tabs, Badge, Checkbox } from 'antd-mobile';
+import 'antd-mobile/es/modal/style/index.css';
+import 'antd-mobile/es/toast/style/index.css';
+import 'antd-mobile/es/checkbox/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/switch/style/index.css';
-import List from 'antd-mobile/lib/list/index';
 import Switch from 'antd-mobile/lib/switch/index';
 import 'antd-mobile/es/notice-bar/style/index.css';
 import 'antd-mobile/es/icon/style/index.css';
@@ -13,7 +14,6 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
 import SubItem from '../../../pageComponents/weixin/subscribe/subItem.jsx';
 import ChooseTime from '../../../pageComponents/weixin/subscribe/ChooseTime.jsx';
-import CheckTime from '../../../pageComponents/weixin/subscribe/CheckTime.jsx';
 import HeaderBar from '../../../components/headerBar';
 import style from './subDetail.less';
 import BaseComponent from '../baseComponent';
@@ -27,6 +27,7 @@ class SubDetail extends BaseComponent {
   constructor(props) {
     console.log('props in SubDetail', props);
     super(props);
+    this.tmListener = null;
   }
   componentWillMount() {
     console.log('componentWillMount subdetail', this.props);
@@ -89,8 +90,20 @@ class SubDetail extends BaseComponent {
       });
     }
   }
+  shareClick(event) {
+    console.log('777777', this.props);
+    this.props.dispatch({
+      type: 'subDetail/chooseTime',
+    });
+  }
 
-
+  closeShare() {
+    const { dispatch } = this.props;
+    console.log('closeShare in');
+    dispatch({
+      type: 'subDetail/closeShareSuc',
+    });
+  }
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -143,6 +156,36 @@ class SubDetail extends BaseComponent {
     };
     SwitchTab3 = createForm()(SwitchTab3);
 
+    // 选择时间
+    const { CheckboxItem } = Checkbox;
+    let chooseHide = this.props.chooseHide;
+    if (!chooseHide) {
+      chooseHide = false;
+      document.body.removeEventListener('touchmove', this.tmListener);
+    }
+    const chooseTime = (
+      <WingBlank>
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" /></Button>
+        <WhiteSpace />
+        <Modal
+          popup
+          visible={chooseHide}
+          onClose={this.closeShare.bind(this)}
+          animationType="slide-up"
+        >
+          <List renderHeader={() => <div>时间段<span onClick={this.closeShare.bind(this)} >完成</span></div>} className="popup-list">
+            {['3分钟', '5分钟', '10分钟', '15分钟'].map((i, index) => (
+              <CheckboxItem className={style.timelv} key={index}>{i}</CheckboxItem>
+           ))}
+          </List>
+          <List.Item>
+            <Button type="primary" onClick={this.closeShare.bind(this)} style={{ hackeight: '20px' }}>确认</Button>
+          </List.Item>
+        </Modal>
+      </WingBlank>
+    );
+
+
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink={backPath} {...this.props} />
@@ -186,7 +229,7 @@ class SubDetail extends BaseComponent {
               </div>
               <div >
                 <div className={style.coinSet}>异动时间段选择</div>
-                <CheckTime />
+                {chooseTime}
                 <div className={style.coinSet}>涨跌幅设置</div>
                 <ChooseTime />
               </div>

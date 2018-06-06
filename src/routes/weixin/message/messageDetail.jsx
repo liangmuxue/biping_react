@@ -1,11 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
-import Modal from 'antd-mobile/lib/modal/index';
+import { Modal, List, Button, WhiteSpace, WingBlank } from 'antd-mobile';
 import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
-import Button from 'antd-mobile/lib/button/index';
-import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import HeaderBar from '../../../components/headerBar';
@@ -16,6 +13,7 @@ import BaseComponent from '../baseComponent';
 import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import QrCodeWithLogo from 'qr-code-with-logo';
+
 /**
 * 老人账号信息页面
 * @author 梁慕学
@@ -275,6 +273,7 @@ class MsgDetail extends BaseComponent {
     if (curAct && curAct === 'queryDetail') {
       window.scrollTo(0, 0);
     }
+
     return (
       <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
@@ -290,6 +289,7 @@ class MsgDetail extends BaseComponent {
             </div>
           </div>
 
+
           <div className={style.notice}>
             <div className={style.hide}>
               <div className={style.caption}>{msgObj.title}</div>
@@ -304,15 +304,16 @@ class MsgDetail extends BaseComponent {
               <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
             </div>
             <div >
+
               <div className={style.transactionCoin} >
                 <div>时间段：<span>12:14 - 12:17</span></div>
-                <div>异动类型：<u className={style.toUp}>上涨</u></div>
-                <div>交易所：<span>火币pro</span></div>
-                <div>交易对：<span>HT/USDT</span></div>
-                <div>当前价格：<span>588.88 USDT <br /><b className={style.convert}>(≈ 人民币3,735.88）</b></span></div>
-                <div>5分钟内成交量：<span>659，其中买入600、卖出59</span></div>
-                <div>5分钟内净流入量：<span>541</span></div>
-                <div>5分钟内涨幅：<span className={style.toUp}>+15.41%</span></div>
+                <div>异动类型：<u className={style.toUp}>{msgObj.transType}</u></div>
+                <div>交易所：<span>{msgObj.exchangeName}</span></div>
+                <div>交易对：<span>{msgObj.quoteCoinCode}/{msgObj.baseCoinCode}</span></div>
+                <div>当前价格：<span>{msgObj.price} <br /><b className={style.convert}>(≈ 人民币{msgObj.priceReal}）</b></span></div>
+                <div>5分钟内成交量：<span>659，其中买入{msgObj.buyAmount}、卖出{msgObj.sellAmount}</span></div>
+                <div>5分钟内净流入量：<span>{msgObj.gainHold}</span></div>
+                <div>5分钟内涨幅：<span className={style.toUp}>{msgObj.gainDiffer}</span></div>
               </div>
 
               <div className={style.coinTable} >
@@ -324,42 +325,18 @@ class MsgDetail extends BaseComponent {
                   <div className={style.tableIncome}>净流入</div>
                 </div>
               </div>
-
-              <div className={style.coinLists} >
-                <div className={style.tableTitle}>
-                  <div className={style.tableTime}>21:21</div>
-                  <div className={style.tablePrice}>72.8</div>
-                  <div className={style.tableChg}><span>0.12%</span></div>
-                  <div className={style.tableIncome}>-322000</div>
-                </div>
-              </div>
-
-              <div className={style.coinLists} >
-                <div className={style.tableTitle}>
-                  <div className={style.tableTime}>21:21</div>
-                  <div className={style.tablePrice}>72.8</div>
-                  <div className={style.tableChg}><span>0.12%</span></div>
-                  <div className={style.tableIncome}>-322000</div>
-                </div>
-              </div>
-
-              <div className={style.coinLists} >
-                <div className={style.tableTitle}>
-                  <div className={style.tableTime}>21:21</div>
-                  <div className={style.tablePrice}>72.8</div>
-                  <div className={style.tableChg}><span>0.12%</span></div>
-                  <div className={style.tableIncome}>-322000</div>
-                </div>
-              </div>
-
-              <div className={style.coinLists} >
-                <div className={style.tableTitle}>
-                  <div className={style.tableTime}>21:21</div>
-                  <div className={style.tablePrice}>72.8</div>
-                  <div className={style.tableChg}><span>0.12%</span></div>
-                  <div className={style.tableIncome}>-322000</div>
-                </div>
-              </div>
+              {msgObj.quoteList.map(msg =>
+                (
+                  <div className={style.coinLists} >
+                    <div className={style.tableTitle}>
+                      <div className={style.tableTime}>{msg.qTime}</div>
+                      <div className={style.tablePrice}>{msg.price}</div>
+                      <div className={style.tableChg}><span>{msg.gainDiffer}</span></div>
+                      <div className={style.tableIncome}>{msg.gainHold}</div>
+                    </div>
+                  </div>
+                ))}
+              <buyEnter />
 
             </div>
             <div className={style.friendBox}>

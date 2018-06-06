@@ -48,6 +48,22 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 时间段选择
+    *chooseTime({ payload }, { put, call }) {
+      // 禁止屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: true,
+        },
+      });
+      yield call(timeoutCall, 50);
+      yield put({
+        type: 'chooseSucc',
+        payload,
+      });
+    },
+
     // 订阅所有类别
     *subscribeAll({ payload }, { put, select, call }) {
       const st = yield select();
@@ -179,6 +195,23 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    // 弹出时间选择
+    chooseSucc(state, action) {
+      const params = action.payload;
+      return {
+        ...state,
+        chooseHide: true,
+        ...params,
+      };
+    },
+    // 关闭时间选择框
+    closeShareSuc(state) {
+      console.log('closeShareSuc', state);
+      return {
+        ...state,
+        chooseHide: false,
       };
     },
   },

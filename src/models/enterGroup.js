@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
       });
       // 埋点
       yield put({
-        type: 'analysis',
+        type: 'app/analysis',
         payload: {
           page: siteAnalysis.pageConst.ENTERGROUP,
           action: siteAnalysis.actConst.GROUPWECHAT,

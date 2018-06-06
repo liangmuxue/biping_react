@@ -105,7 +105,7 @@ export default modelExtend(pageModel, {
       // console.log(`imgDataStr:${imgDataStr}`);
       const st = yield select();
       const endpoint = 'messageDetail';
-      const filter = { messageId };
+      const filter = { messageId, ifTest: '3' };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);

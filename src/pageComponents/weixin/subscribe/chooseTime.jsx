@@ -1,7 +1,7 @@
 import React from 'react';
-import { Picker, List, WhiteSpace } from 'antd-mobile';
+import { Picker, List } from 'antd-mobile';
 import arrayTreeFilter from 'array-tree-filter';
-import { district, provinceLite } from 'antd-mobile-demo-data';
+import { district } from 'antd-mobile-demo-data';
 import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';

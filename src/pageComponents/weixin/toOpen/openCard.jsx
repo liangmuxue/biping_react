@@ -23,6 +23,7 @@ class OpenCard extends React.Component {
     this.props.openClick(this.props.typeObj);
   }
   render() {
+    console.log('ddddddddaaaaa', this.props);
     const { openObj } = this.props;
     let ifEnterGroup = 0;
     if (openObj) {
