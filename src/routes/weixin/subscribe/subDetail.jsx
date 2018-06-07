@@ -22,8 +22,8 @@ import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.js
 import SubItem from '../../../pageComponents/weixin/subscribe/subItem.jsx';
 import ChooseTime from '../../../pageComponents/weixin/subscribe/ChooseTime.jsx';
 import HeaderBar from '../../../components/headerBar';
-import style from './subDetail.less';
 import BaseComponent from '../baseComponent';
+import style from './subDetail.less';
 /**
 * 订阅详情页面
 * @author 梁慕学
@@ -198,6 +198,7 @@ class SubDetail extends BaseComponent {
         <div style={{ display: 'none' }}>
           <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
 
+        <div className={style.subDetailList}>
           {subDetailData.data.content.map(item =>
                         (<SubItem
                           abnormal={1}
@@ -205,6 +206,7 @@ class SubDetail extends BaseComponent {
                           itemObj={item}
                           subscribeClick={this.subscribeItem.bind(this)}
                         />))}
+        </div>
         </div>
 
         <div >
@@ -223,16 +225,14 @@ class SubDetail extends BaseComponent {
                         目前仅支持火币和HADAX两个交易所
                   </NoticeBar>
                 </div>
-                <div style={{
-           backgroundColor: '#fff',
-          }}
-                >  {subDetailData.data.content.map(item =>
-                            (<SubItem
-                              abnormal={1}
-                              key={item.typeId}
-                              itemObj={item}
-                              subscribeClick={this.subscribeItem.bind(this)}
-                            />))}
+                <div className={style.subDetailList}>
+                  {subDetailData.data.content.map(item =>
+                                (<SubItem
+                                  abnormal={1}
+                                  key={item.typeId}
+                                  itemObj={item}
+                                  subscribeClick={this.subscribeItem.bind(this)}
+                                />))}
                 </div>
               </div>
               <div >

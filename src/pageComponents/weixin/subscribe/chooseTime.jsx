@@ -6,6 +6,7 @@ import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 // import 'antd-mobile/dist/antd-mobile.css';
+import style from './ChooseTime.less';
 
 
 /**
@@ -49,14 +50,19 @@ class ChooseTime extends React.Component {
     }];
 
     return (
-      <List style={{ backgroundColor: 'white' }} className="picker-list">
-        <Picker data={district} cols={1} title="涨幅" className="forss">
-          <List.Item arrow="horizontal">涨幅</List.Item>
-        </Picker>
-        <Picker data={downdistrict} cols={1} title="跌幅" className="forss">
-          <List.Item arrow="horizontal">跌幅</List.Item>
-        </Picker>
-      </List>
+      <div >
+        <div className={style.pickerOne}>
+        <List style={{ backgroundColor: 'white' }} className="picker-list">
+          <Picker data={district} cols={1} title="涨幅" className="forss">
+            <List.Item arrow="horizontal">涨幅</List.Item>
+          </Picker>
+
+          <Picker data={downdistrict} cols={1} title="跌幅" className="forss" className={style.ChooseTime}>
+            <List.Item arrow="horizontal" style={{ border : 0 }}>跌幅</List.Item>
+          </Picker>
+        </List>
+        </div>
+      </div>
 
     );
   }
