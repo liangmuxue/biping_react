@@ -11,8 +11,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.106.161:8280';
   // ENV.host = 'http://47.92.25.130:8280';
   //  ENV.host = 'http://10.0.109.224:8280';
+  // ENV.host = 'http://wp.test.tnb99.net';
   ENV.host = 'http://twp.test.tnb99.net';
-  // ENV.host = 'http://twp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';

@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
+import moment from 'moment';
 import Modal from 'antd-mobile/lib/modal/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
+import Button from 'antd-mobile/lib/button/index';
 import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
 import 'antd-mobile/es/button/style/index.css';
@@ -263,7 +265,6 @@ class MsgDetail extends BaseComponent {
                         </Hammer>);
 
     const val = msgObj.content.replace(/＆nbsp;/g, ' ');
-
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
@@ -276,6 +277,7 @@ class MsgDetail extends BaseComponent {
       window.scrollTo(0, 0);
     }
 
+    // 时间戳转小时分钟
     return (
       <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
@@ -293,19 +295,18 @@ class MsgDetail extends BaseComponent {
 
 
           <div className={style.notice}>
-
-            <div className={style.caption}>{msgObj.title}</div>
-            <div className={style.noticeTitle}>
-              <div className={style.times}>{msgObj.time}</div>
-              <Hammer >
-                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-              </Hammer>
-            </div>
-            <div className={style.hide}>
+              <div className={style.caption}>{msgObj.title}</div>
+              <div className={style.noticeTitle}>
+                <div className={style.times}>{msgObj.time}</div>
+                <Hammer >
+                  <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+                </Hammer>
+              </div>
               <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
               <div className={style.clear} />
-              <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-            </div>
+              <div className={style.hide}>
+                <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
+              </div>
             <div >
 
               <div className={style.transactionCoin} >
@@ -379,15 +380,7 @@ class MsgDetail extends BaseComponent {
               <div className={style.similarCenter}>
                 <div className={style.similarTitle}>类似消息</div>
                 <ul className={style.similarListUl}>
-                  {msgObj.relateMsg.map(msg =>
-                  (
-                    <li className={style.similarListLi}>
-                      <Button
-                        onClick={() => this.switchTitle(msg)}
-                        className={style.similarList}
-                      >{msg.title}
-                      </Button>
-                    </li>
+
                   ))}
                 </ul>
               </div>
