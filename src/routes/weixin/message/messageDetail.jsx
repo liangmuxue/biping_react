@@ -1,6 +1,10 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Modal, List, Button, WhiteSpace, WingBlank } from 'antd-mobile';
+import moment from 'moment';
+import Modal from 'antd-mobile/lib/modal/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
+import Button from 'antd-mobile/lib/button/index';
 import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
 import 'antd-mobile/es/button/style/index.css';
@@ -273,7 +277,6 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
@@ -357,15 +360,7 @@ class MsgDetail extends BaseComponent {
               <div className={style.similarCenter}>
                 <div className={style.similarTitle}>类似消息</div>
                 <ul className={style.similarListUl}>
-                  {msgObj.relateMsg.map(msg =>
-                  (
-                    <li className={style.similarListLi}>
-                      <Button
-                        onClick={() => this.switchTitle(msg)}
-                        className={style.similarList}
-                      >{msg.title}
-                      </Button>
-                    </li>
+
                   ))}
                 </ul>
               </div>

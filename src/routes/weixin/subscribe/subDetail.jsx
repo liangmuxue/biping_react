@@ -9,7 +9,6 @@ import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Tabs from 'antd-mobile/lib/tabs/index';
 import Badge from 'antd-mobile/lib/badge/index';
 import Checkbox from 'antd-mobile/lib/checkbox/index';
-
 import 'antd-mobile/es/modal/style/index.css';
 import 'antd-mobile/es/toast/style/index.css';
 import 'antd-mobile/es/checkbox/style/index.css';
@@ -196,8 +195,9 @@ class SubDetail extends BaseComponent {
         <div className={style.topBox}>
           <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
         </div>
-        <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
         <div style={{ display: 'none' }}>
+          <div className={style.listTitle}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
+
           {subDetailData.data.content.map(item =>
                         (<SubItem
                           abnormal={1}
@@ -209,27 +209,31 @@ class SubDetail extends BaseComponent {
 
         <div >
           <div>
-            <NoticeBar marqueeProps={{ loop: true, style: { textAligin: 'left', padding: '0 7.5px' } }}>
-              目前仅支持火币和HADAX两个交易所
-            </NoticeBar>
-          </div>
-          <div>
             <Tabs
               tabs={tabs}
               initialPage={1}
               onChange={(tab, index) => { console.log('onChange', index, tab); }}
               onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
             >
-              <div style={{
-         backgroundColor: '#fff',
-        }}
-              >  {subDetailData.data.content.map(item =>
-                          (<SubItem
-                            abnormal={1}
-                            key={item.typeId}
-                            itemObj={item}
-                            subscribeClick={this.subscribeItem.bind(this)}
-                          />))}
+              <div style={{ position: 'relative' }}>
+                <div className={style.listTitle} style={{ marginTop: 0, height: '1.74rem' }}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
+
+                <div className={style.noticeBar}>
+                  <NoticeBar marqueeProps={{ loop: true, style: { textAligin: 'left', padding: '0 7.5px' } }}>
+                        目前仅支持火币和HADAX两个交易所
+                  </NoticeBar>
+                </div>
+                <div style={{
+           backgroundColor: '#fff',
+          }}
+                >  {subDetailData.data.content.map(item =>
+                            (<SubItem
+                              abnormal={1}
+                              key={item.typeId}
+                              itemObj={item}
+                              subscribeClick={this.subscribeItem.bind(this)}
+                            />))}
+                </div>
               </div>
               <div >
                 <div className={style.coinSet}>异动时间段选择</div>
