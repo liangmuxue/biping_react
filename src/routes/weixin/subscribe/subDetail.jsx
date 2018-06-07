@@ -1,7 +1,15 @@
 import React from 'react';
 import { connect } from 'dva';
 import { createForm } from 'rc-form';
-import { NoticeBar, Modal, List, Button, WhiteSpace, WingBlank, Tabs, Badge, Checkbox } from 'antd-mobile';
+import Modal from 'antd-mobile/lib/modal/index';
+import NoticeBar from 'antd-mobile/lib/notice-bar/index';
+import List from 'antd-mobile/lib/list/index';
+import Button from 'antd-mobile/lib/button/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Tabs from 'antd-mobile/lib/tabs/index';
+import Badge from 'antd-mobile/lib/badge/index';
+import Checkbox from 'antd-mobile/lib/checkbox/index';
+
 import 'antd-mobile/es/modal/style/index.css';
 import 'antd-mobile/es/toast/style/index.css';
 import 'antd-mobile/es/checkbox/style/index.css';
@@ -90,13 +98,12 @@ class SubDetail extends BaseComponent {
       });
     }
   }
-  // 弹出时间选择框
   shareClick(event) {
     this.props.dispatch({
       type: 'subDetail/chooseTime',
     });
   }
-  // 关闭时间选择框
+
   closeShare() {
     const { dispatch } = this.props;
     console.log('closeShare in');
@@ -164,8 +171,8 @@ class SubDetail extends BaseComponent {
       document.body.removeEventListener('touchmove', this.tmListener);
     }
     const chooseTime = (
-      <WingBlank>
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" /></Button>
+      <div >
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
         <WhiteSpace />
         <Modal
           popup
@@ -173,16 +180,13 @@ class SubDetail extends BaseComponent {
           onClose={this.closeShare.bind(this)}
           animationType="slide-up"
         >
-          <List renderHeader={() => <div>时间段<span onClick={this.closeShare.bind(this)} >完成</span></div>} className="popup-list">
+          <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {['3分钟', '5分钟', '10分钟', '15分钟'].map((i, index) => (
               <CheckboxItem className={style.timelv} key={index}>{i}</CheckboxItem>
            ))}
           </List>
-          <List.Item>
-            <Button type="primary" onClick={this.closeShare.bind(this)} style={{ hackeight: '20px' }}>确认</Button>
-          </List.Item>
         </Modal>
-      </WingBlank>
+      </div>
     );
 
 

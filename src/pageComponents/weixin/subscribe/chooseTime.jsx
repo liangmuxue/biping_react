@@ -1,5 +1,6 @@
 import React from 'react';
-import { Picker, List } from 'antd-mobile';
+import List from 'antd-mobile/lib/list/index';
+import Picker from 'antd-mobile/lib/picker/index';
 import 'antd-mobile/es/picker-view/style/index.css';
 import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
