@@ -52,17 +52,18 @@ class ChooseTime extends React.Component {
     return (
       <div >
         <div className={style.pickerOne}>
-        <List style={{ backgroundColor: 'white' }} className="picker-list">
+          <List style={{ backgroundColor: 'white' }} className="picker-list">
           <Picker data={district} cols={1} title="涨幅" className="forss">
             <List.Item arrow="horizontal">涨幅</List.Item>
           </Picker>
-
+          </List>
+        </div>
+          <List style={{ backgroundColor: 'white' }} className="picker-list">
           <Picker data={downdistrict} cols={1} title="跌幅" className="forss" className={style.ChooseTime}>
             <List.Item arrow="horizontal" style={{ border : 0 }}>跌幅</List.Item>
           </Picker>
         </List>
         </div>
-      </div>
 
     );
   }
