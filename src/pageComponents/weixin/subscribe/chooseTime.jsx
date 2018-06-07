@@ -5,7 +5,6 @@ import 'antd-mobile/es/picker-view/style/index.css';
 import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
-import './ChooseTime.less';
 // import 'antd-mobile/dist/antd-mobile.css';
 
 
@@ -21,7 +20,6 @@ class ChooseTime extends React.Component {
     this.state = {
     };
   }
-
   render() {
     const district = [{
       label: '>2%',
@@ -52,7 +50,7 @@ class ChooseTime extends React.Component {
 
     return (
       <List style={{ backgroundColor: 'white' }} className="picker-list">
-        <Picker data={district} cols={1} title="涨幅"className="forss">
+        <Picker data={district} cols={1} title="涨幅" onChange={this.onChange(this)} className="forss">
           <List.Item arrow="horizontal">涨幅</List.Item>
         </Picker>
         <Picker data={downdistrict} cols={1} title="跌幅" className="forss">

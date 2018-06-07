@@ -17,6 +17,7 @@ import BaseComponent from '../baseComponent';
 import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import QrCodeWithLogo from 'qr-code-with-logo';
+import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 
 /**
 * 老人账号信息页面
@@ -212,10 +213,22 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     const msgObj = msgDetailData.data;
-    console.log('msgObj44444', msgObj);
+    console.log('msgObj44444', msgObj.content);
     if (!msgObj.mid) {
       return null;
     }
+    // 内容（异动币和币事件、交易所公告的不同）
+    let contentCard = null;
+    let val = null;
+    console.log('88888888', msgObj.content.mid);
+    if (msgObj.content && msgObj.content.mid) {
+      console.log('MessageContent', msgObj.content.mid);
+      contentCard = (<MessageContent content={msgObj.content} />);
+    } else {
+      val = msgObj.content.replace(/＆nbsp;/g, ' ');
+      contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
+    }
+
     if (!showMsgShare) {
       console.log('touchmove rm', this.tmListener);
       document.body.removeEventListener('touchmove', this.tmListener);
@@ -264,7 +277,6 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-    const val = msgObj.content.replace(/＆nbsp;/g, ' ');
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
@@ -277,7 +289,7 @@ class MsgDetail extends BaseComponent {
       window.scrollTo(0, 0);
     }
 
-    // 时间戳转小时分钟
+
     return (
       <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
@@ -295,54 +307,22 @@ class MsgDetail extends BaseComponent {
 
 
           <div className={style.notice}>
-              <div className={style.caption}>{msgObj.title}</div>
-              <div className={style.noticeTitle}>
-                <div className={style.times}>{msgObj.time}</div>
-                <Hammer >
-                  <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
-                </Hammer>
-              </div>
-              <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
-              <div className={style.clear} />
-              <div className={style.hide}>
-                <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-              </div>
-            <div >
-
-              <div className={style.transactionCoin} >
-                <div>时间段：<span>12:14 - 12:17</span></div>
-                <div>异动类型：<u className={style.toUp}>{msgObj.transType}</u></div>
-                <div>交易所：<span>{msgObj.exchangeName}</span></div>
-                <div>交易对：<span>{msgObj.quoteCoinCode}/{msgObj.baseCoinCode}</span></div>
-                <div>当前价格：<span>{msgObj.price} <br /><b className={style.convert}>(≈ 人民币{msgObj.priceReal}）</b></span></div>
-                <div>5分钟内成交量：<span>659，其中买入{msgObj.buyAmount}、卖出{msgObj.sellAmount}</span></div>
-                <div>5分钟内净流入量：<span>{msgObj.gainHold}</span></div>
-                <div>5分钟内涨幅：<span className={style.toUp}>{msgObj.gainDiffer}</span></div>
-              </div>
-
-              <div className={style.coinTable} >
-                <div className={style.coinTitle} >异动数据（单位：USDT)</div>
-                <div className={style.tableTitle}>
-                  <div className={style.tableTime}>时间</div>
-                  <div className={style.tablePrice}>单价</div>
-                  <div className={style.tableChg}>涨跌幅</div>
-                  <div className={style.tableIncome}>净流入</div>
+            <div className={style.caption}>{msgObj.title}</div>
+            <div className={style.noticeTitle}>
+              <div className={style.times}>{msgObj.time}</div>
+              <Hammer >
+                <div
+                  className={style.detail}
+                  onClick={this.tagClick.bind(this)}
+                >
+                  {msgObj.verbname}
                 </div>
-              </div>
-              {msgObj.quoteList.map(msg =>
-                (
-                  <div className={style.coinLists} >
-                    <div className={style.tableTitle}>
-                      <div className={style.tableTime}>{msg.qTime}</div>
-                      <div className={style.tablePrice}>{msg.price}</div>
-                      <div className={style.tableChg}><span>{msg.gainDiffer}</span></div>
-                      <div className={style.tableIncome}>{msg.gainHold}</div>
-                    </div>
-                  </div>
-                ))}
-              <buyEnter />
-
+              </Hammer>
             </div>
+            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
+            {contentCard}
+
             <div className={style.friendBox}>
               <div className={style.toFriend} />
               <Hammer onTap={this.shareClick.bind(this)}>

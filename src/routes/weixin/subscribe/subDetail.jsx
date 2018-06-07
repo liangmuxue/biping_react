@@ -98,7 +98,6 @@ class SubDetail extends BaseComponent {
     }
   }
   shareClick(event) {
-    console.log('777777', this.props);
     this.props.dispatch({
       type: 'subDetail/chooseTime',
     });
