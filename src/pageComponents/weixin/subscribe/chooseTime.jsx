@@ -50,7 +50,7 @@ class ChooseTime extends React.Component {
 
     return (
       <List style={{ backgroundColor: 'white' }} className="picker-list">
-        <Picker data={district} cols={1} title="涨幅" onChange={this.onChange(this)} className="forss">
+        <Picker data={district} cols={1} title="涨幅" className="forss">
           <List.Item arrow="horizontal">涨幅</List.Item>
         </Picker>
         <Picker data={downdistrict} cols={1} title="跌幅" className="forss">
