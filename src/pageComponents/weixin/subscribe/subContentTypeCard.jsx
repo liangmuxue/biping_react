@@ -9,16 +9,13 @@ import Tabs from 'antd-mobile/lib/tabs/index';
 import Badge from 'antd-mobile/lib/badge/index';
 import Checkbox from 'antd-mobile/lib/checkbox/index';
 import 'antd-mobile/es/checkbox/style/index.css';
-
 import Switch from 'antd-mobile/lib/switch/index';
-
 import 'antd-mobile/es/switch/style/index.css';
 import 'antd-mobile/es/notice-bar/style/index.css';
 import 'antd-mobile/es/modal/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 import style from './subContentType.less';
-
 import ChooseTime from './chooseTime.jsx';
 import SubItem from './subItem.jsx';
 
@@ -56,6 +53,7 @@ class SubContentType extends React.Component {
     const { subTypeContent } = this.props;
     const subDetailData = subTypeContent.subDetailData;
     console.log('subTypeContent11111', subDetailData);
+    const timeTypeArea = subDetailData
     // 选择时间
     const { CheckboxItem } = Checkbox;
     let chooseHide = subTypeContent.chooseHide;
@@ -65,7 +63,7 @@ class SubContentType extends React.Component {
     }
 
     const tabs = [
-      { title: <Badge >交易所</Badge>, sub: '1' },
+      { title: <Badge >交易所</Badge> },
       { title: <Badge >涨跌幅</Badge> },
       { title: <Badge >成交量</Badge> },
     ];
@@ -86,7 +84,7 @@ class SubContentType extends React.Component {
             />}
           >
             <div>
-              <span className={style.buyOnce}>单笔买入量  </span>
+              <span className={style.buyOnce}>单笔买入量 </span>
               <span className={style.passMoney}>超过60万人民币</span>
             </div>
           </List.Item>
@@ -123,7 +121,7 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.gainHold}>{item.gainHold}
+              <CheckboxItem className={style.timelv} key={item.gainHold} onChange={() => console.log(item.gainHold)} >{item.gainHold}
               </CheckboxItem>
            ))}
           </List>

@@ -29,7 +29,7 @@ class MessageContent extends React.Component {
           <div>当前价格：<span>{msgObj.price} <br /><b className={style.convert}>(≈ 人民币{msgObj.priceReal}）</b></span></div>
           <div>5分钟内成交量：<span>659，其中买入{msgObj.buyAmount}、卖出{msgObj.sellAmount}</span></div>
           <div>5分钟内净流入量：<span>{msgObj.gainHold}</span></div>
-          <div>5分钟内涨幅：<span className={style.toUp}>{msgObj.gainDiffer}</span></div>
+          <div>5分钟内涨幅：<span className={msgObj.transType >= '0' ? style.toUp : style.toDown}>{msgObj.gainDiffer}</span></div>
         </div>
 
         <div className={style.coinTable} >
