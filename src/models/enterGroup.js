@@ -1,6 +1,5 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal } from '../services/common';
 import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
