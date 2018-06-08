@@ -108,7 +108,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-                opt: { fromUser, enterMessageCase },
+                opt: { fromUser, enterMessageCase, messageId },
               },
             });
           }
@@ -154,7 +154,7 @@ const App = {
             payload: {
               page: siteAnalysis.pageConst.MESSAGEDETAIL,
               action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-              opt: { fromUser },
+              opt: { fromUser, messageId },
             },
           });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
@@ -332,7 +332,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-                opt: { fromUser, enterMessageCase },
+                opt: { fromUser, enterMessageCase, messageId },
               },
             });
           } else if (subscribe === 1) {
@@ -346,7 +346,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: actionReal,
-                opt: { fromUser, enterMessageCase },
+                opt: { fromUser, enterMessageCase, messageId },
               },
             });
           }

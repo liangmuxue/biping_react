@@ -7,10 +7,15 @@ const ENV = {
 if (process.env.NODE_ENV === 'development') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://10.0.109.126';
+<<<<<<< HEAD
   // ENV.host = 'http://10.0.107.254:8280';
   // ENV.host = 'http://10.0.106.10:8280';
   ENV.host = 'http://10.0.107.124:8280';
   // ENV.host = 'http://10.0.109.224:8280';
+=======
+  ENV.host = 'http://10.0.107.124:8280';
+  // ENV.host = 'http://10.0.106.10:8280';
+>>>>>>> 578e948df49cd90ba2313b2227c28d8c5adf1476
   // ENV.host = 'http://wp.test.tnb99.net';
   // ENV.host = 'http://twp.test.tnb99.net';
 

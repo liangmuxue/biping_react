@@ -88,7 +88,7 @@ class SubContentType extends React.Component {
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
-                 initialValue: true,
+                 initialValue: buyType.hasSubscribe === 1,
                 valuePropName: 'checked',
               })}
               onClick={(checked) => {
@@ -105,7 +105,7 @@ class SubContentType extends React.Component {
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch2', {
-           initialValue: true,
+           initialValue: payType.hasSubscribe === 1,
            valuePropName: 'checked',
          })}
               onClick={(checked) => { console.log(checked); }}
@@ -134,7 +134,7 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} onChange={(e)=>{ console.log('item.gainHold',item.gainHold)}} value={item.gainHold} >{item.gainHold}
+              <CheckboxItem className={style.timelv} key={item.transVerbId} >{item.minuteCount}分钟
               </CheckboxItem>
            ))}
           </List>
