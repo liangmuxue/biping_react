@@ -1,4 +1,5 @@
 import React from 'react';
+import { createForm } from 'rc-form';
 import List from 'antd-mobile/lib/list/index';
 import Picker from 'antd-mobile/lib/picker/index';
 import 'antd-mobile/es/picker-view/style/index.css';
@@ -6,65 +7,76 @@ import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 // import 'antd-mobile/dist/antd-mobile.css';
-import style from './ChooseTime.less';
-
+const initValue = {
+  gainValue: [],
+  loseValue1: [],
+};
 
 /**
-* 订阅小项内容组件
+* 涨跌幅选择卡片
 * @date        2018-04-20
-* @author 梁慕学
+* @author 赵永帅
 */
 class ChooseTime extends React.Component {
   constructor(props) {
     super(props);
     console.log('thisprops is', props);
-    this.state = {
-    };
   }
-  render() {
-    const district = [{
-      label: '>2%',
-      value: '>2%',
-    }, {
-      label: '>3%',
-      value: '>3%',
-    }, {
-      label: '>5%',
-      value: '>5%',
-    }, {
-      label: '>8%',
-      value: '>8%',
-    }];
-    const downdistrict = [{
-      label: '<-2%',
-      value: '<-2%',
-    }, {
-      label: '<-3%',
-      value: '<-3%',
-    }, {
-      label: '<-5%',
-      value: '<-5%',
-    }, {
-      label: '<-8%',
-      value: '<-8%',
-    }];
+  // 涨幅赋值
+  gainValue(value) {
+    initValue.gainValue = value;
+  }
+  // 跌幅赋值
+  loseValue(value) {
+    initValue.loseValue = value;
+  }
 
-    return (
-      <div >
-        <div className={style.pickerOne}>
-          <List style={{ backgroundColor: 'white' }} className="picker-list">
-          <Picker data={district} cols={1} title="涨幅" className="forss">
-            <List.Item arrow="horizontal">涨幅</List.Item>
+  render() {
+    const { chooseObj } = this.props;
+    console.log('chooseObj', chooseObj);
+    // 涨幅
+    const { gainArea } = chooseObj.data;
+    // 跌幅
+    const { loseArea } = chooseObj.data;
+    console.log('loseArea', loseArea);
+    const district = [];
+    const downdistrict = [];
+    loseArea.map(item => (
+      district.push({ value: item.loseHold, label: `>${item.loseHold * 100}%` })
+    ));
+    gainArea.map(item => (
+      downdistrict.push({ value: item.gainHold, label: `<${item.gainHold * 100}%` })
+    ));
+    let ChooseTimeEx = (props) => {
+      const { getFieldProps } = props.form;
+      return (
+        <List style={{ backgroundColor: 'white' }} className="picker-list">
+          <Picker
+            data={district}
+            cols={1}
+            value={initValue.pickerValue}
+            title="涨幅"
+            onChange={v => this.gainValue({ gainValue: v })}
+            {...getFieldProps('district3')}
+          >
+            <List.Item arrow="horizontal" >涨幅</List.Item>
           </Picker>
-          </List>
-        </div>
-          <List style={{ backgroundColor: 'white' }} className="picker-list">
-          <Picker data={downdistrict} cols={1} title="跌幅" className="forss" className={style.ChooseTime}>
-            <List.Item arrow="horizontal" style={{ border : 0 }}>跌幅</List.Item>
+          <Picker
+            data={downdistrict}
+            cols={1}
+            value={initValue.loseValue}
+            title="跌幅"
+            onChange={v => this.loseValue({ loseValue: v })}
+            {...getFieldProps('district4')}
+          >
+            <List.Item arrow="horizontal">跌幅</List.Item>
           </Picker>
         </List>
-        </div>
-
+      );
+    };
+    ChooseTimeEx = createForm()(ChooseTimeEx);
+    return (
+      <ChooseTimeEx />
     );
   }
 }

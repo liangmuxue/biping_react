@@ -29,7 +29,7 @@ class subList extends BaseComponent {
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, backPath } },
+      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, typeCode: typeObj.typeCode, backPath } },
     });
   }
   subTypeClick(subTypeObj) {

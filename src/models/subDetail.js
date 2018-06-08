@@ -32,8 +32,12 @@ export default modelExtend(pageModel, {
       console.log('query for subscribeDetail', payload);
       const st = yield select();
       console.log('query for subscribeDetail,st', st.subDetail);
-      const endpoint = 'subscribeDetail';
-      const { typeId, backPath } = payload;
+      const { typeId, backPath, typeCode } = payload;
+      let endpoint = 'subscribeDetail';
+      if (typeCode && typeCode === 'currencies') {
+        // 异动币跳转方法
+        endpoint = 'transSubscribeDetail';
+      }
       let filter = {};
       if (typeId) {
         filter = { typeId };
