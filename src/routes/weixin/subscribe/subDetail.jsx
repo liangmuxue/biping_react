@@ -38,6 +38,27 @@ class SubDetail extends BaseComponent {
       payload: { typeId },
     });
   }
+  // 订阅所有异动币
+  subscribeAllTrans() {
+    const { typeId } = this.props.subDetailData.data;
+    this.props.dispatch({
+      type: 'subDetail/subscribeAllTrans',
+      payload: { typeId },
+    });
+  }
+  // 涨跌幅
+  gainOrLose(itemObj) {
+    console.log('gainOrLose3', itemObj);
+    // 发起订阅请求
+    this.props.dispatch({
+      type: 'subDetail/gainOrLose',
+      payload: {
+        subItem: itemObj,
+      },
+    });
+  }
+
+
   // 订阅某小类
   subscribeItem(itemObj) {
     console.log('subscribeItem in', itemObj);
@@ -101,7 +122,7 @@ class SubDetail extends BaseComponent {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
     // 如果没有数据，需要首先进行查询
-    if (!subDetailData || !subDetailData.data) {
+    if (!subDetailData || !subDetailData.data || !subDetailData.data.typeId) {
       return null;
     }
 
@@ -109,7 +130,7 @@ class SubDetail extends BaseComponent {
     // 订阅类型详情（异动币，币事件交易所公告）
     let subContent = null;
     console.log('subContent99999', subDetailData);
-    if (subDetailData.data.typeId && subDetailData.data.typeId !== 703) {
+    if (subDetailData.data.typeCode && subDetailData.data.typeCode !== 'currencies') {
       subContent = (<div>
         <div className={style.listTitle}>
           【{subDetailData.data.typeName}】订阅管理
@@ -131,16 +152,19 @@ class SubDetail extends BaseComponent {
         shareClick={this.shareClick.bind(this)}
         closeShare={this.closeShare.bind(this)}
         subscribeItem={this.subscribeItem.bind(this)}
-        subscribeAll={this.subscribeAll.bind(this)}
+        subscribeAll={this.subscribeAllTrans.bind(this)}
+        gainOrLose={this.gainOrLose.bind(this)}
       />);
     }
-
+    console.log('subDetailData.data', subDetailData.data);
+    const subDetailCard = (
+      <div className={style.topBox}>
+        <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
+      </div>);
     return (
       <div>
         <HeaderBar headerText={subDetailData.data.typeName} backRouteLink={backPath} {...this.props} />
-        <div className={style.topBox}>
-          <SubTypeCard key={subDetailData.data.typeId} typeObj={subDetailData.data} flag="1" subTypeClick={this.subTypeClick.bind(this)} />
-        </div>
+        {subDetailCard}
         {subContent}
 
         <div className={style.full} />

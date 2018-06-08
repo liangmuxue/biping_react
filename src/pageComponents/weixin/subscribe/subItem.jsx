@@ -37,7 +37,7 @@ class SubItem extends React.Component {
       if (itemObj.isSub) {
         isSub = itemObj.isSub;
       } else if (itemObj.hasSubscribe) {
-        isSub = itemObj.isSub;
+        isSub = itemObj.hasSubscribe;
       }
       // 名称
       let typeName = null;
@@ -45,6 +45,13 @@ class SubItem extends React.Component {
         typeName = itemObj.typeName;
       } else if (itemObj.exchangeName) {
         typeName = itemObj.exchangeName;
+      }
+      // 图片路径
+      let headImg = null;
+      if (itemObj.headImg) {
+        headImg = itemObj.headImg;
+      } else if (itemObj.exchangeIcon) {
+        headImg = itemObj.exchangeIcon;
       }
       return (
         <List>
@@ -59,7 +66,7 @@ class SubItem extends React.Component {
           }
           >
 
-            {itemObj.headImg === '' ? <span>#</span> : <img src={itemObj.headImg} className={style.subItemLogo} alt="" />}
+            {itemObj.headImg === '' ? <span>#</span> : <img src={headImg} className={style.subItemLogo} alt="" />}
             <span className={style.toMsg}>{typeName} </span>
           </List.Item>
         </List>

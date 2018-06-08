@@ -20,15 +20,18 @@ const initValue = {
 class ChooseTime extends React.Component {
   constructor(props) {
     super(props);
-    console.log('thisprops is', props);
+    console.log('gainOrLose1', props);
   }
   // 涨幅赋值
   gainValue(value) {
+    console.log('gainOrLose1', value);
     initValue.gainValue = value;
+    this.props.gainOrLose(value);
   }
   // 跌幅赋值
   loseValue(value) {
     initValue.loseValue = value;
+    this.props.gainOrLose(value);
   }
 
   render() {
@@ -54,7 +57,7 @@ class ChooseTime extends React.Component {
           <Picker
             data={district}
             cols={1}
-            value={initValue.pickerValue}
+            value={initValue.gainValue}
             title="涨幅"
             onChange={v => this.gainValue({ gainValue: v })}
             {...getFieldProps('district3')}

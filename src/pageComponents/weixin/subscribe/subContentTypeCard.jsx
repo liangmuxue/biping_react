@@ -49,9 +49,16 @@ class SubContentType extends React.Component {
   subscribeAll() {
     this.props.subscribeAll();
   }
+  gainOrLose(itemObj) {
+    console.log('gainOrLose2', itemObj);
+    this.props.gainOrLose(itemObj);
+  }
   render() {
     const { subTypeContent } = this.props;
-    const subDetailData = subTypeContent.subDetailData;
+    if (!subTypeContent || !subTypeContent.subDetailData) {
+      return null;
+    }
+    const { subDetailData } = subTypeContent;
     console.log('subTypeContent11111', subDetailData);
     // 选择买入量卖出量
     const { volArea } = subDetailData.data;
@@ -177,7 +184,7 @@ class SubContentType extends React.Component {
             <div className={style.coinSet}>异动时间段选择</div>
             {checkTime}
             <div className={style.coinSet}>涨跌幅设置</div>
-            <ChooseTime chooseObj={subDetailData} />
+            <ChooseTime chooseObj={subDetailData} gainOrLose={this.gainOrLose.bind(this)} />
           </div>
           <div >
             <div className={style.coinSet}>交易量异动设置</div>
