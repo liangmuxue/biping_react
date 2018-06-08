@@ -27,6 +27,10 @@ import SubItem from './subItem.jsx';
 * @date        2018-04-20
 * @author 梁慕学
 */
+
+const initValue = {
+  gainValue: '',
+};
 class SubContentType extends React.Component {
   constructor(props) {
     super(props);
@@ -49,11 +53,19 @@ class SubContentType extends React.Component {
   subscribeAll() {
     this.props.subscribeAll();
   }
+
+  gainValue(value) {
+
+    console.log('value is',value);
+    initValue.gainValue = value;
+  }
   render() {
     const { subTypeContent } = this.props;
     const subDetailData = subTypeContent.subDetailData;
     console.log('subTypeContent11111', subDetailData);
     const timeTypeArea = subDetailData
+
+
     // 选择时间
     const { CheckboxItem } = Checkbox;
     let chooseHide = subTypeContent.chooseHide;
@@ -67,6 +79,7 @@ class SubContentType extends React.Component {
       { title: <Badge >涨跌幅</Badge> },
       { title: <Badge >成交量</Badge> },
     ];
+
 
     let SwitchTab3 = (props) => {
       const { getFieldProps } = props.form;
@@ -111,7 +124,7 @@ class SubContentType extends React.Component {
 
     const checkTime = (
       <div >
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn} ><sapn>{ initValue.gainValue }</sapn><span className={style.timeVal}></span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
         <WhiteSpace />
         <Modal
           popup
@@ -121,7 +134,7 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.gainHold}  >{item.gainHold}
+              <CheckboxItem className={style.timelv} onChange={(e)=>{ console.log('item.gainHold',item.gainHold)}} value={item.gainHold} >{item.gainHold}
               </CheckboxItem>
            ))}
           </List>
