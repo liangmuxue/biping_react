@@ -1,5 +1,4 @@
 import List from 'antd-mobile/lib/list/index';
-import Button from 'antd-mobile/lib/button/index';
 import Switch from 'antd-mobile/lib/switch/index';
 import 'antd-mobile/es/switch/style/index.css';
 import { createForm } from 'rc-form';
@@ -33,12 +32,26 @@ class SubItem extends React.Component {
     console.log('itemObj is', itemObj);
     let SwitchExample = (props) => {
       const { getFieldProps } = props.form;
+      // 是否订阅
+      let isSub = null;
+      if (itemObj.isSub) {
+        isSub = itemObj.isSub;
+      } else if (itemObj.hasSubscribe) {
+        isSub = itemObj.isSub;
+      }
+      // 名称
+      let typeName = null;
+      if (itemObj.typeName) {
+        typeName = itemObj.typeName;
+      } else if (itemObj.exchangeName) {
+        typeName = itemObj.exchangeName;
+      }
       return (
         <List>
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
-                  initialValue: itemObj.isSub === 1,
+                  initialValue: isSub === 1,
                   valuePropName: 'checked',
                 })}
               onClick={this.subscribe.bind(this)}
@@ -47,7 +60,7 @@ class SubItem extends React.Component {
           >
 
             {itemObj.headImg === '' ? <span>#</span> : <img src={itemObj.headImg} className={style.subItemLogo} alt="" />}
-            <span className={style.toMsg}>{itemObj.typeName} </span>
+            <span className={style.toMsg}>{typeName} </span>
           </List.Item>
         </List>
       );
