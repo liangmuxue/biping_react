@@ -121,7 +121,7 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.gainHold} onChange={() => console.log(item.gainHold)} >{item.gainHold}
+              <CheckboxItem className={style.timelv} key={item.gainHold}  >{item.gainHold}
               </CheckboxItem>
            ))}
           </List>
