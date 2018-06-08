@@ -53,7 +53,23 @@ class SubContentType extends React.Component {
     const { subTypeContent } = this.props;
     const subDetailData = subTypeContent.subDetailData;
     console.log('subTypeContent11111', subDetailData);
-    const timeTypeArea = subDetailData
+    // 选择买入量卖出量
+    const { volArea } = subDetailData.data;
+    // 买入
+    let buyType = [];
+    // 卖出
+    let payType = [];
+    if (volArea) {
+      volArea.map((item) => {
+        if (item.bigVolType === '1') {
+          buyType = item;
+          console.log('uuuuuuu8888', buyType.hasSubscribe);
+        } else if (item.bigVolType === '2') {
+          payType = item;
+          console.log('uuuuuuu', payType.hasSubscribe);
+        }
+      });
+    }
     // 选择时间
     const { CheckboxItem } = Checkbox;
     let chooseHide = subTypeContent.chooseHide;
@@ -75,7 +91,7 @@ class SubContentType extends React.Component {
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
-                 initialValue: true,
+                 initialValue: buyType.hasSubscribe === 1,
                 valuePropName: 'checked',
               })}
               onClick={(checked) => {
@@ -92,7 +108,7 @@ class SubContentType extends React.Component {
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch2', {
-           initialValue: true,
+           initialValue: payType.hasSubscribe === 1,
            valuePropName: 'checked',
          })}
               onClick={(checked) => { console.log(checked); }}
@@ -121,7 +137,7 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.gainHold}  >{item.gainHold}
+              <CheckboxItem className={style.timelv} key={item.transVerbId} >{item.minuteCount}分钟
               </CheckboxItem>
            ))}
           </List>

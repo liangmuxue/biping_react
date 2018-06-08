@@ -42,10 +42,10 @@ class ChooseTime extends React.Component {
     const district = [];
     const downdistrict = [];
     loseArea.map(item => (
-      district.push({ value: item.loseHold, label: `>${item.loseHold * 100}%` })
+      downdistrict.push({ value: item.transVerbId, label: `<${item.loseHold * 100}%` })
     ));
     gainArea.map(item => (
-      downdistrict.push({ value: item.gainHold, label: `<${item.gainHold * 100}%` })
+      district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` })
     ));
     let ChooseTimeEx = (props) => {
       const { getFieldProps } = props.form;
