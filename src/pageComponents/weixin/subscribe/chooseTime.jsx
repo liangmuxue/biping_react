@@ -35,6 +35,9 @@ class ChooseTime extends React.Component {
   }
 
   render() {
+    const changeAct = function(data){
+      console.log("changeAct in",data);
+    };
     const { chooseObj } = this.props;
     console.log('chooseObj', chooseObj);
     // 涨幅
@@ -50,6 +53,7 @@ class ChooseTime extends React.Component {
     gainArea.map(item => (
       district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` })
     ));
+    const sValue = [{value:'2013',label:'春'}];
     let ChooseTimeEx = (props) => {
       const { getFieldProps } = props.form;
       return (
@@ -57,10 +61,9 @@ class ChooseTime extends React.Component {
           <Picker
             data={district}
             cols={1}
-            value={initValue.gainValue}
             title="涨幅"
-            onChange={v => this.gainValue({ gainValue: v })}
-            {...getFieldProps('district3')}
+            onOk={changeAct}
+            value= {sValue}
           >
             <List.Item arrow="horizontal" >涨幅</List.Item>
           </Picker>
