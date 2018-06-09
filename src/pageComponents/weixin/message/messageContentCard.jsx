@@ -18,7 +18,7 @@ class MessageContent extends React.Component {
 
   render() {
     const { content } = this.props;
-    const msgObj = content;
+    const msgObj = JSON.parse(content);
     return (
       <div>
         <div className={style.transactionCoin} >
@@ -45,7 +45,7 @@ class MessageContent extends React.Component {
         (
           <div className={style.coinLists} >
             <div className={style.tableTitle}>
-              <div className={style.tableTime}> {moment(msg.qTime * 1000).format("HH:mm")}</div>
+              <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price}</div>
               <div className={style.tableChg}><span>{msg.gainDiffer}</span></div>
               <div className={style.tableIncome}>{msg.gainHold}</div>
