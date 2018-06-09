@@ -120,7 +120,7 @@ class SubContentType extends React.Component {
 
     const checkTime = (
       <div >
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>{ resultVal }</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}></span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
 
         <Modal
           popup
