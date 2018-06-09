@@ -27,10 +27,6 @@ import SubItem from './subItem.jsx';
 * @date        2018-04-20
 * @author 梁慕学
 */
-
-const initValue = {
-  gainValue: '',
-};
 class SubContentType extends React.Component {
   constructor(props) {
     super(props);
@@ -54,18 +50,27 @@ class SubContentType extends React.Component {
     this.props.subscribeAll();
   }
 
-  gainValue(value) {
-
-    console.log('value is',value);
-    initValue.gainValue = value;
-  }
   render() {
-    const { subTypeContent } = this.props;
+    const { subTypeContent, resultVal } = this.props;
     const subDetailData = subTypeContent.subDetailData;
     console.log('subTypeContent11111', subDetailData);
-    const timeTypeArea = subDetailData
-
-
+    // 选择买入量卖出量
+    const { volArea } = subDetailData.data;
+    // 买入
+    let buyType = [];
+    // 卖出
+    let payType = [];
+    if (volArea) {
+      volArea.map((item) => {
+        if (item.bigVolType === '1') {
+          buyType = item;
+          console.log('uuuuuuu8888', buyType.hasSubscribe);
+        } else if (item.bigVolType === '2') {
+          payType = item;
+          console.log('uuuuuuu', payType.hasSubscribe);
+        }
+      });
+    }
     // 选择时间
     const { CheckboxItem } = Checkbox;
     let chooseHide = subTypeContent.chooseHide;
@@ -79,7 +84,6 @@ class SubContentType extends React.Component {
       { title: <Badge >涨跌幅</Badge> },
       { title: <Badge >成交量</Badge> },
     ];
-
 
     let SwitchTab3 = (props) => {
       const { getFieldProps } = props.form;
@@ -112,7 +116,7 @@ class SubContentType extends React.Component {
             />}
           >
             <div>
-              <span className={style.buyOnce}>单笔卖出量  </span>
+              <span className={style.buyOnce}>单笔卖出量</span>
 
               <span className={style.passMoney}>超过60万人民币</span>
             </div>
@@ -124,8 +128,7 @@ class SubContentType extends React.Component {
 
     const checkTime = (
       <div >
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn} ><sapn>{ initValue.gainValue }</sapn><span className={style.timeVal}></span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
-        <WhiteSpace />
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>{ resultVal }</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
         <Modal
           popup
           visible={chooseHide}
@@ -134,7 +137,12 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.transVerbId} >{item.minuteCount}分钟
+              <CheckboxItem
+                className={style.timelv}
+                key={item.transVerbId}
+                value={item.timeTypeArea}
+                >
+                {item.minuteCount}分钟
               </CheckboxItem>
            ))}
           </List>
@@ -149,6 +157,7 @@ class SubContentType extends React.Component {
           initialPage={1}
           onChange={(tab, index) => { console.log('onChange', index, tab); }}
           onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          swipeable={false}
         >
           <div style={{ position: 'relative' }}>
             <div className={style.listTitle} style={{ marginTop: 0, height: '1.74rem' }}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>
