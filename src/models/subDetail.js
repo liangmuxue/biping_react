@@ -211,8 +211,20 @@ export default modelExtend(pageModel, {
       });
     },
     *gainOrLose({ payload }, { put, select, call }) {
+      const st = yield select();
       const { subItem } = payload;
-      console.log('subDetail.subDetailData.data', subItem);
+      const { itemType } = subItem;
+      console.log('subDetail.subDetailData.data', itemType);
+      let { hasSubscribe } = subItem;
+      // 反向选择
+      if (hasSubscribe === 1) {
+        hasSubscribe = 0;
+      } else {
+        hasSubscribe = 1;
+      }
+
+      const { subDetail } = st;
+      const subObj = subDetail.subDetailData.data;
       const typeId = subItem.transVerbId;
       const filter = {};
       // 发起订阅请求
@@ -222,8 +234,23 @@ export default modelExtend(pageModel, {
         method: 'POST',
         data: {
           typeId,
+          isSub: hasSubscribe,
         },
       }, st);
+
+      // 修改页面状态，把选择数据变为已订阅
+      const newContent = [];
+      const eachContent = subObj[itemType];
+      console.log('eachContent', eachContent);
+      eachContent.map((item) => {
+        if (item.transVerbId === typeId) {
+          newContent.push(Immutable.merge(item, { hasSubscribe }));
+        } else {
+          newContent.push(Immutable.merge(item));
+        }
+        return item;
+      });
+      subObj[itemType] = newContent;
       yield put({
         type: 'subscribeSuccess',
         payload: subObj,
