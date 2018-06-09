@@ -77,10 +77,51 @@ class SubContentType extends React.Component {
       { title: <Badge >成交量</Badge> },
     ];
 
+    let SwitchTab3 = (props) => {
+      const { getFieldProps } = props.form;
+      return (
+        <List>
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch1', {
+                 initialValue: buyType.hasSubscribe === 1,
+                valuePropName: 'checked',
+              })}
+              onClick={(checked) => {
+              console.log('checked is', checked);
+              }}
+            />}
+          >
+            <div>
+              <span className={style.buyOnce}>单笔买入量 </span>
+              <span className={style.passMoney}>超过60万人民币</span>
+            </div>
+          </List.Item>
+
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch2', {
+           initialValue: payType.hasSubscribe === 1,
+           valuePropName: 'checked',
+         })}
+              onClick={(checked) => { console.log(checked); }}
+            />}
+          >
+            <div>
+              <span className={style.buyOnce}>单笔卖出量</span>
+
+              <span className={style.passMoney}>超过60万人民币</span>
+            </div>
+          </List.Item>
+        </List>
+      );
+    };
+    SwitchTab3 = createForm()(SwitchTab3);
+
     const checkTime = (
       <div >
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
-        <WhiteSpace />
+        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>{ resultVal }</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
+
         <Modal
           popup
           visible={chooseHide}
@@ -89,7 +130,12 @@ class SubContentType extends React.Component {
         >
           <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
             {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.transVerbId} >{item.minuteCount}分钟
+              <CheckboxItem
+                className={style.timelv}
+                key={item.transVerbId}
+                value={item.timeTypeArea}
+                >
+                {item.minuteCount}分钟
               </CheckboxItem>
            ))}
           </List>
@@ -108,6 +154,7 @@ class SubContentType extends React.Component {
           initialPage={1}
           onChange={(tab, index) => { console.log('onChange', index, tab); }}
           onTabClick={(tab, index) => { console.log('onTabClick', index, tab); }}
+          swipeable={false}
         >
           <div style={{ position: 'relative' }}>
             <div className={style.listTitle} style={{ marginTop: 0, height: '1.74rem' }}>【{subDetailData.data.typeName}】订阅管理<button className={style.openAll} onClick={this.subscribeAll.bind(this)} >打开所有</button></div>

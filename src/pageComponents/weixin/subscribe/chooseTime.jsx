@@ -6,6 +6,7 @@ import 'antd-mobile/es/picker-view/style/index.css';
 import 'antd-mobile/es/picker/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
+import style from './chooseTime.less';
 // import 'antd-mobile/dist/antd-mobile.css';
 const initValue = {
   gainValue: [{ value: 5, label: '>2%' }],
