@@ -9,7 +9,6 @@ import Tabs from 'antd-mobile/lib/tabs/index';
 import Badge from 'antd-mobile/lib/badge/index';
 import Checkbox from 'antd-mobile/lib/checkbox/index';
 import 'antd-mobile/es/checkbox/style/index.css';
-import Switch from 'antd-mobile/lib/switch/index';
 import 'antd-mobile/es/switch/style/index.css';
 import 'antd-mobile/es/notice-bar/style/index.css';
 import 'antd-mobile/es/modal/style/index.css';
@@ -18,6 +17,7 @@ import 'antd-mobile/es/white-space/style/index.css';
 import style from './subContentType.less';
 import ChooseTime from './chooseTime.jsx';
 import SubItem from './subItem.jsx';
+import BuyOrPayCard from './buyOrPayCard.jsx';
 
 // import 'antd-mobile/dist/antd-mobile.css';
 
@@ -49,28 +49,20 @@ class SubContentType extends React.Component {
   subscribeAll() {
     this.props.subscribeAll();
   }
-
+  // 开通or关闭
+  gainOrLose(itemObj) {
+    console.log('gainOrLose2', itemObj);
+    this.props.gainOrLose(itemObj);
+  }
   render() {
-    const { subTypeContent, resultVal } = this.props;
-    const subDetailData = subTypeContent.subDetailData;
+    const { subTypeContent } = this.props;
+    if (!subTypeContent || !subTypeContent.subDetailData) {
+      return null;
+    }
+    const { subDetailData } = subTypeContent;
     console.log('subTypeContent11111', subDetailData);
     // 选择买入量卖出量
     const { volArea } = subDetailData.data;
-    // 买入
-    let buyType = [];
-    // 卖出
-    let payType = [];
-    if (volArea) {
-      volArea.map((item) => {
-        if (item.bigVolType === '1') {
-          buyType = item;
-          console.log('uuuuuuu8888', buyType.hasSubscribe);
-        } else if (item.bigVolType === '2') {
-          payType = item;
-          console.log('uuuuuuu', payType.hasSubscribe);
-        }
-      });
-    }
     // 选择时间
     const { CheckboxItem } = Checkbox;
     let chooseHide = subTypeContent.chooseHide;
@@ -129,6 +121,7 @@ class SubContentType extends React.Component {
     const checkTime = (
       <div >
         <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>{ resultVal }</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
+
         <Modal
           popup
           visible={chooseHide}
@@ -148,6 +141,10 @@ class SubContentType extends React.Component {
           </List>
         </Modal>
       </div>
+    );
+    const buyOrPayContent = (
+      volArea.map(item => (
+        <BuyOrPayCard buyObj={item} gainOrLose={this.gainOrLose.bind(this)} />))
     );
 
     return (
@@ -183,11 +180,11 @@ class SubContentType extends React.Component {
             <div className={style.coinSet}>异动时间段选择</div>
             {checkTime}
             <div className={style.coinSet}>涨跌幅设置</div>
-            <ChooseTime chooseObj={subDetailData} />
+            <ChooseTime chooseObj={subDetailData} gainOrLose={this.gainOrLose.bind(this)} />
           </div>
           <div >
             <div className={style.coinSet}>交易量异动设置</div>
-            <SwitchTab3 />
+            {buyOrPayContent}
             <div className={style.dealTips}>注：根据币评大数据显示，90%以上的超过60万人民币的单笔交易代表庄家要控盘的信号</div>
           </div>
         </Tabs>

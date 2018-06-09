@@ -98,31 +98,102 @@ export default modelExtend(pageModel, {
         payload: subObj,
       });
     },
+
+    // 订阅所有类别异动币
+    *subscribeAllTrans({ payload }, { put, select, call }) {
+      const st = yield select();
+      const endpoint = 'subscribeTransBatch';
+      const filter = {};
+      const { subDetail } = st;
+      const subObj = subDetail.subDetailData.data;
+      // 所有小类别id
+      let typeIds = '';
+      subObj.exchangeArea.map((item) => {
+        typeIds = `${item.transVerbId},${typeIds}`;
+        return item;
+      });
+
+      // 发起订阅请求
+      yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          typeIds,
+        },
+      }, st);
+      // 修改页面状态，把所有数据变为已订阅
+
+      const newContent = [];
+      subObj.exchangeArea.map((item) => {
+        newContent.push(Immutable.merge(item, { hasSubscribe: 1 }));
+        return item;
+      });
+      subObj.exchangeArea = newContent;
+      yield put({
+        type: 'subscribeSuccess',
+        payload: subObj,
+      });
+    },
     // 订阅小类别
     *subscribeItem({ payload }, { put, select, call }) {
       const st = yield select();
       const { subDetail } = st;
       // 当前的订阅对象
       const subObj = subDetail.subDetailData.data;
+      console.log('subDetail.subDetailData.data', subObj);
       const { subItem } = payload;
-      let { isSub } = subItem;
+      let isSub = 0;
+      if (subItem.isSub) {
+        isSub = subItem.isSub;
+      } else if (subItem.hasSubscribe) {
+        isSub = subItem.hasSubscribe;
+      }
       // 反向选择
       if (isSub === 1) {
         isSub = 0;
       } else {
         isSub = 1;
       }
+      // 要遍历的数组
+      let checkContent = [];
+      // 判断是不是异动币，调用接口不一样
+      let endpoint = 'subscribe';
+      let typeId = '';
       const newContent = [];
-      subObj.content.map((item) => {
-        if (item.typeId === subItem.typeId) {
-          newContent.push(Immutable.merge(item, { isSub }));
-        } else {
-          newContent.push(Immutable.merge(item));
-        }
-        return item;
-      });
-      subObj.content = newContent;
-      const endpoint = 'subscribe';
+      if (subObj.typeCode && subObj.typeCode === 'currencies') {
+        endpoint = 'subscribeTrans';
+        checkContent = subObj.exchangeArea;
+        typeId = subItem.transVerbId;
+        checkContent.map((item) => {
+          if (item.transVerbId === typeId) {
+            newContent.push(Immutable.merge(item, { hasSubscribe: isSub }));
+          } else {
+            newContent.push(Immutable.merge(item));
+          }
+          return item;
+        });
+      } else {
+        checkContent = subObj.content;
+        typeId = subItem.typeId;
+        checkContent.map((item) => {
+          if (item.typeId === typeId) {
+            newContent.push(Immutable.merge(item, { isSub }));
+          } else {
+            newContent.push(Immutable.merge(item));
+          }
+          return item;
+        });
+      }
+      if (subObj.typeCode && subObj.typeCode === 'currencies') {
+        endpoint = 'subscribeTrans';
+        subObj.exchangeArea = newContent;
+      } else {
+        subObj.content = newContent;
+      }
+
+      console.log('subDetail.subDetailData.data', subDetail.subDetailData.data);
+
       const filter = {};
       // 发起订阅请求
       yield call(queryNormal, {
@@ -130,7 +201,7 @@ export default modelExtend(pageModel, {
         filter,
         method: 'POST',
         data: {
-          typeId: subItem.typeId,
+          typeId,
           isSub,
         },
       }, st);
@@ -139,7 +210,54 @@ export default modelExtend(pageModel, {
         payload: subObj,
       });
     },
+    *gainOrLose({ payload }, { put, select, call }) {
+      const st = yield select();
+      const { subItem } = payload;
+      const { itemType } = subItem;
+      console.log('subDetail.subDetailData.data', itemType);
+      let { hasSubscribe } = subItem;
+      // 反向选择
+      if (hasSubscribe === 1) {
+        hasSubscribe = 0;
+      } else {
+        hasSubscribe = 1;
+      }
+
+      const { subDetail } = st;
+      const subObj = subDetail.subDetailData.data;
+      const typeId = subItem.transVerbId;
+      const filter = {};
+      // 发起订阅请求
+      yield call(queryNormal, {
+        endpoint: 'subscribeTrans',
+        filter,
+        method: 'POST',
+        data: {
+          typeId,
+          isSub: hasSubscribe,
+        },
+      }, st);
+
+      // 修改页面状态，把选择数据变为已订阅
+      const newContent = [];
+      const eachContent = subObj[itemType];
+      console.log('eachContent', eachContent);
+      eachContent.map((item) => {
+        if (item.transVerbId === typeId) {
+          newContent.push(Immutable.merge(item, { hasSubscribe }));
+        } else {
+          newContent.push(Immutable.merge(item));
+        }
+        return item;
+      });
+      subObj[itemType] = newContent;
+      yield put({
+        type: 'subscribeSuccess',
+        payload: subObj,
+      });
+    },
     *active({ params }, { put, call }) {
+      console.log('subDetailParams', params);
       const { typeId } = params;
       if (typeId) {
         // 初始化时进行查询
