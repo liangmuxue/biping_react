@@ -1,23 +1,15 @@
 import React from 'react';
-import { createForm } from 'rc-form';
-import Modal from 'antd-mobile/lib/modal/index';
 import NoticeBar from 'antd-mobile/lib/notice-bar/index';
-import List from 'antd-mobile/lib/list/index';
-import Button from 'antd-mobile/lib/button/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import Tabs from 'antd-mobile/lib/tabs/index';
 import Badge from 'antd-mobile/lib/badge/index';
-import Checkbox from 'antd-mobile/lib/checkbox/index';
-import 'antd-mobile/es/checkbox/style/index.css';
-import 'antd-mobile/es/switch/style/index.css';
 import 'antd-mobile/es/notice-bar/style/index.css';
-import 'antd-mobile/es/modal/style/index.css';
-import 'antd-mobile/es/list/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 import style from './subContentType.less';
 import ChooseTime from './chooseTime.jsx';
 import SubItem from './subItem.jsx';
 import BuyOrPayCard from './buyOrPayCard.jsx';
+import CheckTime from './checkTimeCard.jsx';
 
 // import 'antd-mobile/dist/antd-mobile.css';
 
@@ -54,6 +46,11 @@ class SubContentType extends React.Component {
     console.log('gainOrLose2', itemObj);
     this.props.gainOrLose(itemObj);
   }
+  // 时间选择提交
+  checkTimeSubmit(itemObj) {
+    console.log('checkTimeSubmit', itemObj);
+    this.props.checkTimeSubmit(itemObj);
+  }
   render() {
     const { subTypeContent } = this.props;
     if (!subTypeContent || !subTypeContent.subDetailData) {
@@ -63,14 +60,6 @@ class SubContentType extends React.Component {
     console.log('subTypeContent11111', subDetailData);
     // 选择买入量卖出量
     const { volArea } = subDetailData.data;
-    // 选择时间
-    const { CheckboxItem } = Checkbox;
-    let chooseHide = subTypeContent.chooseHide;
-    if (!chooseHide) {
-      chooseHide = false;
-      document.body.removeEventListener('touchmove', this.tmListener);
-    }
-
     const tabs = [
       { title: <Badge >交易所</Badge> },
       { title: <Badge >涨跌幅</Badge> },
@@ -78,23 +67,12 @@ class SubContentType extends React.Component {
     ];
 
     const checkTime = (
-      <div >
-        <Button onClick={this.shareClick.bind(this)} className={style.timeBtn}><sapn>时间段</sapn><span className={style.timeVal}>5分钟,15分钟</span><img src="/images/msgImages/arrow1.png" className={style.arrow1} /></Button>
-        <WhiteSpace />
-        <Modal
-          popup
-          visible={chooseHide}
-          onClose={this.closeShare.bind(this)}
-          animationType="slide-up"
-        >
-          <List renderHeader={() => <div className={style.chooseTimes}>时间段<span onClick={this.closeShare.bind(this)}className={style.finish} >完成</span><span onClick={this.closeShare.bind(this)} className={style.cancel}>取消</span></div>} className="popup-list">
-            {subDetailData.data.timeTypeArea.map(item => (
-              <CheckboxItem className={style.timelv} key={item.transVerbId} >{item.minuteCount}分钟
-              </CheckboxItem>
-           ))}
-          </List>
-        </Modal>
-      </div>
+      <CheckTime
+        checkTimeObj={subTypeContent}
+        closeShare={this.closeShare.bind(this)}
+        shareClick={this.shareClick.bind(this)}
+        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
+      />
     );
     const buyOrPayContent = (
       volArea.map(item => (

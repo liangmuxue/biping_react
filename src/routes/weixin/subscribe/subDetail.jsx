@@ -46,7 +46,7 @@ class SubDetail extends BaseComponent {
       payload: { typeId },
     });
   }
-  // 涨跌幅
+  // 涨跌幅,买入卖出
   gainOrLose(itemObj) {
     console.log('gainOrLose3', itemObj);
     // 发起订阅请求
@@ -118,6 +118,18 @@ class SubDetail extends BaseComponent {
       type: 'subDetail/closeShareSuc',
     });
   }
+  // 时间选择确定
+  checkTimeSubmit(itemObj) {
+    const { dispatch } = this.props;
+    console.log('checkTimeSubmit', itemObj);
+    // 时间选择确定
+    this.props.dispatch({
+      type: 'subDetail/checkTimeSubmit',
+      payload: {
+        subItem: itemObj,
+      },
+    });
+  }
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -154,6 +166,7 @@ class SubDetail extends BaseComponent {
         subscribeItem={this.subscribeItem.bind(this)}
         subscribeAll={this.subscribeAllTrans.bind(this)}
         gainOrLose={this.gainOrLose.bind(this)}
+        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
       />);
     }
     console.log('subDetailData.data', subDetailData.data);
