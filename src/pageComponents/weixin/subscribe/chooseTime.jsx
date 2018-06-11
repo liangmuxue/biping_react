@@ -48,7 +48,7 @@ class ChooseTime extends React.Component {
     this.setState({
       downdistrict: [],
       district: [],
-      gainValue: 8,
+      gainValue: [8],
     });
   }
   render() {
@@ -59,12 +59,15 @@ class ChooseTime extends React.Component {
     console.log('chooseObj', chooseObj);
     const { gainArea, loseArea } = chooseObj.data;
     const { downdistrict, district } = this.state;
-    loseArea.map(item => (
-      downdistrict.push({ value: item.transVerbId, label: `<-${item.loseHold * 100}%` })
-    ));
-    gainArea.map(item => (
-      district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` })
-    ));
+    // 防止重复加载
+    if (!district || district.length === 0) {
+      loseArea.map(item => (
+        downdistrict.push({ value: item.transVerbId, label: `<-${item.loseHold * 100}%` })
+      ));
+      gainArea.map(item => (
+        district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` })
+      ));
+    }
     console.log('this.state.district', this.state.district);
     console.log(`this.state.gainValue:${this.state.gainValue}`);
     let ChooseTimeEx = (props) => {
