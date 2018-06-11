@@ -190,7 +190,17 @@ class SubDetail extends BaseComponent {
     // 订阅类型详情（异动币，币事件交易所公告）
     let subContent = null;
     console.log('subContent99999', subDetailData);
-    if (subDetailData.data.typeCode && subDetailData.data.typeCode !== 'currencies') {
+    if (subDetailData.data.typeCode && subDetailData.data.typeCode === 'currencies') {
+      subContent = (<SubContentType
+        subTypeContent={this.props}
+        shareClick={this.shareClick.bind(this)}
+        closeShare={this.closeShare.bind(this)}
+        subscribeItem={this.subscribeItem.bind(this)}
+        subscribeAll={this.subscribeAllTrans.bind(this)}
+        gainOrLose={this.gainOrLose.bind(this)}
+        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
+      />);
+    } else {
       subContent = (<div>
         <div className={style.listTitle}>
           【{subDetailData.data.typeName}】订阅管理
@@ -206,16 +216,6 @@ class SubDetail extends BaseComponent {
                               />))}
       </div>
       );
-    } else {
-      subContent = (<SubContentType
-        subTypeContent={this.props}
-        shareClick={this.shareClick.bind(this)}
-        closeShare={this.closeShare.bind(this)}
-        subscribeItem={this.subscribeItem.bind(this)}
-        subscribeAll={this.subscribeAllTrans.bind(this)}
-        gainOrLose={this.gainOrLose.bind(this)}
-        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
-      />);
     }
     console.log('subDetailData.data', subDetailData.data);
     const subDetailCard = (
