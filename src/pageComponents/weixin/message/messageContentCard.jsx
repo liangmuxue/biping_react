@@ -18,18 +18,50 @@ class MessageContent extends React.Component {
 
   render() {
     const { content } = this.props;
-    const msgObj = JSON.parse(content);
+    const msgObj = content;
+    // 异动类型
+    let transType = '';
+    // 上涨或者跌幅（0涨1跌）
+    let upOrDown = 0;
+    if (msgObj.transType === 'tansType_gain') {
+      transType = '涨幅异动';
+    } else if (msgObj.transType === 'tansType_lose') {
+      transType = '跌幅异动';
+      upOrDown = 1;
+    } if (msgObj.transType === 'tansType_buyTrans') {
+      transType = '大笔买入';
+    } if (msgObj.transType === 'tansType_sellTrans') {
+      transType = '大笔卖出';
+      upOrDown = 1;
+    }
+    // 时间段
+    let timeUp = msgObj.timeType;
+    if (timeUp) {
+      timeUp = msgObj.timeType.replace('min', '');
+    }
+    // 时间间隔
+    let timeMoment = '';
+    if (msgObj.createTime) {
+      const beginTime = msgObj.createTime - timeUp * 60;
+      timeMoment = `${moment(beginTime * 1000).format('HH:mm')}—${
+        moment(msgObj.createTime * 1000).format('HH:mm')}`;
+    }
     return (
       <div>
         <div className={style.transactionCoin} >
-          <div>时间段：<span>12:14 - 12:17</span></div>
-          <div>异动类型：<u className={msgObj.transType === '涨幅' ? style.toUp : style.toDown}>{msgObj.transType}</u></div>
+          <div>时间段：<span>{timeMoment}</span></div>
+          <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.quoteCoinCode}/{msgObj.baseCoinCode}</span></div>
-          <div>当前价格：<span>{msgObj.price} <br /><b className={style.convert}>(≈ 人民币{msgObj.priceReal}）</b></span></div>
-          <div>5分钟内成交量：<span>659，其中买入{msgObj.buyAmount}、卖出{msgObj.sellAmount}</span></div>
-          <div>5分钟内净流入量：<span>{msgObj.gainHold}</span></div>
-          <div>5分钟内涨幅：<span className={msgObj.transType >= '0' ? style.toUp : style.toDown}>{msgObj.gainDiffer}</span></div>
+          <div>当前价格：
+            <span>{msgObj.price}<br /><b className={style.convert}>(≈ 人民币{(msgObj.priceReal).toFixed(2)}）</b>
+            </span>
+          </div>
+          <div>{timeUp}分钟内成交量：
+            <span>{msgObj.amount}，其中买入{Math.floor(msgObj.buyAmount)}、卖出{Math.floor(msgObj.sellAmount)}</span>
+          </div>
+          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold.toFixed(10)}</span></div>
+          <div>{timeUp}分钟内涨幅：<span className={msgObj.transType >= '0' ? style.toUp : style.toDown}>{((msgObj.gainDiffer * 100).toFixed(2) + '%' )}</span></div>
         </div>
 
         <div className={style.coinTable} >

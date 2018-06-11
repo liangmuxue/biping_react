@@ -209,21 +209,18 @@ class MsgDetail extends BaseComponent {
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
-    if (!msgDetailData) {
+    if (!msgDetailData || !msgDetailData.data) {
       return null;
     }
     const msgObj = msgDetailData.data;
-    console.log('msgObj44444', msgObj.content);
-    if (!msgObj.mid) {
-      return null;
-    }
+    console.log('msgObj44444', msgDetailData.data);
     // 内容（异动币和币事件、交易所公告的不同）
     let contentCard = null;
     let val = null;
-    console.log('88888888', msgObj.content.mid);
-    if (msgObj.content && msgObj.content.mid) {
-      console.log('MessageContent', msgObj.content.mid);
-      contentCard = (<MessageContent content={msgObj.content} />);
+    console.log('88888888', msgDetailData.data.typeCode);
+    if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+      console.log('MessageContent', msgObj.typeCode);
+      contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
@@ -360,7 +357,15 @@ class MsgDetail extends BaseComponent {
               <div className={style.similarCenter}>
                 <div className={style.similarTitle}>类似消息</div>
                 <ul className={style.similarListUl}>
-
+                  {msgObj.relateMsg.map(msg =>
+                  (
+                    <li className={style.similarListLi}>
+                      <Button
+                        onClick={() => this.switchTitle(msg)}
+                        className={style.similarList}
+                      >{msg.title}
+                      </Button>
+                    </li>
                   ))}
                 </ul>
               </div>
