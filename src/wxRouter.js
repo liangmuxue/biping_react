@@ -151,15 +151,6 @@ function RouterConfig({ history, app }) {
     component: () => import('./routes/weixin/result/result'),
   });
 
-  // 订阅标签
-  const SubTag = dynamic({
-    app,
-    // models: () => [
-    //    import('./models/subtag'),
-    //   import('./models/app'),
-    // ],
-    component: () => import('./routes/weixin/subtag/subtag'),
-  });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -197,9 +188,6 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'result',
     component: Result,
-  }, {
-    name: 'subTag',
-    component: SubTag,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -240,7 +228,6 @@ function RouterConfig({ history, app }) {
           <Route path="/noWechat" component={NoWechat} />
           <Route path="/enterGroup" component={EnterGroup} />
           <Route path="/result" component={Result} />
-          <Route path="/subTag" component={SubTag} />
           {routeInner}
         </div>
       </ConnectedRouter>

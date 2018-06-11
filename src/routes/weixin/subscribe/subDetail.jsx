@@ -32,30 +32,67 @@ class SubDetail extends BaseComponent {
   }
   // 订阅所有
   subscribeAll() {
-    const { typeId } = this.props.subDetailData.data;
-    this.props.dispatch({
-      type: 'subDetail/subscribeAll',
-      payload: { typeId },
-    });
+    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    if (remainDate >= 0) {
+      // 发起订阅请求
+      this.props.dispatch({
+        type: 'subDetail/subscribeAll',
+        payload: { typeId },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subList' },
+        },
+      });
+    }
   }
   // 订阅所有异动币
   subscribeAllTrans() {
-    const { typeId } = this.props.subDetailData.data;
-    this.props.dispatch({
-      type: 'subDetail/subscribeAllTrans',
-      payload: { typeId },
-    });
+    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    if (remainDate >= 0) {
+      // 发起订阅请求
+      this.props.dispatch({
+        type: 'subDetail/subscribeAllTrans',
+        payload: { typeId },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subList' },
+        },
+      });
+    }
   }
   // 涨跌幅,买入卖出
   gainOrLose(itemObj) {
-    console.log('gainOrLose3', itemObj);
-    // 发起订阅请求
-    this.props.dispatch({
-      type: 'subDetail/gainOrLose',
-      payload: {
-        subItem: itemObj,
-      },
-    });
+    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    if (remainDate >= 0) {
+      // 发起订阅请求
+      console.log('gainOrLose3', itemObj);
+      // 发起订阅请求
+      this.props.dispatch({
+        type: 'subDetail/gainOrLose',
+        payload: {
+          subItem: itemObj,
+        },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subList' },
+        },
+      });
+    }
   }
 
 
@@ -83,7 +120,7 @@ class SubDetail extends BaseComponent {
         type: 'pageConstruction/switchToInnerPage',
         payload: {
           pageName: 'toOpen',
-          params: { typeId, typeName, backPath: 'subDetail' },
+          params: { typeId, typeName, backPath: 'subList' },
         },
       });
     }
@@ -100,7 +137,7 @@ class SubDetail extends BaseComponent {
         type: 'pageConstruction/switchToInnerPage',
         payload: {
           pageName: 'toOpen',
-          params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subDetail' },
+          params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subList' },
         },
       });
     }
@@ -120,15 +157,26 @@ class SubDetail extends BaseComponent {
   }
   // 时间选择确定
   checkTimeSubmit(itemObj) {
-    const { dispatch } = this.props;
-    console.log('checkTimeSubmit', itemObj);
-    // 时间选择确定
-    this.props.dispatch({
-      type: 'subDetail/checkTimeSubmit',
-      payload: {
-        subItem: itemObj,
-      },
-    });
+    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
+    if (remainDate >= 0) {
+      console.log('checkTimeSubmit', itemObj);
+      // 时间选择确定
+      this.props.dispatch({
+        type: 'subDetail/checkTimeSubmit',
+        payload: {
+          subItem: itemObj,
+        },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subDetail' },
+        },
+      });
+    }
   }
   render() {
     console.log('SubDetail render', this.props);
