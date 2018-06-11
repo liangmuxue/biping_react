@@ -54,14 +54,14 @@ class MessageContent extends React.Component {
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.quoteCoinCode}/{msgObj.baseCoinCode}</span></div>
           <div>当前价格：
-            <span>{msgObj.price} <br /><b className={style.convert}>(≈ 人民币{msgObj.priceReal}）</b>
+            <span>{msgObj.price}<br /><b className={style.convert}>(≈ 人民币{(msgObj.priceReal).toFixed(2)}）</b>
             </span>
           </div>
           <div>{timeUp}分钟内成交量：
-            <span>{msgObj.amount}，其中买入{msgObj.buyAmount}、卖出{msgObj.sellAmount}</span>
+            <span>{msgObj.amount}，其中买入{Math.floor(msgObj.buyAmount)}、卖出{Math.floor(msgObj.sellAmount)}</span>
           </div>
-          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold}</span></div>
-          <div>{timeUp}分钟内涨幅：<span className={msgObj.transType >= '0' ? style.toUp : style.toDown}>{msgObj.gainDiffer}</span></div>
+          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold.toFixed(10)}</span></div>
+          <div>{timeUp}分钟内涨幅：<span className={msgObj.transType >= '0' ? style.toUp : style.toDown}>{((msgObj.gainDiffer * 100).toFixed(2) + '%' )}</span></div>
         </div>
 
         <div className={style.coinTable} >
