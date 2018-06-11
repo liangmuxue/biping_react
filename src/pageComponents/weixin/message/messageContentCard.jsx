@@ -63,7 +63,7 @@ class MessageContent extends React.Component {
             <span>{Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，其中买入{Math.floor(msgObj.buyAmount)}、卖出{Math.floor(msgObj.sellAmount)}</span>
           </div>
           <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold.toFixed(10)}</span></div>
-          <div>{timeUp}分钟内涨幅：<span className={msgObj.gainDiffer >= '0' ? style.toUp : style.toDown}>{((msgObj.gainDiffer * 100).toFixed(2) )}%</span></div>
+          <div>{timeUp}分钟内涨幅：<span className={msgObj.gainDiffer > 0 ? style.toUp : style.toDown}>{((msgObj.gainDiffer * 100).toFixed(2))}%</span></div>
         </div>
 
         <div className={style.coinTable} >
@@ -80,9 +80,9 @@ class MessageContent extends React.Component {
           <div className={style.coinLists} >
             <div className={style.tableTitle}>
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
-              <div className={style.tablePrice}>{msg.price.toString().substr(0 ,11)}</div>
+              <div className={style.tablePrice}>{msg.price.toString().substr(0, 11)}</div>
               <div className={style.tableChg}><span id="gainDiffer" className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}>{(msg.gainDiffer * 100).toString().substr(0 ,4) }%</span></div>
-              <div className={style.tableIncome}>{msg.gainHold.toString().substr(0,8)}</div>
+              <div className={style.tableIncome}>{msg.gainHold.toString().substr(0, 8)}</div>
             </div>
           </div>
         ))}
