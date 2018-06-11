@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
 // import Card from 'antd-mobile/lib/card/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
@@ -14,7 +14,6 @@ import HeaderBar from '../../../components/headerBar';
 import OpenCard from '../../../pageComponents/weixin/toOpen/openCard.jsx';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import style from './toOpen.less';
-import styleResult from '../result/result.less';
 import BaseComponent from '../baseComponent';
 
 /**

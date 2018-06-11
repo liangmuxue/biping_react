@@ -140,7 +140,7 @@ const pcEntity = {
         if (modelName === 'subList') {
           modelName = 'subscribe';
         }
-        console.log(`page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
+        console.log(`88888${pageName},page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
           // 从隐藏到显示

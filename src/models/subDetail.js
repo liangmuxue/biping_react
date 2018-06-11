@@ -304,20 +304,28 @@ export default modelExtend(pageModel, {
     },
     *active({ params }, { put, call }) {
       console.log('subDetailParams', params);
-      const { typeId } = params;
-      if (typeId) {
+      let preventFlag = '';
+      if (params && params.typeId) {
         // 初始化时进行查询
         yield put({
           type: 'subscribeDetail',
           payload: params,
         });
+        preventFlag = false;
+      } else {
+        // 清空本地数据
+        yield put({
+          type: 'emptyData',
+        });
+        preventFlag = true;
       }
+
       // 防止重复点击，延时2秒后重置标志
       yield call(timeoutCall, 2000);
-      console.log('preventFlag open');
+      console.log('preventFlag open', preventFlag);
       yield put({
         type: 'preventTagClick',
-        payload: { preventFlag: false },
+        payload: { preventFlag },
       });
     },
     *deactive({ params }, { put }) {
