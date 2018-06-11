@@ -19,38 +19,58 @@ class ChooseTime extends React.Component {
     super(props);
     console.log('gainOrLose1', props);
   }
-  // 涨幅赋值
-  gainValue(value) {
-    console.log('gainOrLose1555', value);
-    const { chooseObj } = this.props;
-    console.log('chooseObj', chooseObj);
-    // 涨幅
-    const { gainArea } = chooseObj.data;
-    this.setState({ gainValue: value });
-  }
-  // 跌幅赋值
-  loseValue(value) {
-    // 跌幅
-    const { loseArea } = chooseObj.data;
-    let itemObj = null;
-    loseArea.map((item) => {
-      if (item.transVerbId = value) {
-        item.hasSubscribe = 0;
-        itemObj = item;
-      }
-    });
-    // 类别（涨跌幅，买入卖出）
-    itemObj.itemType = 'loseArea';
-    this.props.gainOrLose(itemObj);
-  }
   componentWillMount() {
     console.log('componentWillMount chooseTime', this.props);
     this.setState({
       downdistrict: [],
       district: [],
-      gainValue: [8],
+      gainValue: [],
+      loseValue: [],
     });
   }
+  // 涨幅赋值
+  gainValue(value) {
+    console.log('value000000000', value[0]);
+    const { chooseObj } = this.props;
+    // 跌幅
+    const { gainArea } = chooseObj.data;
+    console.log('gainArea000000000', gainArea);
+    let itemObj = null;
+    gainArea.map((item) => {
+      if (item.transVerbId === value[0]) {
+        console.log('value99999999', value[0]);
+        item.hasSubscribe = 0;
+        // 类别（涨跌幅，买入卖出）
+        item.itemType = 'gainArea';
+        itemObj = item;
+      }
+    });
+    console.log('gainValue++++', itemObj);
+    this.setState({ gainValue: value });
+    this.props.gainOrLose(itemObj);
+  }
+  // 跌幅赋值
+  loseValue(value) {
+    console.log('value111111', value);
+    const { chooseObj } = this.props;
+    // 跌幅
+    const { loseArea } = chooseObj.data;
+    console.log('loseArea000000000', loseArea);
+    let itemObj = null;
+    loseArea.map((item) => {
+      if (item.transVerbId === value[0]) {
+        console.log('loseArea666666', item.transVerbId === value[0]);
+        item.hasSubscribe = 0;
+        // 类别（涨跌幅，买入卖出）
+        item.itemType = 'loseArea';
+        itemObj = item;
+      }
+    });
+    console.log('loseArea++++', itemObj);
+    this.setState({ loseValue: value });
+    this.props.gainOrLose(itemObj);
+  }
+
   render() {
     const changeAct = function (data) {
       console.log('changeAct in', data);
@@ -61,17 +81,22 @@ class ChooseTime extends React.Component {
     const { downdistrict, district } = this.state;
     // 防止重复加载
     if (!district || district.length === 0) {
-      loseArea.map(item => (
-        downdistrict.push({ value: item.transVerbId, label: `<-${item.loseHold * 100}%` })
-      ));
-      gainArea.map(item => (
-        district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` })
-      ));
+      loseArea.map((item) => {
+        if (item.hasSubscribe === 1) {
+          this.setState({ loseValue: [item.transVerbId] });
+        }
+        downdistrict.push({ value: item.transVerbId, label: `<-${item.loseHold * 100}%` });
+      });
+      gainArea.map((item) => {
+        if (item.hasSubscribe === 1) {
+          this.setState({ gainValue: [item.transVerbId] });
+        }
+        district.push({ value: item.transVerbId, label: `>${item.gainHold * 100}%` });
+      });
     }
     console.log('this.state.district', this.state.district);
     console.log(`this.state.gainValue:${this.state.gainValue}`);
-    let ChooseTimeEx = (props) => {
-      const { getFieldProps } = props.form;
+    let ChooseTimeEx = () => {
       return (
         <List style={{ backgroundColor: 'white' }} className="picker-list">
           <Picker
@@ -88,7 +113,7 @@ class ChooseTime extends React.Component {
             cols={1}
             value={this.state.loseValue}
             title="跌幅"
-            onOk={v => this.gainValue(v)}
+            onOk={v => this.loseValue(v)}
           >
             <List.Item arrow="horizontal">跌幅</List.Item>
           </Picker>
