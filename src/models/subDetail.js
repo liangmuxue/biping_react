@@ -120,6 +120,7 @@ export default modelExtend(pageModel, {
         method: 'POST',
         data: {
           typeIds,
+          type: 'exchangeArea',
         },
       }, st);
       // 修改页面状态，把所有数据变为已订阅
@@ -256,6 +257,51 @@ export default modelExtend(pageModel, {
         payload: subObj,
       });
     },
+    // 时间选择提交
+    *checkTimeSubmit({ payload }, { put, select, call }) {
+      const st = yield select();
+      const { subItem } = payload;
+      console.log('checkTimeSubmit', subItem);
+      // 所有选择时间段id
+      let typeIds = '';
+      subItem.map((item) => {
+        if (item.hasSubscribe === 1) {
+          typeIds = `${item.transVerbId},${typeIds}`;
+        }
+        return item;
+      });
+      const { subDetail } = st;
+      const subObj = subDetail.subDetailData.data;
+      const filter = {};
+      // 发起订阅请求
+      yield call(queryNormal, {
+        endpoint: 'subscribeTransBatch',
+        filter,
+        method: 'POST',
+        data: {
+          typeIds,
+          isSub: 1,
+          type: 'timeTypeArea',
+        },
+      }, st);
+
+      // 修改页面状态，把选择数据变为已订阅
+      const newContent = [];
+      subObj.timeTypeArea.map((item) => {
+        // 如果id在选中的状态
+        if (typeIds.indexOf(item.transVerbId) !== -1) {
+          newContent.push(Immutable.merge(item, { hasSubscribe: 1 }));
+        } else {
+          newContent.push(Immutable.merge(item));
+        }
+        return item;
+      });
+      subObj.timeTypeArea = newContent;
+      yield put({
+        type: 'subscribeSuccess',
+        payload: subObj,
+      });
+    },
     *active({ params }, { put, call }) {
       console.log('subDetailParams', params);
       const { typeId } = params;
@@ -311,6 +357,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
+        chooseHide: false,
       };
     },
     preventTagClick(state, action) {
