@@ -37,7 +37,7 @@ class MessageCard extends React.Component {
     let title = msgObj.title;
     if (msgObj.tagName === '异动币') {
       // 异动币需要加工标题，加入时间
-      title = `${title},${msgObj.createTime}`;
+      title = `${title}，${msgObj.createTime}`;
     }
     return (
       <div className={styles.mesList} >

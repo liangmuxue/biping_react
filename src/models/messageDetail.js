@@ -121,12 +121,12 @@ export default modelExtend(pageModel, {
 
     *shareMsg({ payload }, { put, call }) {
       // 禁止屏幕滑动
-      yield put({
-        type: 'app/touchMoveFlagProc',
-        payload: {
-          touchMoveDisable: true,
-        },
-      });
+      // yield put({
+      //   type: 'app/touchMoveFlagProc',
+      //   payload: {
+      //     touchMoveDisable: true,
+      //   },
+      // });
       yield call(timeoutCall, 50);
       yield put({
         type: 'shareMsgSuc',

@@ -29,17 +29,17 @@ class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
-    this.tmListener = null;
-    this.pageDef = null;
-    this.setPageRef = (element) => {
-      console.log('setPageRef', element);
-      // 根据变量决定是否允许滑动
-      this.pageDef = element;
-      element.addEventListener('touchmove', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      }, false);
-    };
+    // this.tmListener = null;
+    // this.pageDef = null;
+    // this.setPageRef = (element) => {
+    //   console.log('setPageRef', element);
+    //   // 根据变量决定是否允许滑动
+    //   this.pageDef = element;
+    //   element.addEventListener('touchmove', (event) => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //   }, false);
+    // };
   }
 
   componentWillMount() {
@@ -82,7 +82,11 @@ class MsgDetail extends BaseComponent {
     const { uid } = params;
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
     console.log('url1111', url);
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.documentElement.style.overflow = 'hidden';
     document.getElementById('showShare').style.display = 'block';
+
     QrCodeWithLogo.toImage({
       image: document.getElementById('ewmImg'),
       content: url,
@@ -251,7 +255,7 @@ class MsgDetail extends BaseComponent {
           <span className={style.titleTips}>长按图片发送好友</span>
           <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
-        <div style={{ height: 500, overflow: 'scroll' }}>
+        <div style={{ height: 400, overflow: 'scroll' }}>
           <img src={msgImgUrl} alt="" />
         </div>
       </div>
@@ -381,7 +385,7 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div id="showShare">
+        <div id="showShare" className={style.hide}>
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
