@@ -19,7 +19,7 @@ class MessageContent extends React.Component {
   render() {
     const { content } = this.props;
     const msgObj = content;
-    console.log('msgObj is', msgObj)
+    console.log('msgObj is', msgObj);
     // 异动类型
     let transType = '';
     // 上涨或者跌幅（0涨1跌）
@@ -44,7 +44,7 @@ class MessageContent extends React.Component {
     let timeMoment = '';
     if (msgObj.createTime) {
       const beginTime = msgObj.createTime - timeUp * 60;
-      timeMoment = `${moment(beginTime * 1000).format('HH:mm')}—${
+      timeMoment = `${moment(beginTime * 1000).format('HH:mm')} - ${
         moment(msgObj.createTime * 1000).format('HH:mm')}`;
     }
 
@@ -82,7 +82,7 @@ class MessageContent extends React.Component {
             <div className={style.tableTitle}>
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
-              <div className={style.tableChg}><span className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}><span>{msg.gainDiffer > 0 ? '+' :' '}</span>{msg.gainDiffer ? (msg.gainDiffer * 100).toString().substr(0, 4) +'%' : '-' }</span></div>
+              <div className={style.tableChg}><span className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}><span>{msg.gainDiffer > 0 ? '+' : ' '}</span>{msg.gainDiffer ? `${(msg.gainDiffer * 100).toString().substr(0, 4)}%` : '-' }</span></div>
               <div className={style.tableIncome}>{msg.gainHold ? msg.gainHold.toString().substr(0, 8) : msg.gainHold}</div>
             </div>
           </div>
