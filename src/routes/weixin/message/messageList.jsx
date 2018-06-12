@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
 import 'antd-mobile/es/wing-blank/style/index.css';

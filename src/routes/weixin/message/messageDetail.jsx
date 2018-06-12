@@ -216,6 +216,8 @@ class MsgDetail extends BaseComponent {
     console.log('msgObj44444', msgDetailData.data);
     // 内容（异动币和币事件、交易所公告的不同）
     let contentCard = null;
+    // 分享文章内容
+    let shareContentCard = null;
     let val = null;
     console.log('88888888', msgDetailData.data.typeCode);
     if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
@@ -224,6 +226,8 @@ class MsgDetail extends BaseComponent {
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
+      shareContentCard =
+      (<div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
 
     if (!showMsgShare) {
@@ -379,7 +383,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
-            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
+            {shareContentCard}
 
             <div className={style.wechatBox}>
               <img id="ewmImg" crossOrigin="anonymous" alt="" />
