@@ -19,7 +19,7 @@ class MessageContent extends React.Component {
   render() {
     const { content } = this.props;
     const msgObj = content;
-    console.log('msgObj is', msgObj)
+    console.log('msgObj is', msgObj);
     // 异动类型
     let transType = '';
     // 上涨或者跌幅（0涨1跌）
@@ -57,14 +57,30 @@ class MessageContent extends React.Component {
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.baseCoinCode}/{msgObj.quoteCoinCode}</span></div>
           <div>当前价格：
-            <span>{msgObj.price} {msgObj.quoteCoinCode}<br /><b className={style.convert}>(≈ 人民币{(msgObj.priceReal).toFixed(2)}）</b>
+            <span>
+              {msgObj.price}
+              {msgObj.quoteCoinCode}<br />
+              <b className={style.convert}>
+               (≈ 人民币{(msgObj.priceReal).toFixed(2)}）
+              </b>
             </span>
           </div>
           <div>{timeUp}分钟内成交量：
-            <span>{Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，其中买入{Math.floor(msgObj.buyAmount)}、卖出{Math.floor(msgObj.sellAmount)}</span>
+            <span>
+              {Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，
+              其中买入{Math.floor(msgObj.buyAmount)}、
+              卖出{Math.floor(msgObj.sellAmount)}
+            </span>
           </div>
           <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold.toFixed(10)}</span></div>
-          <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ? <span className={style.toUp}> +{((msgObj.gainDiffer * 100).toFixed(2))}% </span> : <span className={style.toDown}>{((msgObj.gainDiffer * 100).toFixed(2))}%</span>}</div>
+          <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
+            <span className={style.toUp}>
+            +{((msgObj.gainDiffer * 100).toFixed(2))}%
+            </span> :
+            <span className={style.toDown}>
+              {((msgObj.gainDiffer * 100).toFixed(2))}%
+            </span>}
+          </div>
         </div>
 
         <div className={style.coinTable} >
@@ -82,8 +98,10 @@ class MessageContent extends React.Component {
             <div className={style.tableTitle}>
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
-              <div className={style.tableChg}><span className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}><span>{msg.gainDiffer > 0 ? '+' :' '}</span>{msg.gainDiffer ? (msg.gainDiffer * 100).toString().substr(0, 4) +'%' : '-' }</span></div>
-              <div className={style.tableIncome}>{msg.gainHold ? msg.gainHold.toString().substr(0, 8) : msg.gainHold}</div>
+              <div className={style.tableChg}><span className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}><span>{msg.gainDiffer > 0 ? '+' : ' '}</span>{msg.gainDiffer ? `${(msg.gainDiffer * 100).toString().substr(0, 4)}%` : '-' }</span></div>
+              <div className={style.tableIncome}>
+                {msg.gainHold ? msg.gainHold.toString().substr(0, 8) : msg.gainHold}
+              </div>
             </div>
           </div>
         ))}
