@@ -245,12 +245,14 @@ class MsgDetail extends BaseComponent {
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >
-      <div>
+      <div >
         <div style={{ lineHeight: '1.08rem' }}>
           <span className={style.titleTips}>长按图片发送好友</span>
           <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
-        <img src={msgImgUrl} alt="" />
+        <div style={{ height: 500, overflow: 'scroll' }}>
+          <img src={msgImgUrl} alt="" />
+        </div>
       </div>
 
     </Modal>);
@@ -378,7 +380,7 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div className={style.hide} id="showShare">
+        <div id="showShare">
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>
