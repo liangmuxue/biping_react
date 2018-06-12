@@ -20,9 +20,9 @@ import QrCodeWithLogo from 'qr-code-with-logo';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 
 /**
-* 老人账号信息页面
-* @author 梁慕学
-* @Date  2017-12-25
+* 消息详情
+* @author 赵永帅
+* @Date  2018-6-12
 */
 
 class MsgDetail extends BaseComponent {
@@ -223,6 +223,7 @@ class MsgDetail extends BaseComponent {
     if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
+      shareContentCard = contentCard;
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
