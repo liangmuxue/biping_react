@@ -20,9 +20,9 @@ import QrCodeWithLogo from 'qr-code-with-logo';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 
 /**
-* 老人账号信息页面
-* @author 梁慕学
-* @Date  2017-12-25
+* 消息详情
+* @author 赵永帅
+* @Date  2018-6-12
 */
 
 class MsgDetail extends BaseComponent {
@@ -216,14 +216,19 @@ class MsgDetail extends BaseComponent {
     console.log('msgObj44444', msgDetailData.data);
     // 内容（异动币和币事件、交易所公告的不同）
     let contentCard = null;
+    // 分享文章内容
+    let shareContentCard = null;
     let val = null;
     console.log('88888888', msgDetailData.data.typeCode);
     if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
+      shareContentCard = contentCard;
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
+      shareContentCard =
+      (<div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
 
     if (!showMsgShare) {
@@ -379,7 +384,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
-            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
+            {shareContentCard}
 
             <div className={style.wechatBox}>
               <img id="ewmImg" crossOrigin="anonymous" alt="" />
