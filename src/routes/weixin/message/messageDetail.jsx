@@ -29,17 +29,17 @@ class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
     super(props);
-    this.tmListener = null;
-    this.pageDef = null;
-    this.setPageRef = (element) => {
-      console.log('setPageRef', element);
-      // 根据变量决定是否允许滑动
-      this.pageDef = element;
-      element.addEventListener('touchmove', (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-      }, false);
-    };
+    // this.tmListener = null;
+    // this.pageDef = null;
+    // this.setPageRef = (element) => {
+    //   console.log('setPageRef', element);
+    //   // 根据变量决定是否允许滑动
+    //   this.pageDef = element;
+    //   element.addEventListener('touchmove', (event) => {
+    //     event.preventDefault();
+    //     event.stopPropagation();
+    //   }, false);
+    // };
   }
 
   componentWillMount() {
