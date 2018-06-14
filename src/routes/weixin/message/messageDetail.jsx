@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'dva';
-import moment from 'moment';
 import Modal from 'antd-mobile/lib/modal/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
@@ -82,7 +81,11 @@ class MsgDetail extends BaseComponent {
     const { uid } = params;
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
     console.log('url1111', url);
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.documentElement.style.overflow = 'hidden';
     document.getElementById('showShare').style.display = 'block';
+
     QrCodeWithLogo.toImage({
       image: document.getElementById('ewmImg'),
       content: url,
@@ -199,6 +202,20 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+  tagListClick(msgObj) {
+    const { dispatch, msgDetailData } = this.props;
+    const msgDetailDataObj = msgDetailData.data;
+    const { mid } = msgDetailDataObj;
+    // 传递标签id
+    if (msgObj) {
+      msgObj.tagId = msgObj.id;
+    }
+    console.log('messageDetail msgObj', msgObj);
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subTagList', params: { ...msgObj, messageId: mid, backPath: 'messageDetail' } },
+    });
+  }
   render() {
     console.log('MsgDetail render', this.props);
     const {
@@ -210,7 +227,7 @@ class MsgDetail extends BaseComponent {
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
-    if (!msgDetailData || !msgDetailData.data) {
+    if (!msgDetailData || !msgDetailData.data || !msgDetailData.data.content) {
       return null;
     }
     const msgObj = msgDetailData.data;
@@ -251,7 +268,7 @@ class MsgDetail extends BaseComponent {
           <span className={style.titleTips}>长按图片发送好友</span>
           <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
-        <div style={{ height: 500, overflow: 'scroll' }}>
+        <div style={{ height: 400, overflow: 'scroll' }}>
           <img src={msgImgUrl} alt="" />
         </div>
       </div>
@@ -341,11 +358,14 @@ class MsgDetail extends BaseComponent {
             <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>
               <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                      {msg.name}
-                    </li>
+                {msgObj.tagList.map(msg => (
+                  <li className={style.labelsList}>
+                    <Button
+                      onClick={() => this.tagListClick(msg)}
+                      className={style.similarList}
+                    >{msg.name}
+                    </Button>
+                  </li>
                   ))}
               </ul>
 
@@ -381,7 +401,7 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div id="showShare">
+        <div id="showShare" className={style.hide}>
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
             <div className={style.picTitle}>{msgObj.title}</div>

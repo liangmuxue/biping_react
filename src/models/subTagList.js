@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
+import { timeoutCall } from '../utils/asyncControll';
 
 /**
 * 订阅消息筛选列表
@@ -9,8 +10,8 @@ import { pageModel } from './pagination';
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
-  modelName: 'subTag',
-  endpoint: 'subTag',
+  modelName: 'subTagList',
+  endpoint: 'messageList',
 };
 
 export default modelExtend(pageModel, {
@@ -29,7 +30,9 @@ export default modelExtend(pageModel, {
     // 查询消息列表
     *msgQuery({ payload }, { put }) {
       console.log('query for msgQuery', payload);
-      const { tagId, tagName, backPath } = payload;
+      const {
+        tagId, tagName, backPath, mid,
+      } = payload;
       // 在这里拼好filter，然后调用通用的query方法
       yield put({
         type: 'query',
@@ -39,12 +42,13 @@ export default modelExtend(pageModel, {
           pagination: {
             current: 0, // 当前页码
             pageSize: 10, // 默认每页条目
+            messageId: mid || null,
           },
           backPath,
         },
       });
     },
-    *active({ params, backArrow }, { put }) {
+    *active({ params, backArrow }, { call, put }) {
       console.log('effects active in messageList ', params);
       console.log(`effects active in messageList backArrow:${backArrow}`);
       // const { tagId, tagName } = params;
@@ -69,10 +73,24 @@ export default modelExtend(pageModel, {
         // 隐藏加载提示
         yield put({ type: 'app/hideRouteLoading' });
       }
+      // 防止重复点击，延时2秒后重置标志
+      yield call(timeoutCall, 2000);
+      console.log('preventFlag open');
+      yield put({
+        type: 'preventTagClick',
+        payload: { preventFlag: false },
+      });
     },
   },
 
   reducers: {
+    preventTagClick(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+        curAct: 'preventTagClick',
+      };
+    },
   },
 
 });

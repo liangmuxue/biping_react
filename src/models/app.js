@@ -486,6 +486,7 @@ const App = {
     // ga调用
     *analysis({ payload }, { call, put, select }) {
       const { page, action, opt = {} } = payload;
+      console.log('analysis page', page);
       const st = yield select();
       const { app } = st;
       console.log('app in ana', app);

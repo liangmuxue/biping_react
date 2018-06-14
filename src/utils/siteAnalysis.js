@@ -13,6 +13,14 @@ export const siteAnalysis = {
       code: 'messageList',
       zh: '某大类消息列表',
     },
+    SUBTAGLIST: {
+      code: 'subTagList',
+      zh: '标签消息列表',
+    },
+    MYLIKE: {
+      code: 'myLike',
+      zh: '我关注的',
+    },
     MESSAGEDETAIL: {
       code: 'messageDetail',
       zh: '消息详情',
@@ -125,6 +133,7 @@ export const siteAnalysis = {
     ReactGA.initialize('UA-117280811-2');
   },
   pushEvent(pageDef, actionDef, opt) {
+    console.log('pushEvent pageDef', pageDef);
     ReactGA.event({
       category: `wx_${pageDef.code}`,
       action: actionDef.code,

@@ -55,6 +55,14 @@ class BasicInput extends BaseComponent {
     });
   }
 
+  changePageToLike(mesObj) {
+    // 跳转到我关注的页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'myLike', params: { backPath: 'myself' } },
+    });
+  }
+
   clearStorage() {
     console.log('clear store in');
     localStorage.clear();
@@ -104,12 +112,21 @@ class BasicInput extends BaseComponent {
     SwitchExample = createForm()(SwitchExample);
     return (<div>
       <div className={style.mineBox}>
-        <div><img src={userMain.headUrl} className={style.minePic} /></div>
+        <div><img src={userMain.headUrl} className={style.minePic} alt="" /></div>
         <div className={style.mineName}>{userMain.name}</div>
       </div>
       <List className={style.myList}>
-        <Item arrow="horizontal" onClick={() => {}}>
-          <div onClick={this.changePage.bind(this)} ><img src="/images/myselfImg/2.png" className={style.historyPic} /> <span className={style.history}>购买记录</span> </div>
+        <Item arrow="horizontal" onClick={this.changePage.bind(this)}>
+          <div>
+            <img src="/images/myselfImg/2.png" className={style.historyPic} alt="" />
+            <span className={style.history}>购买记录</span>
+          </div>
+        </Item>
+        <Item arrow="horizontal" onClick={this.changePageToLike.bind(this)}>
+          <div>
+            <img src="/images/myselfImg/myLike.png" className={style.historyPic} alt="" />
+            <span className={style.history}>我关注的</span>
+          </div>
 
         </Item>
       </List>
