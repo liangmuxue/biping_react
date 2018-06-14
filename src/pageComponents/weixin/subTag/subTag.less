@@ -1,5 +1,6 @@
 .coinMain{
   position: relative;
+  z-index: 999;
 }
 .bgPic{
   width: 999px;
@@ -62,7 +63,17 @@
   line-height: .66rem;
   background: #428BFF;
   border-radius: .08rem;
-
+}
+.subscribed{
+  width: 1.64rem;
+  height: .66rem;
+  line-height: .66rem;
+  background: #DDD;
+  color: #000;
+  border-radius: .08rem;
+}
+.subscribed::before{
+  border: none !important;
 }
 .subscribe span{
   font-size: .36rem;
