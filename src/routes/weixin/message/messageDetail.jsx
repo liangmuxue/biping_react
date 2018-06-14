@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'dva';
-import moment from 'moment';
 import Modal from 'antd-mobile/lib/modal/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
@@ -203,6 +202,20 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+  tagListClick(msgObj) {
+    const { dispatch, msgDetailData } = this.props;
+    const msgDetailDataObj = msgDetailData.data;
+    const { mid } = msgDetailDataObj;
+    // 传递标签id
+    if (msgObj) {
+      msgObj.tagId = msgObj.id;
+    }
+    console.log('messageDetail msgObj', msgObj);
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subTagList', params: { ...msgObj, messageId: mid, backPath: 'messageDetail' } },
+    });
+  }
   render() {
     console.log('MsgDetail render', this.props);
     const {
@@ -214,7 +227,7 @@ class MsgDetail extends BaseComponent {
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
-    if (!msgDetailData || !msgDetailData.data) {
+    if (!msgDetailData || !msgDetailData.data || !msgDetailData.data.content) {
       return null;
     }
     const msgObj = msgDetailData.data;
@@ -345,11 +358,14 @@ class MsgDetail extends BaseComponent {
             <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>
               <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                      {msg.name}
-                    </li>
+                {msgObj.tagList.map(msg => (
+                  <li className={style.labelsList}>
+                    <Button
+                      onClick={() => this.tagListClick(msg)}
+                      className={style.similarList}
+                    >{msg.name}
+                    </Button>
+                  </li>
                   ))}
               </ul>
 

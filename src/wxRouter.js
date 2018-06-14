@@ -60,7 +60,7 @@ function RouterConfig({ history, app }) {
       import('./models/pageConstruction'),
       import('./models/app'),
     ],
-    component: () => import('./routes/weixin/message/messageDetail.jsx'),
+    component: () => import('./routes/weixin/message/messageDetail'),
   });
   // 订阅列表
   const SubList = dynamic({
@@ -152,13 +152,22 @@ function RouterConfig({ history, app }) {
   });
 
   // 带标签列表页
-  const SubTag = dynamic({
+  const SubTagList = dynamic({
     app,
     models: () => [
-      // import('./models/subTag'),
-      // import('./models/app'),
+       import('./models/subTagList'),
+      import('./models/app'),
     ],
-    component: () => import('./routes/weixin/subTag/subTag'),
+    component: () => import('./routes/weixin/subTag/subTagList'),
+  });
+  // 我关注的
+  const MyLike = dynamic({
+    app,
+    models: () => [
+       import('./models/myLike'),
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/myLike/myLike'),
   });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
@@ -198,8 +207,11 @@ function RouterConfig({ history, app }) {
     name: 'result',
     component: Result,
   }, {
-    name: 'subTag',
-    component: SubTag,
+    name: 'subTagList',
+    component: SubTagList,
+  }, {
+    name: 'myLike',
+    component: MyLike,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -240,7 +252,8 @@ function RouterConfig({ history, app }) {
           <Route path="/noWechat" component={NoWechat} />
           <Route path="/enterGroup" component={EnterGroup} />
           <Route path="/result" component={Result} />
-          <Route path="/subtag" component={SubTag} />
+          <Route path="/subTagList" component={SubTagList} />
+          <Route path="/myLike" component={MyLike} />
           {routeInner}
         </div>
       </ConnectedRouter>
