@@ -10,8 +10,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.107.254:8280';
   // ENV.host = 'http://10.0.106.10:8280';
   // ENV.host = 'http://10.0.106.147:8280';
+  // ENV.host = 'http://10.0.107.41:8280';
   // ENV.host = 'http://10.0.106.173:8280';
-  // ENV.host = 'http://10.0.106.105:8280';
   ENV.host = 'http://twp.test.tnb99.net';
   // ENV.host = 'http://wp.test.tnb99.net';
 

@@ -208,12 +208,12 @@ class MsgDetail extends BaseComponent {
     const { mid } = msgDetailDataObj;
     // 传递标签id
     if (msgObj) {
-      msgObj.tagId = msgObj.id;
+      msgObj.labelId = msgObj.id;
     }
     console.log('messageDetail msgObj', msgObj);
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subTagList', params: { ...msgObj, messageId: mid, backPath: 'messageDetail' } },
+      payload: { pageName: 'subTagList', params: { ...msgObj, mid, backPath: 'messageDetail' } },
     });
   }
   render() {

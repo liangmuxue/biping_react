@@ -84,7 +84,7 @@ class MessageContent extends React.Component {
         </div>
 
         <div className={style.coinTable} >
-          <div className={style.coinTitle} >异动数据（单位：USDT)</div>
+          <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
           <div className={style.tableTitle}>
             <div className={style.tableTime}>时间</div>
             <div className={style.tablePrice}>单价</div>
