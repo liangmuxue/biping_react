@@ -1,4 +1,5 @@
 import Button from 'antd-mobile/lib/button/index';
+import HeaderBar from '../../../components/headerBar';
 import 'antd-mobile/es/button/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
@@ -49,6 +50,7 @@ class SubTagCard extends React.Component {
     } = data;
     return (
       <div>
+        <HeaderBar headerText="BTC比特币" backRouteLink={this.props.backPath} {...this.props} style={{ zIndex: '1' }} />
         <div className={style.coinMain}>
           <div className={style.bgBox} >
             <div className={style.mask} />
@@ -64,6 +66,7 @@ class SubTagCard extends React.Component {
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
                 <Button type="primary" className={style.subscribe}>订阅</Button>
+                <Button type="primary" className={style.subscribed}>已订阅</Button>
               </div>
             </div>
           </div>

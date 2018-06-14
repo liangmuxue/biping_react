@@ -145,7 +145,7 @@ function RouterConfig({ history, app }) {
   const Result = dynamic({
     app,
     models: () => [
-       import('./models/result'),
+      import('./models/result'),
       import('./models/app'),
     ],
     component: () => import('./routes/weixin/result/result'),
