@@ -1,9 +1,10 @@
-import Button from 'antd-mobile/lib/button/index';
-import HeaderBar from '../../../components/headerBar';
 import 'antd-mobile/es/button/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
+import Button from 'antd-mobile/lib/button/index';
+import HeaderBar from '../../../components/headerBar';
 import style from './subTag.less';
+import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
 
 /**
@@ -30,7 +31,7 @@ class SubTagCard extends React.Component {
       // backPath = params.backPath;
       messageId = params.messageId;
     }
-    const { dispatch } = subTagObj.subTagList;
+    const { dispatch } = subTagObj;
     console.log('currentPath', backPath);
     // 跳转到之前的页面
     dispatch({
@@ -40,14 +41,34 @@ class SubTagCard extends React.Component {
       },
     });
   }
+  subscribe() {
+    const { subTagObj } = this.props;
+    const { dispatch } = subTagObj;
+    const msgObj = subTagObj.subTagList.data;
+    console.log(`subscribe in:${msgObj.id}`);
+    dispatch({
+      type: 'subTagList/subscribe',
+      // 不需要传是否喜欢，model中根据原数据判断
+      payload: {
+        labelId: msgObj.id,
+      },
+    });
+  }
   render() {
     const { subTagObj } = this.props;
 
     console.log('subTagObj', subTagObj);
-    const { data } = subTagObj.subTagList;
+    const { data, isSubscribe } = subTagObj.subTagList;
     const {
       attention, count, logo, name,
     } = data;
+    let subscribeType = true;
+    if (isSubscribe) {
+      subscribeType = isSubscribe;
+    } else {
+      subscribeType = attention;
+    }
+
     return (
       <div>
         <HeaderBar headerText="BTC比特币" backRouteLink={this.props.backPath} {...this.props} style={{ zIndex: '1' }} />
@@ -65,8 +86,8 @@ class SubTagCard extends React.Component {
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
-                <Button type="primary" className={style.subscribe}>订阅</Button>
-                <Button type="primary" className={style.subscribed}>已订阅</Button>
+                <Button type="primary" className={subscribeType === false ? style.subscribe : style.hide} onClick={this.subscribe.bind(this)}>订阅</Button>
+                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide}>已订阅</Button>
               </div>
             </div>
           </div>

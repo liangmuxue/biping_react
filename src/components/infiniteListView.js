@@ -163,8 +163,6 @@ class InfiniteListView extends React.Component {
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
           onEndReachedThreshold={10}
-          useBodyScroll
-
         />
         {this.state.noMoreTip}
       </div>

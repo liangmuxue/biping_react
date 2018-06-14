@@ -65,6 +65,26 @@ export default modelExtend(pageModel, {
       });
     },
 
+    *subscribe({ payload }, { put, call, select }) {
+      console.log('query for msgUnLike,payload', payload);
+      const st = yield select();
+      const endpoint = 'attention';
+      const filter = payload;
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {
+          labelId: payload.labelId,
+        },
+      }, st);
+      console.log('subscribeId', data);
+      yield put({
+        type: 'subscribeSuccess',
+        payload: data,
+      });
+    },
+
     *active({ params, backArrow }, { call, put }) {
       console.log('effects active in messageList ', params);
       console.log(`effects active in messageList backArrow:${backArrow}`);
@@ -97,6 +117,15 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...response,
+      };
+    },
+    subscribeSuccess(state, action) {
+      console.log('msgLikeSuccess in', action.payload);
+      console.log('msgLikeSuccess state', state);
+      return {
+        ...state,
+        ...action.payload,
+        isSubscribe: true, // 已经订阅
       };
     },
   },
