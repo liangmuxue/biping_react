@@ -59,12 +59,14 @@ class SubTagCard extends React.Component {
 
     console.log('subTagObj', subTagObj);
     const { data, isSubscribe } = subTagObj.subTagList;
+    let count = data.count;
     const {
-      attention, count, logo, name,
+      attention, logo, name,
     } = data;
     let subscribeType = true;
     if (isSubscribe) {
       subscribeType = isSubscribe;
+      count += 1;
     } else {
       subscribeType = attention;
     }
@@ -87,7 +89,7 @@ class SubTagCard extends React.Component {
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
                 <Button type="primary" className={subscribeType === false ? style.subscribe : style.hide} onClick={this.subscribe.bind(this)}>订阅</Button>
-                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide}>已订阅</Button>
+                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide} disabled>已订阅</Button>
               </div>
             </div>
           </div>
