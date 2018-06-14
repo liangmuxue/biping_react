@@ -61,7 +61,7 @@ class MessageContent extends React.Component {
               {msgObj.price}
               {msgObj.quoteCoinCode}<br />
               <b className={style.convert}>
-               (≈ 人民币{(msgObj.priceReal).toFixed(2)}）
+               (≈ 人民币{msgObj.priceReal ? (msgObj.priceReal).toFixed(2) : '-'}）
               </b>
             </span>
           </div>
@@ -72,19 +72,19 @@ class MessageContent extends React.Component {
               卖出{Math.floor(msgObj.sellAmount)}
             </span>
           </div>
-          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold.toFixed(10)}</span></div>
+          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold ? msgObj.gainHold.toFixed(10) : '-'}</span></div>
           <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
             <span className={style.toUp}>
-            +{((msgObj.gainDiffer * 100).toFixed(2))}%
+            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
             </span> :
             <span className={style.toDown}>
-              {((msgObj.gainDiffer * 100).toFixed(2))}%
+              {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
             </span>}
           </div>
         </div>
 
         <div className={style.coinTable} >
-          <div className={style.coinTitle} >异动数据（单位：USDT)</div>
+          <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
           <div className={style.tableTitle}>
             <div className={style.tableTime}>时间</div>
             <div className={style.tablePrice}>单价</div>

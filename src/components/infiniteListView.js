@@ -145,6 +145,7 @@ class InfiniteListView extends React.Component {
           renderSeparator={separator}
           renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
           className="am-list"
+
           pageSize={pageSize}
           style={{
             height: this.props.height,

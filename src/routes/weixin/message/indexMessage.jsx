@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
 import 'antd-mobile/es/wing-blank/style/index.css';
@@ -52,6 +52,15 @@ class MessageList extends BaseComponent {
       },
     });
   }
+  // logo点击事件
+  logoClick(msgObj) {
+  // 跳转到信息类型列表页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subTagList', params: { ...msgObj, backPath: 'indexMessage' } },
+    });
+  }
+
   // 标签点击，进行条件筛选
   tagClick(msgObj) {
     // 跳转到信息类型列表页面
@@ -107,6 +116,7 @@ class MessageList extends BaseComponent {
           <MessageCard
             msgObj={rowData}
             cardClick={this.cardClick.bind(this)}
+            logoClick={this.logoClick.bind(this)}
           />
         );
       },
