@@ -96,7 +96,7 @@ class AccountInfo extends BaseComponent {
 }
 
 function mapStateToProps(state) {
-  console.log('dfasdafsdsafdsafdsfd', state.myLike);
+  console.log('dfasdafsdsafdsafdsfd', state);
   // 第一次进入时没有数据，直接返回
   if (!state.myLike.dataSource) {
     const { myLike } = state;

@@ -10,7 +10,7 @@ import { pageModel } from './pagination';
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
   modelName: 'myLike',
-  endpoint: 'payRecord',
+  endpoint: 'attentionList',
 };
 
 export default modelExtend(pageModel, {
@@ -33,7 +33,7 @@ export default modelExtend(pageModel, {
         payload: {
           modelDef: MODEL_DEF,
           pagination: {
-            current: 0, // 当前页码
+            pageNum: 0, // 当前页码
             pageSize: 6, // 默认每页条目
           },
         },
