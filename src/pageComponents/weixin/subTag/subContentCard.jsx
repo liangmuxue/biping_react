@@ -18,37 +18,31 @@ class SubContentCard extends React.Component {
     this.state = {
     };
   }
-  backTo(e) {
-    e.preventDefault();
-    const { subTagObj } = this.props;
-    const { dispatch } = subTagObj;
-    console.log('currentPath', this.props);
-    // 跳转到之前的页面
-    dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'indexMessage', backArrow: true, currentPage: 'indexMessage' },
-    });
+  // 卡片点击
+  handleTap() {
+    console.log('handleTap in,props:', this.props.subObj);
+    this.props.cardClick(this.props.subObj);
   }
   render() {
-    const { subTagObj } = this.props;
-    console.log('subTagObj', subTagObj);
+    const { subObj } = this.props;
+    console.log('subObj', subObj);
     return (
       <div>
         <div className={style.mesList} >
           <Card full>
-            <Hammer >
+            <Hammer onTap={this.handleTap.bind(this)}>
               <div className={style.coinListBox}>
                 <Card.Header title={
                   <div className={style.cardtitle}>
                     <div className={style.logoNameBox}>
-                      <div className={style.logoFrom}>来自订阅：交易所公告 · 刚刚</div>
+                      <div className={style.logoFrom}>来自订阅：{subObj.tagName} · {subObj.time}</div>
                       <div className={style.clear} />
                     </div>
                   </div>}
                 />
                 <Card.Body>
-                  <div className={style.cardtitles}> gate.io将HAV，REM，Tomo和ELEC转移到主交易区长期支持公告</div>
-                  <span className={style.eventStrat}>事件开始日期：2018年6月21日</span>
+                  <div className={style.cardtitles}>{subObj.content}</div>
+                  <span className={subObj.startTime === '币事件' ? style.eventStrat : style.hide}>事件开始日期：{subObj.startTime}</span>
                 </Card.Body>
 
               </div>

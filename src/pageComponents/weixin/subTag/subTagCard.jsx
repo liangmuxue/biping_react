@@ -21,7 +21,7 @@ class SubTagCard extends React.Component {
   backTo(e) {
     e.preventDefault();
     const { subTagObj } = this.props;
-    const { params } = subTagObj;
+    const { params } = subTagObj.subTagList;
     console.log('params888888888', params);
     const backPath = 'indexMessage';
     let messageId = '';
@@ -29,7 +29,7 @@ class SubTagCard extends React.Component {
       // backPath = params.backPath;
       messageId = params.messageId;
     }
-    const { dispatch } = subTagObj;
+    const { dispatch } = subTagObj.subTagList;
     console.log('currentPath', backPath);
     // 跳转到之前的页面
     dispatch({
@@ -42,7 +42,11 @@ class SubTagCard extends React.Component {
   render() {
     const { subTagObj } = this.props;
 
-    console.log('subTagObj', subTagObj.params);
+    console.log('subTagObj', subTagObj);
+    const { data } = subTagObj.subTagList;
+    const {
+      attention, count, logo, name,
+    } = data;
     return (
       <div>
         <div className={style.coinMain}>
@@ -54,10 +58,10 @@ class SubTagCard extends React.Component {
             <Hammer onTap={this.backTo.bind(this)}>
               <img className={style.coinArrow}src="/images/coinList/coinArrow.png" alt="-" />
             </Hammer>
-            <img className={style.coinLogo} src="/images/coinList/coinBg.png" alt="-" />
-            <span className={style.readNum}>33168人关注</span>
+            <img className={style.coinLogo} src={logo} alt="-" />
+            <span className={style.readNum}>{count}人关注</span>
             <div style={{ background: '#fff' }}>
-              <div className={style.coinName}>BTC(比特币)</div>
+              <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
                 <Button type="primary" className={style.subscribe}>订阅</Button>
               </div>
