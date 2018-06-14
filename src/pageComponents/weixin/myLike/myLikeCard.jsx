@@ -22,39 +22,26 @@ class MyLikeCard extends React.Component {
   handleTap(e) {
     console.log('handleTap in,props,event:', e);
     e.preventDefault();
+    const { msgObj } = this.props;
+    if (msgObj) {
+      msgObj.mid = msgObj.id;
+    }
     this.props.myLikeClick(this.props.msgObj);
   }
 
   render() {
     const { msgObj } = this.props;
     console.log('msgObj888888', msgObj);
-    const costNum = msgObj.cost;
-    const buyTypeCode = msgObj.buyTypeCode;
-    let newLogo = null;
-    let newContent = null;
-    if (costNum !== 0 && msgObj.inviteNum !== 0) {
-      newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元,已邀请{msgObj.inviteNum}人</div>;
-    } else if (costNum !== 0 && msgObj.inviteNum === 0) {
-      newContent = <div className={styles.incident}>￥{msgObj.cost / 100}元</div>;
-    } else if (costNum === 0 && msgObj.inviteNum !== 0) {
-      newContent = <div className={styles.incident}>已邀请{msgObj.inviteNum}人</div>;
-    }
-
-    if (buyTypeCode === 0) {
-      newLogo = <img src="/images/buyHistoryImg/2.png" className={styles.leftlogo} alt="" />;
-    } else {
-      newLogo = <img src="/images/buyHistoryImg/1.png" className={styles.leftlogo} alt="" />;
-    }
     return (
       <Hammer onTap={this.handleTap.bind(this)}>
         <div className={styles.historyBox}>
           <div className={styles.tops}>
-            <div>{newLogo}</div>
-            <div className={styles.events}>比特币,BitCoin(BTC)</div>
+            <img src={msgObj.logo} alt="-" />
+            <div className={styles.events}>{msgObj.name}</div>
           </div>
 
           <div className={styles.bottoms}>
-            比特币的一大堆描述
+            {msgObj.desc}
           </div>
         </div>
       </Hammer>
