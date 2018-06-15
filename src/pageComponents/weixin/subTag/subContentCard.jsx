@@ -41,7 +41,7 @@ class SubContentCard extends React.Component {
                   </div>}
                 />
                 <Card.Body>
-                  <div className={style.cardtitles}>{subObj.content}</div>
+                  <div className={style.cardtitles}>{subObj.title}</div>
                   <span className={subObj.startTime === '币事件' ? style.eventStrat : style.hide}>事件开始日期：{subObj.startTime}</span>
                 </Card.Body>
 
