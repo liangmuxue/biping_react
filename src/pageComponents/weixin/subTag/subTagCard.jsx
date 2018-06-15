@@ -1,7 +1,8 @@
-import 'antd-mobile/es/button/style/index.css';
+import 'antd-mobile/es/tag/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
 import Button from 'antd-mobile/lib/button/index';
+import Tag from 'antd-mobile/lib/tag/index';
 import HeaderBar from '../../../components/headerBar';
 import style from './subTag.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
@@ -79,7 +80,7 @@ class SubTagCard extends React.Component {
         <div className={style.coinMain}>
           <div className={style.bgBox} >
             <div className={style.mask} />
-            <img className={style.bgPic} src="/images/coinList/coinBg.png" alt="-" />
+            <img className={style.bgPic} src={logo} alt="-" />
           </div>
           <div>
             <Hammer onTap={this.backTo.bind(this)}>
@@ -90,8 +91,7 @@ class SubTagCard extends React.Component {
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
-                <Button type="primary" className={subscribeType === false ? style.subscribe : style.hide} onClick={this.subscribe.bind(this)}>订阅</Button>
-                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide} disabled>已订阅</Button>
+                <Tag onClick={this.subscribe.bind(this)}>{subscribeType === false ? '订阅' : '已订阅'}</Tag>
               </div>
             </div>
           </div>

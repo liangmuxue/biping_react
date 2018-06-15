@@ -37,11 +37,11 @@ class MyLikeCard extends React.Component {
         <div className={styles.historyBox}>
           <div className={styles.tops}>
             <img src={msgObj.logo} alt="-" />
-            <div className={styles.events}>{msgObj.name}</div>
           </div>
 
           <div className={styles.bottoms}>
-            {msgObj.desc}
+            <div className={styles.events}>{msgObj.name}</div>
+            <div className={styles.contents}>{msgObj.desc}</div>
           </div>
         </div>
       </Hammer>
