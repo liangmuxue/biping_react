@@ -25,14 +25,17 @@ const fetch = (endpoint, options) => {
       type: 'wechat',
       token: systemUser.token,
     },
+    method: options.method,
   });
   let retryCnt = 0;
   // 超时处理逻辑
   axiosInst.interceptors.response.use(undefined, (err) => {
     const axiosConfig = err.config;
-    console.log('timeout in');
     // If config does not exist or the retry option is not set, reject
     if (!config || !axiosConfig.retry) return Promise.reject(err);
+    if (axiosConfig.method !== 'get') {
+      return Promise.reject(err);
+    }
     // Check if we've maxed out the total number of retries
     console.log(`retryCnt is now:${retryCnt}`);
     if (retryCnt >= 3) {
