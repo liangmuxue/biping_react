@@ -82,19 +82,22 @@ class SubTag extends BaseComponent {
         );
       },
     });
-    const height = document.documentElement.clientHeight;
+    const height = document.documentElement.clientHeight - 300;
     console.log('height is', height);
     const key = 'subTag';
     return (
       <div>
         <SubTagCard subTagObj={this.props} />
-        <InfiniteListView
-          bkey={key}
-          needChange
-          {...messageListProps}
-          height={height}
-          pageSize={this.props.subTagList.paginationDef.pageSize}
-        />
+        <div >
+          <InfiniteListView
+            bkey={key}
+            needChange
+            {...messageListProps}
+            height={height}
+            renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }} />)}
+            pageSize={this.props.subTagList.paginationDef.pageSize}
+          />
+        </div>
       </div>
     );
   }

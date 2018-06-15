@@ -74,8 +74,7 @@ class SubTagCard extends React.Component {
     }
 
     return (
-      <div>
-        <HeaderBar headerText={name} backRouteLink={this.props.backPath} {...this.props} style={{ zIndex: '1' }} />
+      <div >
         <div className={style.coinMain}>
           <div className={style.bgBox} >
             <div className={style.mask} />
@@ -90,7 +89,7 @@ class SubTagCard extends React.Component {
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
-                <Tag onClick={this.subscribe.bind(this)}>{ subscribeType ? '订阅' : '已订阅'}</Tag>
+                <Tag onClick={this.subscribe.bind(this)}>{ subscribeType === true ? '订阅' : '已订阅'}</Tag>
               </div>
             </div>
           </div>

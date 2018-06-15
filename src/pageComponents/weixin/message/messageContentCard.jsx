@@ -55,7 +55,7 @@ class MessageContent extends React.Component {
           <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.baseCoinCode}/{msgObj.quoteCoinCode}</span></div>
-          {msgObj.direction ? <div><span>异常大单：{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.quoteCoinCode}</span></div> : ''}
+          {msgObj.direction ? <div>异常大单：<span>{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.baseCoinCode }</span></div> : ''}
           <div>当前价格：
             <span>
               {msgObj.price}
@@ -65,24 +65,38 @@ class MessageContent extends React.Component {
               </b>
             </span>
           </div>
-          <div>{timeUp}分钟内成交量：
+          {msgObj.direction ? <div>1分钟内成交量：
             <span>
-              {Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，
-              其中买入{Math.floor(msgObj.buyAmount)}、
-              卖出{Math.floor(msgObj.sellAmount)}
+              {Math.floor(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount)}，
+              其中买入{Math.floor(msgObj.quoteList[0].buyAmount)}、
+              卖出{Math.floor(msgObj.quoteList[0].sellAmount)}
             </span>
-          </div>
-          <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold ? msgObj.gainHold.toFixed(10) : '-'}</span></div>
-          <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
+          </div> : <div>{timeUp}分钟内成交量：<span>
+                                {Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，
+                其中买入{Math.floor(msgObj.buyAmount)}、
+                卖出{Math.floor(msgObj.sellAmount)}
+                                                           </span>
+                                       </div>}
+          {msgObj.direction ? <div>1分钟内净流入量：<span>{msgObj.quoteList[0].gainHold ? msgObj.quoteList[0].gainHold.toFixed(10) : '-'}</span></div> : <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold ? msgObj.gainHold.toFixed(10) : '-'}</span></div>}
+
+          {msgObj.direction ? <div>1分钟内涨幅：{msgObj.quoteList[0].gainDiffer > 0 ?
             <span className={style.toUp}>
-            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+            +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
             </span> :
             <span className={style.toDown}>
+              {(msgObj.quoteList.gainDiffer ? (msgObj.quoteList.gainDiffer * 100).toFixed(2) : '-')}%
+            </span>}
+                              </div> : <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
+            <span className={style.toUp}>
+            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+                                </span> :
+                                <span className={style.toDown}>
               {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
             </span>}
-          </div>
+          </div>}
+
         </div>
-        <div className={style.coinTable} >
+        <div className={msgObj.direction ? style.hide : style.coinTable} >
           <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
           <div className={style.tableTitle}>
             <div className={style.tableTime}>时间</div>
@@ -91,9 +105,10 @@ class MessageContent extends React.Component {
             <div className={style.tableIncome}>净流入</div>
           </div>
         </div>
+
         {msgObj.quoteList.map(msg =>
         (
-          <div className={style.coinLists} >
+          <div className={msgObj.direction ? style.hide : style.coinLists} >
             <div className={style.tableTitle}>
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
