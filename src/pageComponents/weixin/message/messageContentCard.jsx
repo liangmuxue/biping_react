@@ -84,7 +84,7 @@ class MessageContent extends React.Component {
             +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
             </span> :
             <span className={style.toDown}>
-              {(msgObj.quoteList.gainDiffer ? (msgObj.quoteList.gainDiffer * 100).toFixed(2) : '-')}%
+              {(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
             </span>}
                               </div> : <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
             <span className={style.toUp}>
