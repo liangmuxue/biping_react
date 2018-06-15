@@ -55,24 +55,6 @@ class AccountInfo extends BaseComponent {
     console.log('6666666666', this.props);
     const { buyList } = this.props;
     console.log('buyList', buyList);
-    const { myLike } = this.props;
-    if (myLike) {
-      const { flag } = myLike;
-      if (flag && flag === 1) {
-        return (
-          <div className={styles.empty}>
-            <HeaderBar headerText="我关注的" backRouteLink="myself" {...this.props} />
-            <div><img src="/images/myLikeImg/3.png" className={styles.noBuycar} /></div>
-            <div className={styles.notread}>您还没有买过任何订阅包</div>
-            <WingBlank>
-              <Button type="primary" onClick={this.buttonClick.bind(this)}>去看看订阅包</Button><WhiteSpace />
-            </WingBlank>
-          </div>
-        );
-      }
-    }
-
-
     const buyListProps = buildPagiProps(this.props.dispatch, {
       ...buyList,
       renderRow: (rowData, sectionID, rowID) => {
@@ -96,7 +78,7 @@ class AccountInfo extends BaseComponent {
 }
 
 function mapStateToProps(state) {
-  console.log('dfasdafsdsafdsafdsfd', state.myLike);
+  console.log('dfasdafsdsafdsafdsfd', state);
   // 第一次进入时没有数据，直接返回
   if (!state.myLike.dataSource) {
     const { myLike } = state;

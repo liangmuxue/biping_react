@@ -122,15 +122,15 @@ class BasicInput extends BaseComponent {
             <span className={style.history}>购买记录</span>
           </div>
         </Item>
+      </List>
+      <List className={style.myList}>
         <Item arrow="horizontal" onClick={this.changePageToLike.bind(this)}>
           <div>
             <img src="/images/myselfImg/myLike.png" className={style.historyPic} alt="" />
             <span className={style.history}>我关注的</span>
           </div>
-
         </Item>
       </List>
-
       <SwitchExample />
       <Hammer onDoubleTap={this.clearStorage.bind(this)}>
         <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>

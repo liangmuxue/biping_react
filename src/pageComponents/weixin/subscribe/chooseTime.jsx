@@ -98,26 +98,28 @@ class ChooseTime extends React.Component {
     console.log(`this.state.gainValue:${this.state.gainValue}`);
     let ChooseTimeEx = () => {
       return (
-        <List style={{ backgroundColor: 'white' }} className="picker-list">
-          <Picker
-            data={district}
-            cols={1}
-            title="涨幅"
-            value={this.state.gainValue}
-            onOk={v => this.gainValue(v)}
-          >
-            <List.Item arrow="horizontal" >涨幅</List.Item>
-          </Picker>
-          <Picker
-            data={downdistrict}
-            cols={1}
-            value={this.state.loseValue}
-            title="跌幅"
-            onOk={v => this.loseValue(v)}
-          >
-            <List.Item arrow="horizontal">跌幅</List.Item>
-          </Picker>
-        </List>
+        <div className={style.chooseBox}>
+          <List style={{ backgroundColor: 'white' }} className="picker-list">
+            <Picker
+              data={district}
+              cols={1}
+              title="涨幅"
+              value={this.state.gainValue}
+              onOk={v => this.gainValue(v)}
+            >
+              <List.Item arrow="horizontal" >涨幅</List.Item>
+            </Picker>
+            <Picker
+              data={downdistrict}
+              cols={1}
+              value={this.state.loseValue}
+              title="跌幅"
+              onOk={v => this.loseValue(v)}
+            >
+              <List.Item arrow="horizontal">跌幅</List.Item>
+            </Picker>
+          </List>
+        </div>
       );
     };
     ChooseTimeEx = createForm()(ChooseTimeEx);

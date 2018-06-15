@@ -41,6 +41,7 @@ class SubTagCard extends React.Component {
       },
     });
   }
+  // 是否关注
   subscribe() {
     const { subTagObj } = this.props;
     const { dispatch } = subTagObj;
@@ -48,7 +49,7 @@ class SubTagCard extends React.Component {
     console.log(`subscribe in:${msgObj.id}`);
     dispatch({
       type: 'subTagList/subscribe',
-      // 不需要传是否喜欢，model中根据原数据判断
+      // 类别id（交易所公告等）
       payload: {
         labelId: msgObj.id,
       },
@@ -59,12 +60,15 @@ class SubTagCard extends React.Component {
 
     console.log('subTagObj', subTagObj);
     const { data, isSubscribe } = subTagObj.subTagList;
+    // 关注数量，增加一个关注自动加一
+    let { count } = data;
     const {
-      attention, count, logo, name,
+      attention, logo, name,
     } = data;
     let subscribeType = true;
     if (isSubscribe) {
       subscribeType = isSubscribe;
+      count += 1;
     } else {
       subscribeType = attention;
     }
@@ -87,7 +91,7 @@ class SubTagCard extends React.Component {
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
                 <Button type="primary" className={subscribeType === false ? style.subscribe : style.hide} onClick={this.subscribe.bind(this)}>订阅</Button>
-                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide}>已订阅</Button>
+                <Button type="primary" className={subscribeType === true ? style.subscribed : style.hide} disabled>已订阅</Button>
               </div>
             </div>
           </div>
