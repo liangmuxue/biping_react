@@ -213,7 +213,12 @@ class MsgDetail extends BaseComponent {
     console.log('messageDetail msgObj', msgObj);
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subTagList', params: { ...msgObj, mid, backPath: 'messageDetail' } },
+      payload: {
+        pageName: 'subTagList',
+        params: {
+          ...msgObj, mid, fromLabel: true, backPath: 'messageDetail',
+        },
+      },
     });
   }
   render() {

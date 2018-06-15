@@ -32,18 +32,23 @@ export default modelExtend(pageModel, {
     *msgQuery({ payload }, { put, call, select }) {
       console.log('query for msgQuery', payload);
       const {
-        labelId, backPath, mid,
+        labelId, backPath, mid, fromLabel,
       } = payload;
       // 请求list
+      let messageId = mid;
+      // 如果从标签点击过来，不能传messageId
+      if (fromLabel) {
+        messageId = null;
+      }
       yield put({
         type: 'query',
         payload: {
-          filter: { messageId: mid, labelId },
+          filter: { messageId, labelId },
           modelDef: MODEL_DEF,
           pagination: {
             pageNum: 0, // 当前页码
             pageSize: 10, // 默认每页条目
-            messageId: mid || null,
+            messageId,
           },
           backPath,
         },
@@ -55,7 +60,7 @@ export default modelExtend(pageModel, {
       const data = yield call(queryNormal, {
         endpoint,
         filter: {
-          messageId: mid, labelId, pageSize: 10, pageNum: 0,
+          messageId, labelId, pageSize: 10, pageNum: 0,
         },
       }, st);
       console.log('msgQuery data', data);
