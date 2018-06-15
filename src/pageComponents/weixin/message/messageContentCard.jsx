@@ -51,7 +51,7 @@ class MessageContent extends React.Component {
     return (
       <div>
         <div className={style.transactionCoin} >
-          <div>时间段：<span>{timeMoment}</span></div>
+          {msgObj.direction ? <div>预警时间：<span>{moment(msgObj.createTime * 1000).format('HH:mm')}</span></div> : <div>时间段：<span>{timeMoment}</span></div>}
           <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.baseCoinCode}/{msgObj.quoteCoinCode}</span></div>
@@ -67,14 +67,14 @@ class MessageContent extends React.Component {
           </div>
           {msgObj.direction ? <div>1分钟内成交量：
             <span>
-              {Math.floor(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount)}，
-              其中买入{Math.floor(msgObj.quoteList[0].buyAmount)}、
-              卖出{Math.floor(msgObj.quoteList[0].sellAmount)}
+              {(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount).toFixed(2)}，
+              其中买入{(msgObj.quoteList[0].buyAmount).toFixed(2)}、
+              卖出{(msgObj.quoteList[0].sellAmount).toFixed(2)}
             </span>
           </div> : <div>{timeUp}分钟内成交量：<span>
-                                {Math.floor(msgObj.buyAmount + msgObj.sellAmount)}，
-                其中买入{Math.floor(msgObj.buyAmount)}、
-                卖出{Math.floor(msgObj.sellAmount)}
+                                {(msgObj.buyAmount + msgObj.sellAmount).toFixed(2)}，
+                其中买入{(msgObj.buyAmount).toFixed(2)}、
+                卖出{(msgObj.sellAmount).toFixed(2)}
                                                            </span>
                                        </div>}
           {msgObj.direction ? <div>1分钟内净流入量：<span>{msgObj.quoteList[0].gainHold ? msgObj.quoteList[0].gainHold.toFixed(10) : '-'}</span></div> : <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold ? msgObj.gainHold.toFixed(10) : '-'}</span></div>}
