@@ -1,6 +1,5 @@
 import React from 'react';
 // import WhiteSpace from 'antd-mobile/lib/white-space/index';
-import Card from 'antd-mobile/lib/card/index';
 import Hammer from 'react-hammerjs';
 import styles from './myLike.less';
 

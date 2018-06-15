@@ -30,9 +30,9 @@ class MessageContent extends React.Component {
       transType = '下跌';
       upOrDown = 1;
     } if (msgObj.transType === 'tansType_buyTrans') {
-      transType = '涨幅';
+      transType = '买入量异常';
     } if (msgObj.transType === 'tansType_sellTrans') {
-      transType = '跌幅';
+      transType = '卖出量异常';
       upOrDown = 1;
     }
     // 时间段
@@ -48,7 +48,6 @@ class MessageContent extends React.Component {
         moment(msgObj.createTime * 1000).format('HH:mm')}`;
     }
 
-
     return (
       <div>
         <div className={style.transactionCoin} >
@@ -56,6 +55,7 @@ class MessageContent extends React.Component {
           <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
           <div>交易对：<span>{msgObj.baseCoinCode}/{msgObj.quoteCoinCode}</span></div>
+          {msgObj.direction ? <div><span>异常大单：{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.quoteCoinCode}</span></div> : ''}
           <div>当前价格：
             <span>
               {msgObj.price}
@@ -82,7 +82,6 @@ class MessageContent extends React.Component {
             </span>}
           </div>
         </div>
-
         <div className={style.coinTable} >
           <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
           <div className={style.tableTitle}>
