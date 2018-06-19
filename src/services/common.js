@@ -1,5 +1,5 @@
+import axios from 'axios';
 import request from '../dataExchange/request';
-
 /**
  * 通用请求处理，封装filter，分页等
  * @date        2018-01-12

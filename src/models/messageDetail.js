@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal } from '../services/common';
+import { queryNormal, getImgString } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 /**
 * 订阅消息详情
@@ -94,6 +94,25 @@ export default modelExtend(pageModel, {
       yield put({
         type: 'msgLikeSuccess',
         payload: msgObj,
+      });
+    },
+    // img的src转base64位
+    *getImgString({ payload }, { put, call }) {
+      const { srcs } = payload;
+      console.log('getImgString data', srcs);
+      if (srcs && srcs.length > 0) {
+        console.log('getImgString data0', srcs.length);
+        for (let i = 0; i < srcs.length; i++) {
+          console.log('getImgString data1', srcs[i].src);
+          const data = yield call(getImgString, srcs[i].src);
+          console.log('messageDetail data', data);
+          srcs[i].src = `data:image;base64,${data}`;
+        }
+      }
+      console.log('after getImgString data', srcs);
+      yield put({
+        type: 'getImgStringSuccess',
+        payload: srcs,
       });
     },
     // 查询单个消息
@@ -222,6 +241,15 @@ export default modelExtend(pageModel, {
         ...state,
         ...action.payload,
         curAct: 'msgLike',
+      };
+    },
+    getImgStringSuccess(state, action) {
+      console.log('getImgStringSuccess in', action.payload);
+      console.log('getImgStringSuccess state', state);
+      return {
+        ...state,
+        srcs: action.payload,
+        curAct: 'shareClick',
       };
     },
     preventTagClick(state, action) {

@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
+import QrCodeWithLogo from 'qr-code-with-logo';
+import html2canvas from 'html2canvas';
 import Modal from 'antd-mobile/lib/modal/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
@@ -13,9 +15,7 @@ import style from './messageDetail.less';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
-import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
-import QrCodeWithLogo from 'qr-code-with-logo';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 
 /**
@@ -23,22 +23,52 @@ import MessageContent from '../../../pageComponents/weixin/message/messageConten
 * @author 赵永帅
 * @Date  2018-6-12
 */
-
+function shareEvent(event) {
+  const { messageHost } = config.env;
+  const { wechatHost } = config.env;
+  let imgUrl = null;
+  console.log('this.props', event);
+  const { dispatch, msgDetailData, params } = event;
+  const msgObj = msgDetailData.data;
+  console.log('params1111', params);
+  const { uid } = params;
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+  QrCodeWithLogo.toImage({
+    image: document.getElementById('ewmImg'),
+    content: url,
+    width: 380,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }).then(() => {
+    console.log('success777', document.getElementById('showShare'));
+    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
+      imgUrl = canvas.toDataURL('image/png');
+      document.getElementById('showShare').style.display = 'none';
+      dispatch({
+        type: 'messageDetail/shareMsg',
+        payload: {
+          messageId: msgObj.mid,
+          imgUrl,
+        },
+      });
+      // 分享消息埋点
+      dispatch({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.MESSAGEDETAIL,
+          action: siteAnalysis.actConst.SHAREMESSAGE,
+          opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+        },
+      });
+    });
+  });
+}
 class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
+
     super(props);
-    // this.tmListener = null;
-    // this.pageDef = null;
-    // this.setPageRef = (element) => {
-    //   console.log('setPageRef', element);
-    //   // 根据变量决定是否允许滑动
-    //   this.pageDef = element;
-    //   element.addEventListener('touchmove', (event) => {
-    //     event.preventDefault();
-    //     event.stopPropagation();
-    //   }, false);
-    // };
   }
 
   componentWillMount() {
@@ -70,55 +100,34 @@ class MsgDetail extends BaseComponent {
     }
   }
   // 分享点击
-  shareClick(event) {
-    const { messageHost } = config.env;
-    const { wechatHost } = config.env;
-    let imgUrl = null;
-    console.log('this.props', this.props);
-    const { dispatch, msgDetailData, params } = this.props;
-    const msgObj = msgDetailData.data;
-    console.log('params1111', params);
-    const { uid } = params;
-    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
-    console.log('url1111', url);
+  shareClick() {
+    // 隐藏分享内容背景
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100%';
     document.documentElement.style.overflow = 'hidden';
     document.getElementById('showShare').style.display = 'block';
 
-    QrCodeWithLogo.toImage({
-      image: document.getElementById('ewmImg'),
-      content: url,
-      width: 380,
-      logo: {
-        src: '/images/msgImages/copy.png',
+    // 替换过空格之后的内容
+    const replaceVal = document.getElementById('shareArticle');
+    const imgs = replaceVal.querySelectorAll('img');
+    const srcs = [];
+    if (imgs && imgs.length > 0) {
+      for (let i = 0, j = imgs.length; i < j; i++) {
+        // 解决跨域,传递现有的img、src数组
+        srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+        imgs[i].setAttribute('id', `imgUrl${i}`);
+      }
+    }
+    const { dispatch } = this.props;
+    console.log('ppppppppp', srcs);
+    dispatch({
+      type: 'messageDetail/getImgString',
+      payload: {
+        srcs,
       },
-    }).then(() => {
-      console.log('success777');
-      html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
-        imgUrl = canvas.toDataURL('image/png');
-        document.getElementById('showShare').style.display = 'none';
-        dispatch({
-          type: 'messageDetail/shareMsg',
-          payload: {
-            messageId: msgObj.mid,
-            imgUrl,
-          },
-        });
-        // 分享消息埋点
-        dispatch({
-          type: 'app/analysis',
-          payload: {
-            page: siteAnalysis.pageConst.MESSAGEDETAIL,
-            action: siteAnalysis.actConst.SHAREMESSAGE,
-            opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
-          },
-        });
-      });
     });
-
-    // event.prventDefault();
   }
+
   // 类似消息的点击
   switchTitle(msg) {
     console.log('switchTitle in:', this.props);
@@ -149,6 +158,9 @@ class MsgDetail extends BaseComponent {
     dispatch({
       type: 'messageDetail/closeShare',
     });
+    // 恢复背景滚动
+    document.body.style.overflow = 'scroll';
+    document.documentElement.style.overflow = 'scroll';
   }
   // 跳转到信息类型列表页面
   tagClick() {
@@ -222,9 +234,9 @@ class MsgDetail extends BaseComponent {
     });
   }
   render() {
-    console.log('MsgDetail render', this.props);
+    console.log('MsgDetail Now render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl, curAct,
+      msgDetailData, showMsgShare, params, imgUrl, curAct, srcs,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -234,6 +246,14 @@ class MsgDetail extends BaseComponent {
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData || !msgDetailData.data || !msgDetailData.data.content) {
       return null;
+    }
+    // 分享请求,只有点击share方法才进
+    if (srcs && curAct && curAct === 'shareClick') {
+      for (let i = 0; i < srcs.length; i++) {
+        const imgs = document.getElementById(srcs[i].id);
+        imgs.setAttribute('src', srcs[i].src);
+      }
+      shareEvent(this.props);
     }
     const msgObj = msgDetailData.data;
     console.log('msgObj44444', msgDetailData.data);
@@ -249,9 +269,10 @@ class MsgDetail extends BaseComponent {
       shareContentCard = contentCard;
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
+      console.log('99999999', val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
       shareContentCard =
-      (<div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
+      (<div id="shareArticle" className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
 
     if (!showMsgShare) {
@@ -349,14 +370,12 @@ class MsgDetail extends BaseComponent {
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
             {contentCard}
-
-            <div className={style.friendBox}>
-              <div className={style.toFriend} />
-              <Hammer onTap={this.shareClick.bind(this)}>
+            <Hammer onTap={this.shareClick.bind(this)}>
+              <div className={style.friendBox}>
+                <div className={style.toFriend} />
                 <a className={style.tofriends}>分享给好友</a>
-              </Hammer>
-            </div>
-
+              </div>
+            </Hammer>
           </div>
 
           <div className={style.up}>

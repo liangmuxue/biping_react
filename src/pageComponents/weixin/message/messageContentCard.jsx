@@ -43,7 +43,7 @@ class MessageContent extends React.Component {
     // 时间间隔
     let timeMoment = '';
     if (msgObj.createTime) {
-      const beginTime = msgObj.createTime - timeUp * 60;
+      const beginTime = msgObj.createTime - ((timeUp * 60) - 60);
       timeMoment = `${moment(beginTime * 1000).format('HH:mm')} - ${
         moment(msgObj.createTime * 1000).format('HH:mm')}`;
     }
@@ -54,12 +54,16 @@ class MessageContent extends React.Component {
           {msgObj.direction ? <div>预警时间：<span>{moment(msgObj.createTime * 1000).format('HH:mm')}</span></div> : <div>时间段：<span>{timeMoment}</span></div>}
           <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>
-          <div>交易对：<span>{msgObj.baseCoinCode}/{msgObj.quoteCoinCode}</span></div>
+          <div>交易对：
+            <span>{msgObj.baseCoinCode !== null ? msgObj.baseCoinCode.toUpperCase() : ''}
+            /{msgObj.quoteCoinCode != null ? msgObj.quoteCoinCode.toUpperCase() : ''}
+            </span>
+          </div>
           {msgObj.direction ? <div>异常大单：<span>{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.baseCoinCode }</span></div> : ''}
           <div>当前价格：
             <span>
               {msgObj.price}
-              {msgObj.quoteCoinCode}<br />
+              {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
               <b className={style.convert}>
                (≈ 人民币{msgObj.priceReal ? (msgObj.priceReal).toFixed(2) : '-'}）
               </b>
