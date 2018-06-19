@@ -32,7 +32,7 @@ class HeaderBar extends React.Component {
       <div className={styles.toptitle}>
         {this.props.headerText}
         <Hammer onTap={this.backTo.bind(this)}>
-          <div className={styles.zone}>
+          <div type="headerBack" className={styles.zone} ref={backArrow => this.backArrowArea = backArrow}>
             <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
           </div>
         </Hammer>
