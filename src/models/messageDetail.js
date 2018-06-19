@@ -103,8 +103,10 @@ export default modelExtend(pageModel, {
       if (srcs && srcs.length > 0) {
         console.log('getImgString data0', srcs.length);
         for (let i = 0; i < srcs.length; i++) {
-          console.log('getImgString data1', srcs[i].src);
-          const data = yield call(getImgString, srcs[i].src);
+          // bpimg.6bey.com这个域名无法跨域，换成原默认域名
+          const realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+          console.log(`realSrc is:${realSrc}`);
+          const data = yield call(getImgString, realSrc);
           console.log('messageDetail data', data);
           srcs[i].src = `data:image;base64,${data}`;
         }
