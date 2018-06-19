@@ -22,8 +22,19 @@ class HomePage extends Component {
       this.pageDef = element;
     };
   }
+  componentWillMount() {
+    console.log('componentWillMount in,innerPageDefs', innerPageDefs);
+  }
   componentDidMount() {
-    console.log('componentDidMount in,innerPageDefs', innerPageDefs);
+    window.addEventListener(
+      'popstate',
+      (event) => {
+        console.log('back button click', event);
+        const dom = this.pageDef.querySelector("div[type='headerBack']");
+        console.log('ref dom:', dom);
+      },
+      false,
+    );
   }
   setAttr(key, value) {
     if (this.pageDef) {

@@ -65,6 +65,10 @@ const pcEntity = {
       const {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
+      // push到history，屏蔽回退跳转
+      if (!backArrow) {
+        // history.pushState({ pageName, params, currentPage }, '');
+      }
       console.log('payloadswitch', payload);
       // 页面名称转大写
       let upPageName = null;
