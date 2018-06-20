@@ -66,9 +66,15 @@ const pcEntity = {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
       // push到history，屏蔽回退跳转
-      if (!backArrow) {
-        // history.pushState({ pageName, params, currentPage }, '');
-      }
+      const matchFooterMenu = footMenus.filter((element) => {
+        return element.code === pageName;
+      });
+      // if (!backArrow) {
+      //   history.pushState({ pageName, params, currentPage }, '');
+      // }
+      // if(matchFooterMenu&&matchFooterMenu.length>0){
+      //   history.popState();
+      // }
       console.log('payloadswitch', payload);
       // 页面名称转大写
       let upPageName = null;
