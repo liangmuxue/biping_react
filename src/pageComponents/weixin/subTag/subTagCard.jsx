@@ -21,6 +21,7 @@ class SubTagCard extends React.Component {
     console.log('componentWillMount SubTagCard', this.props);
     this.setState({
       subNum: -1,
+      isEnter: [],
     });
   }
   backTo(e) {
@@ -83,12 +84,13 @@ class SubTagCard extends React.Component {
     const { data, isSubscribe } = subTagObj.subTagList;
     // 关注数量，增加一个关注自动加一
     const { count } = data;
-    const { subNum } = this.state;
-    console.log('subNum', subNum);
+    const { isEnter } = this.state;
+    console.log('isEnter', isEnter);
     // 防止重复加载
-    if (!subNum || subNum === -1) {
-      if (count) {
-        this.setState({ subNum: count });
+    if (!isEnter || isEnter.length === 0) {
+      console.log('count', count === 0);
+      if (count || count === 0) {
+        this.setState({ subNum: count, isEnter: [count] });
       }
     }
     const {
