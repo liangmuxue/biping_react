@@ -17,13 +17,6 @@ class SubTagCard extends React.Component {
     super(props);
     console.log('props in MessageCard', props);
   }
-  componentWillMount() {
-    console.log('componentWillMount SubTagCard', this.props);
-    this.setState({
-      subNum: -1,
-      isEnter: [],
-    });
-  }
   backTo(e) {
     e.preventDefault();
     const { subTagObj } = this.props;
@@ -49,31 +42,12 @@ class SubTagCard extends React.Component {
   subscribe() {
     const { subTagObj } = this.props;
     const { dispatch } = subTagObj;
-    const { isSubscribe, data } = subTagObj.subTagList;
-    const { attention } = data;
-    let subscribeType = 0;
-    if (isSubscribe === 0) {
-      subscribeType = 0;
-    } else if (isSubscribe === 1) {
-      subscribeType = 1;
-    } else if (attention === true) {
-      subscribeType = 0;
-    } else if (attention === false) {
-      subscribeType = 1;
-    }
-    if (subscribeType === 1) {
-      this.setState({ subNum: this.state.subNum + 1 });
-    } else if (subscribeType === 0) {
-      this.setState({ subNum: this.state.subNum - 1 });
-    }
     const msgObj = subTagObj.subTagList.data;
-    console.log(`subscribeType in:${subscribeType}attention:${attention}isSubscribe:${isSubscribe}`);
     dispatch({
       type: 'subTagList/subscribe',
       // 类别id（交易所公告等）
       payload: {
         labelId: msgObj.id,
-        subscribeType,
       },
     });
   }
@@ -81,37 +55,15 @@ class SubTagCard extends React.Component {
     const { subTagObj } = this.props;
 
     console.log('subTagObj', subTagObj);
-    const { data, isSubscribe } = subTagObj.subTagList;
+    const { data } = subTagObj.subTagList;
     // 关注数量，增加一个关注自动加一
     const { count } = data;
-    const { isEnter } = this.state;
-    console.log('isEnter', isEnter);
-    // 防止重复加载
-    if (!isEnter || isEnter.length === 0) {
-      console.log('count', count === 0);
-      if (count || count === 0) {
-        this.setState({ subNum: count, isEnter: [count] });
-      }
-    }
     const {
       attention, logo, name,
     } = data;
     // 已订阅
-    let subscribeType = 0;
     let subscribeContent = '';
-    console.log('isSubscribe', isSubscribe === 0);
-    if (isSubscribe === 0) {
-      subscribeType = 0;
-    } else if (isSubscribe === 1) {
-      subscribeType = 1;
-    } else if (attention === true) {
-      subscribeType = 0;
-    } else if (attention === false) {
-      subscribeType = 1;
-    }
-
-    console.log('subscribeType+++++', subscribeType);
-    if (subscribeType === 0) {
+    if (attention === true) {
       subscribeContent = (
         <Tag onChange={this.subscribe.bind(this)} selected>已订阅</Tag>
       );
@@ -132,7 +84,7 @@ class SubTagCard extends React.Component {
               <img className={style.coinArrow}src="/images/coinList/coinArrow.png" alt="-" />
             </Hammer>
             <img className={style.coinLogo} src={logo} alt="-" />
-            <span className={style.readNum}>{this.state.subNum}人关注</span>
+            <span className={style.readNum}>{count}人关注</span>
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>

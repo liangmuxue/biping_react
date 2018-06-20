@@ -73,14 +73,19 @@ export default modelExtend(pageModel, {
     *subscribe({ payload }, { put, call, select }) {
       console.log('query for msgUnLike,payload', payload);
       const st = yield select();
+      const { subTagList } = st;
+      // 当前的关注对象
+      console.log('============', subTagList);
+      const subTagObj = subTagList.data;
       const endpoint = 'attention';
       const filter = payload;
-      let { subscribeType } = payload;
       // 已经关注则取消关注
-      if (subscribeType === 0) {
-        subscribeType = 1;
-      } else if (subscribeType === 1) {
-        subscribeType = 0;
+      if (subTagObj.attention === true) {
+        subTagObj.attention = false;
+        subTagObj.count -= 1;
+      } else if (subTagObj.attention === false) {
+        subTagObj.attention = true;
+        subTagObj.count += 1;
       }
       const data = yield call(queryNormal, {
         endpoint,
@@ -93,7 +98,7 @@ export default modelExtend(pageModel, {
       console.log('subscribeId', data);
       yield put({
         type: 'subscribeSuccess',
-        payload: { subscribeType },
+        payload: subTagObj,
       });
     },
 
@@ -132,12 +137,11 @@ export default modelExtend(pageModel, {
       };
     },
     subscribeSuccess(state, action) {
-      console.log('msgLikeSuccess in', action.payload);
-      console.log('msgLikeSuccess state', state);
+      console.log('subscribeSuccess in', action.payload);
+      console.log('subscribeSuccess state', state);
       return {
         ...state,
         ...action.payload,
-        isSubscribe: action.payload.subscribeType, // 已经订阅
       };
     },
   },
