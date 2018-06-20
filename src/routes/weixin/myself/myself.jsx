@@ -47,7 +47,7 @@ class BasicInput extends BaseComponent {
       callback(new Error('At least four charactors for account'));
     }
   }
-  changePage(mesObj) {
+  changePage() {
     // 跳转到购买记录页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -55,7 +55,7 @@ class BasicInput extends BaseComponent {
     });
   }
 
-  changePageToLike(mesObj) {
+  changePageToLike() {
     // 跳转到我关注的页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
