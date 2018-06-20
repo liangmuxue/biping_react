@@ -74,7 +74,7 @@ class SubTagCard extends React.Component {
     }
     if (subscribeType) {
       subscribeContent = (
-        <Tag disabled>已订阅</Tag>
+        <Tag>已订阅</Tag>
       );
     } else {
       subscribeContent = (

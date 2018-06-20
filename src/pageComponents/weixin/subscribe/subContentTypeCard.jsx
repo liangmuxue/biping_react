@@ -111,6 +111,7 @@ class SubContentType extends React.Component {
                 <img src="/assets/images/coinList/headLogo1.png" className={style.subItemLogo} alt="" />
                 <span className={style.logoName}>热比特</span>
                 <span className={style.plzWaiting}>敬请期待</span>
+                <div style={{ clear: 'both' }} />
               </div>
             </div>
 
