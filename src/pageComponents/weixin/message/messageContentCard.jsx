@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from 'moment';
+import { NumberFormat } from '../../../utils/numberFormat.js';
 import style from './messageContent.less';
 
 /**
@@ -47,7 +48,8 @@ class MessageContent extends React.Component {
       timeMoment = `${moment(beginTime * 1000).format('HH:mm')} - ${
         moment(msgObj.createTime * 1000).format('HH:mm')}`;
     }
-
+    // 净流入
+    const { gainHoldFun } = NumberFormat;
     return (
       <div>
         <div className={style.transactionCoin} >
@@ -69,35 +71,46 @@ class MessageContent extends React.Component {
               </b>
             </span>
           </div>
-          {msgObj.direction ? <div>1分钟内成交量：
-            <span>
-              {(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount).toFixed(2)}，
+          {msgObj.direction ?
+            <div>1分钟内成交量：
+              <span>
+                {(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount).toFixed(2)}，
               其中买入{(msgObj.quoteList[0].buyAmount).toFixed(2)}、
               卖出{(msgObj.quoteList[0].sellAmount).toFixed(2)}
-            </span>
-          </div> : <div>{timeUp}分钟内成交量：<span>
-                                {(msgObj.buyAmount + msgObj.sellAmount).toFixed(2)}，
+              </span>
+            </div> :
+            <div>{timeUp}分钟内成交量：
+              <span>{(msgObj.buyAmount + msgObj.sellAmount).toFixed(2)}，
                 其中买入{(msgObj.buyAmount).toFixed(2)}、
                 卖出{(msgObj.sellAmount).toFixed(2)}
-                                                           </span>
-                                       </div>}
-          {msgObj.direction ? <div>1分钟内净流入量：<span>{msgObj.quoteList[0].gainHold ? msgObj.quoteList[0].gainHold.toFixed(10) : '-'}</span></div> : <div>{timeUp}分钟内净流入量：<span>{msgObj.gainHold ? msgObj.gainHold.toFixed(10) : '-'}</span></div>}
+              </span>
+            </div>}
+          {msgObj.direction ?
+            <div>{'1分钟内净流入量:'}
+              <span>{gainHoldFun(msgObj.quoteList[0].gainHold)}</span>
+            </div> :
+            <div>{timeUp}分钟内净流入量：
+              <span>{gainHoldFun(msgObj.gainHold)}
+              </span>
+            </div>}
 
-          {msgObj.direction ? <div>1分钟内涨幅：{msgObj.quoteList[0].gainDiffer > 0 ?
-            <span className={style.toUp}>
+          {msgObj.direction ?
+            <div>{'1分钟内涨幅：'}{msgObj.quoteList[0].gainDiffer > 0 ?
+              <span className={style.toUp}>
             +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
-            </span> :
-            <span className={style.toDown}>
-              {(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
-            </span>}
-                              </div> : <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
-            <span className={style.toUp}>
+              </span> :
+              <span className={style.toDown}>
+                {(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
+              </span>}
+            </div> :
+            <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
+              <span className={style.toUp}>
             +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-                                </span> :
-                                <span className={style.toDown}>
-              {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-            </span>}
-          </div>}
+              </span> :
+              <span className={style.toDown}>
+                {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+              </span>}
+            </div>}
 
         </div>
         <div className={msgObj.direction ? style.hide : style.coinTable} >
@@ -117,7 +130,7 @@ class MessageContent extends React.Component {
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
               <div className={style.tableChg}><span className={msg.gainDiffer >= '0' ? style.toUp : style.toDown}><span>{msg.gainDiffer > 0 ? '+' : ' '}</span>{msg.gainDiffer ? `${(msg.gainDiffer * 100).toString().substr(0, 4)}%` : '-' }</span></div>
-              <div className={style.tableIncome}>{msg.gainHold ? msg.gainHold.toString().substr(0, 8) : msg.gainHold}</div>
+              <div className={style.tableIncome}>{gainHoldFun(msg.gainHold)}</div>
             </div>
           </div>
         ))}
