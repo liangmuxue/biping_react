@@ -106,6 +106,30 @@ class SubContentType extends React.Component {
                             subscribeClick={this.subscribeItem.bind(this)}
                           />))}
             </div>
+            <div className={style.waiting}>
+              <div className={style.borderBox}>
+                <img src="/assets/images/coinList/headLogo1.png" className={style.subItemLogo} alt="" />
+                <span className={style.logoName}>热比特</span>
+                <span className={style.plzWaiting}>敬请期待</span>
+                <div style={{ clear: 'both' }} />
+              </div>
+            </div>
+
+            <div className={style.waiting}>
+              <div className={style.borderBox}>
+                <img src="/assets/images/coinList/headLogo2.png" className={style.subItemLogo} alt="" />
+                <span className={style.logoName}>LBANK</span>
+                <span className={style.plzWaiting}>敬请期待</span>
+              </div>
+            </div>
+
+            <div className={style.waiting}>
+              <div className={style.borderBox}>
+                <img src="/assets/images/coinList/headLogo3.png" className={style.subItemLogo} alt="" />
+                <span className={style.logoName}>币安</span>
+                <span className={style.plzWaiting}>敬请期待</span>
+              </div>
+            </div>
           </div>
           <div >
             <div className={style.coinSet}>异动时间段选择</div>

@@ -2,7 +2,6 @@ import 'antd-mobile/es/tag/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
 import Tag from 'antd-mobile/lib/tag/index';
-import HeaderBar from '../../../components/headerBar';
 import style from './subTag.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
@@ -17,8 +16,13 @@ class SubTagCard extends React.Component {
   constructor(props) {
     super(props);
     console.log('props in MessageCard', props);
-    this.state = {
-    };
+  }
+  componentWillMount() {
+    console.log('componentWillMount SubTagCard', this.props);
+    this.setState({
+      subNum: -1,
+      isEnter: [],
+    });
   }
   backTo(e) {
     e.preventDefault();
@@ -45,13 +49,31 @@ class SubTagCard extends React.Component {
   subscribe() {
     const { subTagObj } = this.props;
     const { dispatch } = subTagObj;
+    const { isSubscribe, data } = subTagObj.subTagList;
+    const { attention } = data;
+    let subscribeType = 0;
+    if (isSubscribe === 0) {
+      subscribeType = 0;
+    } else if (isSubscribe === 1) {
+      subscribeType = 1;
+    } else if (attention === true) {
+      subscribeType = 0;
+    } else if (attention === false) {
+      subscribeType = 1;
+    }
+    if (subscribeType === 1) {
+      this.setState({ subNum: this.state.subNum + 1 });
+    } else if (subscribeType === 0) {
+      this.setState({ subNum: this.state.subNum - 1 });
+    }
     const msgObj = subTagObj.subTagList.data;
-    console.log(`subscribe in:${msgObj.id}`);
+    console.log(`subscribeType in:${subscribeType}attention:${attention}isSubscribe:${isSubscribe}`);
     dispatch({
       type: 'subTagList/subscribe',
       // 类别id（交易所公告等）
       payload: {
         labelId: msgObj.id,
+        subscribeType,
       },
     });
   }
@@ -61,18 +83,43 @@ class SubTagCard extends React.Component {
     console.log('subTagObj', subTagObj);
     const { data, isSubscribe } = subTagObj.subTagList;
     // 关注数量，增加一个关注自动加一
-    let { count } = data;
+    const { count } = data;
+    const { isEnter } = this.state;
+    console.log('isEnter', isEnter);
+    // 防止重复加载
+    if (!isEnter || isEnter.length === 0) {
+      console.log('count', count === 0);
+      if (count || count === 0) {
+        this.setState({ subNum: count, isEnter: [count] });
+      }
+    }
     const {
       attention, logo, name,
     } = data;
-    let subscribeType = true;
-    if (isSubscribe) {
-      subscribeType = isSubscribe;
-      count += 1;
-    } else {
-      subscribeType = attention;
+    // 已订阅
+    let subscribeType = 0;
+    let subscribeContent = '';
+    console.log('isSubscribe', isSubscribe === 0);
+    if (isSubscribe === 0) {
+      subscribeType = 0;
+    } else if (isSubscribe === 1) {
+      subscribeType = 1;
+    } else if (attention === true) {
+      subscribeType = 0;
+    } else if (attention === false) {
+      subscribeType = 1;
     }
 
+    console.log('subscribeType+++++', subscribeType);
+    if (subscribeType === 0) {
+      subscribeContent = (
+        <Tag onChange={this.subscribe.bind(this)} selected>已订阅</Tag>
+      );
+    } else {
+      subscribeContent = (
+        <Tag onChange={this.subscribe.bind(this)}>订<u style={{ padding: '0 .137rem' }} />阅</Tag>
+      );
+    }
     return (
       <div >
         <div className={style.coinMain}>
@@ -85,11 +132,11 @@ class SubTagCard extends React.Component {
               <img className={style.coinArrow}src="/images/coinList/coinArrow.png" alt="-" />
             </Hammer>
             <img className={style.coinLogo} src={logo} alt="-" />
-            <span className={style.readNum}>{count}人关注</span>
+            <span className={style.readNum}>{this.state.subNum}人关注</span>
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
-                <Tag onClick={this.subscribe.bind(this)}>{ subscribeType === true ? '订阅' : '已订阅'}</Tag>
+                {subscribeContent}
               </div>
             </div>
           </div>

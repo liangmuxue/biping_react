@@ -27,6 +27,7 @@
   top: 1.2rem;
   z-index: 999;
   left: 50%;
+  border-radius: 50%;
   margin-left: -1.03rem;
 }
 .readNum{
@@ -52,33 +53,40 @@
   padding-top: .68rem;
 }
 .btnBox{
-  width: 1.64rem;
   height: .66rem;
   margin: 0 auto;
   padding: .4rem 0;
 }
 :global(.am-tag-active){
-  width: 1.64rem;
+  width: auto;
   height: .66rem;
   line-height: .66rem;
-  background: #428BFF;
+  color: #000;
+  background: #DDD;
   border-radius: .08rem;
-  color:#fff;
+
 }
 :global(.am-tag-normal){
-  width: 1.64rem;
+  width: auto;
   height: .66rem;
   line-height: .66rem;
-  background: #DDD;
-  color: #000;
+  color:#fff;
+  background: #428BFF;
   border-radius: .08rem;
 }
 .subscribed::before{
   border: none !important;
 }
+:global(.am-tag-normal::before){
+  border: none !important;
+}
+:global(.am-tag-active::before){
+  border: none !important;
+}
 .subscribe span{
   font-size: .36rem;
 }
+
 
 
 //列表啊

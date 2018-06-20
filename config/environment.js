@@ -51,10 +51,10 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
-  ENV.host = 'http://wp.test.tnb99.net';
+  ENV.host = 'http://wp.bipingcoin.com';
   //  ENV.host = 'http://twp.test.tnb99.net';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
-  ENV.messageHost = 'http://wx.test.tnb99.net';
+  ENV.messageHost = 'http://wx.bipingcoin.com';
   //  ENV.messageHost = 'http://twx.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
