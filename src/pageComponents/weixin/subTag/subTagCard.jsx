@@ -2,7 +2,6 @@ import 'antd-mobile/es/tag/style/index.css';
 import Hammer from 'react-hammerjs';
 import React from 'react';
 import Tag from 'antd-mobile/lib/tag/index';
-import HeaderBar from '../../../components/headerBar';
 import style from './subTag.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
@@ -66,13 +65,22 @@ class SubTagCard extends React.Component {
       attention, logo, name,
     } = data;
     let subscribeType = true;
+    let subscribeContent = '';
     if (isSubscribe) {
       subscribeType = isSubscribe;
       count += 1;
     } else {
       subscribeType = attention;
     }
-
+    if (subscribeType) {
+      subscribeContent = (
+        <Tag disabled>已订阅</Tag>
+      );
+    } else {
+      subscribeContent = (
+        <Tag onChange={this.subscribe.bind(this)}>订阅</Tag>
+      );
+    }
     return (
       <div >
         <div className={style.coinMain}>
@@ -89,7 +97,7 @@ class SubTagCard extends React.Component {
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
               <div className={style.btnBox}>
-                <Tag onClick={this.subscribe.bind(this)}>{ subscribeType === true ? '订阅' : '已订阅'}</Tag>
+                {subscribeContent}
               </div>
             </div>
           </div>
