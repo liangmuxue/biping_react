@@ -115,7 +115,7 @@ class SubTagCard extends React.Component {
       );
     } else {
       subscribeContent = (
-        <Tag onChange={this.subscribe.bind(this)}>订阅</Tag>
+        <Tag onChange={this.subscribe.bind(this)}>订 阅</Tag>
       );
     }
     return (
