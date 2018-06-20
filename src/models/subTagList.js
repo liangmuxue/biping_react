@@ -75,6 +75,13 @@ export default modelExtend(pageModel, {
       const st = yield select();
       const endpoint = 'attention';
       const filter = payload;
+      let { subscribeType } = payload;
+      // 已经关注则取消关注
+      if (subscribeType === 0) {
+        subscribeType = 1;
+      } else if (subscribeType === 1) {
+        subscribeType = 0;
+      }
       const data = yield call(queryNormal, {
         endpoint,
         filter,
@@ -86,7 +93,7 @@ export default modelExtend(pageModel, {
       console.log('subscribeId', data);
       yield put({
         type: 'subscribeSuccess',
-        payload: data,
+        payload: { subscribeType },
       });
     },
 
@@ -130,7 +137,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
-        isSubscribe: true, // 已经订阅
+        isSubscribe: action.payload.subscribeType, // 已经订阅
       };
     },
   },

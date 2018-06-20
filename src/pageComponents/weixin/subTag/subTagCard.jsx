@@ -44,6 +44,16 @@ class SubTagCard extends React.Component {
   subscribe() {
     const { subTagObj } = this.props;
     const { dispatch } = subTagObj;
+    const { isSubscribe, data } = subTagObj.subTagList;
+    const { attention } = data;
+    let subscribeType = 0;
+    if (isSubscribe) {
+      subscribeType = isSubscribe;
+    } else if (attention === true) {
+      subscribeType = 0;
+    } else if (attention === false) {
+      subscribeType = 1;
+    }
     const msgObj = subTagObj.subTagList.data;
     console.log(`subscribe in:${msgObj.id}`);
     dispatch({
@@ -51,6 +61,7 @@ class SubTagCard extends React.Component {
       // 类别id（交易所公告等）
       payload: {
         labelId: msgObj.id,
+        subscribeType,
       },
     });
   }
@@ -64,17 +75,27 @@ class SubTagCard extends React.Component {
     const {
       attention, logo, name,
     } = data;
-    let subscribeType = true;
+    // 已订阅
+    let subscribeType = 0;
     let subscribeContent = '';
-    if (isSubscribe) {
-      subscribeType = isSubscribe;
-      count += 1;
-    } else {
-      subscribeType = attention;
+    if (isSubscribe && isSubscribe === 0) {
+      subscribeType = 0;
+    } else if (isSubscribe && isSubscribe === 1) {
+      subscribeType = 1;
+    } else if (attention === true) {
+      subscribeType = 0;
+    } else if (attention === false) {
+      subscribeType = 1;
     }
-    if (subscribeType) {
+    if (isSubscribe && isSubscribe === 0) {
+      count += 1;
+    } else if (isSubscribe && isSubscribe === 1) {
+      count -= 1;
+    }
+    console.log('subscribeType+++++', subscribeType);
+    if (subscribeType === 0) {
       subscribeContent = (
-        <Tag>已订阅</Tag>
+        <Tag onChange={this.subscribe.bind(this)} selected>已订阅</Tag>
       );
     } else {
       subscribeContent = (
