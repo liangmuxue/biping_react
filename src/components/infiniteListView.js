@@ -60,12 +60,20 @@ class InfiniteListView extends React.Component {
       });
     }
   }
-
   render() {
     const {
-      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list, needChange,
+      onEndReached, pagination, onRefresh, renderRow, list, needChange,
     } = this.props;
     console.log('render in infi', this.props);
+    // 自定义头部
+    const pageHeads = () => {
+      let { pageHead } = this.props;
+      console.log('pageHead', pageHead);
+      if (!pageHead) {
+        pageHead = (<span />);
+      }
+      return pageHead;
+    };
     const endReached = (event) => {
       console.log('reach end', event);
       console.log('reach end pagination', pagination);
@@ -128,6 +136,7 @@ class InfiniteListView extends React.Component {
     if (pagination) {
       ({ pageSize } = pagination);
     }
+
     const renderRowInner = (rowData, sectionID, rowID) => {
       console.log('renderRowInner rowData:', rowData);
       if (rowData.noMoreTip && rowData.noMoreTip === 1) {
@@ -143,6 +152,7 @@ class InfiniteListView extends React.Component {
           dataSource={this.state.dataSource}
           renderRow={renderRowInner}
           renderSeparator={separator}
+          renderHeader={pageHeads}
           renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
           className="am-list"
           pageSize={pageSize}
