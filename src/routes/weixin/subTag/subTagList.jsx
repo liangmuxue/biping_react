@@ -23,6 +23,10 @@ class SubTag extends BaseComponent {
     console.log('props in MessageCard', props);
     this.state = {
     };
+    this.pageDef = null;
+    this.setPageRef = (element) => {
+      this.pageDef = element;
+    };
   }
 
   componentWillMount() {
@@ -66,6 +70,10 @@ class SubTag extends BaseComponent {
       },
     });
   }
+  onEndReachedAttach() {
+    console.log('onEndReachedAttach in', this.pageDef);
+    this.pageDef.style.top = 42;
+  }
   backTo() {
     console.log('back to in');
     this.props.dispatch({
@@ -99,14 +107,17 @@ class SubTag extends BaseComponent {
     const key = 'subTag';
     return (
       <div data-name="subTagList">
-        <div className={style.ufFixed}>
+        <div data-name="subtagHeader" className={style.ufFixed}>
           <Hammer onTap={this.backTo.bind(this)}>
             <img className={style.coinArrow} src="/images/coinList/coinArrow.png" alt="-" />
           </Hammer>
         </div>
+        <div>
         <InfiniteListView
+          ref={this.setPageRef}
           noPullRefresh
           bkey={key}
+          onEndReachedAttach={this.onEndReachedAttach.bind(this)}
           needChange
           {...messageListProps}
           pageHead={<SubTagCard subTagObj={this.props} />}
@@ -115,6 +126,7 @@ class SubTag extends BaseComponent {
           renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }} />)}
           pageSize={this.props.subTagList.paginationDef.pageSize}
         />
+      
       </div>
     );
   }
