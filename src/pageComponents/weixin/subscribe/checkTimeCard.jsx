@@ -34,18 +34,46 @@ class CheckTime extends React.Component {
       checkItem,
     };
   }
+  // 时间选择确定
   checkTimeSubmit() {
     console.log('checkTimeSubmit:', this.state.checkItem);
-    this.props.checkTimeSubmit(this.state.checkItem);
+    const itemObj = this.state.checkItem;
+    const { remainDate, typeId, typeName } = this.props.checkTimeObj.subDetailData.data;
+    if (remainDate >= 0) {
+      console.log('checkTimeSubmit', itemObj);
+      // 时间选择确定
+      this.props.checkTimeObj.dispatch({
+        type: 'subDetail/checkTimeSubmit',
+        payload: {
+          subItem: itemObj,
+        },
+      });
+    } else {
+      // 如果大类别没有开通，跳转到开通页面
+      this.props.checkTimeObj.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'toOpen',
+          params: { typeId, typeName, backPath: 'subDetail' },
+        },
+      });
+    }
   }
   // 关闭
   closeShare() {
+    const { dispatch } = this.props.checkTimeObj;
+    console.log('closeShare in');
+    dispatch({
+      type: 'subDetail/closeShare',
+    });
     console.log('subscribe in,props:', this.state.checkItem);
-    this.props.closeShare();
   }
   // 打开
   shareClick() {
-    this.props.shareClick();
+    const { dispatch } = this.props.checkTimeObj;
+    dispatch({
+      type: 'subDetail/chooseTime',
+    });
   }
   // 时间选择
   switchPayType(item) {
@@ -81,7 +109,7 @@ class CheckTime extends React.Component {
     let { chooseHide } = checkTimeObj;
     if (!chooseHide) {
       chooseHide = false;
-      document.body.removeEventListener('touchmove', this.tmListener);
+      // document.body.removeEventListener('touchmove', this.tmListener);
     }
     // 选择时间
     const { CheckboxItem } = Checkbox;

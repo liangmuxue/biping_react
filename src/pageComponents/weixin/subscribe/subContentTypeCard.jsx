@@ -26,14 +26,6 @@ class SubContentType extends React.Component {
     this.state = {
     };
   }
-  // 打开时间段选择
-  shareClick(event) {
-    this.props.shareClick();
-  }
-  // 关闭时间段选择
-  closeShare() {
-    this.props.closeShare();
-  }
   // 订阅交易所
   subscribeItem(itemObj) {
     this.props.subscribeItem(itemObj);
@@ -45,11 +37,6 @@ class SubContentType extends React.Component {
   gainOrLose(itemObj) {
     console.log('gainOrLose2', itemObj);
     this.props.gainOrLose(itemObj);
-  }
-  // 时间选择提交
-  checkTimeSubmit(itemObj) {
-    console.log('checkTimeSubmit', itemObj);
-    this.props.checkTimeSubmit(itemObj);
   }
   render() {
     const { subTypeContent } = this.props;
@@ -69,9 +56,6 @@ class SubContentType extends React.Component {
     const checkTime = (
       <CheckTime
         checkTimeObj={subTypeContent}
-        closeShare={this.closeShare.bind(this)}
-        shareClick={this.shareClick.bind(this)}
-        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
       />
     );
     const buyOrPayContent = (
