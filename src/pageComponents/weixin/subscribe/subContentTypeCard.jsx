@@ -92,8 +92,8 @@ class SubContentType extends React.Component {
             </div>
             <div className={style.waiting}>
               <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo1.png" className={style.subItemLogo} alt="" />
-                <span className={style.logoName}>热比特</span>
+                <img src="/images/coinList/okex.png" className={style.subItemLogo} alt="" />
+                <span className={style.logoName}>OKEx</span>
                 <span className={style.plzWaiting}>敬请期待</span>
                 <div style={{ clear: 'both' }} />
               </div>
@@ -101,15 +101,7 @@ class SubContentType extends React.Component {
 
             <div className={style.waiting}>
               <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo2.png" className={style.subItemLogo} alt="" />
-                <span className={style.logoName}>LBANK</span>
-                <span className={style.plzWaiting}>敬请期待</span>
-              </div>
-            </div>
-
-            <div className={style.waiting}>
-              <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo3.png" className={style.subItemLogo} alt="" />
+                <img src="/images/coinList/bian.png" className={style.subItemLogo} alt="" />
                 <span className={style.logoName}>币安</span>
                 <span className={style.plzWaiting}>敬请期待</span>
               </div>
