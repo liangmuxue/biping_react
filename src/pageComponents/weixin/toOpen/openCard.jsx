@@ -36,13 +36,6 @@ class OpenCard extends React.Component {
           <div><img src={openObj.headUrl} className={style.minePic} /></div>
           <div className={style.mineName}>{openObj.name}</div>
         </div>
-
-        <div className={ifEnterGroup === 0 ? style.introduce : style.hide}>
-          <img src="/images/toOpen/open_bg.png" className={style.openbg} />
-          <WingBlank className={style.transfrom}>
-            <Button type="primary" className={style.toGret} onClick={this.buttonClick.bind(this)}>免费开通</Button><WhiteSpace />
-          </WingBlank>
-        </div>
       </div>
     );
   }
