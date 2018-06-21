@@ -217,6 +217,7 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+  // 带标签的列表页
   tagListClick(msgObj) {
     const { dispatch, msgDetailData } = this.props;
     const msgDetailDataObj = msgDetailData.data;
@@ -388,7 +389,6 @@ class MsgDetail extends BaseComponent {
                 {msgObj.tagList.map(msg => (
                   <li className={style.labelsList}>
                     <Button
-                      onClick={() => this.tagListClick(msg)}
                       className={style.similarList}
                     >{msg.name}
                     </Button>
