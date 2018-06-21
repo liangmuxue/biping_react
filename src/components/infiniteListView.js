@@ -62,7 +62,7 @@ class InfiniteListView extends React.Component {
   }
   render() {
     const {
-      onEndReached, pagination, onRefresh, renderRow, list, needChange,
+      onEndReached, pagination, onRefresh, renderRow, list, needChange, noPullRefresh,
     } = this.props;
     console.log('render in infi', this.props);
     // 自定义头部
@@ -101,7 +101,9 @@ class InfiniteListView extends React.Component {
       const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
       const needLv = lvDom.getElementsByClassName('am-list-view-scrollview')[0];
       const delateMargin = lvDom.getElementsByClassName('list-view-section-body')[0];
-      console.log(`ind.style.transform:${ind.style.transform}`);
+      if (!ind || !ind.style || !ind.style.transform) {
+        return;
+      }
       const ta = ind.style.transform.split(',');
       let yp = ta[1];
       yp = yp.substr(0, yp.length - 2);
@@ -145,6 +147,17 @@ class InfiniteListView extends React.Component {
         return renderRow(rowData, sectionID, rowID);
       }
     };
+    let pullToRefresh = (<PullToRefresh
+      onRefresh={onRefreshAct}
+      distanceToRefresh={25}
+      indicator={{
+        release: <ActivityIndicator text="正在加载" size="small" />,
+        finish: <div />,
+      }}
+    />);
+    if (noPullRefresh) {
+      pullToRefresh = null;
+    }
     const listView = (
       <div onTouchMove={touchMoveAct} className={styles.touchMove}>
         <ListView
@@ -158,16 +171,9 @@ class InfiniteListView extends React.Component {
           pageSize={pageSize}
           style={{
             height: this.props.height,
-
+            top: this.props.top,
           }}
-          pullToRefresh={<PullToRefresh
-            onRefresh={onRefreshAct}
-            distanceToRefresh={25}
-            indicator={{
-              release: <ActivityIndicator text="正在加载" size="small" />,
-              finish: <div />,
-            }}
-          />}
+          pullToRefresh={pullToRefresh}
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
