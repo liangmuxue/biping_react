@@ -18,7 +18,7 @@ const fetch = (endpoint, options) => {
   // 定义标准请求，加入协议头信息
   const axiosInst = axios.create({
     baseURL: `${API_ROOT}/webInterface`,
-    timeout: 3000,
+    timeout: 6000,
     retry: 3,
     retryDelay: 1000,
     headers: {
