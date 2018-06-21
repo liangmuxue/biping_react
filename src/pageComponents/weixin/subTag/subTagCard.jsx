@@ -72,17 +72,16 @@ class SubTagCard extends React.Component {
         <Tag onChange={this.subscribe.bind(this)}>订<u style={{ padding: '0 .137rem' }} />阅</Tag>
       );
     }
+    const docWidth = document.querySelector('body').offsetWidth;
+    console.log(`docWidth:${docWidth}`);
     return (
-      <div >
+      <div style={{ width: docWidth, marginTop: -30 }}>
         <div className={style.coinMain}>
           <div className={style.bgBox} >
             <div className={style.mask} />
             <img className={style.bgPic} src={logo} alt="-" />
           </div>
           <div>
-            <Hammer onTap={this.backTo.bind(this)}>
-              <img className={style.coinArrow}src="/images/coinList/coinArrow.png" alt="-" />
-            </Hammer>
             <img className={style.coinLogo} src={logo} alt="-" />
             <span className={style.readNum}>{count}人关注</span>
             <div style={{ background: '#fff' }}>

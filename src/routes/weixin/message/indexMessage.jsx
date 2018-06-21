@@ -130,6 +130,7 @@ class MessageList extends BaseComponent {
           bkey={key}
           {...messageListProps}
           height={height}
+          top={0}
           pageSize={this.props.indexMessage.paginationDef.pageSize}
         />
       </div>
