@@ -50,15 +50,15 @@ const pcEntity = {
         },
       });
       // 底部菜单切换埋点
-      const opt = { footName: code };
-      yield put({
-        type: 'app/analysis',
-        payload: {
-          page: siteAnalysis.pageConst.FOOTMENU,
-          action: siteAnalysis.actConst.BROWSE,
-          opt,
-        },
-      });
+      // const opt = { footName: code };
+      // yield put({
+      //   type: 'app/analysis',
+      //   payload: {
+      //     page: siteAnalysis.pageConst.FOOTMENU,
+      //     action: siteAnalysis.actConst.BROWSE,
+      //     opt,
+      //   },
+      // });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
