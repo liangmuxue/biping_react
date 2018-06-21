@@ -157,6 +157,7 @@ export const siteAnalysis = {
     ReactGA.set({ userId: systemUser.uid });
     zhuge.identify(systemUser.uid, {
       typeCode: systemUser.typeCode,
+      name: systemUser.name,
     });
   },
 };

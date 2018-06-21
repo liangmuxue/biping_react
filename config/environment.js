@@ -12,7 +12,7 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://localhost:8280';
   // ENV.host = 'http://10.0.107.231:8280';
   ENV.host = 'http://10.0.108.137:8280';
-  ENV.host = 'http://twp.test.tnb99.net';
+  ENV.host = 'http://wp.bipingcoin.com';
   // ENV.host = 'http://wp.test.tnb99.net';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
