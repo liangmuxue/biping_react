@@ -109,15 +109,18 @@ class MsgDetail extends BaseComponent {
 
     // 替换过空格之后的内容
     const replaceVal = document.getElementById('shareArticle');
-    const imgs = replaceVal.querySelectorAll('img');
     const srcs = [];
-    if (imgs && imgs.length > 0) {
-      for (let i = 0, j = imgs.length; i < j; i++) {
-        // 解决跨域,传递现有的img、src数组
-        srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
-        imgs[i].setAttribute('id', `imgUrl${i}`);
+    if (replaceVal && replaceVal !== null) {
+      const imgs = replaceVal.querySelectorAll('img');
+      if (imgs && imgs.length > 0) {
+        for (let i = 0, j = imgs.length; i < j; i++) {
+          // 解决跨域,传递现有的img、src数组
+          srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+          imgs[i].setAttribute('id', `imgUrl${i}`);
+        }
       }
     }
+
     const { dispatch } = this.props;
     console.log('ppppppppp', srcs);
     dispatch({
