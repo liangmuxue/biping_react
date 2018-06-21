@@ -62,7 +62,7 @@ class InfiniteListView extends React.Component {
   }
   render() {
     const {
-      onEndReached, pagination, onRefresh, renderRow, list, needChange, noPullRefresh,
+      onEndReachedAttach, onEndReached, pagination, onRefresh, renderRow, list, needChange, noPullRefresh,
     } = this.props;
     console.log('render in infi', this.props);
     // 自定义头部
@@ -91,6 +91,11 @@ class InfiniteListView extends React.Component {
       } else {
         // 调用父级方法，进行分页请求
         onEndReached();
+        console.log('onEndReached call');
+        if (onEndReachedAttach) {
+          console.log('onEndReachedAttach call');
+          onEndReachedAttach();
+        }
       }
     };
 
@@ -98,6 +103,9 @@ class InfiniteListView extends React.Component {
       console.log('onTouchMove in', event);
       // 需要手工限制indecate间距
       const lvDom = ReactDOM.findDOMNode(this.lv);
+      if (this.props.top) {
+        console.log(`this.props.top:${this.props.top}`);
+      }
       const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
       const needLv = lvDom.getElementsByClassName('am-list-view-scrollview')[0];
       const delateMargin = lvDom.getElementsByClassName('list-view-section-body')[0];
