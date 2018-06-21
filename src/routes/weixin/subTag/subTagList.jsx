@@ -112,7 +112,6 @@ class SubTag extends BaseComponent {
             <img className={style.coinArrow} src="/images/coinList/coinArrow.png" alt="-" />
           </Hammer>
         </div>
-        <div>
         <InfiniteListView
           ref={this.setPageRef}
           noPullRefresh
@@ -126,7 +125,6 @@ class SubTag extends BaseComponent {
           renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }} />)}
           pageSize={this.props.subTagList.paginationDef.pageSize}
         />
-      
       </div>
     );
   }
