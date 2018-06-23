@@ -389,7 +389,6 @@ class MsgDetail extends BaseComponent {
                 {msgObj.tagList.map(msg => (
                   <li className={style.labelsList}>
                     <Button
-                      onClick={() => this.tagListClick(msg)}
                       className={style.similarList}
                     >{msg.name}
                     </Button>
