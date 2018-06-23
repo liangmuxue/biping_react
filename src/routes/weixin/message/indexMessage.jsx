@@ -92,16 +92,18 @@ class MessageList extends BaseComponent {
     }
     // 未订阅小类别,需要判断list为空
     if (flag && flag === 1002) {
-      return (<div className={styles.empty}>
-        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
+      return (
+        <div className={styles.empty}>
+          <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
+          <div className={styles.notread}>暂无消息</div>
+        </div>);
     }
     if (flag === 0 && this.props.indexMessage.list.length === 0) {
-      return (<div className={styles.empty}>
-        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
+      return (
+        <div className={styles.empty}>
+          <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
+          <div className={styles.notread}>暂无消息</div>
+        </div>);
     }
 
     // 加工数据
