@@ -273,6 +273,14 @@ export default modelExtend(pageModel, {
       const { subDetail } = st;
       const subObj = subDetail.subDetailData.data;
       const filter = {};
+      // 放开屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: false,
+        },
+      });
+
       // 发起订阅请求
       yield call(queryNormal, {
         endpoint: 'subscribeTransBatch',
@@ -338,6 +346,19 @@ export default modelExtend(pageModel, {
       // 清空本地数据
       yield put({
         type: 'emptyData',
+      });
+    },
+    *closeShare({ payload }, { put }) {
+      // 放开屏幕滑动
+      yield put({
+        type: 'app/touchMoveFlagProc',
+        payload: {
+          touchMoveDisable: false,
+        },
+      });
+      yield put({
+        type: 'closeShareSuc',
+        payload,
       });
     },
   },

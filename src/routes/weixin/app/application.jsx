@@ -26,12 +26,17 @@ class HomePage extends Component {
     console.log('componentWillMount in,innerPageDefs', innerPageDefs);
   }
   componentDidMount() {
+    const { dispatch } = this.props;
     window.addEventListener(
       'popstate',
       (event) => {
-        console.log('back button click', event);
+        console.log('back button click', event.state);
         const dom = this.pageDef.querySelector("div[type='headerBack']");
         console.log('ref dom:', dom);
+        dispatch({
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { pageName: event.state.pageName, backArrow: true },
+        });
       },
       false,
     );

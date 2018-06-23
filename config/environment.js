@@ -11,9 +11,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.106.10:8280';
   // ENV.host = 'http://localhost:8280';
   // ENV.host = 'http://10.0.107.231:8280';
-  // ENV.host = 'http://10.0.107.32:8280';
-  ENV.host = 'http://twp.test.tnb99.net';
-  // ENV.host = 'http://wp.test.tnb99.net';
+  ENV.host = 'http://10.0.108.137:8280';
+  // ENV.host = 'http://wp.bipingcoin.com';
 
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';

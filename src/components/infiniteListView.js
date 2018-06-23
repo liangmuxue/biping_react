@@ -60,12 +60,20 @@ class InfiniteListView extends React.Component {
       });
     }
   }
-
   render() {
     const {
-      loading, onEndReached, pagination, bkey, onRefresh, renderRow, list, needChange,
+      onEndReachedAttach, onEndReached, pagination, onRefresh, renderRow, list, needChange, noPullRefresh,
     } = this.props;
     console.log('render in infi', this.props);
+    // 自定义头部
+    const pageHeads = () => {
+      let { pageHead } = this.props;
+      console.log('pageHead', pageHead);
+      if (!pageHead) {
+        pageHead = (<span />);
+      }
+      return pageHead;
+    };
     const endReached = (event) => {
       console.log('reach end', event);
       console.log('reach end pagination', pagination);
@@ -83,6 +91,11 @@ class InfiniteListView extends React.Component {
       } else {
         // 调用父级方法，进行分页请求
         onEndReached();
+        console.log('onEndReached call');
+        if (onEndReachedAttach) {
+          console.log('onEndReachedAttach call');
+          onEndReachedAttach();
+        }
       }
     };
 
@@ -90,10 +103,15 @@ class InfiniteListView extends React.Component {
       console.log('onTouchMove in', event);
       // 需要手工限制indecate间距
       const lvDom = ReactDOM.findDOMNode(this.lv);
+      if (this.props.top) {
+        console.log(`this.props.top:${this.props.top}`);
+      }
       const ind = lvDom.getElementsByClassName('am-pull-to-refresh-content')[0];
       const needLv = lvDom.getElementsByClassName('am-list-view-scrollview')[0];
       const delateMargin = lvDom.getElementsByClassName('list-view-section-body')[0];
-      console.log(`ind.style.transform:${ind.style.transform}`);
+      if (!ind || !ind.style || !ind.style.transform) {
+        return;
+      }
       const ta = ind.style.transform.split(',');
       let yp = ta[1];
       yp = yp.substr(0, yp.length - 2);
@@ -128,6 +146,7 @@ class InfiniteListView extends React.Component {
     if (pagination) {
       ({ pageSize } = pagination);
     }
+
     const renderRowInner = (rowData, sectionID, rowID) => {
       console.log('renderRowInner rowData:', rowData);
       if (rowData.noMoreTip && rowData.noMoreTip === 1) {
@@ -136,6 +155,17 @@ class InfiniteListView extends React.Component {
         return renderRow(rowData, sectionID, rowID);
       }
     };
+    let pullToRefresh = (<PullToRefresh
+      onRefresh={onRefreshAct}
+      distanceToRefresh={25}
+      indicator={{
+        release: <ActivityIndicator text="正在加载" size="small" />,
+        finish: <div />,
+      }}
+    />);
+    if (noPullRefresh) {
+      pullToRefresh = null;
+    }
     const listView = (
       <div onTouchMove={touchMoveAct} className={styles.touchMove}>
         <ListView
@@ -143,21 +173,15 @@ class InfiniteListView extends React.Component {
           dataSource={this.state.dataSource}
           renderRow={renderRowInner}
           renderSeparator={separator}
+          renderHeader={pageHeads}
           renderFooter={() => (<div style={{ padding: 30, textAlign: 'center' }} />)}
           className="am-list"
           pageSize={pageSize}
           style={{
             height: this.props.height,
-
+            top: this.props.top,
           }}
-          pullToRefresh={<PullToRefresh
-            onRefresh={onRefreshAct}
-            distanceToRefresh={25}
-            indicator={{
-              release: <ActivityIndicator text="正在加载" size="small" />,
-              finish: <div />,
-            }}
-          />}
+          pullToRefresh={pullToRefresh}
           onScroll={() => {}}
           scrollRenderAheadDistance={500}
           onEndReached={endReached}
