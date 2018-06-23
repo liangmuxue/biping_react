@@ -9,6 +9,10 @@ export const siteAnalysis = {
       code: 'mainpage',
       zh: '首页面',
     },
+    PVCOUNT: {
+      code: 'pvcount',
+      zh: 'pv统计',
+    },
     MESSAGELIST: {
       code: 'messageList',
       zh: '某大类消息列表',

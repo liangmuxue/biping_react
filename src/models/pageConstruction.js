@@ -75,6 +75,15 @@ const pcEntity = {
       // if(matchFooterMenu&&matchFooterMenu.length>0){
       //   history.popState();
       // }
+      // 统计pv埋点
+      yield put({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.PVCOUNT,
+          action: siteAnalysis.actConst.BROWSE,
+        },
+      });
+
       console.log('payloadswitch', payload);
       // 页面名称转大写
       let upPageName = null;
