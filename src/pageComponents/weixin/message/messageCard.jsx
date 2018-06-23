@@ -47,7 +47,7 @@ class MessageCard extends React.Component {
     return (
       <div className={styles.mesList} >
         <Card full>
-          <Hammer>
+          <Hammer onTap={this.logoClick.bind(this)}>
             <div className={styles.listLogo}> <img src={msgObj.img} alt="-" /> </div>
           </Hammer>
           <Hammer onTap={this.handleTap.bind(this)}>
