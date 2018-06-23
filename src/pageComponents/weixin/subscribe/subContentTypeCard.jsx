@@ -26,14 +26,6 @@ class SubContentType extends React.Component {
     this.state = {
     };
   }
-  // 打开时间段选择
-  shareClick(event) {
-    this.props.shareClick();
-  }
-  // 关闭时间段选择
-  closeShare() {
-    this.props.closeShare();
-  }
   // 订阅交易所
   subscribeItem(itemObj) {
     this.props.subscribeItem(itemObj);
@@ -45,11 +37,6 @@ class SubContentType extends React.Component {
   gainOrLose(itemObj) {
     console.log('gainOrLose2', itemObj);
     this.props.gainOrLose(itemObj);
-  }
-  // 时间选择提交
-  checkTimeSubmit(itemObj) {
-    console.log('checkTimeSubmit', itemObj);
-    this.props.checkTimeSubmit(itemObj);
   }
   render() {
     const { subTypeContent } = this.props;
@@ -69,9 +56,6 @@ class SubContentType extends React.Component {
     const checkTime = (
       <CheckTime
         checkTimeObj={subTypeContent}
-        closeShare={this.closeShare.bind(this)}
-        shareClick={this.shareClick.bind(this)}
-        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
       />
     );
     const buyOrPayContent = (
@@ -108,8 +92,8 @@ class SubContentType extends React.Component {
             </div>
             <div className={style.waiting}>
               <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo1.png" className={style.subItemLogo} alt="" />
-                <span className={style.logoName}>热比特</span>
+                <img src="/images/coinList/okex.png" className={style.subItemLogo} alt="" />
+                <span className={style.logoName}>OKEx</span>
                 <span className={style.plzWaiting}>敬请期待</span>
                 <div style={{ clear: 'both' }} />
               </div>
@@ -117,15 +101,7 @@ class SubContentType extends React.Component {
 
             <div className={style.waiting}>
               <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo2.png" className={style.subItemLogo} alt="" />
-                <span className={style.logoName}>LBANK</span>
-                <span className={style.plzWaiting}>敬请期待</span>
-              </div>
-            </div>
-
-            <div className={style.waiting}>
-              <div className={style.borderBox}>
-                <img src="/assets/images/coinList/headLogo3.png" className={style.subItemLogo} alt="" />
+                <img src="/images/coinList/bian.png" className={style.subItemLogo} alt="" />
                 <span className={style.logoName}>币安</span>
                 <span className={style.plzWaiting}>敬请期待</span>
               </div>

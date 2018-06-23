@@ -142,42 +142,7 @@ class SubDetail extends BaseComponent {
       });
     }
   }
-  shareClick(event) {
-    this.props.dispatch({
-      type: 'subDetail/chooseTime',
-    });
-  }
 
-  closeShare() {
-    const { dispatch } = this.props;
-    console.log('closeShare in');
-    dispatch({
-      type: 'subDetail/closeShareSuc',
-    });
-  }
-  // 时间选择确定
-  checkTimeSubmit(itemObj) {
-    const { remainDate, typeId, typeName } = this.props.subDetailData.data;
-    if (remainDate >= 0) {
-      console.log('checkTimeSubmit', itemObj);
-      // 时间选择确定
-      this.props.dispatch({
-        type: 'subDetail/checkTimeSubmit',
-        payload: {
-          subItem: itemObj,
-        },
-      });
-    } else {
-      // 如果大类别没有开通，跳转到开通页面
-      this.props.dispatch({
-        type: 'pageConstruction/switchToInnerPage',
-        payload: {
-          pageName: 'toOpen',
-          params: { typeId, typeName, backPath: 'subDetail' },
-        },
-      });
-    }
-  }
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -193,12 +158,9 @@ class SubDetail extends BaseComponent {
     if (subDetailData.data.typeCode && subDetailData.data.typeCode === 'currencies') {
       subContent = (<SubContentType
         subTypeContent={this.props}
-        shareClick={this.shareClick.bind(this)}
-        closeShare={this.closeShare.bind(this)}
         subscribeItem={this.subscribeItem.bind(this)}
         subscribeAll={this.subscribeAllTrans.bind(this)}
         gainOrLose={this.gainOrLose.bind(this)}
-        checkTimeSubmit={this.checkTimeSubmit.bind(this)}
       />);
     } else {
       subContent = (<div>

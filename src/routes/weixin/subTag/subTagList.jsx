@@ -3,22 +3,29 @@ import { connect } from 'dva';
 import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
 import InfiniteListView from '../../../components/infiniteListView';
+import Hammer from 'react-hammerjs';
 import BaseComponent from '../baseComponent';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTagCard from '../../../pageComponents/weixin/subTag/subTagCard.jsx';
 import SubContentCard from '../../../pageComponents/weixin/subTag/subContentCard.jsx';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
+import HeaderBar from '../../../components/headerBar';
+import style from './subTagList.less';
 
 /**
- * 消息列表页面--某个标签
- * @author 赵永帅
- * @Date  2018-6-13
- */
+* 消息列表页面--某个标签
+* @author 赵永帅
+* @Date  2018-6-13
+*/
 class SubTag extends BaseComponent {
   constructor(props) {
     super(props);
     console.log('props in MessageCard', props);
     this.state = {
+    };
+    this.pageDef = null;
+    this.setPageRef = (element) => {
+      this.pageDef = element;
     };
   }
 
@@ -63,6 +70,19 @@ class SubTag extends BaseComponent {
       },
     });
   }
+  onEndReachedAttach() {
+    console.log('onEndReachedAttach in', this.pageDef);
+    this.pageDef.style.top = 42;
+  }
+  backTo() {
+    console.log('back to in');
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'indexMessage', backArrow: true, currentPage: 'subTagList',
+      },
+    });
+  }
   render() {
     console.log('subTagList99999', this.props);
     const { data } = this.props.subTagList;
@@ -82,22 +102,29 @@ class SubTag extends BaseComponent {
         );
       },
     });
-    const height = document.documentElement.clientHeight - 300;
+    const height = document.documentElement.clientHeight;
     console.log('height is', height);
     const key = 'subTag';
     return (
-      <div>
-        <SubTagCard subTagObj={this.props} />
-        <div >
-          <InfiniteListView
-            bkey={key}
-            needChange
-            {...messageListProps}
-            height={height}
-            renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }} />)}
-            pageSize={this.props.subTagList.paginationDef.pageSize}
-          />
+      <div data-name="subTagList">
+        <div data-name="subtagHeader" className={style.ufFixed}>
+          <Hammer onTap={this.backTo.bind(this)}>
+            <img className={style.coinArrow} src="/images/coinList/coinArrow.png" alt="-" />
+          </Hammer>
         </div>
+        <InfiniteListView
+          ref={this.setPageRef}
+          noPullRefresh
+          bkey={key}
+          onEndReachedAttach={this.onEndReachedAttach.bind(this)}
+          needChange
+          {...messageListProps}
+          pageHead={<SubTagCard subTagObj={this.props} />}
+          height={height}
+          top={40}
+          renderFooter={() => (<div style={{ padding: 0, textAlign: 'center' }} />)}
+          pageSize={this.props.subTagList.paginationDef.pageSize}
+        />
       </div>
     );
   }

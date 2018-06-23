@@ -9,6 +9,10 @@ export const siteAnalysis = {
       code: 'mainpage',
       zh: '首页面',
     },
+    PVCOUNT: {
+      code: 'pvcount',
+      zh: 'pv统计',
+    },
     MESSAGELIST: {
       code: 'messageList',
       zh: '某大类消息列表',
@@ -157,6 +161,7 @@ export const siteAnalysis = {
     ReactGA.set({ userId: systemUser.uid });
     zhuge.identify(systemUser.uid, {
       typeCode: systemUser.typeCode,
+      name: systemUser.name,
     });
   },
 };

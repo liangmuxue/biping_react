@@ -51,6 +51,7 @@ export default modelExtend(pageModel, {
       console.log(`active for indexmessage,backArrow:${backArrow}`);
       // 如果从其他链接过来，则重新查询，如果从返回箭头过来，则不查
       if (!backArrow) {
+        console.log('active for indexmessage,backArrow66666');
         yield put({
           type: 'query',
           payload: {
