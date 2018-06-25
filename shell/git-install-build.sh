@@ -17,7 +17,7 @@ read -p  "生产库（1） 测试环境(2) 退出（3）" choic
 if [ $choic -eq 1 ]
 then
         echo "打包 生产库"
-        deploy_path="/data/productserver/biping-webapp"
+        deploy_path="/data/bpcoinServer/biping-webapp"
         env_file="product_env.js"
         expectitem="product"
 elif [ $choic -eq 2 ]
@@ -52,18 +52,19 @@ npm install
 
 if [ $choic -eq 1 ]
 then
-	echo  "npm run build..."
+        echo  "npm run build..."
   npm run build
-	echo "ok"
+        echo "ok"
 elif [ $choic -eq 2 ]
 then
-	echo  "npm run build..."
-	npm run build
-	echo "ok"
+        echo  "npm run test..."
+        npm run test
+        echo "ok"
 else
-	exit 2
+        exit 2
 fi
 
+<<<<<<< HEAD
 	################################# 打压缩包 ####################################
 	cd $target_path
 	echo  "产生对应压缩包..."
@@ -82,3 +83,22 @@ fi
 		exit 2
 	fi	
 	
+=======
+        ################################# 打压缩包 ####################################
+        cd $target_path
+        echo  "产生对应压缩包..."
+        zip -rq webapp.zip *
+        cp webapp.zip $deploy_path/webapp.zip
+        if [ $choic -eq 1 ]
+        then
+                expect $shellPath/expect_deploy_$expectitem.sh
+        elif [ $choic -eq 2 ]
+        then
+                cd $deploy_path
+                unzip -o webapp.zip
+        else
+                exit 2
+        fi
+
+echo  "ok..."
+>>>>>>> develop

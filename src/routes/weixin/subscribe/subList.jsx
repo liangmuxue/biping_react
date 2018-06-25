@@ -4,7 +4,7 @@ import 'antd-mobile/es/button/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
 import BaseComponent from '../baseComponent';
-
+import style from './subList.less';
 /**
  * 老人账号信息页面
  * @author 梁慕学
@@ -29,7 +29,7 @@ class subList extends BaseComponent {
     // 跳转到订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, backPath } },
+      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, typeCode: typeObj.typeCode, backPath } },
     });
   }
   subTypeClick(subTypeObj) {

@@ -10,10 +10,12 @@
   "author": "lmx",
   "scripts": {
     "dev": "webpack-dev-server --config ./webpack/webpack.config.dev.js",
-    "test": "cross-env BABEL_ENV=production NODE_ENV=test webpack --colors --progress --config ./webpack/webpack.config.prod.js",
+    "test": "cross-env BABEL_ENV=production NODE_ENV=test webpack --colors --progress --config ./webpack/webpack.config.test.js",
     "build": "cross-env BABEL_ENV=production NODE_ENV=production webpack --colors --progress --config ./webpack/webpack.config.prod.js"
   },
   "dependencies": {
+    "aliyun-oss-webpack-plugin": "^2.0.1",
+    "antd-mobile-demo-data": "^0.2.0",
     "axios": "^0.18.0",
     "dva": "^2.1.0-0",
     "dva-loading": "^1.0.4",
@@ -21,13 +23,16 @@
     "history": "^4.7.2",
     "html2canvas": "^1.0.0-alpha.12",
     "kitsu": "^5.1.0",
+    "moment": "^2.22.2",
     "pure-render-decorator": "^1.2.1",
     "qr-code-with-logo": "^1.0.16",
     "qrcode": "^1.2.0",
+    "rc-form": "^2.2.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-ga": "^2.5.0",
     "react-hammerjs": "^1.0.1",
+    "react-infinite-scroller": "^1.1.4",
     "react-sticky": "^6.0.2",
     "wechat-jssdk": "^3.1.0",
     "weixin-js-sdk": "^1.3.2"

@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal } from '../services/common';
+import { queryNormal, getImgString } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 /**
 * 订阅消息详情
@@ -96,6 +96,27 @@ export default modelExtend(pageModel, {
         payload: msgObj,
       });
     },
+    // img的src转base64位
+    *getImgString({ payload }, { put, call }) {
+      const { srcs } = payload;
+      console.log('getImgString data', srcs);
+      if (srcs && srcs.length > 0) {
+        console.log('getImgString data0', srcs.length);
+        for (let i = 0; i < srcs.length; i++) {
+          // bpimg.6bey.com这个域名无法跨域，换成原默认域名
+          const realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+          console.log(`realSrc is:${realSrc}`);
+          const data = yield call(getImgString, realSrc);
+          console.log('messageDetail data', data);
+          srcs[i].src = `data:image;base64,${data}`;
+        }
+      }
+      console.log('after getImgString data', srcs);
+      yield put({
+        type: 'getImgStringSuccess',
+        payload: srcs,
+      });
+    },
     // 查询单个消息
     *detailQuery({ payload }, { put, call, select }) {
       console.log('query for detailQuery,payload', payload);
@@ -105,7 +126,7 @@ export default modelExtend(pageModel, {
       // console.log(`imgDataStr:${imgDataStr}`);
       const st = yield select();
       const endpoint = 'messageDetail';
-      const filter = { messageId };
+      const filter = { messageId, ifTest: '3' };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
@@ -121,12 +142,12 @@ export default modelExtend(pageModel, {
 
     *shareMsg({ payload }, { put, call }) {
       // 禁止屏幕滑动
-      yield put({
-        type: 'app/touchMoveFlagProc',
-        payload: {
-          touchMoveDisable: true,
-        },
-      });
+      // yield put({
+      //   type: 'app/touchMoveFlagProc',
+      //   payload: {
+      //     touchMoveDisable: true,
+      //   },
+      // });
       yield call(timeoutCall, 50);
       yield put({
         type: 'shareMsgSuc',
@@ -222,6 +243,15 @@ export default modelExtend(pageModel, {
         ...state,
         ...action.payload,
         curAct: 'msgLike',
+      };
+    },
+    getImgStringSuccess(state, action) {
+      console.log('getImgStringSuccess in', action.payload);
+      console.log('getImgStringSuccess state', state);
+      return {
+        ...state,
+        srcs: action.payload,
+        curAct: 'shareClick',
       };
     },
     preventTagClick(state, action) {

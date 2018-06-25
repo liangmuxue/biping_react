@@ -64,11 +64,11 @@ body {
 }
 .loading{
   position: fixed;
-  bottom: 50%;
-  text-align: center;
-  background-color: transparent;
-  width: 100%;
-  z-index: 999999999999;
+  z-index:9999999;
+  top: 50%;
+  left: 50%;
+  margin-left: -.55rem;
+  margin-top: -1rem;
 }
 .loading img{
   width: 1rem;
@@ -81,8 +81,33 @@ body {
   position: fixed;
   bottom: 1rem;
   left: 50%;
-  margin-left: -.2rem;
+  margin-left: -.55rem;
 }
 .noTouch{
   touch-action: none;
+}
+.tipError{
+  text-align: center;
+  font-size: .28rem;
+  color: #888;
+  margin: .68rem 0 .77rem;
+}
+.refresh{
+    margin:0 auto;
+    width: 2.08rem;
+    height: .7rem;
+    line-height: .7rem;
+    box-sizing: border-box;
+    border: 1px solid #666;
+    border-radius: .06rem;
+    font-size: .36rem;
+    line-height: .7rem;
+    background: transparent;
+    text-align: center;
+    color: #333;
+}
+
+
+:global(.am-activity-indicator){
+  justify-content: center;
 }

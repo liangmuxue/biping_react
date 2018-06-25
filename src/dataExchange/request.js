@@ -18,33 +18,31 @@ const fetch = (endpoint, options) => {
   // 定义标准请求，加入协议头信息
   const axiosInst = axios.create({
     baseURL: `${API_ROOT}/webInterface`,
-    timeout: 3000,
-    retry: 4,
+    timeout: 6000,
+    retry: 3,
     retryDelay: 1000,
     headers: {
       type: 'wechat',
       token: systemUser.token,
     },
+    method: options.method,
   });
   let retryCnt = 0;
   // 超时处理逻辑
   axiosInst.interceptors.response.use(undefined, (err) => {
     const axiosConfig = err.config;
-    console.log('timeout in');
     // If config does not exist or the retry option is not set, reject
     if (!config || !axiosConfig.retry) return Promise.reject(err);
+    if (axiosConfig.method !== 'get') {
+      return Promise.reject(err);
+    }
     // Check if we've maxed out the total number of retries
-    console.log(`retryCnt now:${retryCnt}`);
+    console.log(`retryCnt is now:${retryCnt}`);
     if (retryCnt >= 3) {
       retryCnt = 0;
       // 多次失败，刷新页面,直接把标志提到提示错误的级别
-      if (endpoint === 'userLogin') {
-        return Promise.reject(err);
-      }
-      window.localStorage.setItem('reconnectFlag', 5);
-      window.location.href = window.location.href;
-      // Reject with the error
-      // return Promise.reject(err);
+      const error = { errCode: '1', message: 'timeout error' };
+      throw error;
     }
     retryCnt += 1;
 

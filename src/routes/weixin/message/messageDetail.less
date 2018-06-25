@@ -4,6 +4,7 @@
   margin:0;
   padding: 0;
     font-family: 'PingFangSC',"Microsoft YaHei" !important;
+    list-style: none;
 }
 html{
   font-size:13.333vw;
@@ -14,7 +15,9 @@ a{text-decoration: none;
  color: #C7C7CC;
 }
 body{font-size:0.28rem;width: 100% !important;}
-
+.clear{
+  clear: both;
+}
 .bannerBox{
   width: 6.9rem;
   height: 2.4rem;
@@ -43,49 +46,60 @@ body{font-size:0.28rem;width: 100% !important;}
   background: #fff;
   text-align: left;
   position: relative;
+  overflow: hidden;
 }
-.noticeTitle{
-    height: 1.23rem;
-}
+
 .times{
-  color: #BBBBBB;
-  font-size: .24rem;
-  position: absolute;
-  left:.3rem;
-  top: .44rem;
+  color: #999;
+  font-size: .28rem;
+  margin-left:.3rem;
+  display: inline;
 }
 .detail{
+  display: inline;
   margin-left: .9rem;
   color: #576B95;
-  font-size: .36rem;
-  position: absolute;
-  left: 1rem;
-  top: .3rem;
+  font-size: .28rem;
+  margin-left: .2rem;
 }
 .caption{
-    margin-right: .3rem;
-    margin-left: .3rem;
     font-size: .44rem;
     font-weight: bold;
     overflow : hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
-    margin-bottom: .5rem;
     text-align: left;
+    color: #222;
+    margin:.5rem .3rem .4rem;
 }
+
 .article{
   font-size: .36rem;
   margin-right: .3rem;
   margin-left: .3rem;
   padding-bottom: .47rem;
-  word-break: break-all;
+  margin-top: .3rem;
+  word-wrap: break-word;
   line-height: .64rem;
   text-align: left;
 }
 .article span{
   font-size: .32rem !important;
+}
+.startTimes{
+  float: left;
+  padding: .14rem .16rem;
+  background: #F0F0F0;
+  color: #333333;
+  font-size: .28rem;
+  border-radius: .06rem;
+  margin: .4rem .3rem ;
+}
+.picBox .startTimes{
+  margin: .45rem .3rem 0 .5rem;
+  margin-bottom: 0;
 }
 .friendBox{
   position: fixed;
@@ -111,39 +125,46 @@ body{font-size:0.28rem;width: 100% !important;}
   width: 2.4rem;
   height: .8rem;
   text-align: center;
-    line-height: .8rem;
+  line-height: .8rem;
 }
 .up{
   width: 100%;
-  margin: .2rem 0;
+  border: 1px solid #E5E5E5;
+  border-bottom: 1px solid #E5E5E5;
 }
 .upCenter{
   width: 7.2rem;
   background: #fff;
   padding-left: .3rem;
   text-align: left;
+  overflow: hidden;
+  border-bottom: 1px solid #E5E5E5;
 }
 .upTitle{
-  height: .87rem;
-  line-height: .88rem;
   font-size: .34rem;
-  border-bottom:1px solid #E5E5E5;
+  font-weight: 800;
+  margin-top: .7rem;
 }
 .labels{
-  margin-top: .28rem;
-  margin-bottom: .47rem;
+  margin: .53rem 0 .7rem;
 }
 .labelsList{
   display: inline-block;
   text-align: center;
   padding: .17rem .3rem .16rem;
-  color: #888;
+  color: #828A92;
   margin-bottom: .14rem;
-  border:.1em solid #EEE;
+  border:.1em solid #828A92;
   margin-right: .15rem;
   border-radius: .5rem;
 }
+.labelsList :global(.am-button){
+  line-height: .43rem !important;
+  height: auto !important;
+  color: #828A92;
+}
 .likesBox{
+  display: none;
   position: relative;
   height: .67rem;
   top: -.15rem;
@@ -168,7 +189,6 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 .similarBox{
   width: 100%;
-  margin-top: .2rem;
   margin-bottom: 1rem;
   background: #fff;
 }
@@ -177,30 +197,45 @@ body{font-size:0.28rem;width: 100% !important;}
     text-align: left;
     padding-bottom: .1rem;
     background: #fff;
+    overflow: hidden;
 }
 .similarTitle{
-  height: .87rem;
-  line-height: .88rem;
   font-size: .34rem;
-  border-bottom:1px solid #E5E5E5;
+  color: #222;
+  font-weight: 800;
+  margin-top: .8rem;
 }
 .similarListUl{
   margin-top: .26rem;
+  margin-bottom: .6rem;
+}
+.similarListUl li :global(.am-button){
+  height: auto;
+  white-space: normal;
+  line-height: .66rem;
+  font-size: .34rem;
 }
 
-.similarList{
-  display: inline-block;
-  margin-bottom: .16rem;
+.similarListUl li{
+  width: 6.62rem;
+  box-sizing: border-box;
+  padding: .3rem .3rem;
   font-size: .32rem;
   color: #000;
-  padding: 0 .3rem;
-  background: #EEEEEE;
-  border-radius: .06rem;
+  background: #F5F5F5;
+  border-radius: 0 !important;
   color: #222;
-  max-width: 6.3rem;
-  overflow: hidden;
-  text-overflow:ellipsis;
-  white-space: nowrap;
+  border-bottom: 1px solid #DFDFDF ;
+  width: 6.9rem;
+  overflow: inherit !important;
+  text-align: left;
+   -webkit-font-smoothing: antialiased;
+}
+.similarListUl li:last-child{
+  border-bottom: none ;
+}
+.similarList{
+  background: none;
   text-align: left;
 }
 .similarList:before{
@@ -218,7 +253,7 @@ body{font-size:0.28rem;width: 100% !important;}
   display: none;
 }
 .fullBox{
-  height: 1.08rem;
+  height: .88rem;
 }
 .showBox{
   width: 100%;
@@ -261,36 +296,38 @@ body{font-size:0.28rem;width: 100% !important;}
 
 .picBox {
     width: 100%;
-    max-height: 550px;
-    background: url(/images/msgImages/dabai.png) #fff no-repeat center;
-    background-size: 100%;
+    height:auto;
+    background: url(/images/msgImages/dabai.png) #fff no-repeat top;
+    background-size: 100% ;
     color: #000;
     font-size: calc(36px * .4);
     word-wrap:break-word;
-    padding-bottom: 1.5rem;
     position: relative;
+    overflow: hidden;
+    padding-bottom: 2rem;
 }
 
 .picKinds {
-    font-size: .26rem;
+    font-size: .32rem;
     color: #666;
     margin-left: calc(72px * .4);
-    padding-top: calc(60px * .4);
-    margin-bottom: calc(20px * .4);
     text-align: left;
+    position: absolute;
+    top: 3.1rem
 
 }
 
 .picTitle {
     box-sizing: border-box;
-    margin: 0 calc(72px * .4) calc(40px * .4);
+    margin: 0 calc(72px * .4) 0;
     line-height: calc(66px * .4);
     font-size: .44rem;
-    height: 1.1rem;
+    // height: 1.1rem;
     overflow: hidden;
-    word-break: break-all;
+    word-wrap: break-word;
     text-align: left;
     font-weight: bold;
+    margin-top: 4.14rem;
 
 }
 
@@ -298,31 +335,38 @@ body{font-size:0.28rem;width: 100% !important;}
 .picFonts {
     box-sizing: border-box;
     line-height: calc(54px * .4);
-    margin: 0 .5rem;
+    margin: .2rem .5rem 0;
     height: 242px;
-    word-break: break-all;
+    word-wrap: break-word;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 9;
     overflow: hidden;
-     word-break: break-all;
      font-size: .36rem;
      line-height: .64rem;
      text-align: left;
+     // position: absolute;
+
 }
 :global(#innerContent img){
   display:none;
 }
-:global(#article img){
-  display:none;
+.picFonts img{
+  width: 100%;
 }
 
 .wechatBox {
-    margin: calc(60px * .4) auto calc(36px * .4);
-    background: url('/images/msgImages/wechatBorder.png');
-    background-size: 2.08rem 2.58rem;
-    width: 2.08rem;
-    height: 2.58rem;
-    position: relative;
+    // margin: calc(60px * .4) auto calc(36px * .4);
+    // background: url('/images/msgImages/wechatBorder.png');
+    // background-size: 2.08rem 2.58rem;
+    // width: 2rem;
+    // height: 2rem;
+    position: absolute;
+    bottom: 12px;
+    right: 17px;
+    border: 2px solid #5191FC;
+    border-radius: .06px;
+    z-index: 999
+
 }
 
  .wechatBox img {
@@ -330,7 +374,7 @@ body{font-size:0.28rem;width: 100% !important;}
     height:2rem;
 }
 .wechatBox img{
-  padding-top: .04rem;
+  padding-top: .02rem;
 }
 
 .content .bottomName, .content .bottomStation {
@@ -344,7 +388,7 @@ body{font-size:0.28rem;width: 100% !important;}
 }
 .bottomCopy{
   width: 100%;
-  height: 1.4rem;
+  height: 1.9rem;
   background: #F6F6F6;
   color: #666;
   font-size: .26rem;
@@ -353,14 +397,19 @@ body{font-size:0.28rem;width: 100% !important;}
   bottom: 0;
   left: 0;
   letter-spacing: .03rem;
+  display: flex;
 }
 .copytop{
-  width: 1.85rem;
-  height: .4rem;
-  margin:.3rem auto .1rem;
+  float: left;
+  width: 1rem;
+  height: 1.1rem;
+  margin-top: .4rem;
+  margin-left: .15rem
 }
 .copytop img{
   float: left;
+  width: 1rem;
+  height: 1.1rem;
 }
 .shareBox h2{
   font-weight: normal;
@@ -394,4 +443,117 @@ table{
   left: 50%;
   margin-left: -50%;
   color: #fff;
+  display: none
+}
+.logotop{
+  float: left;
+  margin-top: .58rem
+}
+
+.logobottom i{
+  float: right;
+  margin-right: .1rem;
+}
+.article img{
+  width: 100%;
+}
+//异动币
+.transactionCoinBox{
+  display:none;
+  margin-bottom: .7rem;
+}
+.transactionCoin{
+  font-size: .36rem;
+  box-sizing: border-box;
+  padding-left: .3rem;
+  color: #000;
+  margin-top: .3rem;
+  padding-bottom: .4rem;
+  border-bottom: 1px solid #EBEBEB;
+}
+.transactionCoin div{
+  margin-bottom: .3rem;
+  width: 6.9rem;
+  word-break: break-all;
+}
+.transactionCoin span{
+  color: #666666;
+  line-height: .54rem;
+}
+.transactionCoin .toUp{
+  text-decoration: none;
+  color: #4CA364;
+}
+.transactionCoin .toDown{
+  text-decoration: none;
+  color: #FF0101;
+}
+.transactionCoin .convert{
+  padding-left: 1.8rem;
+  font-weight: normal;
+}
+
+
+//数据表格
+.coinTitle{
+  padding-left: .3rem;
+  margin: .69rem 0 .3rem;
+  color: #000;
+  font-size: .34rem;
+  font-weight: 800;
+}
+.tableTitle,.coinLists{
+  background: #EFF5FF;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+}
+.tableTime{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 1.26rem;
+  box-sizing: border-box;
+  padding-left: .3rem;
+}
+.tablePrice{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 2rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .2rem;
+}
+.tableChg{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 1.96rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .2rem;
+}
+.tableIncome{
+  font-size: .34rem;
+  height: .88rem;
+  line-height: .88rem;
+  color: #000;
+  width: 2.28rem;
+  text-align: right;
+  box-sizing: border-box;
+  padding-right: .3rem;
+}
+.coinLists .tableTitle{
+  background: #fff;
+}
+:global(.am-modal-mask){
+  height: 100%;
+  overflow: hidden;
+}
+:global(.am-modal-wrap){
+  overflow: hidden;
 }

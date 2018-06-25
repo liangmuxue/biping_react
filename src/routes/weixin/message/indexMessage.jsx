@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
 import 'antd-mobile/es/wing-blank/style/index.css';
@@ -11,7 +11,7 @@ import MessageCard from '../../../pageComponents/weixin/message/messageCard.jsx'
 import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.jsx';
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
-
+import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
 /**
  * 消息列表页面
@@ -42,7 +42,25 @@ class MessageList extends BaseComponent {
         },
       },
     });
+    // 进入详情埋点，feed类型
+    this.props.dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
+        opt: { enterMessageCase: 'feedCase' },
+      },
+    });
   }
+  // logo点击事件
+  logoClick(msgObj) {
+  // 跳转到信息类型列表页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'subTagList', params: { ...msgObj, backPath: 'indexMessage' } },
+    });
+  }
+
   // 标签点击，进行条件筛选
   tagClick(msgObj) {
     // 跳转到信息类型列表页面
@@ -74,16 +92,18 @@ class MessageList extends BaseComponent {
     }
     // 未订阅小类别,需要判断list为空
     if (flag && flag === 1002) {
-      return (<div className={styles.empty}>
-        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
+      return (
+        <div className={styles.empty}>
+          <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
+          <div className={styles.notread}>暂无消息</div>
+        </div>);
     }
     if (flag === 0 && this.props.indexMessage.list.length === 0) {
-      return (<div className={styles.empty}>
-        <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
-        <div className={styles.notread}>暂无消息</div>
-      </div>);
+      return (
+        <div className={styles.empty}>
+          <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
+          <div className={styles.notread}>暂无消息</div>
+        </div>);
     }
 
     // 加工数据
@@ -98,6 +118,7 @@ class MessageList extends BaseComponent {
           <MessageCard
             msgObj={rowData}
             cardClick={this.cardClick.bind(this)}
+            logoClick={this.logoClick.bind(this)}
           />
         );
       },
@@ -111,6 +132,7 @@ class MessageList extends BaseComponent {
           bkey={key}
           {...messageListProps}
           height={height}
+          top={0}
           pageSize={this.props.indexMessage.paginationDef.pageSize}
         />
       </div>

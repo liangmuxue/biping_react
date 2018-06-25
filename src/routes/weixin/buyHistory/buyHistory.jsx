@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
 // import Card from 'antd-mobile/lib/card/index';
 import WhiteSpace from 'antd-mobile/lib/white-space/index';

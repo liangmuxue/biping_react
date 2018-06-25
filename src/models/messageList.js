@@ -65,7 +65,7 @@ export default modelExtend(pageModel, {
           },
         });
       } else {
-        console.log('need hideRouteLoading in active');
+        console.log('need hideRouteLoading in actives');
         // 隐藏加载提示
         yield put({ type: 'app/hideRouteLoading' });
       }

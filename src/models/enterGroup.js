@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal } from '../services/common';
+import { siteAnalysis } from '../utils/siteAnalysis.js';
 
 /**
 * 订阅消息详情
@@ -35,6 +35,15 @@ export default modelExtend(pageModel, {
           touchMoveDisable: true,
         },
       });
+      // 埋点
+      yield put({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.ENTERGROUP,
+          action: siteAnalysis.actConst.GROUPWECHAT,
+        },
+      });
+      // 返回
       yield put({
         type: 'shareWechatSuccess',
       });

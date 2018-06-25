@@ -1,42 +1,74 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'dva';
+import QrCodeWithLogo from 'qr-code-with-logo';
+import html2canvas from 'html2canvas';
 import Modal from 'antd-mobile/lib/modal/index';
+import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import WingBlank from 'antd-mobile/lib/wing-blank/index';
+import Button from 'antd-mobile/lib/button/index';
 import 'antd-mobile/es/modal/style/index.css';
 import Hammer from 'react-hammerjs';
-import WhiteSpace from 'antd-mobile/lib/white-space/index';
-import Button from 'antd-mobile/lib/button/index';
-import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
 import 'antd-mobile/es/list/style/index.css';
-import style from './messageDetail.less';
 import HeaderBar from '../../../components/headerBar';
+import style from './messageDetail.less';
 import { config } from '../../../../config/environment';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
-import html2canvas from 'html2canvas';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
-import QrCodeWithLogo from 'qr-code-with-logo';
+import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 
 /**
-* 老人账号信息页面
-* @author 梁慕学
-* @Date  2017-12-25
+* 消息详情
+* @author 赵永帅
+* @Date  2018-6-12
 */
-
+function shareEvent(event) {
+  const { messageHost } = config.env;
+  const { wechatHost } = config.env;
+  let imgUrl = null;
+  console.log('this.props', event);
+  const { dispatch, msgDetailData, params } = event;
+  const msgObj = msgDetailData.data;
+  console.log('params1111', params);
+  const { uid } = params;
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+  QrCodeWithLogo.toImage({
+    image: document.getElementById('ewmImg'),
+    content: url,
+    width: 380,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }).then(() => {
+    console.log('success777', document.getElementById('showShare'));
+    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
+      imgUrl = canvas.toDataURL('image/png');
+      document.getElementById('showShare').style.display = 'none';
+      dispatch({
+        type: 'messageDetail/shareMsg',
+        payload: {
+          messageId: msgObj.mid,
+          imgUrl,
+        },
+      });
+      // 分享消息埋点
+      dispatch({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.MESSAGEDETAIL,
+          action: siteAnalysis.actConst.SHAREMESSAGE,
+          opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+        },
+      });
+    });
+  });
+}
 class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
+
     super(props);
-    this.tmListener = null;
-    const self = this;
-    this.pageDef = null;
-    // this.setPageRef = (element) => {
-    //   // 根据变量决定是否允许滑动
-    //   this.pageDef = element;
-    //   this.tmListener = document.body.addEventListener('touchmove', (event) => {
-    //     self.touchMoveJudge(event);
-    //   }, false);
-    // };
   }
 
   componentWillMount() {
@@ -68,51 +100,37 @@ class MsgDetail extends BaseComponent {
     }
   }
   // 分享点击
-  shareClick(event) {
-    const { messageHost } = config.env;
-    const { wechatHost } = config.env;
-    let imgUrl = null;
-    console.log('this.props', this.props);
-    const { dispatch, msgDetailData, params } = this.props;
-    const msgObj = msgDetailData.data;
-    console.log('params1111', params);
-    const { uid } = params;
-    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
-    console.log('url1111', url);
+  shareClick() {
+    // 隐藏分享内容背景
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.documentElement.style.overflow = 'hidden';
     document.getElementById('showShare').style.display = 'block';
-    QrCodeWithLogo.toImage({
-      image: document.getElementById('ewmImg'),
-      content: url,
-      width: 380,
-      logo: {
-        src: '/images/msgImages/copy.png',
-      },
-    }).then(() => {
-      console.log('success777');
-      html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
-        imgUrl = canvas.toDataURL('image/png');
-        document.getElementById('showShare').style.display = 'none';
-        dispatch({
-          type: 'messageDetail/shareMsg',
-          payload: {
-            messageId: msgObj.mid,
-            imgUrl,
-          },
-        });
-        // 分享消息埋点
-        dispatch({
-          type: 'app/analysis',
-          payload: {
-            page: siteAnalysis.pageConst.MESSAGEDETAIL,
-            action: siteAnalysis.actConst.SHAREMESSAGE,
-            opt: { messageTitle: msgObj.title },
-          },
-        });
-      });
-    });
 
-    // event.prventDefault();
+    // 替换过空格之后的内容
+    const replaceVal = document.getElementById('shareArticle');
+    const srcs = [];
+    if (replaceVal && replaceVal !== null) {
+      const imgs = replaceVal.querySelectorAll('img');
+      if (imgs && imgs.length > 0) {
+        for (let i = 0, j = imgs.length; i < j; i++) {
+          // 解决跨域,传递现有的img、src数组
+          srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+          imgs[i].setAttribute('id', `imgUrl${i}`);
+        }
+      }
+    }
+
+    const { dispatch } = this.props;
+    console.log('ppppppppp', srcs);
+    dispatch({
+      type: 'messageDetail/getImgString',
+      payload: {
+        srcs,
+      },
+    });
   }
+
   // 类似消息的点击
   switchTitle(msg) {
     console.log('switchTitle in:', this.props);
@@ -127,6 +145,15 @@ class MsgDetail extends BaseComponent {
         },
       },
     });
+    // 进入详情埋点，same类型
+    this.props.dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.BROWSE,
+        opt: { enterMessageCase: 'sameCase' },
+      },
+    });
   }
   closeShare() {
     const { dispatch } = this.props;
@@ -134,6 +161,9 @@ class MsgDetail extends BaseComponent {
     dispatch({
       type: 'messageDetail/closeShare',
     });
+    // 恢复背景滚动
+    document.body.style.overflow = 'scroll';
+    document.documentElement.style.overflow = 'scroll';
   }
   // 跳转到信息类型列表页面
   tagClick() {
@@ -187,10 +217,30 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+  // 带标签的列表页
+  tagListClick(msgObj) {
+    const { dispatch, msgDetailData } = this.props;
+    const msgDetailDataObj = msgDetailData.data;
+    const { mid } = msgDetailDataObj;
+    // 传递标签id
+    if (msgObj) {
+      msgObj.labelId = msgObj.id;
+    }
+    console.log('messageDetail msgObj', msgObj);
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'subTagList',
+        params: {
+          ...msgObj, mid, fromLabel: true, backPath: 'messageDetail',
+        },
+      },
+    });
+  }
   render() {
-    console.log('MsgDetail render', this.props);
+    console.log('MsgDetail Now render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl, curAct,
+      msgDetailData, showMsgShare, params, imgUrl, curAct, srcs,
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -198,14 +248,37 @@ class MsgDetail extends BaseComponent {
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
-    if (!msgDetailData) {
+    if (!msgDetailData || !msgDetailData.data || !msgDetailData.data.content) {
       return null;
+    }
+    // 分享请求,只有点击share方法才进
+    if (srcs && curAct && curAct === 'shareClick') {
+      for (let i = 0; i < srcs.length; i++) {
+        const imgs = document.getElementById(srcs[i].id);
+        imgs.setAttribute('src', srcs[i].src);
+      }
+      shareEvent(this.props);
     }
     const msgObj = msgDetailData.data;
-    console.log('msgObj44444', msgObj);
-    if (!msgObj.mid) {
-      return null;
+    console.log('msgObj44444', msgDetailData.data);
+    // 内容（异动币和币事件、交易所公告的不同）
+    let contentCard = null;
+    // 分享文章内容
+    let shareContentCard = null;
+    let val = null;
+    console.log('88888888', msgDetailData.data.typeCode);
+    if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+      console.log('MessageContent', msgObj.typeCode);
+      contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
+      shareContentCard = contentCard;
+    } else {
+      val = msgObj.content.replace(/＆nbsp;/g, ' ');
+      console.log('99999999', val);
+      contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
+      shareContentCard =
+      (<div id="shareArticle" className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
+
     if (!showMsgShare) {
       console.log('touchmove rm', this.tmListener);
       document.body.removeEventListener('touchmove', this.tmListener);
@@ -220,12 +293,14 @@ class MsgDetail extends BaseComponent {
       wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       onClose={this.closeShare.bind(this)}
     >
-      <div>
-        <div style={{ lineHeight: '1.07rem' }}>
+      <div >
+        <div style={{ lineHeight: '1.08rem' }}>
           <span className={style.titleTips}>长按图片发送好友</span>
           <img src="/images/msgImages/1.png" alt="" className={style.finger} />
         </div>
-        <img src={msgImgUrl} alt="" />
+        <div style={{ height: 400, overflow: 'scroll' }}>
+          <img src={msgImgUrl} alt="" />
+        </div>
       </div>
 
     </Modal>);
@@ -254,7 +329,6 @@ class MsgDetail extends BaseComponent {
       </div>
                         </Hammer>);
 
-    const val = msgObj.content.replace(/＆nbsp;/g, ' ');
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
@@ -266,6 +340,8 @@ class MsgDetail extends BaseComponent {
     if (curAct && curAct === 'queryDetail') {
       window.scrollTo(0, 0);
     }
+
+
     return (
       <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
@@ -281,36 +357,42 @@ class MsgDetail extends BaseComponent {
             </div>
           </div>
 
+
           <div className={style.notice}>
+            <div className={style.caption}>{msgObj.title}</div>
             <div className={style.noticeTitle}>
               <div className={style.times}>{msgObj.time}</div>
               <Hammer >
-                <div className={style.detail} onClick={this.tagClick.bind(this)}>{msgObj.verbname} </div>
+                <div
+                  className={style.detail}
+                  onClick={this.tagClick.bind(this)}
+                >
+                  {msgObj.verbname}
+                </div>
               </Hammer>
             </div>
-
-            <div className={style.caption}>{msgObj.title}</div>
-            <div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />
-
-            <div className={style.friendBox}>
-              <div className={style.toFriend} />
-              <Hammer onTap={this.shareClick.bind(this)}>
+            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
+            {contentCard}
+            <Hammer onTap={this.shareClick.bind(this)}>
+              <div className={style.friendBox}>
+                <div className={style.toFriend} />
                 <a className={style.tofriends}>分享给好友</a>
-              </Hammer>
-            </div>
-
+              </div>
+            </Hammer>
           </div>
 
           <div className={style.up}>
             <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>
-
               <ul className={style.labels}>
-                {msgObj.tagList.map(msg =>
-                  (
-                    <li className={style.labelsList}>
-                      {msg.name}
-                    </li>
+                {msgObj.tagList.map(msg => (
+                  <li className={style.labelsList}>
+                    <Button
+                      className={style.similarList}
+                    >{msg.name}
+                    </Button>
+                  </li>
                   ))}
               </ul>
 
@@ -346,12 +428,13 @@ class MsgDetail extends BaseComponent {
           </div>
         </div>
 
-        <div className={style.hide} id="showShare">
+        <div id="showShare" className={style.hide}>
           <div className={style.picBox}>
             <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
-
             <div className={style.picTitle}>{msgObj.title}</div>
-            <div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />
+            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+            <div className={style.clear} />
+            {shareContentCard}
 
             <div className={style.wechatBox}>
               <img id="ewmImg" crossOrigin="anonymous" alt="" />
@@ -361,10 +444,11 @@ class MsgDetail extends BaseComponent {
             <div className={style.bottomCopy}>
               <div>
                 <div className={style.copytop}>
-                  <img src="/images/msgImages/copy.png" style={{ width: '.35rem', height: '.4rem' }} />&nbsp;biping.io
+                  <img src="/images/msgImages/copy.png" />
                 </div>
 
-                <div>【币评】你最想要的币市信息</div>
+                <div className={style.logotop}>【币评】你最想要的币市信息</div>
+                <div className={style.logobottom}>biping.io <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
               </div>
             </div>
           </div>

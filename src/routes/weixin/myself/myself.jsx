@@ -47,11 +47,19 @@ class BasicInput extends BaseComponent {
       callback(new Error('At least four charactors for account'));
     }
   }
-  changePage(mesObj) {
+  changePage() {
     // 跳转到购买记录页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'buyHistory', params: { backPath: 'myself' } },
+    });
+  }
+
+  changePageToLike() {
+    // 跳转到我关注的页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: { pageName: 'myLike', params: { backPath: 'myself' } },
     });
   }
 
@@ -94,7 +102,7 @@ class BasicInput extends BaseComponent {
               }}
             />}
           >
-            <div>
+            <div className={style.toMsg}>
               <img src="/images/myselfImg/1.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>推送消息  </span>
             </div>
           </List.Item>
@@ -104,20 +112,25 @@ class BasicInput extends BaseComponent {
     SwitchExample = createForm()(SwitchExample);
     return (<div>
       <div className={style.mineBox}>
-        <div><img src={userMain.headUrl} className={style.minePic} /></div>
+        <div><img src={userMain.headUrl} className={style.minePic} alt="" /></div>
         <div className={style.mineName}>{userMain.name}</div>
       </div>
       <List className={style.myList}>
-        <Item arrow="horizontal" onClick={() => {}}>
-          <div onClick={this.changePage.bind(this)} ><img src="/images/myselfImg/2.png" className={style.historyPic} /> <span className={style.history}>购买记录</span> </div>
-
+        <Item arrow="horizontal" onClick={this.changePage.bind(this)}>
+          <div>
+            <img src="/images/myselfImg/2.png" className={style.historyPic} alt="" />
+            <span className={style.history}>购买记录</span>
+          </div>
         </Item>
       </List>
-
       <SwitchExample />
       <Hammer onDoubleTap={this.clearStorage.bind(this)}>
         <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
       </Hammer>
+      <div className={style.version}>
+        <div>@ 2018 biping.io</div>
+        <div>V1.0</div>
+      </div>
     </div>);
   }
 }

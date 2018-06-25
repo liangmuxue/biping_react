@@ -1,5 +1,7 @@
 import List from 'antd-mobile/lib/list/index';
-import Button from 'antd-mobile/lib/button/index';
+import Switch from 'antd-mobile/lib/switch/index';
+import 'antd-mobile/es/switch/style/index.css';
+import { createForm } from 'rc-form';
 import 'antd-mobile/es/button/style/index.css';
 import React from 'react';
 import style from './subItem.less';
@@ -22,28 +24,57 @@ class SubItem extends React.Component {
   subscribe(e) {
     console.log('subscribe in,props:', this.props);
     this.props.subscribeClick(this.props.itemObj);
-
   }
-
   render() {
-    const { itemObj } = this.props;
+    const {
+      itemObj, dispatch, flag, abnormal,
+    } = this.props;
     console.log('itemObj is', itemObj);
-    const extraBtn = (<Button
+    let SwitchExample = (props) => {
+      const { getFieldProps } = props.form;
+      // 是否订阅
+      let isSub = null;
+      if (itemObj.isSub) {
+        isSub = itemObj.isSub;
+      } else if (itemObj.hasSubscribe) {
+        isSub = itemObj.hasSubscribe;
+      }
+      // 名称
+      let typeName = null;
+      if (itemObj.typeName) {
+        typeName = itemObj.typeName;
+      } else if (itemObj.exchangeName) {
+        typeName = itemObj.exchangeName;
+      }
+      // 图片路径
+      let headImg = null;
+      if (itemObj.headImg) {
+        headImg = itemObj.headImg;
+      } else if (itemObj.exchangeIcon) {
+        headImg = itemObj.exchangeIcon;
+      }
+      return (
+        <List>
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch1', {
+                  initialValue: isSub === 1,
+                  valuePropName: 'checked',
+                })}
+              onClick={this.subscribe.bind(this)}
+            /> // 敬请期待
+          }
+          >
 
-      style={itemObj.isSub ? { background: '#DDDDDD', height: '.66rem',color: '#353535',width:'1.42rem', padding:0,lineHeight:".66rem"} : { width:'1.42rem',  height: '.66rem',background: '#428BFF', color: '#fff', padding:0,lineHeight:'.66rem' }}
-      size="small"
-      inline
-      className={style.unreadBtn}
-      onClick={this.subscribe.bind(this)}
-    >{itemObj.isSub ? '已订阅' : '订阅'}
-                      </Button>);
+            {itemObj.headImg === '' ? <span>#</span> : <img src={headImg} className={style.subItemLogo} alt="" />}
+            <span className={style.toMsg}>{typeName} </span>
+          </List.Item>
+        </List>
+      );
+    };
+    SwitchExample = createForm()(SwitchExample);
     return (
-      <List.Item
-        extra={extraBtn}
-        multipleLine
-      >
-        {'# '+ itemObj.typeName}
-      </List.Item>
+      <SwitchExample />
     );
   }
 }

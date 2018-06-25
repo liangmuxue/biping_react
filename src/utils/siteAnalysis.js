@@ -9,9 +9,21 @@ export const siteAnalysis = {
       code: 'mainpage',
       zh: '首页面',
     },
+    PVCOUNT: {
+      code: 'pvcount',
+      zh: 'pv统计',
+    },
     MESSAGELIST: {
       code: 'messageList',
       zh: '某大类消息列表',
+    },
+    SUBTAGLIST: {
+      code: 'subTagList',
+      zh: '标签消息列表',
+    },
+    MYLIKE: {
+      code: 'myLike',
+      zh: '我关注的',
     },
     MESSAGEDETAIL: {
       code: 'messageDetail',
@@ -48,6 +60,10 @@ export const siteAnalysis = {
     RESULT: {
       code: 'result',
       zh: '购买成功',
+    },
+    FOOTMENU: {
+      code: 'footMenu',
+      zh: '底部菜单',
     },
   },
   actConst: {
@@ -103,6 +119,10 @@ export const siteAnalysis = {
       code: 'sharemessage',
       zh: '分享消息',
     },
+    GROUPWECHAT: {
+      code: 'groupWechat',
+      zh: '我要入群点击',
+    },
     CANCLEPUSH: {
       code: 'canclepush',
       zh: '取消推送',
@@ -116,8 +136,8 @@ export const siteAnalysis = {
   init() {
     ReactGA.initialize('UA-117280811-2');
   },
-
   pushEvent(pageDef, actionDef, opt) {
+    console.log('pushEvent pageDef', pageDef);
     ReactGA.event({
       category: `wx_${pageDef.code}`,
       action: actionDef.code,
@@ -132,5 +152,16 @@ export const siteAnalysis = {
 
   setField(key, value) {
     ReactGA.set({ [key]: value });
+    if (key === 'userId') {
+      console.log(`identify uid:${value}`);
+      zhuge.identify(value);
+    }
+  },
+  setUser(systemUser) {
+    ReactGA.set({ userId: systemUser.uid });
+    zhuge.identify(systemUser.uid, {
+      typeCode: systemUser.typeCode,
+      name: systemUser.name,
+    });
   },
 };

@@ -27,6 +27,7 @@ const pcEntity = {
   effects: {
     // 底部菜单切换
     *footMenuChoice({ payload,history }, { call, put ,select}) {  // eslint-disable-line
+      console.log('payload', payload, 'history', history);
       const { code } = payload.selectedMenu;
       const { isFirst } = payload;
       const { selectedMenu } = yield select(({ pageConstruction }) => pageConstruction);
@@ -48,12 +49,42 @@ const pcEntity = {
           direct: true,
         },
       });
+      // 底部菜单切换埋点
+      // const opt = { footName: code };
+      // yield put({
+      //   type: 'app/analysis',
+      //   payload: {
+      //     page: siteAnalysis.pageConst.FOOTMENU,
+      //     action: siteAnalysis.actConst.BROWSE,
+      //     opt,
+      //   },
+      // });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
       const {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
+      // push到history，屏蔽回退跳转
+      const matchFooterMenu = footMenus.filter((element) => {
+        return element.code === pageName;
+      });
+      // if (!backArrow) {
+      //   history.pushState({ pageName, params, currentPage }, '');
+      // }
+      // if(matchFooterMenu&&matchFooterMenu.length>0){
+      //   history.popState();
+      // }
+      // 统计pv埋点
+      yield put({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.PVCOUNT,
+          action: siteAnalysis.actConst.BROWSE,
+        },
+      });
+
+      console.log('payloadswitch', payload);
       // 页面名称转大写
       let upPageName = null;
       if (pageName) {
@@ -72,6 +103,18 @@ const pcEntity = {
       // 埋点：正常浏览，点击进入
       if (!backArrow) {
         opt = { fromPath };
+        // 埋点记录消息id
+        if (pageName === 'messageDetail') {
+          opt.messageId = params.messageId;
+        }
+        // 判断是交易所公告还是币事件详情(701 币事件,702交易所公告)
+        if (pageName && pageName === 'subDetail') {
+          opt.typeId = params.typeId;
+        }
+        // 判断是交易所公告还是币事件详情(701 币事件,702交易所公告)
+        if (pageName && pageName === 'toOpen') {
+          opt.typeId = params.typeId;
+        }
         yield put({
           type: 'app/analysis',
           payload: {
@@ -116,7 +159,7 @@ const pcEntity = {
         if (modelName === 'subList') {
           modelName = 'subscribe';
         }
-        console.log(`page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
+        console.log(`88888${pageName},page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
         if (pageName === innerPageList[i].pageName) {
           matchPage = innerPageList[i];
           // 从隐藏到显示

@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'dva';
 import Modal from 'antd-mobile/lib/modal/index';
+import ActivityIndicator from 'antd-mobile/lib/activity-indicator/index';
+import Button from 'antd-mobile/lib/button/index';
+// import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/modal/style/index.css';
+// import 'antd-mobile/es/wing-blank/style/index.css';
+import 'antd-mobile/es/activity-indicator/style/index.css';
 import Footer from '../../../pageComponents/weixin/footer/footer';
 import { innerPageDefs } from '../../../wxRouter';
 import styles from './index.less';
@@ -11,13 +16,30 @@ class HomePage extends Component {
   constructor(props) {
     console.log('props in HomePage', props);
     super(props);
+
     this.pageDef = null;
     this.setPageRef = (element) => {
       this.pageDef = element;
     };
   }
+  componentWillMount() {
+    console.log('componentWillMount in,innerPageDefs', innerPageDefs);
+  }
   componentDidMount() {
-    console.log('componentDidMount in,innerPageDefs', innerPageDefs);
+    const { dispatch } = this.props;
+    window.addEventListener(
+      'popstate',
+      (event) => {
+        console.log('back button click', event.state);
+        const dom = this.pageDef.querySelector("div[type='headerBack']");
+        console.log('ref dom:', dom);
+        dispatch({
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { pageName: event.state.pageName, backArrow: true },
+        });
+      },
+      false,
+    );
   }
   setAttr(key, value) {
     if (this.pageDef) {
@@ -61,31 +83,47 @@ class HomePage extends Component {
       </Modal>);
     } else if (netError) {
       // 阻断提示 网络连接错误
-      modal = (<Modal
-        visible={netError}
-        transparent
-        maskClosable={false}
-        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-      >
-        <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
-          <img src="/images/indexImg/netError.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
+      return (
+        <div style={{ width: '100%', height: '100%' }}>
+          <div style={{ width: '2.55rem', height: '1.58rem', margin: '2.88rem auto 0' }}>
+            <img src="/images/indexImg/netError.png" alt="" style={{ width: '2.55rem', height: '1.58rem' }} />
+          </div>
+          <div className={styles.tipError}> 网络不给力~ </div>
+          <div className={styles.refresh}>
+            <Button onClick={window.location.reload()}>点击重试</Button>
+          </div>
         </div>
-      </Modal>);
-      return (<div>{modal}</div>);
+      );
     }
     const { innerPageList } = pageConstruction;
     // 加载提示区域
     const loadingTip = (
       <div>
+
         <div className={routeLoading ? styles.loading : styles.loadingHide}>
-          <img src="/images/loading.gif" alt="" style={{ width: '.4rem', height: '.4rem' }} />
+
+          <div className="loading-container" style={{ display: 'flex', justifyContent: 'flex-start' }}>
+            <div className="loading-example" style={{ display: 'flex', flexDirection: 'column', color: '#ccc' }}>
+              <div className="align">
+                <ActivityIndicator size="large" />
+                <span style={{ marginTop: 8, color: '#ccc' }}>正在加载</span>
+              </div>
+            </div>
+          </div>
+
         </div>
+
       </div>
     );
     // 翻页加载提示区域
     const pagiLoadingTip = (
       <div className={pagiLoading ? styles.load : styles.loadingHide}>
-        <img src="/images/loading.gif" style={{ width: '.4rem', height: '.4rem' }} />
+        <div className="loading-example">
+          <div className="align">
+            <ActivityIndicator size="large" />
+            <span style={{ marginTop: 8, color: '#ccc' }}>正在加载</span>
+          </div>
+        </div>
       </div>
     );
     // 当前已有页面，与内部页面定义进行匹配及显示

@@ -35,13 +35,13 @@ const App = {
       // 清理手机缓存
       // localStorage.clear();
       // 开发环境忽略
-      const { wxBrowserCheck, mockUser } = config.env;
+      const { wxBrowserCheck } = config.env;
       // 判断是否在微信浏览器打开
       let match = false;
       if (window.WeixinJSBridge !== 'undefined') {
         match = true;
       }
-      console.log(`match is1221212:${match}`);
+      console.log(`match issss:${match}`);
       let userStr = window.localStorage.getItem(LOCALKEY_SYSUSER);
       let uid = null;
       if (userStr) {
@@ -62,21 +62,23 @@ const App = {
       }
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
-      console.log('7777777777', hrefUrl);
+      console.log(`hrefUrl iss:${hrefUrl}`);
       const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
+      // 模拟用户
       if (mockUserStr) {
+        const userName = analysisParam('userName');
+        const passWord = analysisParam('passWord');
         mockUserReal = {
-          userName: 'e7c38411-f8f2-4283-a274-5b04c59444d7',
-          passWord: 'b2cbacf0-2635-4d42-ad4f-85b63f30f8dc',
+          userName,
+          passWord,
         };
       }
+      console.log('mockUserReal is', mockUserReal);
       // 开发环境模拟用户
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
-      } else if (mockUser) {
-        userStr = JSON.stringify(mockUser);
       }
 
       // 如果本地没有登录数据，则通过code进入登录页
@@ -88,14 +90,27 @@ const App = {
           const state = analysisParam('state');
           let messageId = null;
           let fromUser = null;
+          // 进入消息详情的场景(推送，分享)
+          let enterMessageCase = null;
           if (state && state !== 'STAT') {
             if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
               fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+              enterMessageCase = 'shareCase';
               console.log('messageId', messageId, 'fromUser', fromUser);
             } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+              enterMessageCase = 'pushCase';
             }
+            // 非关注用户扫码进消息详情埋点
+            dispatch({
+              type: 'analysis',
+              payload: {
+                page: siteAnalysis.pageConst.MESSAGEDETAIL,
+                action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
+                opt: { fromUser, enterMessageCase, messageId },
+              },
+            });
           }
           let payData = {};
           if (messageId) {
@@ -106,6 +121,14 @@ const App = {
             payData = { code };
           }
           dispatch({ type: 'autoReg', payload: payData });
+          dispatch({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.MAINPAGE,
+              action: siteAnalysis.actConst.BROWSE,
+              opt: { firstEnter: '1' },
+            },
+          });
         } else if (hrefUrl && hrefUrl.indexOf('messageId') !== -1) {
           const messageId = analysisParam('messageId');
           const fromUser = analysisParam('fromUser');
@@ -131,7 +154,7 @@ const App = {
             payload: {
               page: siteAnalysis.pageConst.MESSAGEDETAIL,
               action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-              opt: { fromUser },
+              opt: { fromUser, messageId },
             },
           });
         } else if (hrefUrl && hrefUrl.indexOf('sharePaper') !== -1) {
@@ -172,18 +195,26 @@ const App = {
           userData.code = code;
         }
         let messageId = null;
+        // 从哪个用户分享过来
         let fromUser = null;
+        // 进入消息详情的场景(推送，分享)
+        let enterMessageCase = null;
         if (state && state !== 'STAT') {
           if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
             fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
+            enterMessageCase = 'shareCase';
             console.log('messageId', messageId, 'fromUser', fromUser);
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.length);
+            enterMessageCase = 'pushCase';
           }
         } else {
           messageId = analysisParam('messageId');
           fromUser = analysisParam('fromUser');
+        }
+        if (enterMessageCase) {
+          userData.enterMessageCase = enterMessageCase;
         }
         if (messageId) {
           userData.messageId = messageId;
@@ -218,17 +249,20 @@ const App = {
       const { messageId } = payload;
       const { sharePaper } = payload;
       const { fromUser } = payload;
+      // 判断进入消息详情的场景
+      const { enterMessageCase } = payload;
+      console.log(`enterMessageCase${enterMessageCase}`);
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe, isFirstEnter,
+          token, name, headUrl, uid, subscribe, isFirstEnter, exchange, event,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid, subscribe,
+          token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event,
         };
         // 群裂变开通权限用户
         if (isFirstEnter && isFirstEnter === 'yes') {
@@ -263,8 +297,9 @@ const App = {
             systemUser,
           },
         });
-        // 初始化ga中的uid
-        siteAnalysis.setField('userId', systemUser.uid);
+        // 初始化用户标识
+        // siteAnalysis.setField('userId', systemUser.uid);
+        siteAnalysis.setUser(systemUser);
         // 发送打开主页的埋点
         yield put({
           type: 'analysis',
@@ -297,7 +332,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: siteAnalysis.actConst.NOUSERSMTMESSAGEDETAIL,
-                opt: { fromUser },
+                opt: { fromUser, enterMessageCase, messageId },
               },
             });
           } else if (subscribe === 1) {
@@ -311,7 +346,7 @@ const App = {
               payload: {
                 page: siteAnalysis.pageConst.MESSAGEDETAIL,
                 action: actionReal,
-                opt: { fromUser },
+                opt: { fromUser, enterMessageCase, messageId },
               },
             });
           }
@@ -451,14 +486,20 @@ const App = {
     // ga调用
     *analysis({ payload }, { call, put, select }) {
       const { page, action, opt = {} } = payload;
+      console.log('analysis page', page);
       const st = yield select();
       const { app } = st;
       console.log('app in ana', app);
       const { systemUser } = app;
+      // 埋点判断是否开通订阅的用户
+      let hasSubcribe = 0;
       if (systemUser) {
         opt.uid = systemUser.uid;
+        if (systemUser.exchange === 1 || systemUser.event === 1) {
+          hasSubcribe = 1;
+        }
       }
-      const pageReal = `wx_${page}`;
+      opt.hasSubcribe = hasSubcribe;
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
