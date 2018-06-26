@@ -139,13 +139,13 @@ export const siteAnalysis = {
   pushEvent(pageDef, actionDef, opt) {
     console.log('pushEvent pageDef', pageDef);
     ReactGA.event({
-      category: `wx_${pageDef.zh}`,
-      action: actionDef.zh,
+      category: `wx_${pageDef.code}`,
+      action: actionDef.code,
       opt,
     });
     console.log('track opt', opt);
-    zhuge.track(`wx_${pageDef.zh}`, {
-      action: actionDef.zh,
+    zhuge.track(`wx_${pageDef.code}`, {
+      action: actionDef.code,
       ...opt,
     });
   },
