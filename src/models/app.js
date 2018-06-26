@@ -14,6 +14,7 @@ import { siteAnalysis } from '../utils/siteAnalysis.js';
 */
 
 const { LOCALKEY_SYSUSER } = constants.default;
+const retryTime = 2;
 
 const App = {
   namespace: 'app',
@@ -30,6 +31,14 @@ const App = {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      const reconnectFlag = window.localStorage.getItem('reconnectFlag');
+      if (parseInt(reconnectFlag) > retryTime) {
+        window.localStorage.setItem('reconnectFlag', 0);
+        dispatch({
+          type: 'netErrorShow',
+        });
+        return;
+      }
       // 流量分析系统初始化
       siteAnalysis.init();
       // 清理手机缓存
@@ -228,13 +237,6 @@ const App = {
           userData.sharePaper = sharePaper;
         }
         console.log('userData*****^^', userData);
-        // 失败跳转
-        const reconnectFlag = window.localStorage.getItem('reconnectFlag');
-        if (reconnectFlag && reconnectFlag > 3) {
-          // 如果发现标志超过，直接发错误
-          dispatch({ type: 'netError', payload: { netError: true } });
-          return;
-        }
         dispatch({ type: 'query', payload: userData });
       }
     },
@@ -543,28 +545,17 @@ const App = {
     },
     // 网络连接错误
     netError(state, action) {
-      console.log('netError', action.payload);
+      console.log('netError in', action.payload);
       const { netError } = action.payload;
       const systemUser = { token: 'netError' };
-      console.log('net error and refresh');
-      // 重定向标志判断
-      let reconnectFlag = window.localStorage.getItem('reconnectFlag');
-      if (reconnectFlag) {
-        reconnectFlag = parseInt(reconnectFlag, 0) + 1;
-      } else {
-        reconnectFlag = 1;
-      }
-      console.log(`reconnectFlag now:${reconnectFlag}`);
-      window.localStorage.setItem('reconnectFlag', reconnectFlag);
-      // 如果多次都不成，弹出错误提示
-      if (reconnectFlag <= 3) {
-        const curHref = window.location.href;
-        window.location.href = `${curHref}`;
-        return;
-      }
-      window.localStorage.setItem('reconnectFlag', 0);
+
       return {
         ...state, isTour: true, modalVisible: false, netError, systemUser,
+      };
+    },
+    netErrorShow(state, action) {
+      return {
+        ...state, modalVisible: false, netError: true,
       };
     },
     // 关闭关注提示窗口

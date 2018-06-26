@@ -64,6 +64,9 @@ class HomePage extends Component {
     } = this.props;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
+    if (!app) {
+      return null;
+    }
     const {
       attentionModal, pagiLoading, routeLoading, netError, touchMoveDisable,
     } = app;

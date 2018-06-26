@@ -83,12 +83,8 @@ class SubTagCard extends React.Component {
           </div>
           <div>
             <img className={style.coinLogo} src={logo} alt="-" />
-            <span className={style.readNum}>{count}人关注</span>
             <div style={{ background: '#fff' }}>
               <div className={style.coinName}>{name}</div>
-              <div className={style.btnBox}>
-                {subscribeContent}
-              </div>
             </div>
           </div>
         </div>
