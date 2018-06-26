@@ -25,4 +25,11 @@ export const NumberFormat = {
     }
     return gainDiffer;
   },
+  // 价格显示转换
+  priceShow(price) {
+    if (price < 1) {
+      return price.toFixed(8);
+    }
+    return price.toFixed(2);
+  },
 };
