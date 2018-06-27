@@ -64,6 +64,26 @@ else
         exit 2
 fi
 
+<<<<<<< HEAD
+	################################# 打压缩包 ####################################
+	cd $target_path
+	echo  "产生对应压缩包..."
+	zip -rq webapp.zip *
+	cp webapp.zip $deploy_path/webapp.zip
+	if [ $choic -eq 1 ]
+	then
+		echo  "npm run build..."
+	  npm run build
+		echo "ok"
+		expect $shellPath/expect_deploy_$expectitem.sh
+	elif [ $choic -eq 2 ]
+	then
+		echo "cp over"
+	else
+		exit 2
+	fi	
+	
+=======
         ################################# 打压缩包 ####################################
         cd $target_path
         echo  "产生对应压缩包..."
@@ -81,3 +101,4 @@ fi
         fi
 
 echo  "ok..."
+>>>>>>> develop

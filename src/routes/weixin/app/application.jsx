@@ -22,9 +22,6 @@ class HomePage extends Component {
       this.pageDef = element;
     };
   }
-  componentWillMount() {
-    console.log('componentWillMount in,innerPageDefs', innerPageDefs);
-  }
   componentDidMount() {
     const { dispatch } = this.props;
     window.addEventListener(
@@ -134,20 +131,14 @@ class HomePage extends Component {
       // 动态组件显示
       const MComponent = matchItem.component;
       const ckey = `container_${item.pageName}`;
-      // 根据标志决定隐藏还是显示
-      if (item.isShow) {
-        console.log('item show', item);
-        // 注意此处div不能加key，否则会重复渲染
-        return (<div name={ckey} className={styles.container}>
-          <MComponent key={item.pageName} modelName={matchItem.modelName} params={item.params} pageName={item.pageName} />
-        </div>);
+      let key = `${item.pageName}`;
+      // 同一页面跳转的时候，会需要动态key值
+      if (item.extraKey) {
+        key = `${key}_${item.extraKey}`;
       }
-      const style = {
-        display: 'none',
-      };
-      // 注意此处div不能加key，否则会重复渲染
-      return (<div name={ckey} style={style} className={styles.container}>
-        <MComponent key={item.pageName} modelName={item.modelName} params={item.params} pageName={item.pageName} />
+      console.log(`key is:${key}`);
+      return (<div name={ckey} className={styles.container}>
+        <MComponent key={key} modelName={item.modelName} params={item.params} pageName={item.pageName} />
               </div>);
     });
     let pageContent = null;

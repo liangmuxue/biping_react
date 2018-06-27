@@ -23,17 +23,6 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch, history }) {
-      // 第一次初始化时进行默认查询
-      dispatch({
-        type: 'msgQuery',
-        payload: {
-          modelDef: MODEL_DEF,
-          pagination: {
-            current: 0, // 当前页码
-            pageSize: 10, // 默认每页条目
-          },
-        },
-      });
     },
   },
 

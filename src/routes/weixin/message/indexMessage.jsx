@@ -14,10 +14,10 @@ import styles from './index.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 
 /**
- * 消息列表页面
- * @author 梁慕学
- * @Date  2017-12-25
- */
+* 消息列表页面
+* @author 梁慕学
+* @Date  2017-12-25
+*/
 
 @pureRender
 class MessageList extends BaseComponent {
@@ -54,7 +54,7 @@ class MessageList extends BaseComponent {
   }
   // logo点击事件
   logoClick(msgObj) {
-  // 跳转到信息类型列表页面
+    // 跳转到信息类型列表页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'subTagList', params: { ...msgObj, backPath: 'indexMessage' } },
@@ -74,6 +74,23 @@ class MessageList extends BaseComponent {
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'subList' },
+    });
+  }
+  componentWillMount() {
+    console.log('componentWillMount indexMessage', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'indexMessage/msgQuery',
+      payload: {
+        modelDef: {
+          modelName: 'indexMessage',
+          endpoint: 'messageList',
+        },
+        pagination: {
+          current: 0, // 当前页码
+          pageSize: 10, // 默认每页条目
+        },
+      },
     });
   }
   render() {

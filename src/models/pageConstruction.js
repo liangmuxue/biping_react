@@ -1,3 +1,4 @@
+import { Route, routerRedux } from 'dva/router';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { innerPageDefs } from '../wxRouter';
 import { siteAnalysis } from '../utils/siteAnalysis.js';
@@ -65,6 +66,7 @@ const pcEntity = {
       const {
         pageName, params, direct, backArrow, currentPage,
       } = payload;
+      console.log(`need switchToInnerPage:${pageName}`);
       // push到history，屏蔽回退跳转
       const matchFooterMenu = footMenus.filter((element) => {
         return element.code === pageName;
@@ -148,58 +150,16 @@ const pcEntity = {
       })[0];
       console.log('matched item', matchItem);
       // 进行内部页面排列处理
-      let matchPage = null;
-      for (let i = 0; i < innerPageList.length; i += 1) {
-        // 取得对应的匹配组件定义
-        let { modelName } = innerPageList[i];
-        // 取得对应的model名称，如果没有则默认是页面名称
-        if (!modelName) {
-          modelName = innerPageList[i].pageName;
-        }
-        if (modelName === 'subList') {
-          modelName = 'subscribe';
-        }
-        console.log(`88888${pageName},page name is:${innerPageList[i].pageName},and isShow:${innerPageList[i].isShow}`);
-        if (pageName === innerPageList[i].pageName) {
-          matchPage = innerPageList[i];
-          // 从隐藏到显示
-          matchPage.isShow = true;
-          // 如果由非激活状态转变为激活状态，要进行页面通知
-          const actEvent = `${modelName}/active`;
-          console.log(`act name:${actEvent}`);
-          console.log('act params:', params);
-          yield put({
-            type: actEvent,
-            pageName,
-            params,
-            backArrow,
-          });
-        } else if (innerPageList[i].isShow) {
-          // 如果同一页面进出，不隐藏
-          if (innerPageList[i].pageName !== matchItem.pageName) {
-            // 从显示到隐藏
-            innerPageList[i].isShow = false;
-            // 如果由激活状态转变为非激活状态，要进行页面通知
-            const deActive = `${modelName}/deactive`;
-            console.log(`need send deactive:${deActive}`);
-            yield put({
-              type: deActive,
-              pageName,
-              params,
-            });
-          }
-        }
-      }
-      // 如果没有匹配，则初始化此页面组件
-      if (!matchPage) {
-        matchPage = {
-          pageName,
-          params,
-          isShow: true,
-        };
-        // 放入页面列表
-        innerPageList.push(matchPage);
-      }
+      const matchPage = {
+        pageName,
+        params,
+        isShow: true,
+      };
+      // 设置动态key
+      matchPage.extraKey = Math.random();
+      // 放入页面列表
+      innerPageList.length = 0;
+      innerPageList.push(matchPage);
       // 直接跳转时，需要判断当前页面属于哪个底部菜单
       if (!direct) {
         console.log('pageConstruction66666666', pageName);
@@ -261,23 +221,6 @@ const pcEntity = {
     },
     *hideRouteLoading({ pageName }, { select, put }) {
       console.log(`hideRouteLoading in:${pageName}`);
-      const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
-      // 根据当前已有页面进行匹配，如果没有，直接进行提示隐藏处理
-      const matchItem = innerPageList.filter((element) => {
-        return element.pageName === pageName;
-      });
-      console.log('matchItem in pagc', matchItem);
-      if (!matchItem || matchItem.length === 0) {
-        yield put({
-          type: 'app/hideRouteLoading',
-        });
-        return;
-      }
-      // 如果是非显示页面，不进行加载提示隐藏
-      if (!matchItem[0].isShow) {
-        return;
-      }
-      // 显示页面加载
       yield put({
         type: 'app/hideRouteLoading',
       });
