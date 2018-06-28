@@ -75,6 +75,7 @@ fi
         elif [ $choic -eq 2 ]
         then
                 cd $deploy_path
+                rm -f *.js
                 unzip -o webapp.zip
         else
                 exit 2

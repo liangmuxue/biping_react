@@ -10,7 +10,7 @@ module.exports = merge(require('./webpack.config'), {
 
   output: {
     path: path.join(__dirname, '../docs'),
-    publicPath: 'http://webapp.closerhearts.net.cn/',
+    //publicPath: 'http://webapp.closerhearts.net.cn/',
   },
 
   plugins: [
@@ -27,6 +27,7 @@ module.exports = merge(require('./webpack.config'), {
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify('production'),
     }),
+    /*
     new AliyunOSSPlugin({
       accessKeyId: 'LTAIvAQwnZS1DyZE',
       accessKeySecret: 'akWYSJarftuqGat4tDUxlmcq7qr7UW',
@@ -35,7 +36,7 @@ module.exports = merge(require('./webpack.config'), {
       headers: {
         'Cache-Control': 'max-age=3600000',
       },
-    }),
+    }),*/
     new Uglify(),
   ],
 });
