@@ -15,6 +15,14 @@ const menus = [
     selectedIcon: 'url(/images/footerImg/msgActived.png) center center /  21px 21px no-repeat',
   },
   {
+    code: 'eventCalendar',
+    title: '事件日历',
+    key: 'eventCalendar',
+    badge: 0,
+    icon: 'url(/images/footerImg/calendar-gray.png) center center /  21px 21px no-repeat',
+    selectedIcon: 'url(/images/footerImg/calendar-blue.png) center center /  21px 21px no-repeat',
+  },
+  {
     code: 'subList',
     title: '订阅管理',
     key: 'subList',

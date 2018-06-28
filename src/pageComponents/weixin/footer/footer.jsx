@@ -23,7 +23,7 @@ function genFooterMenus({ dispatch, pageConstruction }) {
   return (
     <div
       style={{
- position: 'fixed', zIndex: 999, width: '100%', bottom: 0,
+ position: 'fixed', zIndex: 99, width: '100%', bottom: 0,
 }}
       className={footerHide ? styles.hide : null}
     >

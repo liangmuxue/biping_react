@@ -33,6 +33,10 @@ export const siteAnalysis = {
       code: 'indexMessage',
       zh: '消息列表',
     },
+    EVENTCALENDAR: {
+      code: 'EventCalendar',
+      zh: '事件日历',
+    },
     SUBLIST: {
       code: 'subList',
       zh: '订阅列表',

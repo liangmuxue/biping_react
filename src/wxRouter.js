@@ -169,6 +169,16 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/myLike/myLike'),
   });
+
+  // 事件日历
+  const EventCalendar = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/eventCalendar/eventCalendar'),
+  });
+
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -212,6 +222,9 @@ function RouterConfig({ history, app }) {
   }, {
     name: 'myLike',
     component: MyLike,
+  }, {
+    name: 'eventCalendar',
+    component: EventCalendar,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -254,6 +267,7 @@ function RouterConfig({ history, app }) {
           <Route path="/result" component={Result} />
           <Route path="/subTagList" component={SubTagList} />
           <Route path="/myLike" component={MyLike} />
+          <Route path="/eventCalendar" component={EventCalendar} />
           {routeInner}
         </div>
       </ConnectedRouter>
