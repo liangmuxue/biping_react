@@ -48,10 +48,8 @@ class MessageContent extends React.Component {
       timeMoment = `${moment(beginTime * 1000).format('HH:mm')} - ${
         moment(msgObj.createTime * 1000).format('HH:mm')}`;
     }
-    // 净流入
-    const { gainHoldFun } = NumberFormat;
-    // 涨跌幅
-    const { gainDifferFun } = NumberFormat;
+    // 净流入,涨跌幅,价格显示
+    const { gainHoldFun, priceShow, gainDifferFun } = NumberFormat;
     return (
       <div>
         <div className={style.transactionCoin} >
@@ -69,7 +67,7 @@ class MessageContent extends React.Component {
               {msgObj.price}
               {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
               <b className={style.convert}>
-               (≈ 人民币{msgObj.priceReal ? (msgObj.priceReal).toFixed(2) : '-'}）
+               (≈ 人民币{msgObj.priceReal ? priceShow(msgObj.priceReal) : '-'}）
               </b>
             </span>
           </div>
@@ -102,7 +100,7 @@ class MessageContent extends React.Component {
             +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
               </span> :
               <span className={style.toDown}>
-                {(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
+                {gainDifferFun(msgObj.quoteList[0].gainDiffer)}
               </span>}
             </div> :
             <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?

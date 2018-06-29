@@ -26,8 +26,8 @@ class MessageCard extends React.Component {
   // logo点击
   logoClick(e) {
     console.log('logoClick+++++');
-    e.preventDefault();
-    this.props.logoClick(this.props.msgObj);
+    // e.preventDefault();
+    // this.props.logoClick(this.props.msgObj);
   }
   handleTagTap(e) {
   // 点击标签，进行筛选
