@@ -175,6 +175,7 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/app'),
+      import('./models/eventCalendar'),
     ],
     component: () => import('./routes/weixin/eventCalendar/eventCalendar'),
   });

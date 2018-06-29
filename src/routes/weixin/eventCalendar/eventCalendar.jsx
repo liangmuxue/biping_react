@@ -1,12 +1,15 @@
 import React from 'react';
+import { connect } from 'dva';
 import { Flex, Calendar } from 'antd-mobile';
 import 'antd-mobile/es/flex/style/index.css';
 import 'antd-mobile/es/calendar/style/index.css';
 import 'antd-mobile/es/icon/style/index.css';
 import styles from './eventCalendar.less';
-import EventList from './children/eventList'
+import EventList from './children/eventList';
+import mobileRouteComponent from '../../common/mobileRouteComponent';
+import BaseComponent from '../baseComponent';
 
-class EventCalendar extends React.Component {
+class EventCalendar extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -16,13 +19,19 @@ class EventCalendar extends React.Component {
       },
     };
   }
+  componentWillMount() {
+    this.props.dispatch({
+      type: 'eventCalendar/getTime',
+    });
+    super.componentWillMount();
+  }
   onCancel() {
     this.setState({
       show: false,
     });
   }
   onConfirm(time) {
-    console.log(time);
+    console.log(time.getFullYear());
     this.setState({
       show: false,
     });
@@ -50,7 +59,7 @@ class EventCalendar extends React.Component {
             </div>
           </div>
           <Flex>
-            <Flex.Item className={`${styles.item} ${styles.selectItem}`}>
+            <Flex.Item className={`${styles.item}`}>
               <span className={styles.text1}>周日</span>
               <span className={styles.text2}>03</span>
             </Flex.Item>
@@ -66,7 +75,7 @@ class EventCalendar extends React.Component {
               <span className={styles.text1}>周三</span>
               <span className={styles.text2}>06</span>
             </Flex.Item>
-            <Flex.Item className={styles.item}>
+            <Flex.Item className={`${styles.item} ${styles.selectItem}`}>
               <span className={styles.text1}>周四</span>
               <span className={styles.text2}>07</span>
             </Flex.Item>
@@ -92,4 +101,9 @@ class EventCalendar extends React.Component {
   }
 }
 
-export default EventCalendar;
+
+function mapStateToProps(state) {
+  return state;
+}
+
+export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

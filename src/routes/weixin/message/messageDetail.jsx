@@ -17,6 +17,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
+import EventDetail from './children/eventDetail'
 
 /**
 * 消息详情
@@ -381,7 +382,7 @@ class MsgDetail extends BaseComponent {
               </div>
             </Hammer>
           </div>
-
+          <EventDetail />
           <div className={style.up}>
             <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>
