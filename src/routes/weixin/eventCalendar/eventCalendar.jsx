@@ -20,6 +20,7 @@ class EventCalendar extends BaseComponent {
     };
   }
   componentWillMount() {
+    console.log('componentWillMount ec call');
     this.props.dispatch({
       type: 'eventCalendar/getTime',
     });
@@ -42,6 +43,9 @@ class EventCalendar extends BaseComponent {
     });
   }
   render() {
+    console.log('this.props in render:', this.props);
+    const { time } = this.props;
+    console.log(`time in render:${time}`);
     return (
       <div>
         <div className={styles.calendar}>
@@ -103,7 +107,8 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return state;
+  console.log('mapStateToProps eventCalendar', state);
+  return state.eventCalendar;
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

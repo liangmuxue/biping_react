@@ -16,11 +16,22 @@ export default modelExtend(pageModel, {
   },
   effects: {
     // 获取服务器当前时间
-    /* *getTime({ payload }, { call }) {
+    *getTime({ payload }, { put, call }) {
       console.log('gettime=>', payload);
-      return null;
-    }, */
+      yield put({
+        type: 'getTimeSuccess',
+        payload: { time: 1 },
+      });
+    },
   },
   reducers: {
+    getTimeSuccess(state, action) {
+      const { time } = action.payload;
+      console.log('action in getTimeSuccess:', action.payload);
+      return {
+        time,
+        ...state,
+      };
+    },
   },
 });
