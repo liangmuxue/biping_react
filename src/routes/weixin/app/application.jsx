@@ -24,6 +24,7 @@ class HomePage extends Component {
   }
   componentDidMount() {
     const { dispatch } = this.props;
+    // 监听地址返回事件，控制内部跳转
     window.addEventListener(
       'popstate',
       (event) => {
@@ -31,8 +32,8 @@ class HomePage extends Component {
         const dom = this.pageDef.querySelector("div[type='headerBack']");
         console.log('ref dom:', dom);
         dispatch({
-          type: 'pageConstruction/switchToInnerPage',
-          payload: { pageName: event.state.pageName, backArrow: true },
+          type: 'pageConstruction/backButtonIn',
+          payload: {},
         });
       },
       false,

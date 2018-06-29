@@ -30,7 +30,7 @@ const pcEntity = {
     *footMenuChoice({ payload,history }, { call, put ,select}) {  // eslint-disable-line
       console.log('payload', payload, 'history', history);
       const { code } = payload.selectedMenu;
-      const { isFirst } = payload;
+      const { isFirst, noHistory } = payload;
       const { selectedMenu } = yield select(({ pageConstruction }) => pageConstruction);
       console.log('selectedMenu is', selectedMenu);
       // 屏蔽重复点击菜单,第一次进入时不拦截
@@ -48,35 +48,34 @@ const pcEntity = {
         payload: {
           pageName: code,
           direct: true,
+          noHistory,
         },
       });
-      // 底部菜单切换埋点
-      // const opt = { footName: code };
-      // yield put({
-      //   type: 'app/analysis',
-      //   payload: {
-      //     page: siteAnalysis.pageConst.FOOTMENU,
-      //     action: siteAnalysis.actConst.BROWSE,
-      //     opt,
-      //   },
-      // });
     },
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
       const {
-        pageName, params, direct, backArrow, currentPage,
+        pageName, params, direct, backArrow, currentPage, noHistory,
       } = payload;
-      console.log(`need switchToInnerPage:${pageName}`);
+      console.log(`need switchToInnerPage:${pageName},noHistory:${noHistory}`);
       // push到history，屏蔽回退跳转
       const matchFooterMenu = footMenus.filter((element) => {
         return element.code === pageName;
       });
-      // if (!backArrow) {
-      //   history.pushState({ pageName, params, currentPage }, '');
-      // }
-      // if(matchFooterMenu&&matchFooterMenu.length>0){
-      //   history.popState();
-      // }
+      if (!backArrow && !noHistory) {
+        console.log(`pushState in:${pageName}`);
+        window.history.pushState({ pageName, params, currentPage }, '');
+      }
+      // 如果是访问一级菜单，则清除回退记录
+      if (matchFooterMenu && matchFooterMenu.length > 0 && !noHistory) {
+        const backlen = history.length;
+        console.log(`backlen is:${backlen}`);
+        const backStep = parseInt(backlen) * -1;
+        console.log(`backStep is:${backStep}`);
+        if (backStep < 0) {
+          history.go(backStep);
+        }
+      }
       // 统计pv埋点
       yield put({
         type: 'app/analysis',
@@ -217,6 +216,14 @@ const pcEntity = {
         type: 'innerPageSwitched',
         params,
         modelName: matchItem.modelName,
+      });
+    },
+    *backButtonIn({ }, { select, put }) {
+      const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
+      const pageItem = innerPageList[0];
+      console.log('backButtonIn,pageItem', pageItem);
+      const matchFooterMenu = footMenus.filter((element) => {
+        return element.code === pageItem.pageName;
       });
     },
     *hideRouteLoading({ pageName }, { select, put }) {

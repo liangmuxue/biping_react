@@ -144,7 +144,7 @@ const App = {
           if (messageId === 'list') {
             dispatch({
               type: 'pageConstruction/switchToInnerPage',
-              payload: { pageName: 'indexMessage' },
+              payload: { pageName: 'indexMessage', noHistory: true },
             });
             dispatch({ type: 'openMessage', payload: { attentionModal: true } });
             return;
@@ -360,7 +360,7 @@ const App = {
         if (ifVerb === 0) {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: menu, isFirst: true },
+            payload: { selectedMenu: menu, isFirst: true, noHistory: true },
           });
         } else {
           yield put({
