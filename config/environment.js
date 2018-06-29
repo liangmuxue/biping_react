@@ -61,6 +61,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
+  ENV.analysis = true;// 标志是否进行埋点请求
 }
 
 export const config = {
