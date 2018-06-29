@@ -1,4 +1,5 @@
 import ReactGA from 'react-ga';
+import { config } from '../../config/environment';
 
 /**
 * 流量统计分析
@@ -141,17 +142,19 @@ export const siteAnalysis = {
     ReactGA.initialize('UA-117280811-2');
   },
   pushEvent(pageDef, actionDef, opt) {
-    console.log('pushEvent pageDef', pageDef);
-    ReactGA.event({
-      category: `wx_${pageDef.code}`,
-      action: actionDef.code,
-      opt,
-    });
+    console.log('pushEvent pageDefs', pageDef);
+    // ReactGA.event({
+    //   category: `wx_${pageDef.code}`,
+    //   action: actionDef.code,
+    //   opt,
+    // });
     console.log('track opt', opt);
-    zhuge.track(`wx_${pageDef.code}`, {
-      action: actionDef.code,
-      ...opt,
-    });
+    if (config.env.analysis) {
+      zhuge.track(`wx_${pageDef.code}`, {
+        action: actionDef.code,
+        ...opt,
+      });
+    }
   },
 
   setField(key, value) {
@@ -162,10 +165,12 @@ export const siteAnalysis = {
     }
   },
   setUser(systemUser) {
-    ReactGA.set({ userId: systemUser.uid });
-    zhuge.identify(systemUser.uid, {
-      typeCode: systemUser.typeCode,
-      name: systemUser.name,
-    });
+    if (config.env.analysis) {
+      ReactGA.set({ userId: systemUser.uid });
+      zhuge.identify(systemUser.uid, {
+        typeCode: systemUser.typeCode,
+        name: systemUser.name,
+      });
+    }
   },
 };
