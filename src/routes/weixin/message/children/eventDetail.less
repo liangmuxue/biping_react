@@ -1,0 +1,124 @@
+.eventDetail {
+  position: relative;
+  background-color: #ffffff;
+  border-top: 1px solid #E5E5E5;
+}
+.currency {
+  padding: .64rem .3rem;
+  border-bottom: 1px solid #E5E5E5;
+  .head {
+    color: #222222;
+    font-size: .34rem;
+    text-align: left;
+    margin-bottom: .3rem;
+  }
+  .currencyDsc {
+    background-color: #F4F5FA;
+    padding: .2rem;
+    .tl {
+      display: flex;
+      align-items: center;
+      margin-bottom: .2rem;
+      img {
+        width: .59rem;
+        height: .59rem;
+      }
+      .name {
+        margin-left: .2rem;
+        color: #222222;
+        font-size: .3rem;
+      }
+    }
+    .text {
+      color: #888888;
+      font-size: .26rem;
+      text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
+.effettable {
+  border-bottom: 1px solid #E5E5E5;
+  padding: .64rem 0;
+  .title {
+    color: #222222;
+    font-size: .34rem;
+    margin-bottom: .27rem;
+  }
+}
+.CurrencyPrice {
+  border-bottom: 1px solid #E5E5E5;
+  padding: .64rem .3rem;
+  .title {
+    font-size: .34rem;
+    color: #222222;
+    text-align: left;
+    margin-bottom: .6rem;
+  }
+  .btn {
+    position: relative;
+    width: 6.1rem;
+    height: .78rem;
+    font-size: .28rem;
+    border-radius: 20px;
+    border: 1px solid;
+    line-height: .78rem;
+    margin: 0 auto;
+    span {
+      position: absolute;
+      left: 0;
+      top: 0;
+      display: block;
+      width: 0;
+      height: .78rem;
+      border-radius: 20px 0 0 20px;
+      transition: width 1s ease-in-out;
+      -webkit-transition: width 1s ease-in-out;
+    }
+    img {
+      width: .3rem;
+      height: .3rem;
+      position: relative;
+      right: .1rem;
+      top: 3px;
+    }
+    em {
+      position: absolute;
+      z-index: 1;
+      font-style: normal;
+    }
+  }
+  .upBtn {
+    border-color: #0E8E31;
+    color: #0E8E31;
+    span {
+      background-color: #86C698;
+    }
+  }
+  .downBtn {
+    margin-top: .43rem;
+    border-color: #FF2D40;
+    color: #FF2D40;
+    span {
+      background-color: #FF969F;
+    }
+  }
+}
+table {
+  border-collapse: collapse;
+}
+thead {
+  background-color: #F4F5FA;
+}
+td, th {
+  text-align: center;
+  padding: 8px;
+}
+
+/* tr:nth-child(1) {
+  background-color: #F4F5FA;
+} */
