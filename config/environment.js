@@ -14,7 +14,6 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://10.0.108.137:8280';
   ENV.host = 'http://twp.test.tnb99.net';
   // ENV.host = 'http://wp.bipingcoin.com';
-  ENV.host = 'http://twp.test.tnb99.net';
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
   ENV.messageHost = 'http://twx.test.tnb99.net';
@@ -51,16 +50,17 @@ if (process.env.NODE_ENV === 'test') {
 if (process.env.NODE_ENV === 'production') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
-  ENV.host = 'http://wp.bipingcoin.com';
+  ENV.host = 'https://wps.bipingcoin.com';
   //  ENV.host = 'http://twp.test.tnb99.net';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
-  ENV.messageHost = 'http://wx.bipingcoin.com';
+  ENV.messageHost = 'https://wx.bipingcoin.com';
   //  ENV.messageHost = 'http://twx.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.test.tnb99.net';
   ENV.wxBrowserCheck = true;
+  ENV.analysis = true;// 标志是否进行埋点请求
 }
 
 export const config = {
