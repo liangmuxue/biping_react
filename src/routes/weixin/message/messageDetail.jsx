@@ -219,6 +219,7 @@ class MsgDetail extends BaseComponent {
   }
   // 带标签的列表页
   tagListClick(msgObj) {
+    return;
     const { dispatch, msgDetailData } = this.props;
     const msgDetailDataObj = msgDetailData.data;
     const { mid } = msgDetailDataObj;
