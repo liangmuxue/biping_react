@@ -25,6 +25,7 @@ import MessageContent from '../../../pageComponents/weixin/message/messageConten
 */
 function shareEvent(event) {
   const { messageHost } = config.env;
+  console.log(`messageHost is:${messageHost}`);
   const { wechatHost } = config.env;
   let imgUrl = null;
   console.log('this.props', event);
