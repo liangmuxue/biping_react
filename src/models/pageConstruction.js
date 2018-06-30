@@ -15,7 +15,8 @@ const pcEntity = {
 
   state: {
     selectedMenu: footMenus[0],
-    innerPageList: [],
+    innerPageList: [], // 当前页面
+    hisPageList: [], // 历史页面链
   },
 
   subscriptions: {
@@ -55,16 +56,22 @@ const pcEntity = {
     *switchToInnerPage({ payload }, { select, put }) {
       // 页面名称，相关的参数
       const {
-        pageName, params, direct, backArrow, currentPage, noHistory,
+        pageName, params, direct, backArrow, currentPage, noHistory, backButton,
       } = payload;
       console.log(`need switchToInnerPage:${pageName},noHistory:${noHistory}`);
       // push到history，屏蔽回退跳转
       const matchFooterMenu = footMenus.filter((element) => {
         return element.code === pageName;
       });
+      // 如果是返回按钮，则从原来的列表中取得上次页面
+      if (backButton) {
+
+      }
       if (!backArrow && !noHistory) {
         console.log(`pushState in:${pageName}`);
         window.history.pushState({ pageName, params, currentPage }, '');
+        // 放入历史页面
+        this.hisPageList.push(pageName);
       }
       // 如果是访问一级菜单，则清除回退记录
       if (matchFooterMenu && matchFooterMenu.length > 0 && !noHistory) {
@@ -216,14 +223,6 @@ const pcEntity = {
         type: 'innerPageSwitched',
         params,
         modelName: matchItem.modelName,
-      });
-    },
-    *backButtonIn({ }, { select, put }) {
-      const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
-      const pageItem = innerPageList[0];
-      console.log('backButtonIn,pageItem', pageItem);
-      const matchFooterMenu = footMenus.filter((element) => {
-        return element.code === pageItem.pageName;
       });
     },
     *hideRouteLoading({ pageName }, { select, put }) {

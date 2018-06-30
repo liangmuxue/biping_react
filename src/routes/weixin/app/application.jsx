@@ -32,8 +32,8 @@ class HomePage extends Component {
         const dom = this.pageDef.querySelector("div[type='headerBack']");
         console.log('ref dom:', dom);
         dispatch({
-          type: 'pageConstruction/backButtonIn',
-          payload: {},
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { backButton: true },
         });
       },
       false,
