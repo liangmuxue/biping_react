@@ -33,6 +33,7 @@ function shareEvent(event) {
   console.log('params1111', params);
   const { uid } = params;
   const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+  console.log(`share url:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
     content: url,
