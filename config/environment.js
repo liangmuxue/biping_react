@@ -54,7 +54,7 @@ if (process.env.NODE_ENV === 'production') {
   ENV.host = 'https://wps.bipingcoin.com';
   //  ENV.host = 'http://twp.test.tnb99.net';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx92489c80243c1c9c&redirect_uri=';
-  ENV.messageHost = 'https://wx.bipingcoin.com';
+  ENV.messageHost = 'https://wxs.bipingcoin.com';
   //  ENV.messageHost = 'http://twx.test.tnb99.net';
   ENV.imgHost = 'http://img.tnb99.cn';
   ENV.imgUrl = 'https://biping.oss-cn-beijing.aliyuncs.com';
