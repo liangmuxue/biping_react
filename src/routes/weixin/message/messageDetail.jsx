@@ -26,6 +26,7 @@ import EventDetail from './children/eventDetail'
 */
 function shareEvent(event) {
   const { messageHost } = config.env;
+  console.log(`messageHost is:${messageHost}`);
   const { wechatHost } = config.env;
   let imgUrl = null;
   console.log('this.props', event);
@@ -34,6 +35,7 @@ function shareEvent(event) {
   console.log('params1111', params);
   const { uid } = params;
   const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+  console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
     content: url,
