@@ -8,6 +8,7 @@ import styles from './eventCalendar.less';
 import EventList from './children/eventList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
+import { convertDate, weekDay } from '../../../utils/dateFormat';
 
 class EventCalendar extends BaseComponent {
   constructor(props) {
@@ -17,42 +18,76 @@ class EventCalendar extends BaseComponent {
       config: {
         type: 'one',
       },
+      weekArrZn: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
+      thisDate: null,
     };
   }
   componentWillMount() {
-    console.log('componentWillMount ec call');
+    // 获取服务器时间
     this.props.dispatch({
       type: 'eventCalendar/getTime',
     });
-    super.componentWillMount();
+    // 获取币事件类型
+    this.props.dispatch({
+      type: 'eventCalendar/getTypeList',
+    });
+    // 获取币事件日历列表
+    this.props.dispatch({
+      type: 'eventCalendar/getListData',
+    })
   }
+
+  // 点击今日
+  clickThisDay() {
+    this.props.dispatch({
+      type: 'eventCalendar/getTime',
+    });
+  }
+
+  // 日历关闭
   onCancel() {
     this.setState({
       show: false,
     });
   }
+
+  // 日历确定
   onConfirm(time) {
-    console.log(time.getFullYear());
     this.setState({
       show: false,
     });
+    this.props.dispatch({
+      type: 'eventCalendar/confirmTime',
+      payload: { time: time.getTime() },
+    });
   }
+  // 展示日历
   toggleCalendar() {
     this.setState({
       show: !this.state.show,
     });
   }
   render() {
-    console.log('this.props in render:', this.props);
-    const { time } = this.props;
-    console.log(`time in render:${time}`);
+    console.log('calendar**=>', this.props);
+    const { eventTime } = this.props;
+    if (!eventTime || !eventTime.data) {
+      return null;
+    }
+    const weekArr = weekDay(eventTime.data.time); // 一周的日期数组
+    this.state.thisDate = new Date().getDate(); // 今天
+    let thisDateDOm = null;
+    if (this.state.thisDate == convertDate(eventTime.data.time, 'DD')) {
+      thisDateDOm = null;
+    } else {
+      thisDateDOm = <span onClick={this.clickThisDay.bind(this)} className={styles.today}>今</span>;
+    }
     return (
       <div>
         <div className={styles.calendar}>
           <div className={styles.clearFix}>
             <div className={styles.left}>
-              <span className={styles.time}>2018年6月</span>
-              <span className={styles.today}>今</span>
+              <span className={styles.time}>{convertDate(eventTime.data.time, 'YYYY年MM月')}</span>
+              {thisDateDOm}
             </div>
             <div
               className={styles.right}
@@ -63,42 +98,22 @@ class EventCalendar extends BaseComponent {
             </div>
           </div>
           <Flex>
-            <Flex.Item className={`${styles.item}`}>
-              <span className={styles.text1}>周日</span>
-              <span className={styles.text2}>03</span>
-            </Flex.Item>
-            <Flex.Item className={styles.item}>
-              <span className={styles.text1}>周一</span>
-              <span className={styles.text2}>04</span>
-            </Flex.Item>
-            <Flex.Item className={styles.item}>
-              <span className={styles.text1}>周二</span>
-              <span className={styles.text2}>05</span>
-            </Flex.Item>
-            <Flex.Item className={styles.item}>
-              <span className={styles.text1}>周三</span>
-              <span className={styles.text2}>06</span>
-            </Flex.Item>
-            <Flex.Item className={`${styles.item} ${styles.selectItem}`}>
-              <span className={styles.text1}>周四</span>
-              <span className={styles.text2}>07</span>
-            </Flex.Item>
-            <Flex.Item className={styles.item}>
-              <span className={styles.text1}>周五</span>
-              <span className={styles.text2}>08</span>
-            </Flex.Item>
-            <Flex.Item className={styles.item}>
-              <span className={styles.text1}>周六</span>
-              <span className={styles.text2}>09</span>
-            </Flex.Item>
+            {weekArr.map((msg, index) => (
+              <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} >
+                <span className={styles.text1}>{this.state.weekArrZn[index]}</span>
+                <span className={styles.text2}>{msg}</span>
+              </Flex.Item>
+            ))}
           </Flex>
         </div>
-        <EventList />
+        <EventList {...this.props} />
         <Calendar
           {...this.state.config}
           visible={this.state.show}
           onCancel={this.onCancel.bind(this)}
           onConfirm={this.onConfirm.bind(this)}
+          minDate={new Date(eventTime.data.staTime)}
+          maxDate={new Date(eventTime.data.time + 63158400000)}
         />
       </div>
     );
@@ -107,7 +122,6 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  console.log('mapStateToProps eventCalendar', state);
   return state.eventCalendar;
 }
 

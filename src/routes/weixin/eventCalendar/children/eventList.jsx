@@ -11,7 +11,7 @@ class EventList extends React.Component {
   }
 
   componentWillMount() {
-    console.log(this.props);
+    // console.log(this.props);
     /* this.props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'eventList',
@@ -19,18 +19,20 @@ class EventList extends React.Component {
   }
 
   render() {
+    const { typeList } = this.props;
+    console.log('eventList**=>', this.props, typeList);
+    if (!typeList || !typeList.data) {
+      return null;
+    }
+    const listData = typeList.data;
     return (
       <div className={styles.eventList}>
         <div className={styles.tag}>
           <ul>
-            <li>全部</li>
-            <li>交易所公告</li>
-            <li>空投</li>
-            <li>代币销毁</li>
-            <li>硬分叉</li>
-            <li>硬分叉</li>
-            <li>硬分叉</li>
-            <li>硬分叉</li>
+            <li className={styles.selected}>全部</li>
+            {listData.map((msg, index) => (
+              <li key={msg.id}>{msg.name}</li>
+            ))}
           </ul>
           <div className={styles.rightBtn}>
             <img alt="分类" src="/images/calendar/type-right-Button.png" />
