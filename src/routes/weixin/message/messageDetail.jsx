@@ -452,7 +452,7 @@ class MsgDetail extends BaseComponent {
                 </div>
 
                 <div className={style.logotop}>【币评】你最想要的币市信息</div>
-                <div className={style.logobottom}>biping.io <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+                <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
               </div>
             </div>
           </div>
