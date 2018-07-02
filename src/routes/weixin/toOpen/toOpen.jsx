@@ -91,7 +91,7 @@ class toOpenDetail extends BaseComponent {
     const {
       toOpenData, backPath, firstEnter,
     } = this.props.toOpen;
-    let { selectedItem, params } = this.props.toOpen;
+    let { selectedItem, params, commId } = this.props.toOpen;
     const { paySuccess, typeName } = this.props.toOpen;
     const { systemUser } = this.props;
     // 如果是支付成功标志，则跳转到成功页面
@@ -130,9 +130,14 @@ class toOpenDetail extends BaseComponent {
       console.log('99999999', firstEnter);
       const { checked } = data[0];
       data[0].checked = true;
-      value = { commId: data[0].commid, typeName: data[0].name };
+      if (data[0].commid) {
+        commId = data[0].commid;
+      }
+      value = { commId, typeName: data[0].name };
       isHide = false;
       selectedItem = data[0].currentPrice / 100;
+    } else {
+      value = { commId, typeName: data[0].name };
     }
     console.log('content in subdetail', data);
     let subDesc = `订阅${toOpenData.typeName}`;
