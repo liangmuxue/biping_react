@@ -34,7 +34,7 @@ class EventCalendar extends BaseComponent {
     // 获取币事件日历列表
     this.props.dispatch({
       type: 'eventCalendar/getListData',
-    })
+    });
   }
 
   // 点击今日
@@ -68,8 +68,16 @@ class EventCalendar extends BaseComponent {
     });
   }
   // 星期点击
-  weekChange() {
-    console.log('weekChange');
+  weekChange(msg) {
+    console.log('weekChange', msg);
+    let { eventTime } = this.props;
+    const time = new Date(eventTime.data.time);
+    const clickTime = new Date(time.getFullYear(), time.getMonth(), msg);
+    console.log(clickTime);
+    this.props.dispatch({
+      type: 'eventCalendar/confirmTime',
+      payload: { time: clickTime.getTime() },
+    });
   }
 
   render() {
@@ -80,11 +88,11 @@ class EventCalendar extends BaseComponent {
     }
     const weekArr = weekDay(eventTime.data.time); // 一周的日期数组
     this.state.thisDate = new Date().getDate(); // 今天
-    let thisDateDOm = null;
+    let thisDateDom = null;
     if (this.state.thisDate == convertDate(eventTime.data.time, 'DD')) {
-      thisDateDOm = null;
+      thisDateDom = null;
     } else {
-      thisDateDOm = <span onClick={this.clickThisDay.bind(this)} className={styles.today}>今</span>;
+      thisDateDom = <span onClick={this.clickThisDay.bind(this)} className={styles.today}>今</span>;
     }
     return (
       <div>
@@ -92,7 +100,7 @@ class EventCalendar extends BaseComponent {
           <div className={styles.clearFix}>
             <div className={styles.left}>
               <span className={styles.time}>{convertDate(eventTime.data.time, 'YYYY年MM月')}</span>
-              {thisDateDOm}
+              {thisDateDom}
             </div>
             <div
               className={styles.right}
@@ -104,7 +112,7 @@ class EventCalendar extends BaseComponent {
           </div>
           <Flex>
             {weekArr.map((msg, index) => (
-              <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} onClick={this.weekChange.bind(this)} >
+              <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} onClick={() => this.weekChange(msg)} >
                 <span className={styles.text1}>{this.state.weekArrZn[index]}</span>
                 <span className={styles.text2}>{msg}</span>
               </Flex.Item>

@@ -29,6 +29,7 @@ export default modelExtend(pageModel, {
       });
     },
     *confirmTime({ payload }, { put, select }) {
+      console.log('confirmTime=>>>');
       const { time } = payload;
       const st = yield select();
       const { eventCalendar } = st;
@@ -76,6 +77,7 @@ export default modelExtend(pageModel, {
       };
     },
     confirmTimeSuccess(state, action) {
+      console.log('confirmTimeSuccess=>>>', action.payload);
       return {
         ...state,
         ...action.payload,
