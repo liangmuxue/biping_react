@@ -67,6 +67,11 @@ class EventCalendar extends BaseComponent {
       show: !this.state.show,
     });
   }
+  // 星期点击
+  weekChange() {
+    console.log('weekChange');
+  }
+
   render() {
     console.log('calendar**=>', this.props);
     const { eventTime } = this.props;
@@ -99,7 +104,7 @@ class EventCalendar extends BaseComponent {
           </div>
           <Flex>
             {weekArr.map((msg, index) => (
-              <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} >
+              <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} onClick={this.weekChange.bind(this)} >
                 <span className={styles.text1}>{this.state.weekArrZn[index]}</span>
                 <span className={styles.text2}>{msg}</span>
               </Flex.Item>

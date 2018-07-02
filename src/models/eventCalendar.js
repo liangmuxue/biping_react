@@ -60,6 +60,10 @@ export default modelExtend(pageModel, {
           pageSize: 10, // 默认每页条目
         },
       }, st);
+      yield put({
+        type: 'getListDataSuccess',
+        payload: data,
+      });
       console.log('getListData**=>', data);
     },
   },
@@ -82,6 +86,13 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         typeList: { ...response },
+      };
+    },
+    getListDataSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        listData: { ...response },
       };
     },
   },
