@@ -18,9 +18,9 @@ class MessageContent extends React.Component {
   }
 
   render() {
-    const { content } = this.props;
+    const { content, shareType } = this.props;
     const msgObj = content;
-    console.log('msgObj is', msgObj);
+    console.log('msgObj is', msgObj, shareType);
     // 异动类型
     let transType = '';
     // 上涨或者跌幅（0涨1跌）
@@ -52,7 +52,7 @@ class MessageContent extends React.Component {
     const { gainHoldFun, priceShow, gainDifferFun } = NumberFormat;
     return (
       <div>
-        <div className={style.transactionCoin} >
+        <div className={`${style.transactionCoin} ${shareType == 1 ? style.shareCon : ''} `} >
           {msgObj.direction ? <div>预警时间：<span>{moment(msgObj.createTime * 1000).format('HH:mm')}</span></div> : <div>时间段：<span>{timeMoment}</span></div>}
           <div>异动类型：<u className={upOrDown === 0 ? style.toUp : style.toDown}>{transType}</u></div>
           <div>交易所：<span>{msgObj.exchangeName}</span></div>

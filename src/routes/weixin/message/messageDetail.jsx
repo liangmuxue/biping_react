@@ -273,7 +273,7 @@ class MsgDetail extends BaseComponent {
     if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
-      shareContentCard = contentCard;
+      shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       console.log('99999999', val);
