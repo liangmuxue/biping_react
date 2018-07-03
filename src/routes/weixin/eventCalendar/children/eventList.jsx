@@ -11,25 +11,25 @@ class EventList extends React.Component {
     this.state = {
       typeId: '',
       typeColor: {
-        '首次代币发行': '#66A5C3',
-        '交易所公告': '#E9880B',
-        '硬分叉': '#5C6E3F',
-        '政策发布': '#0BE983',
-        '会议': '#E2D115',
-        '线下交流会': '#9DE90B',
-        '软分叉': '#724D4D',
-        '合作消息': '#DF4EE8',
-        '空投': '#39C58D',
-        'AMA': '#F86E6E',
-        '功能发布': '#E9600B',
-        '公告': '#6CC857',
-        '转链消息': '#646685',
-        '升级通知': '#EB3724',
-        '通用': '#0BA2E9',
-        '测试通知': '#EBB924',
-        '蓝图规划': '#363AE0',
-        '开发竞赛': '#E84E90',
-        '代币销毁': '#5E4EE5',
+        首次代币发行: '#66A5C3',
+        交易所公告: '#E9880B',
+        硬分叉: '#5C6E3F',
+        政策发布: '#0BE983',
+        会议: '#E2D115',
+        线下交流会: '#9DE90B',
+        软分叉: '#724D4D',
+        合作消息: '#DF4EE8',
+        空投: '#39C58D',
+        AMA: '#F86E6E',
+        功能发布: '#E9600B',
+        公告: '#6CC857',
+        转链消息: '#646685',
+        升级通知: '#EB3724',
+        通用: '#0BA2E9',
+        测试通知: '#EBB924',
+        蓝图规划: '#363AE0',
+        开发竞赛: '#E84E90',
+        代币销毁: '#5E4EE5',
       },
       showLayer: false,
     };
@@ -66,6 +66,7 @@ class EventList extends React.Component {
 
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: eventCalendar });
+    console.log('messageList is', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       renderRow: (rowData) => {
@@ -123,6 +124,7 @@ class EventList extends React.Component {
         <InfiniteListView
           {...messageListProps}
           height={height}
+          listRemain
         />
         {
           this.state.showLayer ? <TypeLayer closeLayer={() => this.closeLayer()} {...this.props} /> : ''

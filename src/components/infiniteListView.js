@@ -43,14 +43,14 @@ class InfiniteListView extends React.Component {
   componentWillReceiveProps(nextProps) {
     console.log('componentWillReceiveProps in', nextProps);
     const {
-      loading,
+      loading, listRemain,
     } = nextProps;
     // 如果是显示加载信息的内容，则不进行数据比较
     if (loading) {
       return;
     }
     // 有数据则加入到滚动列表
-    if (nextProps.dataSource && nextProps.dataSource.length > 0) {
+    if (nextProps.dataSource && nextProps.dataSource.length > 0 || listRemain) {
       // 这个list是所有的列表数据
       const { list } = nextProps;
       // 转换为listview的数据源
