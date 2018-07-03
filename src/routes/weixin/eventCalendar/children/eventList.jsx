@@ -66,6 +66,7 @@ class EventList extends React.Component {
 
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: eventCalendar });
+    console.log('eventList=>', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       renderRow: (rowData) => {

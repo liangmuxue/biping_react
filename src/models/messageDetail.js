@@ -226,10 +226,13 @@ export default modelExtend(pageModel, {
     *forecast({ payload }, { put, call, select }) {
       const st = yield select();
       const endpoint = 'event/forecast';
-      const filter = payload;
       const resData = yield call(queryNormal, {
         endpoint,
-        filter,
+        method: 'POST',
+        data: {
+          status: payload.status,
+          id: payload.id,
+        },
       }, st);
       yield put({
         type: 'forecastSuccess',

@@ -136,11 +136,13 @@ class EventCalendar extends BaseComponent {
     });
   }
   render() {
+    console.log('eventCalendar render', this.props);
     const { eventCalendar } = this.props;
     const { eventTime } = eventCalendar;
     if (!eventTime || !eventTime.data) {
       return null;
     }
+    console.log('eventCalendar render', this.props);
     const weekArr = weekDay(eventTime.data.time); // 一周的日期数组
     this.state.thisDate = new Date().getDate(); // 今天
     let thisDateDom = null;

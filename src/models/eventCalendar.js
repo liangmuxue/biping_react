@@ -61,7 +61,8 @@ export default modelExtend(pageModel, {
     *reminder({ payload }, { call, put, select }) {
       const st = yield select();
       const { eventCalendar } = st;
-      const { dataSource } = eventCalendar;
+      // console.log('reminder=>', eventCalendar);
+      // const { dataSource, list } = eventCalendar;
       const endpoint = 'event/reminder';
       const filter = {};
       const data = yield call(queryNormal, {
@@ -72,6 +73,12 @@ export default modelExtend(pageModel, {
           id: payload.id,
         },
       }, st);
+      /* for (var i in list) {
+        if (list[i].id == payload.id) {
+          console.log('=============');
+          list[i].recerveStatus = 'true';
+        }
+      } */
       yield put({
         type: 'reminderSuccess',
         payload: data,

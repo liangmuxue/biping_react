@@ -46,7 +46,6 @@ function Table(props) {
 }
 class EventDetail extends React.Component {
   constructor(props) {
-    console.log(props);
     super(props);
   }
 
@@ -58,6 +57,7 @@ class EventDetail extends React.Component {
     const { coinInfo, coinPrice, msgDetailData } = this.props;
     // 币种介绍
     var coinInfodom = null;
+    // 币价
     var calenDarDom = null;
     if (coinInfo.data) {
       coinInfodom = <Currency data={coinInfo.data} />;
