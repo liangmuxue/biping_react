@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
-import { pageModel } from './commonPage';
-import { queryNormal, query } from '../services/common';
+import { pageModel } from './pagination';
+import { queryNormal } from '../services/common';
 
 export const MODEL_DEF = {
   modelName: 'eventCalendar',
@@ -17,7 +17,6 @@ export default modelExtend(pageModel, {
   effects: {
     // 获取服务器当前时间
     *getTime({ payload }, { put, call, select }) {
-      // console.log('gettime=>', payload);
       const st = yield select();
       const endpoint = 'event/eventTime';
       const data = yield call(queryNormal, {
@@ -28,8 +27,8 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 日历确认时间
     *confirmTime({ payload }, { put, select }) {
-      console.log('confirmTime=>>>');
       const { time } = payload;
       const st = yield select();
       const { eventCalendar } = st;
@@ -40,6 +39,7 @@ export default modelExtend(pageModel, {
         payload: eventTime,
       });
     },
+    // 获取type类型
     *getTypeList({ payload }, { put, call, select }) {
       const st = yield select();
       const endpoint = 'event/typeList';
@@ -51,21 +51,31 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
-    *getListData({ payload }, { put, call, select}) {
+    // 分页请求数据
+    *getListData({ payload }, { put }) {
+      yield put({
+        type: 'query',
+        payload,
+      });
+    },
+    *reminder({ payload }, { call, put, select }) {
       const st = yield select();
-      const endpoint = 'event/eventList';
-      const data = yield call(query, {
+      const { eventCalendar } = st;
+      const { dataSource } = eventCalendar;
+      const endpoint = 'event/reminder';
+      const filter = {};
+      const data = yield call(queryNormal, {
         endpoint,
-        pagination: {
-          current: 0, // 当前页码
-          pageSize: 10, // 默认每页条目
+        filter,
+        method: 'POST',
+        data: {
+          id: payload.id,
         },
       }, st);
       yield put({
-        type: 'getListDataSuccess',
+        type: 'reminderSuccess',
         payload: data,
       });
-      console.log('getListData**=>', data);
     },
   },
   reducers: {
@@ -77,7 +87,6 @@ export default modelExtend(pageModel, {
       };
     },
     confirmTimeSuccess(state, action) {
-      console.log('confirmTimeSuccess=>>>', action.payload);
       return {
         ...state,
         ...action.payload,
@@ -90,11 +99,12 @@ export default modelExtend(pageModel, {
         typeList: { ...response },
       };
     },
-    getListDataSuccess(state, action) {
-      const { response } = action.payload;
+    reminderSuccess(state, action) {
+      console.log('reminderSuccess=>>>', action.payload);
+      // TODO:视图更新
       return {
         ...state,
-        listData: { ...response },
+        ...action.payload,
       };
     },
   },

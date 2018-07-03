@@ -14,12 +14,13 @@ class EventCalendar extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-      show: false,
+      show: false, // 日历组件显示
       config: {
-        type: 'one',
+        type: 'one', // 日历组件单选
       },
-      weekArrZn: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'],
-      thisDate: null,
+      weekArrZn: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], // 一周汉字
+      thisDate: null, // 当前日期 => DD
+      typeId: '',
     };
   }
   componentWillMount() {
@@ -31,9 +32,31 @@ class EventCalendar extends BaseComponent {
     this.props.dispatch({
       type: 'eventCalendar/getTypeList',
     });
-    // 获取币事件日历列表
+    this.getListData();
+  }
+
+  getListData() {
+    // 获取币事件日历列表,初始化时进行查询
+    const { eventCalendar } = this.props;
+    const { eventTime } = eventCalendar;
+    var time = null;
+    const type = this.state.typeId || null;
+    if (eventTime && eventTime.data) {
+      time = convertDate(eventTime.data.time, 'YYYY-MM-DD') || null;
+    }
     this.props.dispatch({
       type: 'eventCalendar/getListData',
+      payload: {
+        filter: { time, type },
+        modelDef: {
+          modelName: 'eventCalendar',
+          endpoint: 'event/eventList',
+        },
+        pagination: {
+          current: 0, // 当前页码
+          pageSize: 10, // 默认每页条目
+        },
+      },
     });
   }
 
@@ -42,6 +65,7 @@ class EventCalendar extends BaseComponent {
     this.props.dispatch({
       type: 'eventCalendar/getTime',
     });
+    this.getListData();
   }
 
   // 日历关闭
@@ -60,6 +84,7 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/confirmTime',
       payload: { time: time.getTime() },
     });
+    this.getListData();
   }
   // 展示日历
   toggleCalendar() {
@@ -69,20 +94,50 @@ class EventCalendar extends BaseComponent {
   }
   // 星期点击
   weekChange(msg) {
-    console.log('weekChange', msg);
-    let { eventTime } = this.props;
+    const { eventCalendar } = this.props;
+    const { eventTime } = eventCalendar;
     const time = new Date(eventTime.data.time);
     const clickTime = new Date(time.getFullYear(), time.getMonth(), msg);
-    console.log(clickTime);
-    this.props.dispatch({
-      type: 'eventCalendar/confirmTime',
-      payload: { time: clickTime.getTime() },
-    });
+    this.onConfirm(clickTime);
   }
 
+  // 子组件type点击
+  changeType(id) {
+    this.setState({
+      typeId: id,
+    });
+    setTimeout(() => {
+      this.getListData();
+    }, 300);
+  }
+  // 子组件提醒点击
+  reminder(data) {
+    this.props.dispatch({
+      type: 'eventCalendar/reminder',
+      payload: {
+        id: data.id,
+      },
+    });
+  }
+  // 去详情页
+  toDetail(data) {
+    console.log(this, data);
+    // 跳转到信息详情页面
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'messageDetail',
+        params: {
+          messageId: data.id,
+          backPath: 'eventCalendar',
+          tagName: '币事件日历',
+        },
+      },
+    });
+  }
   render() {
-    console.log('calendar**=>', this.props);
-    const { eventTime } = this.props;
+    const { eventCalendar } = this.props;
+    const { eventTime } = eventCalendar;
     if (!eventTime || !eventTime.data) {
       return null;
     }
@@ -119,7 +174,12 @@ class EventCalendar extends BaseComponent {
             ))}
           </Flex>
         </div>
-        <EventList {...this.props} />
+        <EventList
+          {...this.props}
+          changeType={id => this.changeType(id)}
+          reminder={data => this.reminder(data)}
+          toDetail={data => this.toDetail(data)}
+        />
         <Calendar
           {...this.state.config}
           visible={this.state.show}
@@ -135,7 +195,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return state.eventCalendar;
+  return { eventCalendar: state.eventCalendar };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

@@ -76,11 +76,24 @@ class MsgDetail extends BaseComponent {
 
   componentWillMount() {
     console.log('componentWillMount messageDetail', this.props);
+    const { params } = this.props;
     // 初始化时进行查询
     this.props.dispatch({
       type: 'messageDetail/detailQuery',
       payload: { ...this.props.params },
     });
+    // 初始化查询币种介绍
+    this.props.dispatch({
+      type: 'messageDetail/coinInfo',
+      payload: { ...this.props.params },
+    });
+    //  请求币事件日历的币价信息
+    if (params && params.tagName == '币事件日历') {
+      this.props.dispatch({
+        type: 'messageDetail/coinPrice',
+        payload: { ...this.props.params },
+      });
+    }
     super.componentWillMount();
   }
   // 去开通
@@ -241,6 +254,20 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+
+  forecast(bol) {
+    console.log('forecast=>', bol);
+    const { params } = this.props;
+    const { messageId } = params;
+    this.props.dispatch({
+      type: 'messageDetail/forecast',
+      payload: {
+        status: bol,
+        id: messageId,
+      },
+    });
+  }
+
   render() {
     console.log('MsgDetail Now render', this.props);
     const {
@@ -344,8 +371,6 @@ class MsgDetail extends BaseComponent {
     if (curAct && curAct === 'queryDetail') {
       window.scrollTo(0, 0);
     }
-
-
     return (
       <div id="page_messageDetail" ref={this.setPageRef}>
         <div className={style.contentBox}>
@@ -385,7 +410,7 @@ class MsgDetail extends BaseComponent {
               </div>
             </Hammer>
           </div>
-          <EventDetail />
+          <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
           <div className={style.up}>
             <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>

@@ -1,69 +1,132 @@
 import React from 'react';
-import { ListView } from 'antd-mobile';
-import 'antd-mobile/es/list-view/style/index.css';
+import InfiniteListView from '../../../../components/infiniteListView';
+import { buildPagiProps } from '../../../common/paginationRoute';
+import { rebuildMessageList } from '../../../../selectors/messageList';
 import styles from './eventList.less';
+import TypeLayer from '../layer/typeLayer';
 
-function ListCard(props) {
-  return (
-    <div className={styles.listItem}>
-      <div className={styles.leftCon}>
-        <div className={styles.dsc}>
-          <img alt="币种" src="https://zos.alipayobjects.com/rmsportal/dKbkpPXKfvZzWCM.png" />
-          <span className={styles.name}>ZIL</span>
-          <span className={styles.time}>2天前发布</span>
-        </div>
-        <p className={styles.title}>Kryptono平台上线ZIL</p>
-        <p className={styles.detail}>
-        事件发布时单价 ￥0.67，1天后单价
-        ￥0.85，涨幅<em className={styles.up}>+26.86%</em>
-        </p>
-      </div>
-      <button className={styles.rightBtn}>提醒</button>
-      <div className={styles.rightTop}>
-        交易所公告
-      </div>
-    </div>
-  );
-}
 class EventList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      typeId: '',
+      typeColor: {
+        '首次代币发行': '#66A5C3',
+        '交易所公告': '#E9880B',
+        '硬分叉': '#5C6E3F',
+        '政策发布': '#0BE983',
+        '会议': '#E2D115',
+        '线下交流会': '#9DE90B',
+        '软分叉': '#724D4D',
+        '合作消息': '#DF4EE8',
+        '空投': '#39C58D',
+        'AMA': '#F86E6E',
+        '功能发布': '#E9600B',
+        '公告': '#6CC857',
+        '转链消息': '#646685',
+        '升级通知': '#EB3724',
+        '通用': '#0BA2E9',
+        '测试通知': '#EBB924',
+        '蓝图规划': '#363AE0',
+        '开发竞赛': '#E84E90',
+        '代币销毁': '#5E4EE5',
+      },
+      showLayer: false,
     };
   }
 
   componentWillMount() {
-    // console.log(this.props);
-    /* this.props.dispatch({
-      type: 'pageConstruction/hideRouteLoading',
-      pageName: 'eventList',
-    }); */
   }
 
+  typeClick(msg) {
+    if (!msg) {
+      this.state.typeId = '';
+    } else {
+      this.state.typeId = msg.id;
+    }
+    this.props.changeType(this.state.typeId);
+  }
+  showLayer() {
+    this.setState({
+      showLayer: true,
+    });
+  }
+  closeLayer() {
+    this.setState({
+      showLayer: false,
+    });
+  }
   render() {
-    const { typeList, listData } = this.props;
-    console.log('eventList**=>', this.props, listData);
-    if (!typeList || !typeList.data || !listData || !listData.data) {
+    const { eventCalendar } = this.props;
+    const { typeList, listData } = eventCalendar;
+    if (!typeList || !typeList.data) {
       return null;
     }
     const typelistData = typeList.data;
-    const conlistData = listData.data.pager;
-    console.log('conlistData=>', conlistData);
+
+    // 加工list数据
+    const { messageList } = rebuildMessageList({ messageList: eventCalendar });
+    const messageListProps = buildPagiProps(this.props.dispatch, {
+      ...messageList,
+      renderRow: (rowData) => {
+        const borderStyle = {
+          'border-top-color': this.state.typeColor[rowData.typename],
+        };
+        const colorStyle = {
+          'background-color': this.state.typeColor[rowData.typename],
+        };
+        let buttonDom = null;
+        if (rowData.recerveStatus == 'false') {
+          buttonDom = <button className={styles.rightBtn} onClick={() => this.props.reminder(rowData)}>提醒</button>;
+        } else {
+          buttonDom = <button className={styles.rightBtnSelect}>已设置</button>;
+        }
+        return (
+          <div>
+            <div className={`${styles.listItem}`} style={borderStyle}>
+              <div className={styles.leftCon} onClick={() => this.props.toDetail(rowData)} >
+                <div className={styles.dsc}>
+                  <img alt="币种" src={rowData.img} />
+                  <span className={styles.name}>{rowData.coincode}</span>
+                  <span className={styles.time}>{rowData.pubtime}</span>
+                </div>
+                <p className={styles.title}>{rowData.title}</p>
+                <p className={styles.detail}>
+                事件发布时单价 ￥{rowData.pubprice}，1天后单价
+                ￥{rowData.afterprice}，涨幅<em className={`${rowData.incr.indexOf('+') < 0 ? styles.down : styles.up}`}>{rowData.incr}</em>
+                </p>
+              </div>
+              {buttonDom}
+              {/* <button className={styles.rightBtn} onClick={() => this.props.reminder(rowData)}>提醒</button> */}
+              <div className={styles.rightTop} style={colorStyle}>
+                {rowData.typename}
+              </div>
+            </div>
+          </div>
+        );
+      },
+    });
     const height = document.documentElement.clientHeight;
     return (
       <div className={styles.eventList}>
         <div className={styles.tag}>
           <ul>
-            <li className={styles.selected}>全部</li>
+            <li onClick={() => this.typeClick()} className={`${this.state.typeId == '' ? styles.selected : ''}`}>全部</li>
             {typelistData.map((msg, index) => (
-              <li key={msg.id}>{msg.name}</li>
+              <li onClick={() => this.typeClick(msg)} key={msg.id} className={`${this.state.typeId == msg.id ? styles.selected : ''}`}>{msg.name}</li>
             ))}
           </ul>
-          <div className={styles.rightBtn}>
+          <div onClick={() => this.showLayer()} className={styles.rightBtn}>
             <img alt="分类" src="/images/calendar/type-right-Button.png" />
           </div>
         </div>
-        <ListCard />
+        <InfiniteListView
+          {...messageListProps}
+          height={height}
+        />
+        {
+          this.state.showLayer ? <TypeLayer closeLayer={() => this.closeLayer()} {...this.props} /> : ''
+        }
       </div>
     );
   }

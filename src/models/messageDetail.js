@@ -192,6 +192,50 @@ export default modelExtend(pageModel, {
         type: 'emptyData',
       });
     },
+    // 获取币种信息
+    *coinInfo({ payload }, {put, call, select}) {
+      const st = yield select();
+      const { messageId } = payload;
+      const endpoint = 'event/coinInfo';
+      const filter = { id: messageId };
+      const resData = yield call(queryNormal, {
+        endpoint,
+        filter,
+      }, st);
+      console.log(resData);
+      yield put({
+        type: 'coinInfoSuccess',
+        payload: resData,
+      });
+    },
+    //  请求币事件日历的币价信息
+    *coinPrice({ payload }, { put, call, select }) {
+      const st = yield select();
+      const { messageId } = payload;
+      const endpoint = 'event/coinPrice';
+      const filter = { id: messageId };
+      const resData = yield call(queryNormal, {
+        endpoint,
+        filter,
+      }, st);
+      yield put({
+        type: 'coinPriceSuccess',
+        payload: resData,
+      });
+    },
+    *forecast({ payload }, { put, call, select }) {
+      const st = yield select();
+      const endpoint = 'event/forecast';
+      const filter = payload;
+      const resData = yield call(queryNormal, {
+        endpoint,
+        filter,
+      }, st);
+      yield put({
+        type: 'forecastSuccess',
+        payload: resData,
+      });
+    },
   },
 
   reducers: {
@@ -259,6 +303,26 @@ export default modelExtend(pageModel, {
         ...state,
         ...action.payload,
         curAct: 'preventTagClick',
+      };
+    },
+    coinInfoSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        coinInfo: { ...response },
+      };
+    },
+    coinPriceSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        coinPrice: { ...response },
+      };
+    },
+    forecastSuccess(state, action) {
+      console.log('forecastSuccess=>', action.payload);
+      return {
+        ...state,
       };
     },
   },

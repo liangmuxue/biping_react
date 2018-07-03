@@ -25,9 +25,13 @@
       }
     }
     .rightBtn {
-      padding-left: 0.2rem;
+      /* padding-left: 0.2rem;
       display: flex;
-      align-items: center;
+      align-items: center; */
+      margin-left: 0.2rem;
+      position: relative;
+      top: .4rem;
+      height: 100%;
       img {
         width: .4rem;
         height: .28rem;
@@ -40,6 +44,7 @@
     background-color: #FAFAFA;
     border-top: 2px solid #E9880B;
     padding: .28rem .2rem .28rem .24rem;
+    margin-bottom: .4rem;
     .leftCon {
       flex: 1;
       margin-right: 1.6rem;
@@ -76,13 +81,16 @@
           color: #0E8E31;
           font-style: normal;
         }
+        .down {
+          color: #FF0101;
+          font-style: normal;
+        }
       }
     }
     .rightBtn {
       position: absolute;
       bottom: .28rem;
       right: .2rem;
-      width: 1.38rem;
       height: .52rem;
       border: 1px solid #0068DD;
       border-radius: 20px;
@@ -90,9 +98,26 @@
       color: #0068DD;
       background: url(/images/calendar/blueRemind.png) left no-repeat;
       background-size: .24rem .26rem;
-      background-position-x: .26rem;
-      padding-left: .6rem;
+      background-position-x: .2rem;
+      padding-left: .5rem;
       text-align: left;
+      padding-right: .3rem;
+    }
+    .rightBtnSelect {
+      position: absolute;
+      bottom: .28rem;
+      right: .2rem;
+      height: .52rem;
+      border: 1px solid #888888;
+      border-radius: 20px;
+      font-size: .26rem;
+      color: #888888;
+      background: url(/images/calendar/grayRemind.png) left no-repeat;
+      background-size: .24rem .26rem;
+      background-position-x: .2rem;
+      padding-left: .5rem;
+      text-align: left;
+      padding-right: .3rem;
     }
     .rightTop {
       position: absolute;
