@@ -98,6 +98,7 @@ const pcEntity = {
           hisPageList.push({ pageName, params, currentPage });
         }
       }
+      console.log('switchPageReal params', params);
       // 进行切换页面
       yield* switchPageReal({
         pageName, params, currentPage, backArrow, direct,
@@ -258,6 +259,7 @@ function* switchPageReal({
       type: 'showFooter',
     });
   }
+  console.log('params in sw', params);
   if (params) {
     const { footerHide } = params;
     if (footerHide) {

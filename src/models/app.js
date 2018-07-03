@@ -1,6 +1,6 @@
 import { routerRedux } from 'dva/router';
 import { parse } from 'qs';
-import { query, logout, autoReg } from '../services/app';
+import { query, logout, autoReg, wapReg } from '../services/app';
 import * as constants from '../constants/constants';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { config } from '../../config/environment';
@@ -13,7 +13,9 @@ import { siteAnalysis } from '../utils/siteAnalysis.js';
 * @date  18-01-10
 */
 
-const { LOCALKEY_SYSUSER } = constants.default;
+const {
+  LOCALKEY_SYSUSER, urlParam_sourceType, urlParam_directPage, urlParamValue_sourceType, urlParamValue_directPage,
+} = constants.default;
 const retryTime = 2;
 
 const App = {
@@ -31,6 +33,17 @@ const App = {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      const { analysisParam } = urlUtils;
+      let sourceType = analysisParam(urlParam_sourceType);
+      // 来源，包括微信和wap
+      if (!sourceType) {
+        sourceType = urlParamValue_sourceType.fromWx;
+      }
+      let directPage = analysisParam(urlParam_directPage);
+      // 进入后的跳转页面，默认为消息列表页
+      if (!directPage) {
+        directPage = urlParamValue_directPage.indexMessage;
+      }
       const reconnectFlag = window.localStorage.getItem('reconnectFlag');
       if (parseInt(reconnectFlag) > retryTime) {
         window.localStorage.setItem('reconnectFlag', 0);
@@ -72,7 +85,6 @@ const App = {
       // 进入主页面前，先进行身份识别
       const hrefUrl = window.location.href;
       console.log(`hrefUrl iss:${hrefUrl}`);
-      const { analysisParam } = urlUtils;
       const mockUserStr = analysisParam('mockUserStr');
       let mockUserReal = null;
       // 模拟用户
@@ -89,10 +101,14 @@ const App = {
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
       }
-
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         console.log('nouserStr');
+        // 如果是wap页面，则进行自动注册
+        if (sourceType === urlParamValue_sourceType.fromWap) {
+          dispatch({ type: 'wapReg', payload: { sourceType, directPage } });
+          return null;
+        }
         // 如果存在code
         if (hrefUrl && hrefUrl.indexOf('code') !== -1) {
           const code = analysisParam('code');
@@ -121,7 +137,7 @@ const App = {
               },
             });
           }
-          let payData = {};
+          let payData = null;
           if (messageId) {
             payData = { code, messageId };
           } else if (messageId && fromUser) {
@@ -129,6 +145,7 @@ const App = {
           } else {
             payData = { code };
           }
+          payData.sourceType = sourceType;
           dispatch({ type: 'autoReg', payload: payData });
           dispatch({
             type: 'analysis',
@@ -236,6 +253,8 @@ const App = {
         if (sharePaper) {
           userData.sharePaper = sharePaper;
         }
+        userData.sourceType = sourceType;
+        userData.directPage = directPage;
         console.log('userData*****^^', userData);
         dispatch({ type: 'query', payload: userData });
       }
@@ -248,11 +267,10 @@ const App = {
       payload,
     }, { call, put }) {
       // 使用同步模式，避免子页面在没有登录的状态下自行加载
-      const { messageId } = payload;
-      const { sharePaper } = payload;
-      const { fromUser } = payload;
+      const {
+        messageId, sharePaper, fromUser, sourceType, directPage, enterMessageCase,
+      } = payload;
       // 判断进入消息详情的场景
-      const { enterMessageCase } = payload;
       console.log(`enterMessageCase${enterMessageCase}`);
       const ret = yield call(query, payload);
       console.log('ret in app query', ret);
@@ -264,7 +282,7 @@ const App = {
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event,
+          sourceType, directPage, token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event,
         };
         // 群裂变开通权限用户
         if (isFirstEnter && isFirstEnter === 'yes') {
@@ -299,9 +317,15 @@ const App = {
             systemUser,
           },
         });
-        // 初始化用户标识
-        // siteAnalysis.setField('userId', systemUser.uid);
         siteAnalysis.setUser(systemUser);
+        if (sourceType === urlParamValue_sourceType.fromWap) {
+          // 如果是wap访问，则直接跳转到对应页面
+          yield put({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: directPage, noHistory: true, params: { footerHide: true } },
+          });
+          return;
+        }
         // 发送打开主页的埋点
         yield put({
           type: 'analysis',
@@ -365,7 +389,7 @@ const App = {
         } else {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: footMenus[1], isFirst: true },
+            payload: { selectedMenu: footMenus[1], isFirst: true, noHistory: true },
           });
         }
       } else if (success && response.flag === 1001) {
@@ -388,7 +412,32 @@ const App = {
         yield put({ type: 'netError', payload: { netError } });
       }
     },
-
+    // wap方式，获取用户名密码自动注册
+    *wapReg({ payload }, { call, put, select }) {
+      const ret = yield call(wapReg, payload);
+      console.log('ret in app wapReg', ret);
+      const { success, response } = ret;
+      const { directPage, sourceType } = payload;
+      if (success && response.data && response.flag === 0) {
+        const systemUser = response.data;
+        Object.assign(systemUser, payload);
+        console.log('wap reg suc', systemUser);
+        // 等成功后，存储到本地
+        yield put({
+          type: 'regSuccess',
+          payload: {
+            sourceType,
+            directPage,
+            systemUser,
+          },
+        });
+        // 跳转到目标页面
+        yield put({
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { pageName: directPage, noHistory: true, params: { footerHide: true } },
+        });
+      }
+    },
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
       console.log('go autoReg', payload);
@@ -405,6 +454,7 @@ const App = {
             systemUser,
           },
         });
+        // 登录成功后，打开首页消息列表页
         yield put({ type: 'query', payload: systemUser });
         // code重复使用，用户信息获取失败
       } else if (success && response.flag === 1003) {

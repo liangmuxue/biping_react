@@ -31,6 +31,17 @@ export const autoReg = async function query(params) {
     },
   });
 };
+// wap方式自动注册
+export const wapReg = async function query(params) {
+  return request('wapLogin', {
+    method: 'get',
+    filter: params,
+    // 构造默认空token
+    systemUser: {
+      token: 'none',
+    },
+  });
+};
 
 export const query = async function query(params) {
   return request('userLogin', {
