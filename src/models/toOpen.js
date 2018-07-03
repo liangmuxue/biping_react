@@ -84,6 +84,9 @@ export default modelExtend(pageModel, {
         endpoint, filter, data, method: 'POST',
       }, st);
       console.log('verbCommodList data', dataReturn);
+      if (!dataReturn.success) {
+        return null;
+      }
       const datanow = dataReturn.response.data;
       let resultno = 0;
       if (datanow && datanow.timeStamp) {
