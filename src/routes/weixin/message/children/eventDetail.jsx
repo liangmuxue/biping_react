@@ -11,8 +11,9 @@ function Currency(props) {
           <img alt="" src={data.logo} />
           <span className={styles.name}>{data.name}</span>
         </div>
-        <div className={styles.text}>
+        <div id="domText" className={styles.text}>
           {data.introduce}
+          <span>...<em>更多</em></span>
         </div>
       </div>
     </div>
@@ -51,15 +52,45 @@ class EventDetail extends React.Component {
   forecast(boo) {
     this.props.forecast(boo);
   }
+  componentDidMount() {
+    console.log('componentDidMountDom=>', document.getElementById('domText'));
+    var dom = document.getElementById('domText');
+    let height = 14 * 1.5 * 3;
+    let domHeight = dom.clientHeight;
+    if (domHeight > height) {
+      dom.classList.add('showMore');
+    }
+  }
+  clickMore() {
+    var dom = document.getElementById('domText');
+    dom.classList.remove('showMore');
+  }
   render() {
     console.log('eventDetail=>', this.props);
     const { coinInfo, coinPrice, msgDetailData, baseDetail } = this.props;
     // 币种介绍
+    if (!coinInfo || !coinInfo.data) {
+      return null;
+    }
     var coinInfodom = null;
     // 币价
     var calenDarDom = null;
     if (coinInfo.data) {
-      coinInfodom = <Currency data={coinInfo.data} />;
+      // coinInfodom = <Currency data={coinInfo.data} />;
+      const data = coinInfo.data;
+      coinInfodom = <div className={styles.currency}>
+      <p className={styles.head}>币种介绍</p>
+      <div className={styles.currencyDsc}>
+        <div className={styles.tl}>
+          <img alt="" src={data.logo} />
+          <span className={styles.name}>{data.name}</span>
+        </div>
+        <div id="domText" className={styles.text}>
+          {data.introduce}
+          <span>...<em onClick={() => this.clickMore()}>更多</em></span>
+        </div>
+      </div>
+    </div>
     } else {
       coinInfodom = '';
     }

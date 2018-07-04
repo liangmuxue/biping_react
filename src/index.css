@@ -3,3 +3,12 @@ html, body, :global(#root) {
   height: 100%;
 }
 
+.showMore {
+  /* text-overflow: ellipsis; */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.showMore span {
+  display: block !important;
+}

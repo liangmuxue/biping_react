@@ -39,7 +39,7 @@ function shareEvent(event) {
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
     content: url,
-    width: 380,
+    width: 160,
     logo: {
       src: '/images/msgImages/copy.png',
     },
