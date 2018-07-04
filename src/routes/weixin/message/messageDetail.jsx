@@ -93,6 +93,10 @@ class MsgDetail extends BaseComponent {
         type: 'messageDetail/coinPrice',
         payload: { ...this.props.params },
       });
+      this.props.dispatch({
+        type: 'messageDetail/baseDetail',
+        payload: { ...this.props.params },
+      });
     }
     super.componentWillMount();
   }

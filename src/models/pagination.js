@@ -4,6 +4,7 @@ import { query } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 import baseModel from './baseModel';
 import { siteAnalysis } from '../utils/siteAnalysis.js';
+import { Toast } from 'antd-mobile';
 
 /**
 * 用于分页的通用处理model
@@ -89,6 +90,7 @@ const pageModel = modelExtend(baseModel, {
     querySuccess(state, {
       payload, modelDef, filter, list, pageSize, backPath,
     }) {
+      Toast.hide();
       // 分页模式，服务端统一返回data及meta属性
       const {
         data, pager, flag,

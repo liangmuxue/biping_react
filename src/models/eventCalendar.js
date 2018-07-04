@@ -1,6 +1,8 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
 import { queryNormal } from '../services/common';
+import Immutable from 'seamless-immutable';
+import { Toast } from 'antd-mobile';
 
 export const MODEL_DEF = {
   modelName: 'eventCalendar',
@@ -53,7 +55,8 @@ export default modelExtend(pageModel, {
     },
     // 分页请求数据
     *getListData({ payload }, { put }) {
-      yield put({
+      Toast.loading('正在加载...');
+      const data = yield put({
         type: 'query',
         payload,
       });
@@ -61,11 +64,11 @@ export default modelExtend(pageModel, {
     *reminder({ payload }, { call, put, select }) {
       const st = yield select();
       const { eventCalendar } = st;
-      // console.log('reminder=>', eventCalendar);
+      console.log('reminder=>', eventCalendar);
       // const { dataSource, list } = eventCalendar;
       const endpoint = 'event/reminder';
       const filter = {};
-      const data = yield call(queryNormal, {
+      const resData = yield call(queryNormal, {
         endpoint,
         filter,
         method: 'POST',
@@ -73,15 +76,24 @@ export default modelExtend(pageModel, {
           id: payload.id,
         },
       }, st);
-      /* for (var i in list) {
-        if (list[i].id == payload.id) {
-          console.log('=============');
-          list[i].recerveStatus = 'true';
+      const { response } = resData;
+      if (!response.data) {
+        Toast.info(response.msg);
+        return null;
+      }
+      const newContent = [];
+      eventCalendar.list.map(item => {
+        if (item.id == payload.id) {
+          newContent.push(Immutable.merge(item, { recerveStatus: true }));
+        } else {
+          newContent.push(Immutable.merge(item));
         }
-      } */
+        return item;
+      })
+      eventCalendar.list = newContent
       yield put({
         type: 'reminderSuccess',
-        payload: data,
+        payload: eventCalendar,
       });
     },
   },
@@ -107,8 +119,7 @@ export default modelExtend(pageModel, {
       };
     },
     reminderSuccess(state, action) {
-      console.log('reminderSuccess=>>>', action.payload);
-      // TODO:视图更新
+      Toast.info('添加提醒成功');
       return {
         ...state,
         ...action.payload,

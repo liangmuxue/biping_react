@@ -33,6 +33,7 @@
         color: #888888;
         font-size: .26rem;
         margin-left: .2rem;
+        font-style: normal;
       }
     }
     button {
@@ -41,7 +42,7 @@
       height: .48rem;
       line-height: .48rem;
       border: 1px solid #0068DD;
-      border-radius: 10px;
+      border-radius: 4px;
       color: #0068DD;
       float: right;
       background-color: #ffffff;
@@ -50,16 +51,23 @@
   .typeList {
     li {
       float: left;
-      padding: .26rem;
+      // padding: .26rem;
+      width: 1.6rem;
+      height: .76rem;
+      line-height: .76rem;
+      text-align: center;
       color: #333333;
       font-size: .28rem;
       border-radius: 5px;
       background-color: #F4F5FA;
-      margin-right: .17rem;
+      margin-right: .16rem;
       margin-bottom: .3rem;
     }
     li:nth-child(4n) {
       margin-right: 0;
+    }
+    li:nth-last-child(2) {
+      width: 1.9rem;
     }
   }
 }

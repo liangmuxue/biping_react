@@ -2,6 +2,7 @@ import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
 import { queryNormal, getImgString } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
+import Immutable from 'seamless-immutable';
 /**
 * 订阅消息详情
 * @author 梁慕学
@@ -223,8 +224,25 @@ export default modelExtend(pageModel, {
         payload: resData,
       });
     },
+    *baseDetail({ payload }, { put, call, select }) {
+      const st = yield select();
+      const { messageId } = payload;
+      const endpoint = 'event/baseDetail';
+      const filter = { id: messageId };
+      const resData = yield call(queryNormal, {
+        endpoint,
+        filter,
+      }, st);
+      yield put({
+        type: 'baseDetailSuccess',
+        payload: resData,
+      });
+    },
     *forecast({ payload }, { put, call, select }) {
       const st = yield select();
+      const { messageDetail } = st;
+      const { baseDetail } = messageDetail;
+      console.log('baseDetail=>', baseDetail, st);
       const endpoint = 'event/forecast';
       const resData = yield call(queryNormal, {
         endpoint,
@@ -234,9 +252,16 @@ export default modelExtend(pageModel, {
           id: payload.id,
         },
       }, st);
+      const newContent = baseDetail.data;
+      if (resData.response.data) {
+        newContent.lookStatus = 'true';
+        newContent.upIncrease = resData.response.data.upIncrease;
+        newContent.downIncrease = resData.response.data.downIncrease;
+      }
+      baseDetail.data = newContent;
       yield put({
         type: 'forecastSuccess',
-        payload: resData,
+        payload: baseDetail.data,
       });
     },
   },
@@ -323,9 +348,16 @@ export default modelExtend(pageModel, {
       };
     },
     forecastSuccess(state, action) {
-      console.log('forecastSuccess=>', action.payload);
       return {
         ...state,
+        ...action.payload,
+      };
+    },
+    baseDetailSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        baseDetail: { ...response },
       };
     },
   },

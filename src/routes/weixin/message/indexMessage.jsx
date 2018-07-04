@@ -125,7 +125,7 @@ class MessageList extends BaseComponent {
 
     // 加工数据
     const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
-    console.log('messageList', messageList);
+    console.log('messageList in idx', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       pageSize: this.props.indexMessage.paginationDef.pageSize,

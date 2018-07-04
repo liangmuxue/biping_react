@@ -24,8 +24,8 @@ class TypeLayer extends React.Component {
           <button>编辑</button>
         </div>
         <ul className={styles.typeList}>
-          {typelistData.map(( msg ) => (
-            <li>{msg.name}</li>
+          {typelistData.map(( msg, index ) => (
+            <li key={index}>{msg.name}</li>
           ))}
         </ul>
       </div>

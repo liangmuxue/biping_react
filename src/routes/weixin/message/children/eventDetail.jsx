@@ -32,7 +32,7 @@ function Table(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map(rowData => (
+          {data.map((rowData) => (
             <tr>
               <td>{rowData.name}</td>
               <td>{rowData.price}</td>
@@ -48,13 +48,12 @@ class EventDetail extends React.Component {
   constructor(props) {
     super(props);
   }
-
   forecast(boo) {
     this.props.forecast(boo);
   }
   render() {
     console.log('eventDetail=>', this.props);
-    const { coinInfo, coinPrice, msgDetailData } = this.props;
+    const { coinInfo, coinPrice, msgDetailData, baseDetail } = this.props;
     // 币种介绍
     var coinInfodom = null;
     // 币价
@@ -64,6 +63,18 @@ class EventDetail extends React.Component {
     } else {
       coinInfodom = '';
     }
+    const baseDatailData = baseDetail.data;
+    var upBtnStyle = null;
+    var downBtnStyle = null;
+    if (baseDatailData.lookStatus == 'true') {
+      upBtnStyle = {
+        'width': baseDatailData.upIncrease + '%',
+      }
+      downBtnStyle = {
+        'width': baseDatailData.downIncrease + '%',
+      }
+    }
+
     if (msgDetailData.tagName == '币事件日历') {
       calenDarDom =
       <div>
@@ -71,12 +82,12 @@ class EventDetail extends React.Component {
         <div className={styles.CurrencyPrice}>
           <p className={styles.title}>预测事件发生后的币价变化</p>
           <div onClick={() => this.forecast(true)} className={`${styles.btn} ${styles.upBtn}`}>
-            <span></span>
+            <span style={upBtnStyle}></span>
             <img src="/images/calendar/good.png" alt="" />
             <em>利好</em>
           </div>
           <div onClick={() => this.forecast(false)} className={`${styles.btn} ${styles.downBtn}`}>
-            <span></span>
+            <span style={downBtnStyle}></span>
             <img src="/images/calendar/bad.png" alt="" />
             <em>利空</em>
           </div>

@@ -5,13 +5,15 @@
   padding: 0 .3rem;
   .tag {
     display: flex;
+    border-bottom: 1px solid #EBEBEB;
+    margin-bottom: .36rem;
     ul {
       display: flex;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch; 
       flex: 1;
       li {
-        padding: .2rem .14rem;
+        padding: .15rem .14rem;
         color: #353535;
         background-color: #F4F5FA;
         font-size: .26rem;
@@ -70,20 +72,22 @@
         color: #000000;
         font-size: .32rem;
         text-align: left;
-        margin: .35rem 0 .24rem;
+        margin: .2rem 0 .24rem;
       }
       .detail {
         color: #888888;
         font-size: .28rem;
         text-align: left;
         line-height: 1.5;
+        em {
+          font-style: normal;
+          margin-left: 5px;
+        }
         .up {
           color: #0E8E31;
-          font-style: normal;
         }
         .down {
           color: #FF0101;
-          font-style: normal;
         }
       }
     }
@@ -123,8 +127,8 @@
       position: absolute;
       right: 0;
       top: -2px;
-      padding: .14rem .1rem;
-      border-radius: 0 0 5px 5px;
+      padding: .12rem .1rem;
+      border-radius: 0 0 4px 4px;
       color: #FEFEFE;
       font-size: .24rem;
       background-color: #E9880B;
