@@ -94,19 +94,23 @@ class EventDetail extends React.Component {
     } else {
       coinInfodom = '';
     }
-    const baseDatailData = baseDetail.data;
-    var upBtnStyle = null;
-    var downBtnStyle = null;
-    if (baseDatailData.lookStatus == 'true') {
-      upBtnStyle = {
-        'width': baseDatailData.upIncrease + '%',
-      }
-      downBtnStyle = {
-        'width': baseDatailData.downIncrease + '%',
-      }
-    }
 
     if (msgDetailData.tagName == '币事件日历') {
+
+      const baseDatailData = baseDetail.data;
+      if (!baseDatailData) {
+        return null;
+      }
+      var upBtnStyle = null;
+      var downBtnStyle = null;
+      if (baseDatailData.lookStatus == 'true') {
+        upBtnStyle = {
+          'width': baseDatailData.upIncrease + '%',
+        }
+        downBtnStyle = {
+          'width': baseDatailData.downIncrease + '%',
+        }
+      }
       calenDarDom =
       <div>
         <Table data={coinPrice.data} />

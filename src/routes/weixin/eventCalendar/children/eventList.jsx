@@ -109,8 +109,8 @@ class EventList extends React.Component {
         );
       },
     });
-    var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
-    const height = document.documentElement.clientHeight - calendarDomHeight - 100;
+    // var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
+    const height = document.documentElement.clientHeight - 210;
     return (
       <div className={styles.eventList}>
         <div id="tagDom" className={styles.tag}>
