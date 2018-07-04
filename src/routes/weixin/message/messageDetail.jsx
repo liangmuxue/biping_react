@@ -305,7 +305,7 @@ class MsgDetail extends BaseComponent {
     if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
-      shareContentCard = contentCard;
+      shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
     } else {
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       console.log('99999999', val);
@@ -482,7 +482,7 @@ class MsgDetail extends BaseComponent {
                 </div>
 
                 <div className={style.logotop}>【币评】你最想要的币市信息</div>
-                <div className={style.logobottom}>biping.io <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+                <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
               </div>
             </div>
           </div>
