@@ -283,7 +283,7 @@ class MsgDetail extends BaseComponent {
     }
     console.log('msgDetail', msgDetailData);
     // 如果没有数据，需要首先进行查询
-    if (!msgDetailData || !msgDetailData.data || !msgDetailData.data.content) {
+    if (!msgDetailData || !msgDetailData.data) {
       return null;
     }
     // 分享请求,只有点击share方法才进

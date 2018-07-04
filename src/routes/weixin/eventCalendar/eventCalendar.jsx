@@ -65,7 +65,9 @@ class EventCalendar extends BaseComponent {
     this.props.dispatch({
       type: 'eventCalendar/getTime',
     });
-    this.getListData();
+    setTimeout(() => {
+      this.getListData();      
+    }, 300);
   }
 
   // 日历关闭
@@ -153,7 +155,7 @@ class EventCalendar extends BaseComponent {
     }
     return (
       <div>
-        <div className={styles.calendar}>
+        <div id="calendarDom" className={styles.calendar}>
           <div className={styles.clearFix}>
             <div className={styles.left}>
               <span className={styles.time}>{convertDate(eventTime.data.time, 'YYYY年MM月')}</span>

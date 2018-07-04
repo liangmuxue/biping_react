@@ -37,6 +37,8 @@ class EventList extends React.Component {
 
   componentWillMount() {
   }
+  componentDidMount() {
+  }
 
   typeClick(msg) {
     if (!msg) {
@@ -107,10 +109,11 @@ class EventList extends React.Component {
         );
       },
     });
-    const height = document.documentElement.clientHeight - 220;
+    var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
+    const height = document.documentElement.clientHeight - calendarDomHeight - 100;
     return (
       <div className={styles.eventList}>
-        <div className={styles.tag}>
+        <div id="tagDom" className={styles.tag}>
           <ul>
             <li onClick={() => this.typeClick()} className={`${this.state.typeId == '' ? styles.selected : ''}`}>全部</li>
             {typelistData.map((msg, index) => (
