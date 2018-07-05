@@ -113,7 +113,8 @@ export default modelExtend(pageModel, {
         console.log('getImgString data0', srcs.length);
         for (let i = 0; i < srcs.length; i++) {
           // bpimg.6bey.com这个域名无法跨域，换成原默认域名
-          const realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+          let realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+          realSrc = srcs[i].src.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
           console.log(`realSrc is:${realSrc}`);
           const data = yield call(getImgString, realSrc);
           console.log('messageDetail data', data);
@@ -132,12 +133,12 @@ export default modelExtend(pageModel, {
         payload,
       });
     },
-    *closeShare({payload}, { put }) {
+    *closeShare({ payload }, { put }) {
       yield put({
         type: 'closeShareSuc',
         payload,
       });
-    }
+    },
   },
   reducers: {
     getTimeSuccess(state, action) {
@@ -188,7 +189,7 @@ export default modelExtend(pageModel, {
         ...state,
         showMsgShare: true,
         curAct: 'shareMsg',
-        imgUrl: imgUrl,
+        imgUrl,
       };
     },
     // 关闭分享弹层
