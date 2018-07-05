@@ -101,6 +101,24 @@ const App = {
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
       }
+      const directToFunc = function (state) {
+        const stateStr = state.split('-');
+        const directPage = stateStr[0].split('_')[1];
+        const fromUser = stateStr[1].split('_')[1].split('#')[0];
+        dispatch({
+          type: 'pageConstruction/switchToInnerPage',
+          payload: { pageName: directPage, noHistory: true },
+        });
+        // 埋点
+        dispatch({
+          type: 'analysis',
+          payload: {
+            page: siteAnalysis.pageConst.EVENTCALENDAR,
+            action: siteAnalysis.actConst.PUSHMSGTODETAIL,
+            opt: { fromUser },
+          },
+        });
+      };
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         console.log('nouserStr');
@@ -126,6 +144,9 @@ const App = {
             } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.length);
               enterMessageCase = 'pushCase';
+            } else if (state.indexOf('directPage') !== -1) {
+              directToFunc(state);
+              return null;
             }
             // 非关注用户扫码进消息详情埋点
             dispatch({
@@ -234,6 +255,9 @@ const App = {
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.length);
             enterMessageCase = 'pushCase';
+          } else if (state.indexOf('directPage') !== -1) {
+            directToFunc(state);
+            return null;
           }
         } else {
           messageId = analysisParam('messageId');
