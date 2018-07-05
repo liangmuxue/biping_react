@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryNormal } from '../services/common';
+import { queryNormal, getImgString } from '../services/common';
 import Immutable from 'seamless-immutable';
 import { Toast } from 'antd-mobile';
 
@@ -98,6 +98,39 @@ export default modelExtend(pageModel, {
         payload: eventCalendar,
       });
     },
+    // img的src转base64位
+    *getImgString({ payload }, { put, call }) {
+      const { srcs } = payload;
+      console.log('getImgString data', srcs);
+      if (srcs && srcs.length > 0) {
+        console.log('getImgString data0', srcs.length);
+        for (let i = 0; i < srcs.length; i++) {
+          // bpimg.6bey.com这个域名无法跨域，换成原默认域名
+          const realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+          console.log(`realSrc is:${realSrc}`);
+          const data = yield call(getImgString, realSrc);
+          console.log('messageDetail data', data);
+          srcs[i].src = `data:image;base64,${data}`;
+        }
+      }
+      console.log('after getImgString data', srcs);
+      yield put({
+        type: 'getImgStringSuccess',
+        payload: srcs,
+      });
+    },
+    *shareMsg({ payload }, { put, call }) {
+      yield put({
+        type: 'shareMsgSuc',
+        payload,
+      });
+    },
+    *closeShare({payload}, { put }) {
+      yield put({
+        type: 'closeShareSuc',
+        payload,
+      });
+    }
   },
   reducers: {
     getTimeSuccess(state, action) {
@@ -125,6 +158,33 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
+      };
+    },
+    getImgStringSuccess(state, action) {
+      console.log('getImgStringSuccess in', action.payload);
+      console.log('getImgStringSuccess state', state);
+      return {
+        ...state,
+        srcs: action.payload,
+        curAct: 'shareClick',
+      };
+    },
+    // 分享给好友
+    shareMsgSuc(state, action) {
+      const { imgUrl } = action.payload;
+      return {
+        ...state,
+        showMsgShare: true,
+        curAct: 'shareMsg',
+        imgUrl: imgUrl,
+      };
+    },
+    // 关闭分享弹层
+    closeShareSuc(state) {
+      return {
+        ...state,
+        showMsgShare: false,
+        curAct: 'closeShare',
       };
     },
   },

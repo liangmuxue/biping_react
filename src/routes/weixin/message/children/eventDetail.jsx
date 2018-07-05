@@ -55,10 +55,12 @@ class EventDetail extends React.Component {
   componentDidMount() {
     console.log('componentDidMountDom=>', document.getElementById('domText'));
     var dom = document.getElementById('domText');
-    let height = 14 * 1.5 * 3;
-    let domHeight = dom.clientHeight;
-    if (domHeight > height) {
-      dom.classList.add('showMore');
+    if (dom) {
+      let height = 14 * 1.5 * 3;
+      let domHeight = dom.clientHeight;
+      if (domHeight > height) {
+        dom.classList.add('showMore');
+      }
     }
   }
   clickMore() {

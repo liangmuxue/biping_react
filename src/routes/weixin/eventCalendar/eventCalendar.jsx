@@ -1,5 +1,9 @@
 import React from 'react';
 import { connect } from 'dva';
+import QrCodeWithLogo from 'qr-code-with-logo';
+import html2canvas from 'html2canvas';
+import Modal from 'antd-mobile/lib/modal/index';
+import 'antd-mobile/es/modal/style/index.css';
 import { Flex, Calendar } from 'antd-mobile';
 import 'antd-mobile/es/flex/style/index.css';
 import 'antd-mobile/es/calendar/style/index.css';
@@ -9,7 +13,56 @@ import EventList from './children/eventList';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import { convertDate, weekDay } from '../../../utils/dateFormat';
+import { config } from '../../../../config/environment';
 
+function shareEvent(event) {
+  document.getElementById('eventShareDom').style.display = 'block';
+  var dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
+  var dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
+  var dom3 = document.getElementsByClassName('am-list-footer')[1];
+  if (dom1) {
+    dom1.style.height = 'auto';
+  }
+  if (dom2) {
+    dom2.style.position = 'relative';
+  }
+  if (dom3) {
+    dom3.style.height = '0';
+  }
+  console.log('shareEvent=>', dom1, dom2);
+  const { messageHost } = config.env;
+  console.log(`messageHost is:${messageHost}`);
+  const { wechatHost } = config.env;
+  let imgUrl = null;
+  console.log('this.props', event);
+  const { dispatch, systemUser } = event;
+  let uid = null;
+  if (systemUser) {
+    uid = systemUser.uid;
+  }
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}#wechat_redirect`;
+  console.log(`share url is:${url}`);
+  QrCodeWithLogo.toImage({
+    image: document.getElementById('imgUrl0'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }).then(() => {
+    console.log('success777', document.getElementById('eventShareDom'));
+    html2canvas(document.getElementById('eventShareDom'), { useCORS: true }).then((canvas) => {
+      imgUrl = canvas.toDataURL('image/png');
+      document.getElementById('eventShareDom').style.display = 'none';
+      dispatch({
+        type: 'eventCalendar/shareMsg',
+        payload: {
+          imgUrl,
+        },
+      });
+    });
+  });
+}
 class EventCalendar extends BaseComponent {
   constructor(props) {
     super(props);
@@ -141,14 +194,106 @@ class EventCalendar extends BaseComponent {
       },
     });
   }
+  // 分享点击
+  shareClick() {
+    // 隐藏分享内容背景
+    document.body.style.overflow = 'hidden';
+    document.body.style.height = '100%';
+    document.documentElement.style.overflow = 'hidden';
+    document.getElementById('eventShareDom').style.display = 'block';
+    console.log(document.getElementById('ewmImg'));
+
+
+    // 替换过空格之后的内容
+    const replaceVal = document.getElementById('eventShareDom');
+    const srcs = [];
+    if (replaceVal && replaceVal !== null) {
+      const imgs = replaceVal.querySelectorAll('img');
+      if (imgs && imgs.length > 0) {
+        for (let i = 0, j = imgs.length; i < j; i++) {
+          // 解决跨域,传递现有的img、src数组
+          srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+          imgs[i].setAttribute('id', `imgUrl${i}`);
+        }
+      }
+    }
+
+    const { dispatch } = this.props;
+    console.log('ppppppppp', srcs);
+    dispatch({
+      type: 'eventCalendar/getImgString',
+      payload: {
+        srcs,
+      },
+    });
+  }
+  closeShare() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'eventCalendar/closeShare',
+    });
+    // 恢复背景滚动
+    document.body.style.overflow = 'scroll';
+    document.documentElement.style.overflow = 'scroll';
+  }
   render() {
     console.log('eventCalendar render', this.props);
     const { eventCalendar } = this.props;
-    const { eventTime } = eventCalendar;
+    const { eventTime, curAct, srcs, showMsgShare, imgUrl } = eventCalendar;
     if (!eventTime || !eventTime.data) {
       return null;
     }
-    console.log('eventCalendar render', this.props);
+    // 分享请求,只有点击share方法才进
+    console.log('srcs=>>', srcs, curAct);
+    if (srcs && curAct && curAct === 'shareClick') {
+      for (let i = 0; i < srcs.length; i++) {
+        const imgs = document.getElementById(srcs[i].id);
+        imgs.setAttribute('src', srcs[i].src);
+      }
+      shareEvent(this.props);
+    }
+    if (!showMsgShare) {
+      console.log('touchmove rm', this.tmListener);
+      document.body.removeEventListener('touchmove', this.tmListener);
+    }
+    // 分享消息的图片链接
+    const msgImgUrl = imgUrl;
+    /* const modal = (<Modal
+      className={styles.shareBg}
+      visible={showMsgShare}
+      transparent
+      maskClosable
+      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+      onClose={this.closeShare.bind(this)}
+    >
+      <div className={styles.shareCon}>
+        <div className={styles.title}>
+          <span className={styles.text}>长按图片发送好友</span>
+          <img src="/images/msgImages/1.png" alt="" />
+        </div>
+        <div className={styles.content}>
+          <img src={msgImgUrl} alt="" />
+        </div>
+      </div>
+    </Modal>); */
+    const modal = (<Modal
+      className={styles.shareBg}
+      visible={showMsgShare}
+      transparent
+      maskClosable
+      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+      onClose={this.closeShare.bind(this)}
+    >
+      <div >
+        <div style={{ lineHeight: '1.08rem' }}>
+          <span className={styles.titleTips}>长按图片发送好友</span>
+          <img src="/images/msgImages/1.png" alt="" className={styles.finger} />
+        </div>
+        <div style={{ height: 400, overflow: 'scroll' }}>
+          <img src={msgImgUrl} alt="" />
+        </div>
+      </div>
+    </Modal>);
     const weekArr = weekDay(eventTime.data.time); // 一周的日期数组
     this.state.thisDate = new Date().getDate(); // 今天
     let thisDateDom = null;
@@ -159,6 +304,7 @@ class EventCalendar extends BaseComponent {
     }
     return (
       <div>
+        {modal}
         <div id="calendarDom" className={styles.calendar}>
           <div className={styles.clearFix}>
             <div className={styles.left}>
@@ -188,6 +334,9 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
+        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
+          <span>分享给好友</span>
+        </div>
         <Calendar
           {...this.state.config}
           visible={this.state.show}
@@ -196,6 +345,36 @@ class EventCalendar extends BaseComponent {
           minDate={new Date(eventTime.data.staTime)}
           maxDate={new Date(eventTime.data.time + 63158400000)}
         />
+        <div id="eventShareDom" className={styles.shareDom}>
+          <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" />
+          <div id="calendarDom" className={styles.calendar}>
+            <div className={styles.shareTop}>
+              <p>事件日历</p>
+              <p>{convertDate(eventTime.data.time, 'YYYY/MM/DD')}</p>
+            </div>
+            <Flex className={styles.flexTime}>
+              {weekArr.map((msg, index) => (
+                <Flex.Item className={`${styles.item} ${msg == convertDate(eventTime.data.time, 'DD') ? styles.selectItem : ''}`} key={msg} onClick={() => this.weekChange(msg)} >
+                  <span className={styles.text1}>{this.state.weekArrZn[index]}</span>
+                  <span className={styles.text2}>{msg}</span>
+                </Flex.Item>
+              ))}
+            </Flex>
+          </div>
+          <EventList
+            {...this.props}
+            changeType={id => this.changeType(id)}
+            reminder={data => this.reminder(data)}
+            toDetail={data => this.toDetail(data)}
+          />
+          <div className={styles.bottomDom}>
+            <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
+            <div className={styles.info}>
+              <p className={styles.p1}>【币评】你最想要的币市信息</p>
+              <p className={styles.p2}>www.bipingcoin.com</p>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }

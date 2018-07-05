@@ -111,6 +111,9 @@ class EventList extends React.Component {
     });
     // var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
     const height = document.documentElement.clientHeight - 210;
+    const divStyle = {
+      'height': height - 100, 
+    }
     return (
       <div className={styles.eventList}>
         <div id="tagDom" className={styles.tag}>
@@ -120,18 +123,19 @@ class EventList extends React.Component {
               <li onClick={() => this.typeClick(msg)} key={msg.id} className={`${this.state.typeId == msg.id ? styles.selected : ''}`}>{msg.name}</li>
             ))}
           </ul>
-          <div onClick={() => this.showLayer()} className={styles.rightBtn}>
+          <div onClick={() => this.showLayer()} className={styles.rightBtn} style={{ display: 'none' }}>
             <img alt="分类" src="/images/calendar/type-right-Button.png" />
           </div>
         </div>
         {
-          messageList.list.length > 0 ? '' : <div className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
+          messageList.list.length > 0 ?
+          <InfiniteListView
+            {...messageListProps}
+            height={height}
+            listRemain
+          /> :
+          <div style={divStyle} className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
         }
-        <InfiniteListView
-          {...messageListProps}
-          height={height}
-          listRemain
-        />
         {
           this.state.showLayer ? <TypeLayer closeLayer={() => this.closeLayer()} {...this.props} /> : ''
         }
