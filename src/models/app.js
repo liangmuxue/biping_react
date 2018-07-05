@@ -101,6 +101,25 @@ const App = {
       if (mockUserReal) {
         userStr = JSON.stringify(mockUserReal);
       }
+      const directToFunc = function (state) {
+        const stateStr = state.split('-');
+        const directPage = stateStr[0].split('_')[1];
+        const fromUser = stateStr[1].split('_')[1].split('#')[0];
+        // dispatch({
+        //   type: 'pageConstruction/switchToInnerPage',
+        //   payload: { pageName: directPage, noHistory: true },
+        // });
+        // 埋点
+        dispatch({
+          type: 'analysis',
+          payload: {
+            page: siteAnalysis.pageConst.EVENTCALENDAR,
+            action: siteAnalysis.actConst.PUSHMSGTODETAIL,
+            opt: { fromUser },
+          },
+        });
+        return { fromUser, directPage };
+      };
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
         console.log('nouserStr');
@@ -117,15 +136,23 @@ const App = {
           let fromUser = null;
           // 进入消息详情的场景(推送，分享)
           let enterMessageCase = null;
+          let payData = {};
           if (state && state !== 'STAT') {
             if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') !== -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.indexOf('fromUser'));
               fromUser = state.substring(state.indexOf('fromUser') + 8, state.length);
               enterMessageCase = 'shareCase';
+              payData = {
+                code, messageId, fromUser, enterMessageCase,
+              };
               console.log('messageId', messageId, 'fromUser', fromUser);
             } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
               messageId = state.substring(state.indexOf('messageId') + 9, state.length);
               enterMessageCase = 'pushCase';
+              payData = { code, messageId, enterMessageCase };
+            } else if (state.indexOf('directPage') !== -1) {
+              payData = directToFunc(state);
+              payData.code = code;
             }
             // 非关注用户扫码进消息详情埋点
             dispatch({
@@ -136,14 +163,6 @@ const App = {
                 opt: { fromUser, enterMessageCase, messageId },
               },
             });
-          }
-          let payData = null;
-          if (messageId) {
-            payData = { code, messageId };
-          } else if (messageId && fromUser) {
-            payData = { code, messageId, fromUser };
-          } else {
-            payData = { code };
           }
           payData.sourceType = sourceType;
           dispatch({ type: 'autoReg', payload: payData });
@@ -234,6 +253,10 @@ const App = {
           } else if (state.indexOf('messageId') !== -1 && state.indexOf('fromUser') === -1) {
             messageId = state.substring(state.indexOf('messageId') + 9, state.length);
             enterMessageCase = 'pushCase';
+          } else if (state.indexOf('directPage') !== -1) {
+            const payData = directToFunc(state);
+            userData.fromUser = payData.fromUser;
+            userData.directPage = payData.directPage;
           }
         } else {
           messageId = analysisParam('messageId');
@@ -246,7 +269,7 @@ const App = {
           userData.messageId = messageId;
         }
         // 从哪个用户分享的海报进来
-        if (fromUser) {
+        if (fromUser && !userData.fromUser) {
           userData.fromUser = fromUser;
         }
         const sharePaper = analysisParam('sharePaper');
@@ -254,7 +277,9 @@ const App = {
           userData.sharePaper = sharePaper;
         }
         userData.sourceType = sourceType;
-        userData.directPage = directPage;
+        if (!userData.directPage) {
+          userData.directPage = directPage;
+        }
         console.log('userData*****^^', userData);
         dispatch({ type: 'query', payload: userData });
       }
@@ -339,6 +364,18 @@ const App = {
         if (subscribe === 0) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
+        // 如果是直接进入，则跳转到对应页面
+        if (directPage) {
+          console.log(`go directPage:${directPage}`);
+          const matchFooterMenu = footMenus.filter((element) => {
+            return element.code === directPage;
+          })[0];
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: matchFooterMenu, isFirst: true },
+          });
+          return;
+        }
         if (messageId && messageId === 'list') {
           yield put({
             type: 'pageConstruction/footMenuChoice',
@@ -389,7 +426,7 @@ const App = {
         } else {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: footMenus[1], isFirst: true, noHistory: true },
+            payload: { selectedMenu: footMenus[2], isFirst: true, noHistory: true },
           });
         }
       } else if (success && response.flag === 1001) {

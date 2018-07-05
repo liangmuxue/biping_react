@@ -34,7 +34,7 @@ export default modelExtend(pageModel, {
       const { time } = payload;
       const st = yield select();
       const { eventCalendar } = st;
-      var eventTime = eventCalendar.eventTime;
+      const eventTime = eventCalendar.eventTime;
       eventTime.data.time = time;
       yield put({
         type: 'confirmTimeSuccess',
@@ -84,18 +84,25 @@ export default modelExtend(pageModel, {
         return null;
       }
       const newContent = [];
-      eventCalendar.list.map(item => {
+      let recerveStatus = null;
+      eventCalendar.list.map((item) => {
         if (item.id == payload.id) {
-          newContent.push(Immutable.merge(item, { recerveStatus: true }));
+          recerveStatus = item.recerveStatus;
+          if (!recerveStatus || recerveStatus == 'false') {
+            recerveStatus = 'true';
+          } else {
+            recerveStatus = 'false';
+          }
+          newContent.push(Immutable.merge(item, { recerveStatus }));
         } else {
           newContent.push(Immutable.merge(item));
         }
         return item;
-      })
-      eventCalendar.list = newContent
+      });
+      eventCalendar.list = newContent;
       yield put({
         type: 'reminderSuccess',
-        payload: eventCalendar,
+        payload: { eventCalendar, recerveStatus },
       });
     },
     // img的src转base64位
@@ -154,7 +161,12 @@ export default modelExtend(pageModel, {
       };
     },
     reminderSuccess(state, action) {
-      Toast.info('添加提醒成功');
+      const { recerveStatus } = action.payload;
+      if (!recerveStatus || recerveStatus == 'false') {
+        Toast.info('取消提醒成功');
+      } else {
+        Toast.info('添加提醒成功');
+      }
       return {
         ...state,
         ...action.payload,

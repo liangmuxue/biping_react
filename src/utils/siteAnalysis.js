@@ -66,6 +66,10 @@ export const siteAnalysis = {
       code: 'result',
       zh: '购买成功',
     },
+    EVENTCALENDAR: {
+      code: 'eventCalendar',
+      zh: '币事件日历',
+    },
     FOOTMENU: {
       code: 'footMenu',
       zh: '底部菜单',
