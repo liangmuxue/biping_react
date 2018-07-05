@@ -124,6 +124,9 @@ class EventList extends React.Component {
             <img alt="分类" src="/images/calendar/type-right-Button.png" />
           </div>
         </div>
+        {
+          messageList.list.length > 0 ? '' : <div className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
+        }
         <InfiniteListView
           {...messageListProps}
           height={height}
