@@ -82,7 +82,7 @@ class EventList extends React.Component {
         if (rowData.recerveStatus == 'false') {
           buttonDom = <button className={styles.rightBtn} onClick={() => this.props.reminder(rowData)}>提醒</button>;
         } else {
-          buttonDom = <button className={styles.rightBtnSelect}>已设置</button>;
+          buttonDom = <button className={styles.rightBtnSelect} onClick={() => this.props.reminder(rowData)}>已设置</button>;
         }
         return (
           <div>
