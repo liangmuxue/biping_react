@@ -389,7 +389,7 @@ const App = {
         } else {
           yield put({
             type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: footMenus[1], isFirst: true, noHistory: true },
+            payload: { selectedMenu: footMenus[2], isFirst: true, noHistory: true },
           });
         }
       } else if (success && response.flag === 1001) {
