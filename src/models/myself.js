@@ -76,6 +76,21 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    // 是否夜间推送
+    *freePush({payload}, {put, call, select}) {
+      const st = yield select();
+      const endpoint = 'updatePushStatus';
+      const { freePush } = payload;
+      const filter = { freePush };
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+      }, st);
+      yield put({
+        type: 'freePushSuccess',
+        payload: data,
+      });
+    },
   },
 
   reducers: {
@@ -91,6 +106,12 @@ export default modelExtend(pageModel, {
     ifpushSuccess(state, action) {
       console.log('ifpushSuccess in', action.payload);
       console.log('ifpushSuccess state', state);
+      const { response } = action.payload;
+      return {
+        ...state,
+      };
+    },
+    freePushSuccess(state, action) {
       const { response } = action.payload;
       return {
         ...state,
