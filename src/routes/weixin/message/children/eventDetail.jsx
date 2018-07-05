@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './eventDetail.less';
-import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
+import ReactHtmlParser from 'react-html-parser';
 
 function Currency(props) {
   const { data } = props;
