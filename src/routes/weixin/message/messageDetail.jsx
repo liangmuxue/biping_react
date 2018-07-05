@@ -17,7 +17,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
-import EventDetail from './children/eventDetail'
+import EventDetail from './children/eventDetail';
 
 /**
 * 消息详情
@@ -308,6 +308,9 @@ class MsgDetail extends BaseComponent {
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
       shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
     } else {
+      if (!msgObj || !msgObj.content) {
+        return null;
+      }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       console.log('99999999', val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);

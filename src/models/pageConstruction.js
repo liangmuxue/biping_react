@@ -84,19 +84,23 @@ const pcEntity = {
           // history.go(backStep);
         }
       }
-      if (!backArrow) {
-        console.log(`pushState in:${pageName}`);
-        // 在正常模式下，通过pushstate达到阻止浏览器自动回退的目的
-        if (!noHistory) {
-          window.history.pushState({ pageName, params, currentPage }, '');
-        }
-        const prevItem = innerPageList[0];
-        console.log('prevItem is', prevItem);
-        if (prevItem) {
-          const { pageName, params, currentPage } = prevItem;
+      const prevItem = innerPageList[0];
+      console.log('prevItem is', prevItem);
+      if (prevItem) {
+        const {
+          pageName, modelName, params, currentPage,
+        } = prevItem;
+        if (!backArrow) {
           // 把访问页面放入历史记录
           hisPageList.push({ pageName, params, currentPage });
         }
+        const deActive = `${pageName}/deactive`;
+        console.log(`need send deactive:${deActive}`);
+        yield put({
+          type: deActive,
+          pageName,
+          params,
+        });
       }
       console.log('switchPageReal params', params);
       // 进行切换页面
