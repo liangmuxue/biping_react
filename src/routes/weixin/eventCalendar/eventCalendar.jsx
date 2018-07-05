@@ -40,7 +40,9 @@ function shareEvent(event) {
   if (systemUser) {
     uid = systemUser.uid;
   }
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}#wechat_redirect`;
+  const { eventCalendar } = event;
+  const { time, staTime } = eventCalendar.eventTime.data;
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${time}-staTime_${staTime}#wechat_redirect`;
   console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
@@ -77,7 +79,19 @@ class EventCalendar extends BaseComponent {
     };
   }
   componentWillMount() {
-    const { eventCalendar } = this.props;
+    const { eventCalendar, extraData } = this.props;
+    console.log('extraData in', extraData);
+    if (extraData && extraData.time) {
+      this.props.dispatch({
+        type: 'eventCalendar/getTimeSuccess',
+        payload: {
+          response: {
+            data: { time: parseInt(extraData.time), staTime: parseInt(extraData.staTime) },
+          },
+        },
+      });
+      return;
+    }
     // 判断如果有时间的，不从服务器取了。
     if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
       // 获取服务器时间
@@ -384,7 +398,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.extraData, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

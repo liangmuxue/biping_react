@@ -104,11 +104,14 @@ const App = {
       const directToFunc = function (state) {
         const stateStr = state.split('-');
         const directPage = stateStr[0].split('_')[1];
-        const fromUser = stateStr[1].split('_')[1].split('#')[0];
-        // dispatch({
-        //   type: 'pageConstruction/switchToInnerPage',
-        //   payload: { pageName: directPage, noHistory: true },
-        // });
+        const fromUser = stateStr[1].split('_')[1];
+        const time = stateStr[2].split('_')[1];
+        const staTime = stateStr[3].split('_')[1].split('#')[0];
+        // 保存额外信息
+        dispatch({
+          type: 'extraData',
+          payload: { extraData: { directPage, time, staTime } },
+        });
         // 埋点
         dispatch({
           type: 'analysis',
@@ -118,7 +121,7 @@ const App = {
             opt: { fromUser },
           },
         });
-        return { fromUser, directPage };
+        return { fromUser, directPage, time };
       };
       // 如果本地没有登录数据，则通过code进入登录页
       if (userStr == null) {
@@ -221,6 +224,23 @@ const App = {
               },
             });
           }
+        } else if (hrefUrl && hrefUrl.indexOf('directPage') !== -1) {
+          const directPage = analysisParam('directPage');
+          // 币事件日历进入中间页
+          dispatch({
+            type: 'pageConstruction/switchToInnerPage',
+            payload: { pageName: 'enterGroup', params: { footerHide: true, ifEnterGroup: 0 } },
+          });
+          // 埋点扫码进入中间页
+          siteAnalysis.pushEvent(0, '币事件日历进入中间页', 'enter');
+          // 非关注用户扫码进中间页
+          dispatch({
+            type: 'analysis',
+            payload: {
+              page: siteAnalysis.pageConst.ENTERGROUP,
+              action: siteAnalysis.actConst.NOUSERTOMIDDLE,
+            },
+          });
         } else {
           const backPath = '/messageList';
           dispatch({
@@ -257,6 +277,7 @@ const App = {
             const payData = directToFunc(state);
             userData.fromUser = payData.fromUser;
             userData.directPage = payData.directPage;
+            userData.time = payData.time;
           }
         } else {
           messageId = analysisParam('messageId');
@@ -364,18 +385,6 @@ const App = {
         if (subscribe === 0) {
           yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         }
-        // 如果是直接进入，则跳转到对应页面
-        if (directPage) {
-          console.log(`go directPage:${directPage}`);
-          const matchFooterMenu = footMenus.filter((element) => {
-            return element.code === directPage;
-          })[0];
-          yield put({
-            type: 'pageConstruction/footMenuChoice',
-            payload: { selectedMenu: matchFooterMenu, isFirst: true },
-          });
-          return;
-        }
         if (messageId && messageId === 'list') {
           yield put({
             type: 'pageConstruction/footMenuChoice',
@@ -415,7 +424,18 @@ const App = {
           }
           return;
         }
-
+        // 如果是直接进入，则跳转到对应页面
+        if (directPage) {
+          console.log(`go directPage:${directPage}`);
+          const matchFooterMenu = footMenus.filter((element) => {
+            return element.code === directPage;
+          })[0];
+          yield put({
+            type: 'pageConstruction/footMenuChoice',
+            payload: { selectedMenu: matchFooterMenu, isFirst: true },
+          });
+          return;
+        }
         // 登录验证通过后,模拟菜单点击第一项，进入主页面
         const menu = footMenus[0];
         if (ifVerb === 0) {
@@ -594,6 +614,13 @@ const App = {
     },
   },
   reducers: {
+    extraData(state, { payload }) {
+      return {
+        ...state,
+        ...payload,
+        attentionModal: false,
+      };
+    },
     sysUserSet(state, { payload }) {
       // 清除重连标志
       window.localStorage.setItem('reconnectFlag', 0);
