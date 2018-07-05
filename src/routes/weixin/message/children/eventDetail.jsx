@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './eventDetail.less';
+import ReactHtmlParser, { processNodes, convertNodeToElement, htmlparser2 } from 'react-html-parser';
 
 function Currency(props) {
   const { data } = props;
@@ -12,8 +13,8 @@ function Currency(props) {
           <span className={styles.name}>{data.name}</span>
         </div>
         <div id="domText" className={styles.text}>
-          {data.introduce}
-          <span>...<em>更多</em></span>
+          {ReactHtmlParser(data.introduce)}
+          <span className={styles.spanMore}>...<em>更多</em></span>
         </div>
       </div>
     </div>
@@ -33,7 +34,7 @@ function Table(props) {
           </tr>
         </thead>
         <tbody>
-          {data.map((rowData) => (
+          {data.map(rowData => (
             <tr>
               <td>{rowData.name}</td>
               <td>{rowData.price}</td>
@@ -54,80 +55,81 @@ class EventDetail extends React.Component {
   }
   componentDidMount() {
     console.log('componentDidMountDom=>', document.getElementById('domText'));
-    var dom = document.getElementById('domText');
-    let height = 14 * 1.5 * 3;
-    let domHeight = dom.clientHeight;
+    const dom = document.getElementById('domText');
+    const height = 14 * 1.5 * 3;
+    const domHeight = dom.clientHeight;
     if (domHeight > height) {
       dom.classList.add('showMore');
     }
   }
   clickMore() {
-    var dom = document.getElementById('domText');
+    const dom = document.getElementById('domText');
     dom.classList.remove('showMore');
   }
   render() {
     console.log('eventDetail=>', this.props);
-    const { coinInfo, coinPrice, msgDetailData, baseDetail } = this.props;
+    const {
+      coinInfo, coinPrice, msgDetailData, baseDetail,
+    } = this.props;
     // 币种介绍
     if (!coinInfo || !coinInfo.data) {
       return null;
     }
-    var coinInfodom = null;
+    let coinInfodom = null;
     // 币价
-    var calenDarDom = null;
+    let calenDarDom = null;
     if (coinInfo.data) {
       // coinInfodom = <Currency data={coinInfo.data} />;
       const data = coinInfo.data;
-      coinInfodom = <div className={styles.currency}>
-      <p className={styles.head}>币种介绍</p>
-      <div className={styles.currencyDsc}>
-        <div className={styles.tl}>
-          <img alt="" src={data.logo} />
-          <span className={styles.name}>{data.name}</span>
+      coinInfodom = (<div className={styles.currency}>
+        <p className={styles.head}>币种介绍</p>
+        <div className={styles.currencyDsc}>
+          <div className={styles.tl}>
+            <img alt="" src={data.logo} />
+            <span className={styles.name}>{data.name}</span>
+          </div>
+          <div id="domText" className={styles.text}>
+            {ReactHtmlParser(data.introduce)}
+            <span className="spanMore">...<em onClick={() => this.clickMore()}>更多</em></span>
+          </div>
         </div>
-        <div id="domText" className={styles.text}>
-          {data.introduce}
-          <span>...<em onClick={() => this.clickMore()}>更多</em></span>
-        </div>
-      </div>
-    </div>
+                     </div>);
     } else {
       coinInfodom = '';
     }
 
     if (msgDetailData.tagName == '币事件日历') {
-
       const baseDatailData = baseDetail.data;
       if (!baseDatailData) {
         return null;
       }
-      var upBtnStyle = null;
-      var downBtnStyle = null;
+      let upBtnStyle = null;
+      let downBtnStyle = null;
       if (baseDatailData.lookStatus == 'true') {
         upBtnStyle = {
-          'width': baseDatailData.upIncrease + '%',
-        }
+          width: `${baseDatailData.upIncrease}%`,
+        };
         downBtnStyle = {
-          'width': baseDatailData.downIncrease + '%',
-        }
+          width: `${baseDatailData.downIncrease}%`,
+        };
       }
       calenDarDom =
-      <div>
-        <Table data={coinPrice.data} />
-        <div className={styles.CurrencyPrice}>
-          <p className={styles.title}>预测事件发生后的币价变化</p>
-          <div onClick={() => this.forecast(true)} className={`${styles.btn} ${styles.upBtn}`}>
-            <span style={upBtnStyle}></span>
-            <img src="/images/calendar/good.png" alt="" />
-            <em>利好</em>
+        (<div>
+          <Table data={coinPrice.data} />
+          <div className={styles.CurrencyPrice}>
+            <p className={styles.title}>预测事件发生后的币价变化</p>
+            <div onClick={() => this.forecast(true)} className={`${styles.btn} ${styles.upBtn}`}>
+              <span style={upBtnStyle} />
+              <img src="/images/calendar/good.png" alt="" />
+              <em>利好</em>
+            </div>
+            <div onClick={() => this.forecast(false)} className={`${styles.btn} ${styles.downBtn}`}>
+              <span style={downBtnStyle} />
+              <img src="/images/calendar/bad.png" alt="" />
+              <em>利空</em>
+            </div>
           </div>
-          <div onClick={() => this.forecast(false)} className={`${styles.btn} ${styles.downBtn}`}>
-            <span style={downBtnStyle}></span>
-            <img src="/images/calendar/bad.png" alt="" />
-            <em>利空</em>
-          </div>
-        </div>
-      </div>;
+        </div>);
     } else {
       calenDarDom = '';
     }
