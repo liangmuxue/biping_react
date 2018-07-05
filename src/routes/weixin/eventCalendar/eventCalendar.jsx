@@ -16,10 +16,12 @@ import { convertDate, weekDay } from '../../../utils/dateFormat';
 import { config } from '../../../../config/environment';
 
 function shareEvent(event) {
-  document.getElementById('eventShareDom').style.display = 'block';
+  const { messageHost } = config.env;
+  const { wechatHost } = config.env;
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
   const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
   const dom3 = document.getElementsByClassName('am-list-footer')[1];
+  const dom4 = document.getElementsByClassName('list-view-section-body')[1];
   if (dom1) {
     dom1.style.height = 'auto';
   }
@@ -27,12 +29,11 @@ function shareEvent(event) {
     dom2.style.position = 'relative';
   }
   if (dom3) {
-    dom3.style.height = '0';
+    dom3.style.height = '0px';
   }
-  console.log('shareEvent=>', dom1, dom2);
-  const { messageHost } = config.env;
-  console.log(`messageHost is:${messageHost}`);
-  const { wechatHost } = config.env;
+  if (dom4) {
+    dom4.style.marginBottom = '0px';
+  }
   let imgUrl = null;
   console.log('this.props', event);
   const { dispatch, systemUser } = event;
@@ -40,8 +41,7 @@ function shareEvent(event) {
   if (systemUser) {
     uid = systemUser.uid;
   }
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}#wechat_redirect`;
-  console.log(`share url is:${url}`);
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
   QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
     content: url,
@@ -50,7 +50,6 @@ function shareEvent(event) {
       src: '/images/msgImages/copy.png',
     },
   }).then(() => {
-    console.log('success777', document.getElementById('eventShareDom'));
     html2canvas(document.getElementById('eventShareDom'), { useCORS: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('eventShareDom').style.display = 'none';
