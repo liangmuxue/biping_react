@@ -55,6 +55,8 @@ export default modelExtend(pageModel, {
     },
     // 分页请求数据
     *getListData({ payload }, { put }) {
+      // TODO: loading重复bug，临时解决 - 以后跟数据统一走
+      yield put({ type: 'app/hideRouteLoading' });
       Toast.loading('正在加载...');
       const data = yield put({
         type: 'query',

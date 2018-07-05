@@ -86,11 +86,13 @@ class BasicInput extends BaseComponent {
 
     let SwitchExample = (props) => {
       const { getFieldProps } = props.form;
+      console.log('myself SwitchExample=>', getFieldProps);
       return (
         <List>
           <List.Item
             extra={<Switch
               {...getFieldProps('Switch1', {
+                
                 initialValue: userMain.isPush == 0,
                 valuePropName: 'checked',
               })}
@@ -106,6 +108,28 @@ class BasicInput extends BaseComponent {
               <img src="/images/myselfImg/1.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>推送消息  </span>
             </div>
           </List.Item>
+          <Hammer onDoubleTap={this.clearStorage.bind(this)}>
+            <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
+          </Hammer>
+          <List.Item
+            extra={<Switch
+              {...getFieldProps('Switch2', {
+                initialValue: userMain.freePush == true,
+                valuePropName: 'checked',
+              })}
+              onClick={(checked) => {
+                dispatch({
+                  type: 'myself/freePush',
+                  payload: { freePush: checked },
+                });
+              }}
+            />}
+          >
+            <div className={style.toMsg}>
+              <img src="/images/myselfImg/night.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>夜间推送  </span>
+            </div>
+          </List.Item>
+          <div className={style.tips}>开启后，23:00-08:00 间的消息会在晨间推送</div>
         </List>
       );
     };
@@ -124,9 +148,9 @@ class BasicInput extends BaseComponent {
         </Item>
       </List>
       <SwitchExample />
-      <Hammer onDoubleTap={this.clearStorage.bind(this)}>
+      {/* <Hammer onDoubleTap={this.clearStorage.bind(this)}>
         <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
-      </Hammer>
+      </Hammer> */}
       <div className={style.version}>
         <div>@ 2018 biping.io</div>
         <div>V1.0</div>

@@ -24,10 +24,14 @@ class EventCalendar extends BaseComponent {
     };
   }
   componentWillMount() {
-    // 获取服务器时间
-    this.props.dispatch({
-      type: 'eventCalendar/getTime',
-    });
+    const { eventCalendar } = this.props;
+    // 判断如果有时间的，不从服务器取了。
+    if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
+      // 获取服务器时间
+      this.props.dispatch({
+        type: 'eventCalendar/getTime',
+      });
+    }
     // 获取币事件类型
     this.props.dispatch({
       type: 'eventCalendar/getTypeList',
