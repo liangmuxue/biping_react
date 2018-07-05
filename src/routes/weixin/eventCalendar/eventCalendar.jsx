@@ -17,9 +17,9 @@ import { config } from '../../../../config/environment';
 
 function shareEvent(event) {
   document.getElementById('eventShareDom').style.display = 'block';
-  var dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
-  var dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
-  var dom3 = document.getElementsByClassName('am-list-footer')[1];
+  const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
+  const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
+  const dom3 = document.getElementsByClassName('am-list-footer')[1];
   if (dom1) {
     dom1.style.height = 'auto';
   }
@@ -96,7 +96,7 @@ class EventCalendar extends BaseComponent {
     // 获取币事件日历列表,初始化时进行查询
     const { eventCalendar } = this.props;
     const { eventTime } = eventCalendar;
-    var time = null;
+    let time = null;
     const type = this.state.typeId || null;
     if (eventTime && eventTime.data) {
       time = convertDate(eventTime.data.time, 'YYYY-MM-DD') || null;
@@ -123,7 +123,7 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/getTime',
     });
     setTimeout(() => {
-      this.getListData();      
+      this.getListData();
     }, 300);
   }
 
@@ -239,7 +239,9 @@ class EventCalendar extends BaseComponent {
   render() {
     console.log('eventCalendar render', this.props);
     const { eventCalendar } = this.props;
-    const { eventTime, curAct, srcs, showMsgShare, imgUrl } = eventCalendar;
+    const {
+      eventTime, curAct, srcs, showMsgShare, imgUrl,
+    } = eventCalendar;
     if (!eventTime || !eventTime.data) {
       return null;
     }
@@ -382,7 +384,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar };
+  return { eventCalendar: state.eventCalendar, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));
