@@ -296,6 +296,9 @@ class MsgDetail extends BaseComponent {
       shareEvent(this.props);
     }
     const msgObj = msgDetailData.data;
+    if (!msgObj.tagList && !msgObj.relateMsg && !msgObj.content) {
+      return null;
+    }
     console.log('msgObj44444', msgDetailData.data);
     // 内容（异动币和币事件、交易所公告的不同）
     let contentCard = null;
@@ -308,8 +311,11 @@ class MsgDetail extends BaseComponent {
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
       shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
     } else {
-      if (!msgObj || !msgObj.content) {
+      if (!msgObj) {
         return null;
+      }
+      if (!msgObj.content) {
+        msgObj.content = ' ';
       }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       console.log('99999999', val);
@@ -371,8 +377,7 @@ class MsgDetail extends BaseComponent {
     // 类似消息不存在，隐藏
     let hideRelateMsg = 0;
     const { relateMsg } = msgObj;
-    console.log('relateMsg', relateMsg.length);
-    if (relateMsg.length === 0) {
+    if (relateMsg && relateMsg.length === 0) {
       hideRelateMsg = 1;
     }
     // 进入的时候需要跳到头部

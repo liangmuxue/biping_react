@@ -85,22 +85,29 @@ const pcEntity = {
         }
       }
       const prevItem = innerPageList[0];
-      console.log('prevItem is', prevItem);
-      if (prevItem) {
-        const {
-          pageName, modelName, params, currentPage,
-        } = prevItem;
-        if (!backArrow) {
+      if (!backArrow) {
+        console.log(`pushState in:${pageName}`);
+        // 在正常模式下，通过pushstate达到阻止浏览器自动回退的目的
+        if (!noHistory) {
+          window.history.pushState({ pageName, params, currentPage }, '');
+        }
+        console.log('prevItem is', prevItem);
+        if (prevItem) {
+          const { pageName, params, currentPage } = prevItem;
           // 把访问页面放入历史记录
           hisPageList.push({ pageName, params, currentPage });
         }
-        const deActive = `${pageName}/deactive`;
-        console.log(`need send deactive:${deActive}`);
-        yield put({
-          type: deActive,
-          pageName,
-          params,
-        });
+      }
+      if (prevItem) {
+        const { pageName } = prevItem;
+        if (pageName === 'messageDetail') {
+          console.log(`need deact:${pageName}`);
+          yield put({
+            type: 'messageDetail/deactive',
+            params,
+            pageName,
+          });
+        }
       }
       console.log('switchPageReal params', params);
       // 进行切换页面
