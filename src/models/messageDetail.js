@@ -194,7 +194,7 @@ export default modelExtend(pageModel, {
       });
     },
     // 获取币种信息
-    *coinInfo({ payload }, {put, call, select}) {
+    *coinInfo({ payload }, { put, call, select }) {
       const st = yield select();
       const { messageId } = payload;
       const endpoint = 'event/coinInfo';
@@ -351,6 +351,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         ...action.payload,
+        curAct: 'forecast',
       };
     },
     baseDetailSuccess(state, action) {
