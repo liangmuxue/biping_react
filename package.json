@@ -17,6 +17,7 @@
     "aliyun-oss-webpack-plugin": "^2.0.1",
     "antd-mobile-demo-data": "^0.2.0",
     "axios": "^0.18.0",
+    "base64-img-promise": "^1.0.5",
     "dva": "^2.1.0-0",
     "dva-loading": "^1.0.4",
     "emoji": "^0.3.2",
@@ -32,11 +33,11 @@
     "react-dom": "^15.4.2",
     "react-ga": "^2.5.0",
     "react-hammerjs": "^1.0.1",
+    "react-html-parser": "^2.0.2",
     "react-infinite-scroller": "^1.1.4",
     "react-sticky": "^6.0.2",
     "wechat-jssdk": "^3.1.0",
-    "weixin-js-sdk": "^1.3.2",
-    "react-html-parser": "^2.0.2"
+    "weixin-js-sdk": "^1.3.2"
   },
   "devDependencies": {
     "antd": "3.0.3",

@@ -1,8 +1,10 @@
 import modelExtend from 'dva-model-extend';
+import base64Img from 'base64Img';
 import { pageModel } from './commonPage';
 import { queryNormal, getImgString, shortUrl } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 import Immutable from 'seamless-immutable';
+
 /**
 * 订阅消息详情
 * @author 梁慕学
@@ -107,7 +109,7 @@ export default modelExtend(pageModel, {
           // bpimg.6bey.com这个域名无法跨域，换成原默认域名
           const realSrc = srcs[i].src;
           console.log(`realSrc is:${realSrc}`);
-          const data = yield call(getImgString, realSrc);
+          const data = base64Img.base64Sync('path/demo.png');
           console.log('messageDetail data', data);
           srcs[i].src = `data:image;base64,${data}`;
         }
