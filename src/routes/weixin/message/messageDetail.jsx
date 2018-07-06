@@ -345,7 +345,8 @@ class MsgDetail extends BaseComponent {
       }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
       val = val.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
-      console.log('99999999', val);
+      val = val.replace('//Static', '/Static');
+      console.log(`val after rep:${val}`);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
       shareContentCard =
       (<div id="shareArticle" className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
