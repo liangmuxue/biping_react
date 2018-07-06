@@ -105,12 +105,11 @@ const App = {
         const stateStr = state.split('-');
         const directPage = stateStr[0].split('_')[1];
         const fromUser = stateStr[1].split('_')[1];
-        const time = stateStr[2].split('_')[1];
-        const staTime = stateStr[3].split('_')[1].split('#')[0];
+        const time = stateStr[2].split('_')[1].split('#')[0];
         // 保存额外信息
         dispatch({
           type: 'extraData',
-          payload: { extraData: { directPage, time, staTime } },
+          payload: { extraData: { directPage, time } },
         });
         // 埋点
         dispatch({
