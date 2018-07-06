@@ -32,11 +32,8 @@ function shareEvent(event) {
   let imgUrl = null;
   const { dispatch, shortUrl, msgDetailData } = event;
   const reuslturl = shortUrl.data.reuslturl;
-  // const url = `${host}/shortUrl/${reuslturl}`;
+  const url = `${host}/shortUrl/${reuslturl}`;
   const msgObj = msgDetailData.data;
-  console.log('params1111', params);
-  const { uid } = params;
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
   console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
@@ -291,7 +288,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
-    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
       payload: url,
