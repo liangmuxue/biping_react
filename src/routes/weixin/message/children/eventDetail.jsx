@@ -55,10 +55,10 @@ class EventDetail extends React.Component {
   }
   componentDidMount() {
     console.log('componentDidMountDom=>', document.getElementById('domText'));
-    var dom = document.getElementById('domText');
+    const dom = document.getElementById('domText');
     if (dom) {
-      let height = 14 * 1.5 * 3;
-      let domHeight = dom.clientHeight;
+      const height = 14 * 1.5 * 3;
+      const domHeight = dom.clientHeight;
       if (domHeight > height) {
         dom.classList.add('showMore');
       }
@@ -83,11 +83,12 @@ class EventDetail extends React.Component {
     if (coinInfo.data) {
       // coinInfodom = <Currency data={coinInfo.data} />;
       const data = coinInfo.data;
+      const logoReal = data.logo.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
       coinInfodom = (<div className={styles.currency}>
         <p className={styles.head}>币种介绍</p>
         <div className={styles.currencyDsc}>
           <div className={styles.tl}>
-            <img alt="" src={data.logo} />
+            <img alt="" src={logoReal} />
             <span className={styles.name}>{data.name}</span>
           </div>
           <div id="domText" className={styles.text}>
