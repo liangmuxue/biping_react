@@ -25,17 +25,13 @@ import EventDetail from './children/eventDetail';
 * @Date  2018-6-12
 */
 function shareEvent(event) {
-  const { messageHost } = config.env;
-  console.log(`messageHost is:${messageHost}`);
-  const { wechatHost } = config.env;
+  console.log('shareEvent');
+  const { host } = config.env;
   let imgUrl = null;
-  console.log('this.props', event);
-  const { dispatch, msgDetailData, params } = event;
+  const { dispatch, shortUrl, msgDetailData } = event;
+  const reuslturl = shortUrl.data.reuslturl;
+  const url = `${host}/shortUrl/${reuslturl}`;
   const msgObj = msgDetailData.data;
-  console.log('params1111', params);
-  const { uid } = params;
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
-  console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
     content: url,
@@ -272,11 +268,22 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
+  shortUrl() {
+    const { messageHost, wechatHost } = config.env;
+    const { msgDetailData, params } = this.props;
+    const msgObj = msgDetailData.data;
+    const { uid } = params;
+    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+    this.props.dispatch({
+      type: 'messageDetail/shortUrl',
+      payload: url,
+    });
+  }
 
   render() {
     console.log('MsgDetail Now render', this.props);
     const {
-      msgDetailData, showMsgShare, params, imgUrl, curAct, srcs,
+      msgDetailData, showMsgShare, params, imgUrl, curAct, srcs, shortUrl
     } = this.props;
     let ifEnterGroup = 0;
     if (params) {
@@ -286,6 +293,10 @@ class MsgDetail extends BaseComponent {
     // 如果没有数据，需要首先进行查询
     if (!msgDetailData || !msgDetailData.data) {
       return null;
+    }
+    // 拿到数据之后长链接转短链接
+    if (!shortUrl) {
+      this.shortUrl();
     }
     // 分享请求,只有点击share方法才进
     if (srcs && curAct && curAct === 'shareClick') {
@@ -478,7 +489,7 @@ class MsgDetail extends BaseComponent {
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
             {shareContentCard}
-
+            <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
             <div className={style.wechatBox}>
               <img id="ewmImg" crossOrigin="anonymous" alt="" />
               <div className={style.readAll}>扫码阅读全文</div>

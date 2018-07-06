@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal, getImgString } from '../services/common';
+import { queryNormal, getImgString, shortUrl } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 import Immutable from 'seamless-immutable';
 /**
@@ -264,6 +264,16 @@ export default modelExtend(pageModel, {
         payload: baseDetail.data,
       });
     },
+    // 长链接转短链接
+    *shortUrl({ payload }, { call, put }) {
+      const endpoint = '/getLong2short';
+      const filter = { url: payload };
+      const data = yield call(shortUrl, endpoint, filter);
+      yield put({
+        type: 'shortUrlSuccess',
+        payload: data,
+      });
+    },
   },
 
   reducers: {
@@ -359,6 +369,13 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         baseDetail: { ...response },
+      };
+    },
+    shortUrlSuccess(state, action) {
+      const { data } = action.payload;
+      return {
+        ...state,
+        shortUrl: { ...data },
       };
     },
   },
