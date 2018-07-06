@@ -228,7 +228,7 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         shortUrl: { ...data },
-      }
+      };
     },
   },
 });
