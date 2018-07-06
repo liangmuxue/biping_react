@@ -117,7 +117,7 @@ class EventCalendar extends BaseComponent {
     if (systemUser) {
       uid = systemUser.uid;
     }
-    const times = new Date(time) || new Date();
+    const times = parseInt(timeOri) || new Date().getTime();
     const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${times}#wechat_redirect`;
     this.props.dispatch({
       type: 'eventCalendar/shortUrl',
