@@ -118,7 +118,7 @@ class EventDetail extends React.Component {
       }
       calenDarDom =
         (<div>
-          <Table data={coinPrice.data} />
+          {coinPrice.data.length > 0 ? <Table data={coinPrice.data} /> : ''}
           <div className={styles.CurrencyPrice}>
             <p className={styles.title}>预测事件发生后的币价变化</p>
             <div onClick={() => this.forecast(true)} className={`${styles.btn} ${styles.upBtn}`}>
