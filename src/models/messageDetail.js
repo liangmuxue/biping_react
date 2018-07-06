@@ -1,5 +1,4 @@
 import modelExtend from 'dva-model-extend';
-import base64Img from 'base64Img';
 import { pageModel } from './commonPage';
 import { queryNormal, getImgString, shortUrl } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
@@ -110,7 +109,7 @@ export default modelExtend(pageModel, {
           const realSrc = srcs[i].src;
           console.log(`realSrc is:${realSrc}`);
           const data = base64Img.base64Sync('path/demo.png');
-          console.log('messageDetail data', data);
+          console.log('messageDetail data get', data);
           srcs[i].src = `data:image;base64,${data}`;
         }
       }

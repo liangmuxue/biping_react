@@ -1,7 +1,20 @@
 import axios from 'axios';
 import request from '../dataExchange/request';
 import { config } from '../../config/environment';
+
 const API_ROOT = config.env.host;
+
+function getBase64Image(img, width, height) { // width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+  const canvas = document.createElement('canvas');
+  canvas.width = width || img.width;
+  canvas.height = height || img.height;
+
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const dataURL = canvas.toDataURL();
+  return dataURL;
+}
+
 /**
  * 通用请求处理，封装filter，分页等
  * @date        2018-01-12
@@ -47,6 +60,20 @@ export const getImgString = async function getBase64(url) {
       responseType: 'arraybuffer',
     })
     .then(response => Buffer.from(response.data, 'binary').toString('base64'));
+};
+
+/**
+ * 取得图片的base64字符串
+ */
+export const getImgStringBase = async function getImgStringBase(url) {
+  const image = new Image();
+  image.crossOrigin = '';
+  image.src = url;
+  return new Promise((resolve, reject) => {
+    image.onload = function () {
+      resolve(getBase64Image(image));// 将base64传给done上传处理
+    };
+  });
 };
 
 /**
