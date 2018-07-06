@@ -69,6 +69,14 @@ const pcEntity = {
         const prvPageItem = hisPageList.pop();
         console.log('prvPageItem is:', prvPageItem);
         const { pageName, params, currentPage } = prvPageItem;
+        if (pageName === 'messageDetail') {
+          console.log(`need deact:${pageName}`);
+          yield put({
+            type: 'messageDetail/deactive',
+            params,
+            pageName,
+          });
+        }
         // 地址栏历史回退一步
         // history.go(-1);
         yield* switchPageReal({ pageName, params, currentPage }, { put, select });
