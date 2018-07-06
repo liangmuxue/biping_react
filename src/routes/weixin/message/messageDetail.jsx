@@ -27,7 +27,7 @@ import { urlUtils } from '../../../utils/urlUtil.js';
 * @Date  2018-6-12
 */
 function shareEvent(event) {
-  var dom1 = document.getElementById('picBox');
+  const dom1 = document.getElementById('picBox');
   if (dom1) {
     dom1.style.paddingBottom = '0';
   }
@@ -79,7 +79,7 @@ class MsgDetail extends BaseComponent {
     if (state && state.indexOf('messageId') !== -1) {
       const tagNameArea = state.split('tagName');
       // 分享进入时，在此补充tagName
-      if (tagNameArea && tagNameArea.length > 0) {
+      if (tagNameArea && tagNameArea.length > 1) {
         const tagName = tagNameArea[1].split('#')[0];
         console.log(`tagName get:${tagName}`);
         const tagNameReal = decodeURIComponent(tagName);
