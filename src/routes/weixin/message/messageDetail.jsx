@@ -292,6 +292,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
+    console.log('msgObj is', msgObj);
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
@@ -348,7 +349,7 @@ class MsgDetail extends BaseComponent {
         msgObj.content = ' ';
       }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
-      // val = val.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+      val = val.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
       // val = val.replace('//Static', '/Static');
       // console.log('val after rep:'+val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
