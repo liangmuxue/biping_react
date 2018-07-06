@@ -81,7 +81,7 @@ class EventCalendar extends BaseComponent {
         type: 'eventCalendar/getTimeSuccess',
         payload: {
           response: {
-            data: { time: parseInt(extraData.time)},
+            data: { time: parseInt(extraData.time) },
           },
         },
       });
@@ -117,7 +117,8 @@ class EventCalendar extends BaseComponent {
     if (systemUser) {
       uid = systemUser.uid;
     }
-    const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${time}#wechat_redirect`;
+    const times = new Date(time) || new Date();
+    const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${times}#wechat_redirect`;
     this.props.dispatch({
       type: 'eventCalendar/shortUrl',
       payload: wxUrl,
