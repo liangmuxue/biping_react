@@ -18,6 +18,8 @@ import BaseComponent from '../baseComponent';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
 import MessageContent from '../../../pageComponents/weixin/message/messageContentCard.jsx';
 import EventDetail from './children/eventDetail';
+import { urlUtils } from '../../../utils/urlUtil.js';
+
 
 /**
 * 消息详情
@@ -34,7 +36,7 @@ function shareEvent(event) {
   const msgObj = msgDetailData.data;
   console.log('params1111', params);
   const { uid } = params;
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}#wechat_redirect`;
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
   console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
@@ -71,7 +73,19 @@ function shareEvent(event) {
 class MsgDetail extends BaseComponent {
   constructor(props) {
     console.log('props in MsgDetail', props);
-
+    const { analysisParam } = urlUtils;
+    const state = analysisParam('state');
+    if (state && state.indexOf('messageId') !== -1) {
+      const tagNameArea = state.split('tagName');
+      // 分享进入时，在此补充tagName
+      if (tagNameArea && tagNameArea.length > 0) {
+        const tagName = tagNameArea[1].split('#')[0];
+        console.log(`tagName get:${tagName}`);
+        const tagNameReal = decodeURIComponent(tagName);
+        console.log(`tagNameReal get:${tagNameReal}`);
+        props.params.tagName = tagNameReal;
+      }
+    }
     super(props);
   }
 
