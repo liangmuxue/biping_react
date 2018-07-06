@@ -48,7 +48,7 @@ function shareEvent(event) {
     },
   }).then(() => {
     console.log('success777', document.getElementById('showShare'));
-    html2canvas(document.getElementById('showShare'), { useCORS: true, allowTaint: false }).then((canvas) => {
+    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       console.log('imgUrl=>>', imgUrl);
       document.getElementById('showShare').style.display = 'none';

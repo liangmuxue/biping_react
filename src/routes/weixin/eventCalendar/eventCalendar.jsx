@@ -48,7 +48,7 @@ function shareEvent(event) {
       src: '/images/msgImages/copy.png',
     },
   }).then(() => {
-    html2canvas(document.getElementById('eventShareDom'), { useCORS: true, allowTaint: false }).then((canvas) => {
+    html2canvas(document.getElementById('eventShareDom'), { useCORS: false, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('eventShareDom').style.display = 'none';
       dispatch({
@@ -365,7 +365,7 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
-        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
+        <div style={{display: 'none'}} className={styles.shareBtn} onClick={() => this.shareClick()}>
           <span>分享</span>
         </div>
         <Calendar
