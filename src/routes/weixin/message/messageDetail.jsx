@@ -513,10 +513,10 @@ class MsgDetail extends BaseComponent {
             </div>
 
             <div className={style.bottomCopy}>
-              <div>
-                <div className={style.copytop}>
+              <div className={style.con}>
+                {/* <div className={style.copytop}>
                   <img src="/images/msgImages/copy.png" />
-                </div>
+                </div> */}
 
                 <div className={style.logotop}>【币评】你最想要的币市信息</div>
                 <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
