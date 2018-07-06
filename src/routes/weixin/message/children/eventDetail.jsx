@@ -38,7 +38,11 @@ function Table(props) {
             <tr>
               <td>{rowData.name}</td>
               <td>{rowData.price}</td>
-              <td>{rowData.quote}</td>
+              {
+                rowData.quote.indexOf('+') >= 0 ?
+                  <td className={styles.up}>{rowData.quote}</td> :
+                  <td className={styles.down}>{rowData.quote}</td>
+              }
             </tr>
           ))}
         </tbody>
