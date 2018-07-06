@@ -366,7 +366,7 @@ class EventCalendar extends BaseComponent {
           toDetail={data => this.toDetail(data)}
         />
         <div className={styles.shareBtn} onClick={() => this.shareClick()}>
-          <span>分享给好友</span>
+          <span>分享</span>
         </div>
         <Calendar
           {...this.state.config}
