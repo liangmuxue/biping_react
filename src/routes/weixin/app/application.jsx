@@ -9,6 +9,7 @@ import 'antd-mobile/es/modal/style/index.css';
 // import 'antd-mobile/es/wing-blank/style/index.css';
 import 'antd-mobile/es/activity-indicator/style/index.css';
 import Footer from '../../../pageComponents/weixin/footer/footer';
+import { config } from '../../../../config/environment';
 import { innerPageDefs } from '../../../wxRouter';
 import styles from './index.less';
 
@@ -60,6 +61,8 @@ class HomePage extends Component {
     const {
       match, app, pageConstruction,
     } = this.props;
+    const { qrImgName } = config.env;
+    const wechatQrImgSrc = `/images/indexImg/${qrImgName}`;
     console.log(`match.url:${match.url}`);
     console.log('app data', app);
     if (!app) {
@@ -79,7 +82,7 @@ class HomePage extends Component {
         wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       >
         <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
-          <img src="/images/indexImg/wechat.png" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
+          <img src="{wechatQrImgSrc}" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
         </div>
       </Modal>);
     } else if (netError) {
