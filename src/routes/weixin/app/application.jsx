@@ -82,7 +82,7 @@ class HomePage extends Component {
         wrapProps={{ onTouchStart: this.onWrapTouchStart }}
       >
         <div style={{ overflow: 'hidden', width: '5.38rem', height: '5.44rem' }}>
-          <img src="{wechatQrImgSrc}" alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
+          <img src={wechatQrImgSrc} alt="" style={{ width: '5.38rem', height: '5.44rem' }} />
         </div>
       </Modal>);
     } else if (netError) {
