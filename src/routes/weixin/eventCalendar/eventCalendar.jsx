@@ -90,30 +90,29 @@ class EventCalendar extends BaseComponent {
           },
         },
       });
-      return;
-    }
-    // 判断如果有时间的，不从服务器取了。
-    if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
-      // 获取服务器时间
-      this.props.dispatch({
-        type: 'eventCalendar/getTime',
-      });
+      this.getListData(extraData.time);
+    } else {
+      // 判断如果有时间的，不从服务器取了。
+      if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
+        // 获取服务器时间
+        this.props.dispatch({
+          type: 'eventCalendar/getTime',
+        });
+        this.getListData();
+      }
     }
     // 获取币事件类型
     this.props.dispatch({
       type: 'eventCalendar/getTypeList',
     });
-    this.getListData();
   }
 
-  getListData() {
+  getListData(timeOri) {
     // 获取币事件日历列表,初始化时进行查询
-    const { eventCalendar } = this.props;
-    const { eventTime } = eventCalendar;
     let time = null;
     const type = this.state.typeId || null;
-    if (eventTime && eventTime.data) {
-      time = convertDate(eventTime.data.time, 'YYYY-MM-DD') || null;
+    if (timeOri) {
+      time = convertDate(timeOri, 'YYYY-MM-DD') || null;
     }
     this.props.dispatch({
       type: 'eventCalendar/getListData',
@@ -157,7 +156,7 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/confirmTime',
       payload: { time: time.getTime() },
     });
-    this.getListData();
+    this.getListData(time.getTime());
   }
   // 展示日历
   toggleCalendar() {
@@ -179,8 +178,15 @@ class EventCalendar extends BaseComponent {
     this.setState({
       typeId: id,
     });
+    const { eventCalendar } = this.props;
+    const { eventTime } = eventCalendar;
+    let time = null;
+    if (eventTime && eventTime.data) {
+      time = eventTime.data.time;
+    }
+    console.log('getListData in', eventCalendar);
     setTimeout(() => {
-      this.getListData();
+      this.getListData(time);
     }, 300);
   }
   // 子组件提醒点击
