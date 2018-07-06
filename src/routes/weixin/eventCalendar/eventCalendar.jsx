@@ -16,8 +16,6 @@ import { convertDate, weekDay } from '../../../utils/dateFormat';
 import { config } from '../../../../config/environment';
 
 function shareEvent(event) {
-  const { messageHost } = config.env;
-  const { wechatHost } = config.env;
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
   const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
   const dom3 = document.getElementsByClassName('am-list-footer')[1];
@@ -36,14 +34,11 @@ function shareEvent(event) {
   }
   let imgUrl = null;
   console.log('this.props', event);
-  const { dispatch, systemUser } = event;
-  let uid = null;
-  if (systemUser) {
-    uid = systemUser.uid;
-  }
-  const { eventCalendar } = event;
-  const { time, staTime } = eventCalendar.eventTime.data;
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${time}-staTime_${staTime}#wechat_redirect`;
+  const { host } = config.env;
+  const { dispatch, eventCalendar } = event;
+  const { shortUrl } = eventCalendar;
+  const reuslturl = shortUrl.data.reuslturl;
+  const url = `${host}/shortUrl/${reuslturl}`;
   console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
@@ -86,7 +81,7 @@ class EventCalendar extends BaseComponent {
         type: 'eventCalendar/getTimeSuccess',
         payload: {
           response: {
-            data: { time: parseInt(extraData.time), staTime: parseInt(extraData.staTime) },
+            data: { time: parseInt(extraData.time)},
           },
         },
       });
@@ -114,6 +109,19 @@ class EventCalendar extends BaseComponent {
     if (timeOri) {
       time = convertDate(parseInt(timeOri), 'YYYY-MM-DD') || null;
     }
+    // 通过time生成长链接和服务器交互
+
+    const { messageHost, wechatHost } = config.env;
+    const { systemUser } = this.props;
+    let uid = null;
+    if (systemUser) {
+      uid = systemUser.uid;
+    }
+    const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${time}#wechat_redirect`;
+    this.props.dispatch({
+      type: 'eventCalendar/shortUrl',
+      payload: wxUrl,
+    });
     this.props.dispatch({
       type: 'eventCalendar/getListData',
       payload: {

@@ -126,7 +126,7 @@ class BasicInput extends BaseComponent {
             />}
           >
             <div className={style.toMsg}>
-              <img src="/images/myselfImg/night.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>夜间推送  </span>
+              <img src="/images/myselfImg/night.png" className={style.pushMsgPic} alt="" /> <span className={style.toMsg}>夜间勿扰  </span>
             </div>
           </List.Item>
           <div className={style.tips}>开启后，23:00-08:00 间的消息会在晨间推送</div>

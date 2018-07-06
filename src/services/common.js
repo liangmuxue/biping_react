@@ -1,5 +1,7 @@
 import axios from 'axios';
 import request from '../dataExchange/request';
+import { config } from '../../config/environment';
+const API_ROOT = config.env.host;
 /**
  * 通用请求处理，封装filter，分页等
  * @date        2018-01-12
@@ -47,6 +49,16 @@ export const getImgString = async function getBase64(url) {
     .then(response => Buffer.from(response.data, 'binary').toString('base64'));
 };
 
+/**
+ * 长链接转短链接
+*/
+export const shortUrl = async function toshort(url, filter) {
+  return axios
+    .get(`${API_ROOT}${url}`, {
+      params: filter,
+    })
+    .then(response => response);
+};
 
 /**
 * @date        2018-04-22
