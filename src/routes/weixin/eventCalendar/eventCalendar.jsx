@@ -112,7 +112,7 @@ class EventCalendar extends BaseComponent {
     let time = null;
     const type = this.state.typeId || null;
     if (timeOri) {
-      time = convertDate(timeOri, 'YYYY-MM-DD') || null;
+      time = convertDate(parseInt(timeOri), 'YYYY-MM-DD') || null;
     }
     this.props.dispatch({
       type: 'eventCalendar/getListData',
