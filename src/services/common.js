@@ -67,7 +67,7 @@ export const getImgString = async function getBase64(url) {
  */
 export const getImgStringBase = async function getImgStringBase(url) {
   const image = new Image();
-  image.crossOrigin = '';
+  image.crossOrigin = 'Anonymous';
   image.src = url;
   return new Promise((resolve, reject) => {
     image.onload = function () {
