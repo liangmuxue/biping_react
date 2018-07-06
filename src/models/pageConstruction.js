@@ -58,7 +58,7 @@ const pcEntity = {
       const {
         pageName, params, direct, backArrow, currentPage, noHistory, backButton,
       } = payload;
-      console.log(`need switchToInnerPage:${pageName},noHistory:${noHistory}`);
+      console.log(`need switchToInnerPage:${pageName},noHistory:${noHistory},currentPage:${currentPage}`);
       const { hisPageList, innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
       // push到history，屏蔽回退跳转
       const matchFooterMenu = footMenus.filter((element) => {
@@ -69,6 +69,13 @@ const pcEntity = {
         const prvPageItem = hisPageList.pop();
         console.log('prvPageItem is:', prvPageItem);
         const { pageName, params, currentPage } = prvPageItem;
+        const prevItem = innerPageList[0];
+        if (prevItem.pageName === 'messageDetail') {
+          console.log(`need deact:${prevItem.pageName}`);
+          yield put({
+            type: 'messageDetail/deactive',
+          });
+        }
         // 地址栏历史回退一步
         // history.go(-1);
         yield* switchPageReal({ pageName, params, currentPage }, { put, select });
