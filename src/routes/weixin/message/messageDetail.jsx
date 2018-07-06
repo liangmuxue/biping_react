@@ -50,7 +50,7 @@ function shareEvent(event) {
     console.log('success777', document.getElementById('showShare'));
     html2canvas(document.getElementById('showShare'), { useCORS: true, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
-      console.log('imgUrl=>>', imgUrl);
+      // console.log('imgUrl=>>', imgUrl);
       document.getElementById('showShare').style.display = 'none';
       dispatch({
         type: 'messageDetail/shareMsg',
