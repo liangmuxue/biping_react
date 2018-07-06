@@ -41,7 +41,10 @@ function shareEvent(event) {
   if (systemUser) {
     uid = systemUser.uid;
   }
-  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo#wechat_redirect`;
+  const { eventCalendar } = event;
+  const { time, staTime } = eventCalendar.eventTime.data;
+  const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${time}-staTime_${staTime}#wechat_redirect`;
+  console.log(`share url is:${url}`);
   QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
     content: url,
@@ -76,29 +79,40 @@ class EventCalendar extends BaseComponent {
     };
   }
   componentWillMount() {
-    const { eventCalendar } = this.props;
-    // 判断如果有时间的，不从服务器取了。
-    if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
-      // 获取服务器时间
+    const { eventCalendar, extraData } = this.props;
+    console.log('extraData in', extraData);
+    if (extraData && extraData.time) {
       this.props.dispatch({
-        type: 'eventCalendar/getTime',
+        type: 'eventCalendar/getTimeSuccess',
+        payload: {
+          response: {
+            data: { time: parseInt(extraData.time), staTime: parseInt(extraData.staTime) },
+          },
+        },
       });
+      this.getListData(extraData.time);
+    } else {
+      // 判断如果有时间的，不从服务器取了。
+      if (!eventCalendar || !eventCalendar.eventTime || !eventCalendar.eventTime.data) {
+        // 获取服务器时间
+        this.props.dispatch({
+          type: 'eventCalendar/getTime',
+        });
+        this.getListData();
+      }
     }
     // 获取币事件类型
     this.props.dispatch({
       type: 'eventCalendar/getTypeList',
     });
-    this.getListData();
   }
 
-  getListData() {
+  getListData(timeOri) {
     // 获取币事件日历列表,初始化时进行查询
-    const { eventCalendar } = this.props;
-    const { eventTime } = eventCalendar;
     let time = null;
     const type = this.state.typeId || null;
-    if (eventTime && eventTime.data) {
-      time = convertDate(eventTime.data.time, 'YYYY-MM-DD') || null;
+    if (timeOri) {
+      time = convertDate(parseInt(timeOri), 'YYYY-MM-DD') || null;
     }
     this.props.dispatch({
       type: 'eventCalendar/getListData',
@@ -142,7 +156,7 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/confirmTime',
       payload: { time: time.getTime() },
     });
-    this.getListData();
+    this.getListData(time.getTime());
   }
   // 展示日历
   toggleCalendar() {
@@ -164,8 +178,15 @@ class EventCalendar extends BaseComponent {
     this.setState({
       typeId: id,
     });
+    const { eventCalendar } = this.props;
+    const { eventTime } = eventCalendar;
+    let time = null;
+    if (eventTime && eventTime.data) {
+      time = eventTime.data.time;
+    }
+    console.log('getListData in', eventCalendar);
     setTimeout(() => {
-      this.getListData();
+      this.getListData(time);
     }, 300);
   }
   // 子组件提醒点击
@@ -383,7 +404,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.extraData, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

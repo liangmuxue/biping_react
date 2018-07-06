@@ -53,7 +53,20 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
-    // 分页请求数据
+    // 请求当前日期，并根据日期请求币事件列表数据
+    *getListDataWithTime({ payload }, { put }) {
+      const endpoint = 'event/eventTime';
+      const res = yield call(queryNormal, {
+        endpoint,
+      }, st);
+      const time = res.time;
+      payload.time = time;
+      yield put({
+        type: 'getListData',
+        payload,
+      });
+    },
+    // 请求币事件列表数据
     *getListData({ payload }, { put }) {
       // TODO: loading重复bug，临时解决 - 以后跟数据统一走
       yield put({ type: 'app/hideRouteLoading' });
