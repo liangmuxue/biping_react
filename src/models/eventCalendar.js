@@ -129,7 +129,9 @@ export default modelExtend(pageModel, {
           let realSrc = srcs[i].src;
           // let realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
           realSrc = realSrc.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
-          console.log(`realSrc is:${realSrc}`);
+          if (realSrc.indexOf('data:image') >= 0) {
+            continue;
+          }
           const data = yield call(getImgString, realSrc);
           srcs[i].src = `data:image;base64,${data}`;
         }
