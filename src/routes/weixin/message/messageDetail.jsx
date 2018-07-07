@@ -315,9 +315,9 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 拿到数据之后长链接转短链接
-    if (!shortUrl) {
+    /* if (!shortUrl) {
       this.shortUrl();
-    }
+    } */
     // 分享请求,只有点击share方法才进
     if (srcs && curAct && curAct === 'shareClick') {
       for (let i = 0; i < srcs.length; i++) {

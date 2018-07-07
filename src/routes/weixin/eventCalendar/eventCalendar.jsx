@@ -14,6 +14,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import { convertDate, weekDay } from '../../../utils/dateFormat';
 import { config } from '../../../../config/environment';
+import { Toast } from 'antd-mobile';
 
 function shareEvent(event) {
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
@@ -51,6 +52,7 @@ function shareEvent(event) {
     html2canvas(document.getElementById('eventShareDom'), { useCORS: false, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('eventShareDom').style.display = 'none';
+      Toast.hide();
       dispatch({
         type: 'eventCalendar/shareMsg',
         payload: {
@@ -225,6 +227,7 @@ class EventCalendar extends BaseComponent {
   }
   // 分享点击
   shareClick() {
+    Toast.loading('正在生成...', 0);
     // 隐藏分享内容背景
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100%';
@@ -365,7 +368,7 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
-        <div style={{display: 'none'}} className={styles.shareBtn} onClick={() => this.shareClick()}>
+        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
           <span>分享</span>
         </div>
         <Calendar
