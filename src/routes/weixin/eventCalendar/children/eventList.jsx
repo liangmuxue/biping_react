@@ -84,12 +84,13 @@ class EventList extends React.Component {
         } else {
           buttonDom = <button className={styles.rightBtnSelect} onClick={() => this.props.reminder(rowData)}>已设置</button>;
         }
+        const dyImgSrc = `${rowData.img}?${Math.random()}`;
         return (
           <div>
             <div className={`${styles.listItem}`} style={borderStyle}>
               <div className={styles.leftCon} onClick={() => this.props.toDetail(rowData)} >
                 <div className={styles.dsc}>
-                  <img alt="币种" src={rowData.img} />
+                  <img alt="币种" src={dyImgSrc} />
                   <span className={styles.name}>{rowData.coincode}</span>
                   <span className={styles.time}>{rowData.pubtime}</span>
                 </div>
@@ -112,8 +113,8 @@ class EventList extends React.Component {
     // var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
     const height = document.documentElement.clientHeight - 210;
     const divStyle = {
-      'height': height - 100, 
-    }
+      height: height - 100,
+    };
     return (
       <div className={styles.eventList}>
         <div id="tagDom" className={styles.tag}>
@@ -129,12 +130,12 @@ class EventList extends React.Component {
         </div>
         {
           messageList.list.length > 0 ?
-          <InfiniteListView
-            {...messageListProps}
-            height={height}
-            listRemain
-          /> :
-          <div style={divStyle} className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
+            <InfiniteListView
+              {...messageListProps}
+              height={height}
+              listRemain
+            /> :
+            <div style={divStyle} className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
         }
         {
           this.state.showLayer ? <TypeLayer closeLayer={() => this.closeLayer()} {...this.props} /> : ''

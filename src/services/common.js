@@ -4,18 +4,15 @@ import { config } from '../../config/environment';
 
 const API_ROOT = config.env.host;
 
-function toDataUrl(url, callback) {
-  const xhr = new XMLHttpRequest();
-  xhr.onload = function () {
-    const reader = new FileReader();
-    reader.onloadend = function () {
-      callback(reader.result);
-    };
-    reader.readAsDataURL(xhr.response);
-  };
-  xhr.open('GET', url);
-  xhr.responseType = 'blob';
-  xhr.send();
+function getBase64Image(img, width, height) { // width、height调用时传入具体像素值，控制大小 ,不传则默认图像大小
+  const canvas = document.createElement('canvas');
+  canvas.width = width || img.width;
+  canvas.height = height || img.height;
+
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  const dataURL = canvas.toDataURL();
+  return dataURL;
 }
 
 /**
@@ -58,15 +55,36 @@ export const query = async function query(
  * 取得图片的base64字符串
  */
 export const getImgString = async function getBase64(url) {
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  if (url.indexOf('biping.oss') > 0) {
-    url = proxyUrl + url;
-  }
+  // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  // if (url.indexOf('biping.oss') > 0) {
+  //   url = proxyUrl + url;
+  // }
+  url = `${url}?${Math.random()}`;
   return axios
     .get(url, {
       responseType: 'arraybuffer',
+      headers: {
+  	  'Access-Control-Allow-Origin': '*',
+        crossOrigin: 'anonymous',
+  	   },
+
     })
     .then(response => Buffer.from(response.data, 'binary').toString('base64'));
+};
+
+/**
+ * 取得图片的base64字符串
+ */
+export const getImgStringBase = async function getImgStringBase(url) {
+  const image = new Image();
+  image.setAttribute('crossOrigin', 'anonymous');
+  image.src = `${url}?${Math.random()}`;
+  console.log(`rd image src:${image.src}`);
+  return new Promise((resolve, reject) => {
+    image.onload = function () {
+      resolve(getBase64Image(image));// 将base64传给done上传处理
+    };
+  });
 };
 
 /**

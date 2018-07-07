@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
-import { queryNormal, getImgString, shortUrl } from '../services/common';
+import { queryNormal, getImgString, getImgStringBase, shortUrl } from '../services/common';
 import Immutable from 'seamless-immutable';
 import { Toast } from 'antd-mobile';
 
@@ -126,17 +126,15 @@ export default modelExtend(pageModel, {
         console.log('getImgString data0', srcs.length);
         for (let i = 0; i < srcs.length; i++) {
           // bpimg.6bey.com这个域名无法跨域，换成原默认域名
-          let realSrc = srcs[i].src;
-          // let realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
-          realSrc = realSrc.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
+          const realSrc = srcs[i].src;
+          if (realSrc.length === 0) {
+            continue;
+          }
           if (realSrc.indexOf('data:image') >= 0) {
             continue;
           }
-          if (realSrc.indexOf('zeusshield.png') >= 0 || realSrc.indexOf('golem') >= 0) {
-            continue;
-          }
-          const data = yield call(getImgString, realSrc);
-          srcs[i].src = `data:image;base64,${data}`;
+          const data = yield call(getImgStringBase, realSrc);
+          srcs[i].src = `${data}`;
         }
       }
       console.log('after getImgString data', srcs);
