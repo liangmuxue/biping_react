@@ -365,7 +365,7 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
-        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
+        <div style={{ display: 'none' }} className={styles.shareBtn} onClick={() => this.shareClick()}>
           <span>分享</span>
         </div>
         <Calendar
