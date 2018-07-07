@@ -133,9 +133,6 @@ export default modelExtend(pageModel, {
           if (realSrc.indexOf('data:image') >= 0) {
             continue;
           }
-          if (realSrc.indexOf('zeusshield.png') >= 0 || realSrc.indexOf('golem') >= 0) {
-            continue;
-          }
           const data = yield call(getImgStringBase, realSrc);
           srcs[i].src = `${data}`;
         }

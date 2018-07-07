@@ -84,12 +84,13 @@ class EventList extends React.Component {
         } else {
           buttonDom = <button className={styles.rightBtnSelect} onClick={() => this.props.reminder(rowData)}>已设置</button>;
         }
+        const dyImgSrc = `${rowData.img}?${Math.random()}`;
         return (
           <div>
             <div className={`${styles.listItem}`} style={borderStyle}>
               <div className={styles.leftCon} onClick={() => this.props.toDetail(rowData)} >
                 <div className={styles.dsc}>
-                  <img alt="币种" src={rowData.img} />
+                  <img alt="币种" src={dyImgSrc} />
                   <span className={styles.name}>{rowData.coincode}</span>
                   <span className={styles.time}>{rowData.pubtime}</span>
                 </div>

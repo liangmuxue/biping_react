@@ -55,10 +55,11 @@ export const query = async function query(
  * 取得图片的base64字符串
  */
 export const getImgString = async function getBase64(url) {
-  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-  if (url.indexOf('biping.oss') > 0) {
-    url = proxyUrl + url;
-  }
+  // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  // if (url.indexOf('biping.oss') > 0) {
+  //   url = proxyUrl + url;
+  // }
+  url = `${url}?${Math.random()}`;
   return axios
     .get(url, {
       responseType: 'arraybuffer',
