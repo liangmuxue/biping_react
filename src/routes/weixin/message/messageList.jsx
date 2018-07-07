@@ -76,8 +76,8 @@ class MessageList extends BaseComponent {
       },
     });
     const height = document.documentElement.clientHeight;
-    console.log('height is', height);
-    const { tagName } = this.props.paramsData;
+    // const { tagName } = this.props.paramsData;
+    const { tagName } = this.props.params;
     const key = 'messageList';
     return (
       <div>
