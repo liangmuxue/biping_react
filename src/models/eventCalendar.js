@@ -126,12 +126,16 @@ export default modelExtend(pageModel, {
         console.log('getImgString data0', srcs.length);
         for (let i = 0; i < srcs.length; i++) {
           // bpimg.6bey.com这个域名无法跨域，换成原默认域名
-          const realSrc = srcs[i].src
+          let realSrc = srcs[i].src;
           // let realSrc = srcs[i].src.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
-          // realSrc = realSrc.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
-          console.log(`realSrc is:${realSrc}`);
+          realSrc = realSrc.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
+          if (realSrc.indexOf('data:image') >= 0) {
+            continue;
+          }
+          if (realSrc.indexOf('zeusshield.png') >= 0 || realSrc.indexOf('golem') >= 0) {
+            continue;
+          }
           const data = yield call(getImgString, realSrc);
-          console.log('messageDetail data', data);
           srcs[i].src = `data:image;base64,${data}`;
         }
       }

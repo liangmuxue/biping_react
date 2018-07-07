@@ -27,7 +27,7 @@ import { urlUtils } from '../../../utils/urlUtil.js';
 * @Date  2018-6-12
 */
 function shareEvent(event) {
-  var dom1 = document.getElementById('picBox');
+  const dom1 = document.getElementById('picBox');
   if (dom1) {
     dom1.style.paddingBottom = '0';
   }
@@ -50,7 +50,7 @@ function shareEvent(event) {
     console.log('success777', document.getElementById('showShare'));
     html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
-      console.log('imgUrl=>>', imgUrl);
+      // console.log('imgUrl=>>', imgUrl);
       document.getElementById('showShare').style.display = 'none';
       dispatch({
         type: 'messageDetail/shareMsg',
@@ -79,7 +79,7 @@ class MsgDetail extends BaseComponent {
     if (state && state.indexOf('messageId') !== -1) {
       const tagNameArea = state.split('tagName');
       // 分享进入时，在此补充tagName
-      if (tagNameArea && tagNameArea.length > 0) {
+      if (tagNameArea && tagNameArea.length > 1) {
         const tagName = tagNameArea[1].split('#')[0];
         console.log(`tagName get:${tagName}`);
         const tagNameReal = decodeURIComponent(tagName);
@@ -292,6 +292,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
+    console.log('msgObj is', msgObj);
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
@@ -348,7 +349,7 @@ class MsgDetail extends BaseComponent {
         msgObj.content = ' ';
       }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
-      // val = val.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+      val = val.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
       // val = val.replace('//Static', '/Static');
       // console.log('val after rep:'+val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
