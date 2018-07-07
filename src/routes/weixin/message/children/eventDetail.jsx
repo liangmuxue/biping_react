@@ -4,12 +4,15 @@ import ReactHtmlParser from 'react-html-parser';
 
 function Currency(props) {
   const { data } = props;
+  let logoReal = `${data.logo}?${Math.random()}`;
+  logoReal = logoReal.replace('https', 'http');
+  console.log(`corImgSrc is:${corImgSrc}`);
   return (
     <div className={styles.currency}>
       <p className={styles.head}>币种介绍</p>
       <div className={styles.currencyDsc}>
         <div className={styles.tl}>
-          <img alt="" src={data.logo} />
+          <img alt="" src={logoReal} />
           <span className={styles.name}>{data.name}</span>
         </div>
         <div id="domText" className={styles.text}>
@@ -85,9 +88,9 @@ class EventDetail extends React.Component {
     // 币价
     let calenDarDom = null;
     if (coinInfo.data) {
-      // coinInfodom = <Currency data={coinInfo.data} />;
       const data = coinInfo.data;
-      const logoReal = data.logo.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
+      let logoReal = `${data.logo}?${Math.random()}`;
+      logoReal = logoReal.replace('https', 'http');
       coinInfodom = (<div className={styles.currency}>
         <p className={styles.head}>币种介绍</p>
         <div className={styles.currencyDsc}>
