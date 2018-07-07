@@ -1,7 +1,23 @@
 import axios from 'axios';
 import request from '../dataExchange/request';
 import { config } from '../../config/environment';
+
 const API_ROOT = config.env.host;
+
+function toDataUrl(url, callback) {
+  const xhr = new XMLHttpRequest();
+  xhr.onload = function () {
+    const reader = new FileReader();
+    reader.onloadend = function () {
+      callback(reader.result);
+    };
+    reader.readAsDataURL(xhr.response);
+  };
+  xhr.open('GET', url);
+  xhr.responseType = 'blob';
+  xhr.send();
+}
+
 /**
  * 通用请求处理，封装filter，分页等
  * @date        2018-01-12
@@ -42,6 +58,10 @@ export const query = async function query(
  * 取得图片的base64字符串
  */
 export const getImgString = async function getBase64(url) {
+  const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  if (url.indexOf('biping.oss') > 0) {
+    url = proxyUrl + url;
+  }
   return axios
     .get(url, {
       responseType: 'arraybuffer',
