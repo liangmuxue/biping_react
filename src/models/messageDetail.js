@@ -1,6 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './commonPage';
-import { queryNormal, getImgString, shortUrl } from '../services/common';
+import { queryNormal, getImgStringBase, shortUrl } from '../services/common';
 import { timeoutCall } from '../utils/asyncControll';
 import Immutable from 'seamless-immutable';
 /**
@@ -107,9 +107,15 @@ export default modelExtend(pageModel, {
           // bpimg.6bey.com这个域名无法跨域，换成原默认域名
           const realSrc = srcs[i].src;
           console.log(`realSrc is:${realSrc}`);
-          const data = yield call(getImgString, realSrc);
+          if (realSrc.length === 0) {
+            continue;
+          }
+          if (realSrc.indexOf('data:image') >= 0) {
+            continue;
+          }
+          const data = yield call(getImgStringBase, realSrc);
           console.log('messageDetail data', data);
-          srcs[i].src = `data:image;base64,${data}`;
+          srcs[i].src = `${data}`;
         }
       }
       console.log('after getImgString data', srcs);
