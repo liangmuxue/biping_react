@@ -38,7 +38,11 @@ function Table(props) {
             <tr>
               <td>{rowData.name}</td>
               <td>{rowData.price}</td>
-              <td>{rowData.quote}</td>
+              {
+                rowData.quote.indexOf('+') >= 0 ?
+                  <td className={styles.up}>{rowData.quote}</td> :
+                  <td className={styles.down}>{rowData.quote}</td>
+              }
             </tr>
           ))}
         </tbody>
@@ -74,7 +78,7 @@ class EventDetail extends React.Component {
       coinInfo, coinPrice, msgDetailData, baseDetail,
     } = this.props;
     // 币种介绍
-    if (!coinInfo || !coinInfo.data) {
+    if (!coinInfo || !coinInfo.data || !msgDetailData) {
       return null;
     }
     let coinInfodom = null;
@@ -103,7 +107,7 @@ class EventDetail extends React.Component {
 
     if (msgDetailData.tagName == '币事件日历') {
       const baseDatailData = baseDetail.data;
-      if (!baseDatailData) {
+      if (!baseDatailData || !coinPrice) {
         return null;
       }
       let upBtnStyle = null;
