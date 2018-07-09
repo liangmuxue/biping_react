@@ -507,25 +507,40 @@ class MsgDetail extends BaseComponent {
 
         <div id="showShare" className={style.hide}>
           <div className={style.picBox} id="picBox">
-            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
-            <div className={style.picTitle}>{msgObj.title}</div>
-            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
-            <div className={style.clear} />
-            <div id="shareArticle">
-              {shareContentCard}
-              <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
+            <div className={style.bgImg}>
+              <img alt="币评" src="/images/msgImages/bg.jpg" />
             </div>
-            <div className={style.bottomCopy}>
+            <div className={style.shareCon}>
+              <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
+              <div className={style.picTitle}>{msgObj.title}</div>
+              <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+              <div className={style.clear} />
+              <div id="shareArticle">
+                {shareContentCard}
+                <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
+              </div>
+            </div>
+            {/* <div className={style.bottomCopy}>
               <div className={style.wechatBox}>
                 <img id="ewmImg" crossOrigin="anonymous" alt="" />
                 <div className={style.readAll}>扫码阅读全文</div>
               </div>
-              <div className={style.con}>
-                {/* <div className={style.copytop}>
-                  <img src="/images/msgImages/copy.png" />
-                </div> */}
-                <div className={style.logotop}>【币评】你最想要的币市信息</div>
-                <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+            </div>
+            <div className={style.con}>
+              <div className={style.copytop}>
+                <img src="/images/msgImages/copy.png" />
+              </div>
+              <div className={style.logotop}>【币评】你最想要的币市信息</div>
+              <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+            </div> */}
+            <div className={style.ewmCon}>
+              <img id="ewmImg" crossOrigin="anonymous" alt="" />
+              <div className={style.rightText}>
+                <p className={style.p1}>扫码阅读全文</p>
+                <div className={style.info}>
+                  <p>【币评】你最想要的币市信息</p>
+                  <p>www.bipingcoin.com</p>
+                </div>
               </div>
             </div>
           </div>
