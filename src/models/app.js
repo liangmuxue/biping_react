@@ -167,6 +167,9 @@ const App = {
             });
           }
           payData.sourceType = sourceType;
+          if (!payData.code) {
+            payData.code = code;
+          }
           dispatch({ type: 'autoReg', payload: payData });
           dispatch({
             type: 'analysis',
