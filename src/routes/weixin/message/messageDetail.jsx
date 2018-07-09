@@ -48,7 +48,7 @@ function shareEvent(event) {
     },
   }).then(() => {
     console.log('success777', document.getElementById('showShare'));
-    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
+    html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       // console.log('imgUrl=>>', imgUrl);
       document.getElementById('showShare').style.display = 'none';
@@ -148,6 +148,7 @@ class MsgDetail extends BaseComponent {
     const srcs = [];
     if (replaceVal && replaceVal !== null) {
       const imgs = replaceVal.querySelectorAll('img');
+      console.log('get images', imgs);
       if (imgs && imgs.length > 0) {
         for (let i = 0, j = imgs.length; i < j; i++) {
           // 解决跨域,传递现有的img、src数组
@@ -354,7 +355,7 @@ class MsgDetail extends BaseComponent {
       // console.log('val after rep:'+val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
       shareContentCard =
-      (<div id="shareArticle" className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
+      (<div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
 
     if (!showMsgShare) {
@@ -510,9 +511,10 @@ class MsgDetail extends BaseComponent {
             <div className={style.picTitle}>{msgObj.title}</div>
             <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
             <div className={style.clear} />
-            {shareContentCard}
-            <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
-
+            <div id="shareArticle">
+              {shareContentCard}
+              <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
+            </div>
             <div className={style.bottomCopy}>
               <div className={style.wechatBox}>
                 <img id="ewmImg" crossOrigin="anonymous" alt="" />
