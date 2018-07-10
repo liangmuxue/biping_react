@@ -12,6 +12,8 @@ import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.js
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
+import Tabs from 'antd-mobile/lib/tabs/index';
+import 'antd-mobile/es/notice-bar/style/index.css';
 
 /**
 * 消息列表页面
@@ -93,13 +95,21 @@ class MessageList extends BaseComponent {
       },
     });
   }
+  bannerClick() {
+    console.log('bannerClick');
+  }
   render() {
     console.log('cd renders in indexMessage', this.props);
     const { indexMessage } = this.props;
     if (!indexMessage) {
       return null;
     }
-
+    const tabs = [
+      { title: '订阅' },
+      { title: '异动币' },
+      { title: '交易所公告' },
+      { title: '币事件' },
+    ];
     const { flag, list } = this.props.indexMessage;
     console.log(`flag inx is:${flag}`);
     // 未开通大类别,需要判断list为空
@@ -144,14 +154,23 @@ class MessageList extends BaseComponent {
     const key = 'indexMessage';
     return (
       <div>
-        {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
-        <InfiniteListView
-          bkey={key}
-          {...messageListProps}
-          height={height}
-          top={0}
-          pageSize={this.props.indexMessage.paginationDef.pageSize}
-        />
+        <Tabs tabs={tabs}
+          initialPage={0}
+          swipeable={false}
+          renderTab={tab => <span>{tab.title}</span>}
+        >
+          {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
+          <div className={styles.conList}>
+            <InfiniteListView
+              bkey={key}
+              {...messageListProps}
+              height={height}
+              top={0}
+              pageSize={this.props.indexMessage.paginationDef.pageSize}
+              pageHead={<img onClick={this.bannerClick.bind(this)} className={styles.conListBanner} alt="banner" src="/images/indexImg/banner.png" />}
+            />
+          </div>
+        </Tabs>
       </div>
     );
   }
