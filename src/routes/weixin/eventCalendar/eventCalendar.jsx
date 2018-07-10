@@ -41,8 +41,17 @@ function shareEvent(event) {
   const reuslturl = shortUrl.data.reuslturl;
   const url = `${host}/shortUrl/${reuslturl}`;
   console.log(`share url is:${url}`);
-  QrCodeWithLogo.toImage({
+  // TODO: img部分机型显示不出来
+  /* QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }) */
+  QrCodeWithLogo.toCanvas({
+    canvas: document.getElementById('canvas'),
     content: url,
     width: 120,
     logo: {
@@ -380,7 +389,8 @@ class EventCalendar extends BaseComponent {
           maxDate={new Date(eventTime.data.time + 63158400000)}
         />
         <div id="eventShareDom" className={styles.shareDom}>
-          <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" />
+          {/* <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" /> */}
+          <canvas id="canvas" className={styles.shareewm}></canvas>
           <div id="calendarDom" className={styles.calendar}>
             <div className={styles.shareTop}>
               <p>事件日历</p>
@@ -402,11 +412,12 @@ class EventCalendar extends BaseComponent {
             toDetail={data => this.toDetail(data)}
           />
           <div className={styles.bottomDom}>
-            <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
+            {/* <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
             <div className={styles.info}>
               <p className={styles.p1}>【币评】你最想要的币市信息</p>
               <p className={styles.p2}>www.bipingcoin.com</p>
-            </div>
+            </div> */}
+            <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
           </div>
         </div>
       </div>

@@ -33,6 +33,10 @@ class EventList extends React.Component {
       },
       showLayer: false,
     };
+    this.pageDef = null;
+    this.setPageRef = (element) => {
+      this.pageDef = element;
+    };
   }
 
   componentWillMount() {
@@ -68,7 +72,6 @@ class EventList extends React.Component {
 
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: eventCalendar });
-    console.log('messageList is', messageList);
     const messageListProps = buildPagiProps(this.props.dispatch, {
       ...messageList,
       renderRow: (rowData) => {
@@ -110,6 +113,9 @@ class EventList extends React.Component {
         );
       },
     });
+    if (this.pageDef && this.pageDef.lv) {
+      this.pageDef.lv.scrollTo(0, 0);
+    }
     // var calendarDomHeight = document.getElementById('calendarDom').clientHeight;
     const height = document.documentElement.clientHeight - 210;
     const divStyle = {
@@ -131,7 +137,10 @@ class EventList extends React.Component {
         {
           messageList.list.length > 0 ?
             <InfiniteListView
+              ref={this.setPageRef}
               {...messageListProps}
+              noPullRefresh
+              rendergoTop
               height={height}
               listRemain
             /> :

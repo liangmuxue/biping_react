@@ -39,8 +39,17 @@ function shareEvent(event) {
   const url = `${host}/shortUrl/${reuslturl}`;
   const msgObj = msgDetailData.data;
   console.log(`share url is:${url}`);
-  QrCodeWithLogo.toImage({
+  // TODO: img部分机型显示不出来
+  /* QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }) */
+  QrCodeWithLogo.toCanvas({
+    canvas: document.getElementById('canvas'),
     content: url,
     width: 120,
     logo: {
@@ -534,14 +543,16 @@ class MsgDetail extends BaseComponent {
               <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
             </div> */}
             <div className={style.ewmCon}>
-              <img id="ewmImg" crossOrigin="anonymous" alt="" />
-              <div className={style.rightText}>
+              {/* <img id="ewmImg" className={style.leftImg} crossOrigin="anonymous" alt="" /> */}
+              <canvas id="canvas" className={style.leftImg}></canvas>
+              <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
+              {/* <div className={style.rightText}>
                 <p className={style.p1}>扫码阅读全文</p>
                 <div className={style.info}>
                   <p>【币评】你最想要的币市信息</p>
                   <p>www.bipingcoin.com</p>
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
