@@ -37,7 +37,7 @@ if (process.env.NODE_ENV === 'development') {
 if (process.env.NODE_ENV === 'test') {
   ENV.resourceHost = 'http://resource.tnb99.net';
   ENV.socketHost = 'http://47.93.78.97:7090';
-  ENV.host = 'http://twp.test.tnb99.net';
+  ENV.host = 'https://twp.test.tnb99.net';
   //  ENV.host = 'http://twp.test.tnb99.net';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd4795144c135bdd&redirect_uri=';
   ENV.messageHost = 'http://twx.test.tnb99.net';
