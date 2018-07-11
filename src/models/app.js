@@ -462,8 +462,8 @@ const App = {
         if (!mockUser) {
           window.localStorage.clear();
           console.log(`need reset for:${window.location.href}`);
-          const curHref = window.location.href;
-          window.location.href = curHref;
+          // const curHref = window.location.href;
+          // window.location.href = curHref;
         }
       } else if (!success) {
         console.log('fail999999999');
