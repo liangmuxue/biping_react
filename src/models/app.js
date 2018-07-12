@@ -211,7 +211,6 @@ const App = {
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
       console.log('goto autoReg', payload);
-      return null;
       const { code } = payload;
       // 没有code，说明未关注
       if (!code) {
@@ -239,9 +238,11 @@ const App = {
         console.log('failautoReg');
         yield put({ type: 'tourLogin', payload: { attentionModal: true } });
       } else if (!success) {
-        console.log('fail999999999');
+        console.log('fail net');
+        alert('net error');
         const netError = true;
-        yield put({ type: 'netError', payload: { netError } });
+        return null;
+        // yield put({ type: 'netError', payload: { netError } });
       }
     },
     // 自动登录成功后返回
