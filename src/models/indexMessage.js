@@ -24,8 +24,8 @@ export default modelExtend(pageModel, {
   subscriptions: {
     setup({ dispatch, history }) {
       dispatch({
-        type:'msgQuery'
-        payload:{}
+        type: 'msgQuery',
+        payload: {},
       });
     },
   },
