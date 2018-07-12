@@ -210,7 +210,7 @@ const App = {
     },
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
-      console.log('go autoReg', payload);
+      console.log('goto autoReg', payload);
       const { code } = payload;
       // 没有code，说明未关注
       if (!code) {
