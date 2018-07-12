@@ -218,6 +218,7 @@ const App = {
           type: 'toTourPage',
           payload: {},
         });
+        return;
       }
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
