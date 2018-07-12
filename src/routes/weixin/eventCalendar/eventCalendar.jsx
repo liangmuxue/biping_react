@@ -390,7 +390,7 @@ class EventCalendar extends BaseComponent {
         />
         <div id="eventShareDom" className={styles.shareDom}>
           {/* <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" /> */}
-          <canvas id="canvas" className={styles.shareewm}></canvas>
+          <canvas id="canvas" className={styles.shareewm} />
           <div id="calendarDom" className={styles.calendar}>
             <div className={styles.shareTop}>
               <p>事件日历</p>
@@ -427,7 +427,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, extraData: state.app.extraData, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

@@ -17,6 +17,7 @@ const formItemLayout = {
 // URL参数相关
 const urlParam_sourceType = 'sourceType';
 const urlParam_directPage = 'directPage';
+const urlParam_code = 'code';
 const urlParamValue_sourceType = {
   fromWap: 'wap',
   fromWx: 'wechat',
@@ -31,6 +32,7 @@ export default {
   formItemLayout,
   urlParam_sourceType,
   urlParam_directPage,
+  urlParam_code,
   urlParamValue_sourceType,
   urlParamValue_directPage,
 };
