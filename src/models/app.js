@@ -226,7 +226,7 @@ const App = {
       if (success && response.data && response.flag === 0) {
         const systemUser = response.data;
         console.log('usermessage1111222', systemUser);
-        yield call({
+        yield put({
           type: 'sysUserSet',
           payload: {
             systemUser,
