@@ -240,7 +240,6 @@ const App = {
       } else if (!success) {
         console.log('fail net');
         const netError = true;
-        return null;
         yield put({ type: 'netError', payload: { netError } });
       }
     },
