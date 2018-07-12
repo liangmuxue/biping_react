@@ -23,9 +23,19 @@ export default modelExtend(pageModel, {
 
   subscriptions: {
     setup({ dispatch, history }) {
+      // 初始化时进行查询
       dispatch({
         type: 'msgQuery',
-        payload: {},
+        payload: {
+          modelDef: {
+            modelName: 'indexMessage',
+            endpoint: 'messageList',
+          },
+          pagination: {
+            current: 0, // 当前页码
+            pageSize: 10, // 默认每页条目
+          },
+        },
       });
     },
   },
