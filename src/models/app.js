@@ -239,10 +239,9 @@ const App = {
         yield put({ type: 'tourLogin', payload: { attentionModal: true } });
       } else if (!success) {
         console.log('fail net');
-        alert('net error');
         const netError = true;
         return null;
-        // yield put({ type: 'netError', payload: { netError } });
+        yield put({ type: 'netError', payload: { netError } });
       }
     },
     // 自动登录成功后返回
