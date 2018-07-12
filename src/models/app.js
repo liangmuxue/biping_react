@@ -211,6 +211,7 @@ const App = {
     // 通过code获取用户名密码自动注册
     *autoReg({ payload }, { call, put, select }) {
       console.log('goto autoReg', payload);
+      return null;
       const { code } = payload;
       // 没有code，说明未关注
       if (!code) {
@@ -218,7 +219,6 @@ const App = {
           type: 'toTourPage',
           payload: {},
         });
-        return;
       }
       const ret = yield call(autoReg, payload);
       console.log('ret in app autoReg', ret);
