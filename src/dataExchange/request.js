@@ -10,6 +10,7 @@ import { config } from '../../config/environment';
 const API_ROOT = config.env.host;
 
 const fetch = (endpoint, options) => {
+  console.log('systemuser in fetch', systemUser);
   const {
     method = 'get',
     systemUser,
