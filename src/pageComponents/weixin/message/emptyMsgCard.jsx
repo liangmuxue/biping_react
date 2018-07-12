@@ -1,4 +1,5 @@
 import WhiteSpace from 'antd-mobile/lib/white-space/index';
+import Hammer from 'react-hammerjs';
 import Button from 'antd-mobile/lib/button/index';
 import WingBlank from 'antd-mobile/lib/wing-blank/index';
 import 'antd-mobile/es/button/style/index.css';
@@ -19,9 +20,10 @@ class EmptyMsgCard extends React.Component {
     this.state = {
     };
   }
-  buttonClick() {
-    console.log('8888888888888888');
-    this.props.emptyClick(this);
+  buttonClick(e) {
+    console.log('buttonClick in,props,event:', e);
+    e.preventDefault();
+    this.props.emptyClick(e);
   }
 
   render() {
@@ -30,7 +32,10 @@ class EmptyMsgCard extends React.Component {
         <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} /></div>
         <div className={styles.notread}>没有订阅</div>
         <WingBlank>
-          <Button type="primary" onClick={this.buttonClick.bind(this)}>赶紧去订阅</Button><WhiteSpace />
+          <Hammer onTap={this.buttonClick.bind(this)}>
+            <div style={{ height: 36 }}>赶紧去订阅</div>
+          </Hammer>
+          <WhiteSpace />
         </WingBlank>
       </div>
 

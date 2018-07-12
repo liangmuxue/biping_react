@@ -78,6 +78,20 @@ class MessageList extends BaseComponent {
   }
   componentWillMount() {
     console.log('componentWillMount indexMessage', this.props);
+    // 初始化时进行查询
+    this.props.dispatch({
+      type: 'indexMessage/msgQuery',
+      payload: {
+        modelDef: {
+          modelName: 'indexMessage',
+          endpoint: 'messageList',
+        },
+        pagination: {
+          current: 0, // 当前页码
+          pageSize: 10, // 默认每页条目
+        },
+      },
+    });
   }
   render() {
     console.log('cd renders in indexMessage', this.props);
