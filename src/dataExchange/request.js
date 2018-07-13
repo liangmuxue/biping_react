@@ -10,12 +10,12 @@ import { config } from '../../config/environment';
 const API_ROOT = config.env.host;
 
 const fetch = (endpoint, options) => {
-  console.log('systemuser in fetch', systemUser);
   const {
     method = 'get',
     systemUser,
     data, filter,
   } = options;
+  console.log('systemuser in fetch', systemUser);
   // 定义标准请求，加入协议头信息
   const axiosInst = axios.create({
     baseURL: `${API_ROOT}/webInterface`,

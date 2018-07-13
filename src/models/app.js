@@ -152,12 +152,12 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const {
-          token, name, headUrl, uid, subscribe, isFirstEnter, exchange, event,
+          token, name, headUrl, uid, subscribe, isFirstEnter, exchange, event, typeCode,
         } = response.data;
         const { ifVerb } = response.data;// 是否订阅内容
         const { ifEnterGroup } = response.data;// 是否已经入群
         const systemUser = {
-          sourceType, directPage, token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event,
+          sourceType, directPage, token, name, headUrl, ifEnterGroup, uid, subscribe, exchange, event, typeCode,
         };
         // 成功后把用户数据存储到全局
         yield put({
@@ -166,7 +166,6 @@ const App = {
             systemUser,
           },
         });
-        siteAnalysis.setUser(systemUser);
         // 登录成功数据处理
         yield put({ type: 'autoLoginSuc', payload: {} });
       } else if (success && response.flag === 1001) {
@@ -302,6 +301,7 @@ const App = {
       };
     },
     sysUserSet(state, { payload }) {
+      siteAnalysis.setUser(payload.systemUser);
       // 清除重连标志
       window.localStorage.setItem('reconnectFlag', 0);
       console.log('sysUserSet in', payload);
