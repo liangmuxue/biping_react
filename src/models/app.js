@@ -203,6 +203,7 @@ const App = {
             systemUser,
           },
         });
+        window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(systemUser));
         // 进入自动处理
         yield put({ type: 'autoLoginSuc', payload: {} });
       }
@@ -231,6 +232,7 @@ const App = {
             systemUser,
           },
         });
+        window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(systemUser));
         // 进入自动处理
         yield put({ type: 'autoLoginSuc', payload: {} });
         // code重复使用，用户信息获取失败
@@ -309,18 +311,6 @@ const App = {
         ...state,
         ...payload,
         attentionModal: false,
-      };
-    },
-    regSuccess(state, action) {
-      const { systemUser } = action.payload;
-      const userInfo = {
-        userName: systemUser.userName,
-        passWord: systemUser.passWord,
-        uid: systemUser.uid,
-      };
-      window.localStorage.setItem(LOCALKEY_SYSUSER, JSON.stringify(userInfo));
-      return {
-        ...state, ...systemUser, isLogin: true, modalVisible: false,
       };
     },
     // 未关注公众号
