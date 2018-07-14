@@ -61,20 +61,20 @@ class EventDetail extends React.Component {
     this.props.forecast(boo);
   }
   componentDidMount() {
-    console.log('componentDidMountDom=>', document.getElementById('domText'));
-    const dom = document.getElementById('domText');
-    if (dom) {
-      const height = 14 * 1.5 * 3;
-      const domHeight = dom.clientHeight;
-      if (domHeight > height) {
-        dom.classList.add('showMore');
-      }
-    }
+    // console.log('componentDidMountDom=>', document.getElementById('domText'));
+    // const dom = document.getElementById('domText');
+    // if (dom) {
+    //   const height = 14 * 1.5 * 3;
+    //   const domHeight = dom.clientHeight;
+    //   if (domHeight > height) {
+    //     dom.classList.add('showMore');
+    //   }
+    // }
   }
-  clickMore() {
+  /* clickMore() {
     const dom = document.getElementById('domText');
     dom.classList.remove('showMore');
-  }
+  } */
   render() {
     console.log('eventDetail=>', this.props);
     const {
@@ -100,10 +100,10 @@ class EventDetail extends React.Component {
           </div>
           <div id="domText" className={styles.text}>
             {ReactHtmlParser(data.introduce)}
-            <span className="spanMore">...<em onClick={() => this.clickMore()}>更多</em></span>
+            {/* <span className="spanMore">...<em onClick={() => this.clickMore()}>更多</em></span> */}
           </div>
         </div>
-                     </div>);
+      </div>);
     } else {
       coinInfodom = '';
     }
