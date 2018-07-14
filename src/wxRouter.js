@@ -82,7 +82,38 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/subscribe/subDetail'),
   });
-
+  // 订阅详情 - 新
+  const NewSubDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+    ],
+    component: () => import('./routes/weixin/subscribe/children/newSubDetail.jsx'),
+  });
+  // 币种列表 - 选择交易对
+  const CoinList = dynamic({
+    app,
+    models: () => [
+      import('./models/app.js'),
+    ],
+    component: () => import('./routes/weixin/subscribe/children/coinList.jsx'),
+  });
+  // 币种搜索
+  const CoinSearch = dynamic({
+    app,
+    models: () => [
+      import('./models/app.js'),
+    ],
+    component: () => import('./routes/weixin/subscribe/children/coinSearch.jsx'),
+  });
+  // 订阅结果
+  const SubscribeResult = dynamic({
+    app,
+    models: () => [
+      import('./models/app.js'),
+    ],
+    component: () => import('./routes/weixin/subscribe/children/subscribeResult.jsx'),
+  })
   const Announcement = dynamic({
     app,
     models: () => [
@@ -202,6 +233,22 @@ function RouterConfig({ history, app }) {
     modelName: 'subDetail',
     component: SubDetail,
   }, {
+    name: 'newSubDetail',
+    modelName: 'newSubDetail',
+    component: NewSubDetail,
+  }, {
+    name: 'coinList',
+    modelName: 'coinList',
+    component: CoinList,
+  }, {
+    name: 'coinSearch',
+    modelName: 'coinSearch',
+    component: CoinSearch,
+  }, {
+    name: 'subscribeResult',
+    modelName: 'subscribeResult',
+    component: SubscribeResult,
+  }, {
     name: 'toOpen',
     modelName: 'toOpen',
     component: ToOpen,
@@ -260,6 +307,10 @@ function RouterConfig({ history, app }) {
           <Route path="/Announcement" component={Announcement} />
           <Route path="/subList" component={SubList} />
           <Route path="/subDetail" component={SubDetail} />
+          <Route path="/newSubDetail" component={NewSubDetail} />
+          <Route path="/coinList" component={CoinList} />
+          <Route path="/coinSearch" component={CoinSearch} />
+          <Route path="/subscribeResult" component={SubscribeResult} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={BuyHistory} />
           <Route path="/toOpen" component={ToOpen} />

@@ -3,6 +3,8 @@ import pureRender from 'pure-render-decorator';
 import { connect } from 'dva';
 import 'antd-mobile/es/wing-blank/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
+import Tabs from 'antd-mobile/lib/tabs/index';
+import 'antd-mobile/es/notice-bar/style/index.css';
 import InfiniteListView from '../../../components/infiniteListView';
 import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
@@ -12,8 +14,9 @@ import EmptyMsgCard from '../../../pageComponents/weixin/message/emptyMsgCard.js
 import BaseComponent from '../baseComponent';
 import styles from './index.less';
 import { siteAnalysis } from '../../../utils/siteAnalysis.js';
-import Tabs from 'antd-mobile/lib/tabs/index';
-import 'antd-mobile/es/notice-bar/style/index.css';
+import 'antd-mobile/es/toast/style/index.css';
+import Toast from 'antd-mobile/lib/toast/index';
+import 'antd-mobile/es/icon/style/index.css';
 
 /**
 * 消息列表页面
@@ -23,6 +26,19 @@ import 'antd-mobile/es/notice-bar/style/index.css';
 
 @pureRender
 class MessageList extends BaseComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      tabs: [
+        { title: '订阅', tagId: null },
+        { title: '大单买卖', tagId: 717 },
+        { title: '暴涨暴跌', tagId: 718 },
+        { title: '交易所公告', tagId: 702 },
+        { title: '币事件', tagId: 701 },
+      ],
+      contentHtml: null,
+    };
+  }
   // 卡片点击事件，进入详情页
   cardClick(msgObj) {
     console.log('cardClick in,msgObj:', this.props);
@@ -80,10 +96,17 @@ class MessageList extends BaseComponent {
   }
   componentWillMount() {
     console.log('componentWillMount indexMessage', this.props);
+    this.getMessageList();
+  }
+  bannerClick() {
+    this.emptyClick();
+  }
+  getMessageList(tagId = null) {
     // 初始化时进行查询
     this.props.dispatch({
       type: 'indexMessage/msgQuery',
       payload: {
+        filter: { tagId },
         modelDef: {
           modelName: 'indexMessage',
           endpoint: 'messageList',
@@ -95,80 +118,80 @@ class MessageList extends BaseComponent {
       },
     });
   }
-  bannerClick() {
-    console.log('bannerClick');
+  tabClick(tab, index) {
+    Toast.loading('正在加载...');
+    this.setState({
+      contentHtml: null,
+    });
+    console.log(this.state, tab, index);
+    this.getMessageList(tab.tagId);
+
   }
   render() {
-    console.log('cd renders in indexMessage', this.props);
     const { indexMessage } = this.props;
     if (!indexMessage) {
       return null;
     }
-    const tabs = [
-      { title: '订阅' },
-      { title: '异动币' },
-      { title: '交易所公告' },
-      { title: '币事件' },
-    ];
     const { flag, list } = this.props.indexMessage;
-    console.log(`flag inx is:${flag}`);
+    this.state.contentHtml = null;
     // 未开通大类别,需要判断list为空
     if (flag && flag === 1001) {
       console.log('pagination2222', flag);
-      return (<EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />);
-    }
-    // 未订阅小类别,需要判断list为空
-    if (flag && flag === 1002) {
-      return (
+      this.state.contentHtml = <EmptyMsgCard emptyClick={this.emptyClick.bind(this)} />;
+      // 未订阅小类别,需要判断list为空
+    } else if (flag && flag === 1002) {
+      this.state.contentHtml = (
         <div className={styles.empty}>
           <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
           <div className={styles.notread}>暂无消息</div>
         </div>);
-    }
-    if (flag === 0 && this.props.indexMessage.list.length === 0) {
-      return (
+    } else if (flag === 0 && list.length === 0) {
+      this.state.contentHtml = (
         <div className={styles.empty}>
           <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
           <div className={styles.notread}>暂无消息</div>
         </div>);
+    } else {
+      // 加工数据
+      const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
+      console.log('messageList in idx', messageList);
+      const messageListProps = buildPagiProps(this.props.dispatch, {
+        ...messageList,
+        pageSize: this.props.indexMessage.paginationDef.pageSize,
+        renderRow: (rowData) => {
+          return (
+            <MessageCard
+              msgObj={rowData}
+              cardClick={this.cardClick.bind(this)}
+              logoClick={this.logoClick.bind(this)}
+            />
+          );
+        },
+      });
+      const height = document.documentElement.clientHeight;
+      const key = 'indexMessage';
+      this.state.contentHtml = (
+        <InfiniteListView
+          bkey={key}
+          {...messageListProps}
+          height={height}
+          top={0}
+          pageSize={this.props.indexMessage.paginationDef.pageSize}
+          pageHead={<div onClick={this.bannerClick.bind(this)} className={styles.conListBanner}><img alt="banner" src="/images/indexImg/banner.png" /></div>}
+        />);
     }
-
-    // 加工数据
-    const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
-    console.log('messageList in idx', messageList);
-    const messageListProps = buildPagiProps(this.props.dispatch, {
-      ...messageList,
-      pageSize: this.props.indexMessage.paginationDef.pageSize,
-      renderRow: (rowData, sectionID, rowID) => {
-        // console.log('rowData is', rowData);
-        return (
-          <MessageCard
-            msgObj={rowData}
-            cardClick={this.cardClick.bind(this)}
-            logoClick={this.logoClick.bind(this)}
-          />
-        );
-      },
-    });
-    const height = document.documentElement.clientHeight;
-    const key = 'indexMessage';
     return (
       <div>
-        <Tabs tabs={tabs}
+        <Tabs
+          tabs={this.state.tabs}
           initialPage={0}
           swipeable={false}
           renderTab={tab => <span>{tab.title}</span>}
+          onTabClick={(tab, index) => this.tabClick(tab, index)}
         >
           {/* 使用继承infinite的列表页组件，传递上拉加载更多的处理方法 */}
           <div className={styles.conList}>
-            <InfiniteListView
-              bkey={key}
-              {...messageListProps}
-              height={height}
-              top={0}
-              pageSize={this.props.indexMessage.paginationDef.pageSize}
-              pageHead={<img onClick={this.bannerClick.bind(this)} className={styles.conListBanner} alt="banner" src="/images/indexImg/banner.png" />}
-            />
+            {this.state.contentHtml}
           </div>
         </Tabs>
       </div>
