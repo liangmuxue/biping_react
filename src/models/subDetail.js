@@ -38,6 +38,9 @@ export default modelExtend(pageModel, {
         // 异动币跳转方法
         endpoint = 'transSubscribeDetail';
       }
+      if (typeCode === 'updown' || typeCode === 'buysell') {
+        endpoint = 'transSubscribeExchange';
+      }
       let filter = {};
       if (typeId) {
         filter = { typeId };

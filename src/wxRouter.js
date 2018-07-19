@@ -87,6 +87,7 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/app'),
+      import('./models/newSubDetail'),
     ],
     component: () => import('./routes/weixin/subscribe/children/newSubDetail.jsx'),
   });
@@ -95,6 +96,7 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/app.js'),
+      import('./models/coinList.js'),
     ],
     component: () => import('./routes/weixin/subscribe/children/coinList.jsx'),
   });
@@ -103,8 +105,18 @@ function RouterConfig({ history, app }) {
     app,
     models: () => [
       import('./models/app.js'),
+      import('./models/coinSearch.js'),
     ],
     component: () => import('./routes/weixin/subscribe/children/coinSearch.jsx'),
+  });
+  // 订阅详情
+  const CoinDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/app.js'),
+      import('./models/coinDetail.js'),
+    ],
+    component: () => import('./routes/weixin/subscribe/children/coinDetail.jsx'),
   });
   // 订阅结果
   const SubscribeResult = dynamic({
@@ -245,6 +257,10 @@ function RouterConfig({ history, app }) {
     modelName: 'coinSearch',
     component: CoinSearch,
   }, {
+    name: 'coinDetail',
+    modelName: 'coinDetail',
+    component: CoinDetail,
+  }, {
     name: 'subscribeResult',
     modelName: 'subscribeResult',
     component: SubscribeResult,
@@ -310,6 +326,7 @@ function RouterConfig({ history, app }) {
           <Route path="/newSubDetail" component={NewSubDetail} />
           <Route path="/coinList" component={CoinList} />
           <Route path="/coinSearch" component={CoinSearch} />
+          <Route path="/coinDetail" component={CoinDetail} />
           <Route path="/subscribeResult" component={SubscribeResult} />
           <Route path="/myself" component={Myself} />
           <Route path="/buyhistory" component={BuyHistory} />

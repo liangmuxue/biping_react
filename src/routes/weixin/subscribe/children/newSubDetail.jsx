@@ -10,15 +10,22 @@ class NewSubDetail extends BaseComponent {
     super(props);
     this.state = {};
   }
-
+  componentWillMount() {
+    const { params } = this.props;
+    this.props.dispatch({
+      type: 'newSubDetail/subdetail',
+      payload: { ...params },
+    });
+  }
   render() {
     console.log('newSubDetail=>', this.props);
-    const { params } = this.props;
+    const { params, newSubDetails } = this.props;
     const { backPath } = params;
+    console.log('newSubDetails=>', newSubDetails);
     const title = '币事件';
     return (
       <div>
-        <HeaderBar headerText={title} backRouteLink={backPath} {...this.props} />
+        <HeaderBar headerText={params.tagId} backRouteLink={backPath} {...this.props} />
         <div className={styles.topCard}>
           <button>去开通</button>
           <span className={styles.num}>已经有500人订阅</span>
