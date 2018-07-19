@@ -153,7 +153,7 @@ class BasicInput extends BaseComponent {
       </Hammer> */}
       <div className={style.version}>
         <div>@ 2018 bipingcoin.com</div>
-        <div>V0.7.2</div>
+        <div>V0.7.3</div>
       </div>
     </div>);
   }

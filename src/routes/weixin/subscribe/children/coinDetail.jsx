@@ -90,7 +90,8 @@ class CoinDetail extends BaseComponent {
       type: 'coinDetail/subscribeAdd',
       payload: payloadData,
       params: {
-        pageName: 'coinList',
+        // pageName: 'coinList',
+        pageName: 'subscribeResult',
         params: { exchangeId: params.exchangeId, verbId: params.verbId, backPath: 'coinDetail' },
       },
     });
