@@ -2,9 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'dva';
 import 'antd-mobile/es/button/style/index.css';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
-import SubTypeCard from '../../../pageComponents/weixin/subscribe/subTypeCard.jsx';
+import SubCard from './children/subCard';
 import BaseComponent from '../baseComponent';
-import style from './subList.less';
+import styles from './subList.less';
 /**
  * 老人账号信息页面
  * @author 梁慕学
@@ -13,34 +13,21 @@ import style from './subList.less';
 
 class subList extends BaseComponent {
   constructor(props) {
-    console.log('props in subList', props);
     super(props);
+    this.state = {};
   }
   componentWillMount() {
-    console.log('componentWillMount subList', this.props);
     // 初始化时进行查询
     this.props.dispatch({
       type: 'subscribe/subscribeQuery',
     });
   }
-  remarkClick(typeObj) {
-    console.log('remarkClick in,typeObj:', typeObj);
+  itemClick(item) {
     const backPath = 'subList';
-    // 跳转到订阅详情页面
+    // 跳转到新订阅详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: typeObj.typeId, typeCode: typeObj.typeCode, backPath } },
-    });
-  }
-  subTypeClick(subTypeObj) {
-    console.log('subTypeObj in subList', subTypeObj);
-    // 跳转到订阅包页面
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
-        pageName: 'toOpen',
-        params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subList' },
-      },
+      payload: { pageName: 'subDetail', params: { typeId: item.typeId, typeCode: item.typeCode, backPath } },
     });
   }
   render() {
@@ -50,14 +37,16 @@ class subList extends BaseComponent {
     console.log('subList data', subListData);
     if (subListData && subListData.data) {
       return (
-        <div>
+        <div className={styles.subListCon}>
           {subListData.data.map(item =>
-            (<SubTypeCard
-              key={item.typeId}
-              typeObj={item}
-              remarkClick={this.remarkClick.bind(this)}
-              subTypeClick={this.subTypeClick.bind(this)}
-            />))}
+            (
+              <SubCard
+                key={item.typeId}
+                item={item}
+                itemClick={this.itemClick.bind(this)}
+              />
+            ))
+          }
         </div>
       );
     }
@@ -70,4 +59,3 @@ function mapStateToProps(state) {
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(subList));
-// export default mobileRouteComponent(AccountInfo);
