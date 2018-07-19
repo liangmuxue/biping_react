@@ -9,6 +9,8 @@ import BaseComponent from '../../baseComponent';
 import InfiniteListView from '../../../../components/infiniteListView';
 import { buildPagiProps } from '../../../common/paginationRoute';
 import { rebuildMessageList } from '../../../../selectors/messageList';
+import Toast from 'antd-mobile/lib/toast/index';
+import 'antd-mobile/es/icon/style/index.css';
 
 class CoinList extends BaseComponent {
   constructor(props) {
@@ -42,6 +44,7 @@ class CoinList extends BaseComponent {
   }
   // tab选项卡点击
   tabChange(tab) {
+    Toast.loading('正在加载...');
     const { params } = this.props;
     const { verbId, exchangeId } = params;
     const { title } = tab;
@@ -226,6 +229,7 @@ class CoinList extends BaseComponent {
         </div>
         <Tabs
           tabs={tabs}
+          swipeable={false}
           initialPage={initialPage}
           renderTab={tab => <span>{tab.title}</span>}
           onChange={tab => this.tabChange(tab)}

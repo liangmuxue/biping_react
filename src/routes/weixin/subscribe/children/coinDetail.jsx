@@ -28,13 +28,21 @@ class CoinDetail extends BaseComponent {
       selectTimeArr: [],
     });
   }
-  changeData(str) {
+  changeData(str, lb = 'time') {
     let returnArr = [];
     let arr = str.split(',');
     for (var i in arr) {
+      let lbdata = null;
+      if (lb == 'time') {
+        lbdata = arr[i];
+      } else if (lb == 'gainHold') {
+        lbdata = `>${arr[i]*100}%`;
+      } else if (lb == 'loseHold') {
+        lbdata = `<${arr[i]*100}%`;
+      }
       let obj = {
         value: arr[i],
-        label: arr[i],
+        label: lbdata,
       }
       returnArr.push(obj);
     }
@@ -81,10 +89,7 @@ class CoinDetail extends BaseComponent {
     this.props.dispatch({
       type: 'coinDetail/subscribeAdd',
       payload: payloadData,
-    });
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
+      params: {
         pageName: 'coinList',
         params: { exchangeId: params.exchangeId, verbId: params.verbId, backPath: 'coinDetail' },
       },
@@ -142,9 +147,9 @@ class CoinDetail extends BaseComponent {
           </List>
         );
       } else {
-        const gainHoldArr1 = this.changeData(data.dic.gainHoldStr);
-        const loseHoldArr1 = this.changeData(data.dic.loseHoldStr);
-        const timeArr1 = this.changeData(data.dic.timeStr);
+        const gainHoldArr1 = this.changeData(data.dic.gainHoldStr, 'gainHold');
+        const loseHoldArr1 = this.changeData(data.dic.loseHoldStr, 'loseHold');
+        const timeArr1 = this.changeData(data.dic.timeStr, 'time');
         let checkedTimeArr1 = data.detail.timeStr.split(',');
         const thisTimeArr = this.state.selectTimeArr;
         if (thisTimeArr && thisTimeArr.length > 0) {
@@ -159,6 +164,7 @@ class CoinDetail extends BaseComponent {
               {...getFieldProps('district1')}
               value={[`${data.detail.gainHold}`]}
               onOk={(val) => { data.detail.gainHold = val; }}
+              // format={(val) => { return `>${val*100}%`; }}
             >
               <List.Item arrow="horizontal">涨幅</List.Item>
             </Picker>
@@ -168,6 +174,7 @@ class CoinDetail extends BaseComponent {
               {...getFieldProps('district2')}
               value={[`${data.detail.loseHold}`]}
               onOk={(val) => { data.detail.loseHold = val; }}
+              // format={(val) => { return `<${val*100}%`; }}
             >
               <List.Item arrow="horizontal">跌幅</List.Item>
             </Picker>

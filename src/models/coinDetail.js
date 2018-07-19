@@ -27,7 +27,7 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
-    *subscribeAdd({ payload }, { put, call, select }) {
+    *subscribeAdd({ payload, params }, { put, call, select }) {
       const st = yield select();
       const endpoint = 'symbolVerb/subscribeAdd';
       const filter = {};
@@ -40,6 +40,10 @@ export default modelExtend(pageModel, {
       yield put({
         type: 'subscribeAddSuccess',
         payload: data,
+      });
+      yield put({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: params,
       });
     },
   },
