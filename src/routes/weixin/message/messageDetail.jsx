@@ -347,7 +347,8 @@ class MsgDetail extends BaseComponent {
     let shareContentCard = null;
     let val = null;
     console.log('88888888', msgDetailData.data.typeCode);
-    if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+    // if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+    if (msgDetailData.data.verbid === 717 || msgDetailData.data.verbid === 718) {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
       shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
