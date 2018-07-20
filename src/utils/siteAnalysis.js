@@ -68,7 +68,7 @@ export const siteAnalysis = {
     },
     EVENTCALENDAR: {
       code: 'eventCalendar',
-      zh: '币事件日历',
+      zh: '币事件',
     },
     FOOTMENU: {
       code: 'footMenu',

@@ -108,7 +108,7 @@ class EventDetail extends React.Component {
       coinInfodom = '';
     }
 
-    if (msgDetailData.tagName == '币事件日历') {
+    if (msgDetailData.tagName == '币事件') {
       const baseDatailData = baseDetail.data;
       if (!baseDatailData || !coinPrice) {
         return null;

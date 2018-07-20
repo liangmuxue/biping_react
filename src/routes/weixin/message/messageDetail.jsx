@@ -113,7 +113,7 @@ class MsgDetail extends BaseComponent {
       payload: { ...this.props.params },
     });
     //  请求币事件日历的币价信息
-    if (params && params.tagName == '币事件日历') {
+    if (params && params.tagName == '币事件') {
       this.props.dispatch({
         type: 'messageDetail/coinPrice',
         payload: { ...this.props.params },

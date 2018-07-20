@@ -229,7 +229,7 @@ class EventCalendar extends BaseComponent {
         params: {
           messageId: data.id,
           backPath: 'eventCalendar',
-          tagName: '币事件日历',
+          tagName: '币事件',
         },
       },
     });
