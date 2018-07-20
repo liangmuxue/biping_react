@@ -36,9 +36,9 @@ class CoinDetail extends BaseComponent {
       if (lb == 'time') {
         lbdata = arr[i];
       } else if (lb == 'gainHold') {
-        lbdata = `>${arr[i]*100}%`;
+        lbdata = `> ${arr[i]*100}%`;
       } else if (lb == 'loseHold') {
-        lbdata = `<${arr[i]*100}%`;
+        lbdata = `< ${arr[i]*100}%`;
       }
       let obj = {
         value: arr[i],

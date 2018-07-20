@@ -36,7 +36,7 @@ export default modelExtend(pageModel, {
             },
           });
         } else {
-          const coinName = 'USDT';
+          const { coinName } = response.data.sobmolList[0].coinName;
           yield put({
             type: 'listdata',
             payload: {
