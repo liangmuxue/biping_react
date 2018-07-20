@@ -36,7 +36,7 @@ export default modelExtend(pageModel, {
             },
           });
         } else {
-          const { coinName } = response.data.sobmolList[0].coinName;
+          const { coinName } = response.data.sobmolList[0];
           yield put({
             type: 'listdata',
             payload: {

@@ -196,7 +196,7 @@ class CoinList extends BaseComponent {
               {
                 params.verbId === 717 ?
                 (
-                  <p className={styles.bottomText}>{`单笔买入>60万,单比卖出>60万`}</p>
+                  <p className={styles.bottomText}>{`单笔买入 >60万,单比卖出 >60万`}</p>
                 ) :
                 (
                   <div>
