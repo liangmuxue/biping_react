@@ -24,7 +24,7 @@ class SubDetailChildrenCard extends React.Component {
         <ul>
           {subDetailData.data.content.map(item => (
             <li onClick={() => this.itemClick(item)} key={item.exchangeId}>
-              <img src={item.img} alt="" />
+              <img src={item.img} className={styles.headImg} alt="" />
               {item.name}
               {item.wait ? (
                 <div className={styles.rightText}>敬请期待</div>

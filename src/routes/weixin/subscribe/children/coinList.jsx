@@ -176,7 +176,7 @@ class CoinList extends BaseComponent {
                       )
                     }
                   </div>
-                  <div className={styles.btns}>
+                  <div className={`${styles.btns} ${styles.rightBtns}`}>
                     <img onClick={(e) => this.showCancel(e, rowData)} alt="" src="/images/coinList/three.png" />
                     {
                       rowData.showCancekBtn ?
@@ -184,7 +184,7 @@ class CoinList extends BaseComponent {
                         <span
                           onClick={(e) => this.cancelBtn(e, rowData)}
                           className={styles.removeBtn}
-                        >取消订阅</span>
+                        ><div></div>取消订阅</span>
                       ) : (
                         null
                       )
@@ -220,7 +220,7 @@ class CoinList extends BaseComponent {
                   <button onClick={(e) => this.cancelBtnlist(e, rowData)} className={`${styles.rightBtn} ${styles.selectBtn}`}>已订阅</button>
                 ) :
                 (
-                  <button onClick={() => this.toDetail(rowData)} className={styles.rightBtn}>+ 订阅</button>
+                  <button onClick={() => this.toDetail(rowData)} className={styles.rightBtn}><em>+</em> 订阅</button>
                 )
               }
               <div className={styles.line}></div>
@@ -241,6 +241,8 @@ class CoinList extends BaseComponent {
         <Tabs
           tabs={tabs}
           swipeable={false}
+          tabBarActiveTextColor="#0068dd"
+          tabBarTextStyle={{ fontSize: '.26rem' }}
           initialPage={initialPage}
           renderTab={tab => <span>{tab.title}</span>}
           onChange={tab => this.tabChange(tab)}

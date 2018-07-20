@@ -186,6 +186,8 @@ class MessageList extends BaseComponent {
           tabs={this.state.tabs}
           initialPage={0}
           swipeable={false}
+          tabBarActiveTextColor="#0068dd"
+          tabBarTextStyle={{ fontSize: '.26rem' }}
           renderTab={tab => <span>{tab.title}</span>}
           onTabClick={(tab, index) => this.tabClick(tab, index)}
         >
