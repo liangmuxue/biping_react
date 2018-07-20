@@ -128,7 +128,7 @@ class CoinList extends BaseComponent {
     });
   }
   render() {
-    const { coinList } = this.props;
+    const { coinList, params } = this.props;
     const { coinListHeadData } = coinList;
     const tabs = [
       { title: '自选' },
@@ -162,7 +162,7 @@ class CoinList extends BaseComponent {
             <div onClick={() => this.toDetail(rowData)} className={styles.userList}>
               <p className={styles.nametext}>{rowData.exchangeZhName}</p>
               <div className={styles.contentMsg}>
-                <img className={styles.headimg} alt="" src="/images/coinList/coinBg.png" />
+                <img className={styles.headimg} alt="" src={rowData.baseLogo} />
                 <span className={styles.headtext}>{rowData.baseCoinCode}<em>/{rowData.quoteCoinCode}</em></span>
                 <div className={styles.rightBtn}>
                   <div className={styles.btns}>
@@ -193,7 +193,18 @@ class CoinList extends BaseComponent {
                   </div>
                 </div>
               </div>
-              <p className={styles.bottomText}>单比买入单比卖出</p>
+              {
+                params.verbId === 717 ?
+                (
+                  <p className={styles.bottomText}>{`单笔买入>60万,单比卖出<60万`}</p>
+                ) :
+                (
+                  <div>
+                    <p className={styles.bottomText}>{`检测时间段：${rowData.timeStr.split(',').join('分钟 、')}分钟`}</p>
+                    <p className={styles.bottomText}>{`涨幅>${rowData.gainHold * 100}% 跌幅<${rowData.loseHold * 100}%`}</p>
+                  </div>
+                )
+              }
               <div className={styles.line}></div>
             </div>
           );
@@ -201,7 +212,7 @@ class CoinList extends BaseComponent {
           contentHtml = (
             <div onClick={() => this.toDetail(rowData)} className={styles.listItem}>
               <span className={styles.text1}>{rowData.exchangeZhName}</span>
-              <img className={styles.coinImg} alt="" src="/images/coinList/coinBg.png" />
+              <img className={styles.coinImg} alt="" src={rowData.baseLogo} />
               <span className={styles.text2}>{rowData.baseCoinCode}<em>/{rowData.quoteCoinCode}</em></span>
               {
                 rowData.subscribeFlag ?

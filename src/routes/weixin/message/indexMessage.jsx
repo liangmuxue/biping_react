@@ -168,7 +168,7 @@ class MessageList extends BaseComponent {
           );
         },
       });
-      const height = document.documentElement.clientHeight;
+      const height = document.documentElement.clientHeight - 50;
       const key = 'indexMessage';
       this.state.contentHtml = (
         <InfiniteListView
