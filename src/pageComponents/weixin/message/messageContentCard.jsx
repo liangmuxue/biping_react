@@ -64,8 +64,7 @@ class MessageContent extends React.Component {
           {msgObj.direction ? <div>异常大单：<span>{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.baseCoinCode }</span></div> : ''}
           <div>当前价格：
             <span>
-              {msgObj.price}
-              {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
+              {msgObj.price} {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
               <b className={style.convert}>
                (≈ 人民币{msgObj.priceReal ? priceShow(msgObj.priceReal) : '-'}）
               </b>
@@ -86,11 +85,11 @@ class MessageContent extends React.Component {
               </span>
             </div>}
           {msgObj.direction ?
-            <div>{'1分钟内净流入额:'}
-              <span>{gainHoldFun(msgObj.quoteList[0].gainHold)}</span>
+            <div>{'1分钟内净流入额：'}
+              <span>{gainHoldFun(msgObj.quoteList[0].gainHold)} {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}</span>
             </div> :
             <div>{timeUp}分钟内净流入额：
-              <span>{gainHoldFun(msgObj.gainHold)}
+              <span>{gainHoldFun(msgObj.gainHold)}{msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}
               </span>
             </div>}
 

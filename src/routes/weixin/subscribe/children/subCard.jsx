@@ -40,7 +40,7 @@ class SubCard extends React.Component {
         <div className={styles.rightCon}>
           <div className={styles.msg}>
             <span className={styles.name}>{item.typeName}</span>
-            <span className={styles.date}>{item.remainDate < 0 ? '未开通' : `剩${item.remainDate}天`}</span>
+            <span className={styles.date}>{item.remainDate < 0 ? '未开通' : `剩 ${item.remainDate} 天`}</span>
             <button>管理订阅</button>
           </div>
           <div className={styles.detail}>

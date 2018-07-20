@@ -14,7 +14,8 @@ class HeaderBar extends React.Component {
   constructor(props) {
     super(props);
   }
-  backTo() {
+  backTo(e) {
+    // e.stopPropagation();
     const { dispatch, backRouteLink, pageName } = this.props;
     console.log('currentPath', this.props);
     const currentPage = pageName;
@@ -31,11 +32,9 @@ class HeaderBar extends React.Component {
     return (
       <div className={styles.toptitle}>
         {this.props.headerText}
-        <Hammer onTap={this.backTo.bind(this)}>
-          <div type="headerBack" className={styles.zone} ref={backArrow => this.backArrowArea = backArrow}>
-            <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
-          </div>
-        </Hammer>
+        <div onClick={(e) => this.backTo(e)} type="headerBack" className={styles.zone} ref={backArrow => this.backArrowArea = backArrow}>
+          <img src="/images/messageListImg/left_arrow.png" className={styles.leftArrow} />
+        </div>
       </div>
     );
   }
