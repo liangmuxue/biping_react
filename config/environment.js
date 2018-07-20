@@ -33,6 +33,7 @@ if (process.env.NODE_ENV === 'development') {
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.closerhearts.net.cn';
   ENV.wxBrowserCheck = true;
+  // ENV.analysis = true;
 }
 if (process.env.NODE_ENV === 'test') {
   ENV.resourceHost = 'http://resource.tnb99.net';
