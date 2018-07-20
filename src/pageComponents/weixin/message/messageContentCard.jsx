@@ -86,10 +86,10 @@ class MessageContent extends React.Component {
               </span>
             </div>}
           {msgObj.direction ?
-            <div>{'1分钟内净流入量:'}
+            <div>{'1分钟内净流入额:'}
               <span>{gainHoldFun(msgObj.quoteList[0].gainHold)}</span>
             </div> :
-            <div>{timeUp}分钟内净流入量：
+            <div>{timeUp}分钟内净流入额：
               <span>{gainHoldFun(msgObj.gainHold)}
               </span>
             </div>}
