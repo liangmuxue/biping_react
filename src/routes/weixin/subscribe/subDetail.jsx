@@ -9,6 +9,7 @@ import HeaderBar from '../../../components/headerBar';
 import style from './subDetail.less';
 import BaseComponent from '../baseComponent';
 import SubContentType from '../../../pageComponents/weixin/subscribe/subContentTypeCard.jsx';
+import SubDetailChildrenCard from './children/subDetailChildrenCard';
 /**
 * 订阅详情页面
 * @author 梁慕学
@@ -142,7 +143,17 @@ class SubDetail extends BaseComponent {
       });
     }
   }
-
+  // 大单 涨幅 交易所点击
+  childrenClick(data) {
+    const { typeId } = this.props.subDetailData.data;
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'coinList',
+        params: { exchangeId: data.exchangeId, verbId: typeId, backPath: 'subDetail' },
+      },
+    });
+  }
   render() {
     console.log('SubDetail render', this.props);
     const { subDetailData } = this.props;
@@ -162,6 +173,13 @@ class SubDetail extends BaseComponent {
         subscribeAll={this.subscribeAllTrans.bind(this)}
         gainOrLose={this.gainOrLose.bind(this)}
       />);
+    } else if (subDetailData.data.typeName === '暴涨暴跌' || subDetailData.data.typeName === '大单买卖') {
+      subContent = (
+        <SubDetailChildrenCard
+          data={this.props}
+          itemClick={this.childrenClick.bind(this)}
+        />
+      );
     } else {
       subContent = (<div>
         <div className={style.listTitle}>
@@ -170,14 +188,13 @@ class SubDetail extends BaseComponent {
         </div>
 
         {subDetailData.data.content.map(item =>
-                              (<SubItem
-                                abnormal={1}
-                                key={item.typeId}
-                                itemObj={item}
-                                subscribeClick={this.subscribeItem.bind(this)}
-                              />))}
-      </div>
-      );
+          (<SubItem
+            abnormal={1}
+            key={item.typeId}
+            itemObj={item}
+            subscribeClick={this.subscribeItem.bind(this)}
+          />))}
+      </div>);
     }
     console.log('subDetailData.data', subDetailData.data);
     const subDetailCard = (

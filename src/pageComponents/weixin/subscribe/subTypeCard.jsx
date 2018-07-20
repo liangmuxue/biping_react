@@ -55,11 +55,32 @@ class SubTypeCard extends React.Component {
       );
       remainButton = (<Renew />);
     }
+    let imgSrc = '';
+    switch (typeObj.typeName) {
+      case '暴涨暴跌':
+        imgSrc = '/images/coinList/coin3.png';
+        break;
+      case '大单买卖':
+        imgSrc = '/images/coinList/coin4.png';
+        break;
+      case '异动币':
+        imgSrc = '/images/coinList/coin3.png';
+        break;
+      case '交易所公告':
+        imgSrc = '/images/coinList/coin2.png';
+        break;
+      case '币事件':
+        imgSrc = '/images/coinList/coin1.png';
+        break;
+      default:
+        imgSrc = '/images/coinList/coin1.png';
+    }
     return (
       <div className={styles.whiteBox}>
         {remainButton}
         <div className={styles.boxCenter}>
           <div className={styles.hadReady}>已经有{typeObj.subCnt}人订阅：</div>
+          <img className={flag === '1' ? styles.rightSrc : styles.hide} alt="" src={imgSrc} />
           <h1 className={styles.titles}>{typeObj.typeName}</h1>
           <div className={styles.contents}>{typeObj.tagDesc}</div>
           <Hammer onTap={this.handleRemarkTap.bind(this)}>

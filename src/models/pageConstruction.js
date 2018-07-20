@@ -265,6 +265,13 @@ function* switchPageReal({
         payload: { selectedMenu },
       });
     }
+    if (pageName === 'eventCalendar') {
+      const selectedMenu = footMenus[1];
+      yield put({
+        type: 'footMenuChoiced',
+        payload: { selectedMenu },
+      });
+    }
   }
 
   // 支付页面隐藏底部

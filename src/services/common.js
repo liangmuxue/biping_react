@@ -55,9 +55,19 @@ export const query = async function query(
  * 取得图片的base64字符串
  */
 export const getImgString = async function getBase64(url) {
+  // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
+  // if (url.indexOf('biping.oss') > 0) {
+  //   url = proxyUrl + url;
+  // }
+  url = `${url}?${Math.random()}`;
   return axios
     .get(url, {
       responseType: 'arraybuffer',
+      headers: {
+  	  'Access-Control-Allow-Origin': '*',
+        crossOrigin: 'anonymous',
+  	   },
+
     })
     .then(response => Buffer.from(response.data, 'binary').toString('base64'));
 };
@@ -67,8 +77,9 @@ export const getImgString = async function getBase64(url) {
  */
 export const getImgStringBase = async function getImgStringBase(url) {
   const image = new Image();
-  image.crossOrigin = 'Anonymous';
-  image.src = url;
+  image.setAttribute('crossOrigin', 'anonymous');
+  image.src = `${url}?${Math.random()}`;
+  console.log(`rd image src:${image.src}`);
   return new Promise((resolve, reject) => {
     image.onload = function () {
       resolve(getBase64Image(image));// 将base64传给done上传处理

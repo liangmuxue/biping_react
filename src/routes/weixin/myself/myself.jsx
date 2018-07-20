@@ -152,8 +152,8 @@ class BasicInput extends BaseComponent {
         <div className={style.tips}>关闭后，你将无法收到服务号推送的及时消息</div>
       </Hammer> */}
       <div className={style.version}>
-        <div>@ 2018 biping.io</div>
-        <div>V1.0</div>
+        <div>@ 2018 bipingcoin.com</div>
+        <div>V0.7.3</div>
       </div>
     </div>);
   }

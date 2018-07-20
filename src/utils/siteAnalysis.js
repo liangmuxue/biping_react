@@ -143,15 +143,9 @@ export const siteAnalysis = {
   },
 
   init() {
-    ReactGA.initialize('UA-117280811-2');
+    // ReactGA.initialize('UA-117280811-2');
   },
   pushEvent(pageDef, actionDef, opt) {
-    console.log('pushEvent pageDefs', pageDef);
-    // ReactGA.event({
-    //   category: `wx_${pageDef.code}`,
-    //   action: actionDef.code,
-    //   opt,
-    // });
     console.log('track opt', opt);
     if (config.env.analysis) {
       zhuge.track(`wx_${pageDef.code}`, {
@@ -162,7 +156,6 @@ export const siteAnalysis = {
   },
 
   setField(key, value) {
-    ReactGA.set({ [key]: value });
     if (key === 'userId') {
       console.log(`identify uid:${value}`);
       zhuge.identify(value);
@@ -170,7 +163,6 @@ export const siteAnalysis = {
   },
   setUser(systemUser) {
     if (config.env.analysis) {
-      ReactGA.set({ userId: systemUser.uid });
       zhuge.identify(systemUser.uid, {
         typeCode: systemUser.typeCode,
         name: systemUser.name,

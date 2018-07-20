@@ -4,12 +4,15 @@ import ReactHtmlParser from 'react-html-parser';
 
 function Currency(props) {
   const { data } = props;
+  let logoReal = `${data.logo}?${Math.random()}`;
+  logoReal = logoReal.replace('https', 'http');
+  console.log(`corImgSrc is:${corImgSrc}`);
   return (
     <div className={styles.currency}>
       <p className={styles.head}>币种介绍</p>
       <div className={styles.currencyDsc}>
         <div className={styles.tl}>
-          <img alt="" src={data.logo} />
+          <img alt="" src={logoReal} />
           <span className={styles.name}>{data.name}</span>
         </div>
         <div id="domText" className={styles.text}>
@@ -58,36 +61,36 @@ class EventDetail extends React.Component {
     this.props.forecast(boo);
   }
   componentDidMount() {
-    console.log('componentDidMountDom=>', document.getElementById('domText'));
-    const dom = document.getElementById('domText');
-    if (dom) {
-      const height = 14 * 1.5 * 3;
-      const domHeight = dom.clientHeight;
-      if (domHeight > height) {
-        dom.classList.add('showMore');
-      }
-    }
+    // console.log('componentDidMountDom=>', document.getElementById('domText'));
+    // const dom = document.getElementById('domText');
+    // if (dom) {
+    //   const height = 14 * 1.5 * 3;
+    //   const domHeight = dom.clientHeight;
+    //   if (domHeight > height) {
+    //     dom.classList.add('showMore');
+    //   }
+    // }
   }
-  clickMore() {
+  /* clickMore() {
     const dom = document.getElementById('domText');
     dom.classList.remove('showMore');
-  }
+  } */
   render() {
     console.log('eventDetail=>', this.props);
     const {
       coinInfo, coinPrice, msgDetailData, baseDetail,
     } = this.props;
     // 币种介绍
-    if (!coinInfo || !coinInfo.data) {
+    if (!coinInfo || !coinInfo.data || !msgDetailData) {
       return null;
     }
     let coinInfodom = null;
     // 币价
     let calenDarDom = null;
     if (coinInfo.data) {
-      // coinInfodom = <Currency data={coinInfo.data} />;
       const data = coinInfo.data;
-      const logoReal = data.logo.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
+      let logoReal = `${data.logo}?${Math.random()}`;
+      logoReal = logoReal.replace('https', 'http');
       coinInfodom = (<div className={styles.currency}>
         <p className={styles.head}>币种介绍</p>
         <div className={styles.currencyDsc}>
@@ -97,17 +100,17 @@ class EventDetail extends React.Component {
           </div>
           <div id="domText" className={styles.text}>
             {ReactHtmlParser(data.introduce)}
-            <span className="spanMore">...<em onClick={() => this.clickMore()}>更多</em></span>
+            {/* <span className="spanMore">...<em onClick={() => this.clickMore()}>更多</em></span> */}
           </div>
         </div>
-                     </div>);
+      </div>);
     } else {
       coinInfodom = '';
     }
 
     if (msgDetailData.tagName == '币事件日历') {
       const baseDatailData = baseDetail.data;
-      if (!baseDatailData) {
+      if (!baseDatailData || !coinPrice) {
         return null;
       }
       let upBtnStyle = null;

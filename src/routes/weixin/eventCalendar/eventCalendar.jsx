@@ -14,6 +14,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import BaseComponent from '../baseComponent';
 import { convertDate, weekDay } from '../../../utils/dateFormat';
 import { config } from '../../../../config/environment';
+import { Toast } from 'antd-mobile';
 
 function shareEvent(event) {
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
@@ -40,8 +41,17 @@ function shareEvent(event) {
   const reuslturl = shortUrl.data.reuslturl;
   const url = `${host}/shortUrl/${reuslturl}`;
   console.log(`share url is:${url}`);
-  QrCodeWithLogo.toImage({
+  // TODO: img部分机型显示不出来
+  /* QrCodeWithLogo.toImage({
     image: document.getElementById('imgUrl0'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }) */
+  QrCodeWithLogo.toCanvas({
+    canvas: document.getElementById('canvas'),
     content: url,
     width: 120,
     logo: {
@@ -51,6 +61,7 @@ function shareEvent(event) {
     html2canvas(document.getElementById('eventShareDom'), { useCORS: false, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
       document.getElementById('eventShareDom').style.display = 'none';
+      Toast.hide();
       dispatch({
         type: 'eventCalendar/shareMsg',
         payload: {
@@ -225,6 +236,7 @@ class EventCalendar extends BaseComponent {
   }
   // 分享点击
   shareClick() {
+    Toast.loading('正在生成...', 0);
     // 隐藏分享内容背景
     document.body.style.overflow = 'hidden';
     document.body.style.height = '100%';
@@ -365,7 +377,7 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
-        <div style={{display: 'none'}} className={styles.shareBtn} onClick={() => this.shareClick()}>
+        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
           <span>分享</span>
         </div>
         <Calendar
@@ -377,7 +389,8 @@ class EventCalendar extends BaseComponent {
           maxDate={new Date(eventTime.data.time + 63158400000)}
         />
         <div id="eventShareDom" className={styles.shareDom}>
-          <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" />
+          {/* <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" /> */}
+          <canvas id="canvas" className={styles.shareewm} />
           <div id="calendarDom" className={styles.calendar}>
             <div className={styles.shareTop}>
               <p>事件日历</p>
@@ -399,11 +412,12 @@ class EventCalendar extends BaseComponent {
             toDetail={data => this.toDetail(data)}
           />
           <div className={styles.bottomDom}>
-            <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
+            {/* <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
             <div className={styles.info}>
               <p className={styles.p1}>【币评】你最想要的币市信息</p>
               <p className={styles.p2}>www.bipingcoin.com</p>
-            </div>
+            </div> */}
+            <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
           </div>
         </div>
       </div>
@@ -413,7 +427,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, extraData: state.app.extraData, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

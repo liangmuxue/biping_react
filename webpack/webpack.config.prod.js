@@ -10,6 +10,7 @@ module.exports = merge(require('./webpack.config'), {
 
   output: {
     path: path.join(__dirname, '../docs'),
+    filename: '[name].[hash:8].js',
     //publicPath: 'http://webapp.closerhearts.net.cn/',
   },
 

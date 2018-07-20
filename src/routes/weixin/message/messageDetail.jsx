@@ -27,7 +27,7 @@ import { urlUtils } from '../../../utils/urlUtil.js';
 * @Date  2018-6-12
 */
 function shareEvent(event) {
-  var dom1 = document.getElementById('picBox');
+  const dom1 = document.getElementById('picBox');
   if (dom1) {
     dom1.style.paddingBottom = '0';
   }
@@ -39,8 +39,17 @@ function shareEvent(event) {
   const url = `${host}/shortUrl/${reuslturl}`;
   const msgObj = msgDetailData.data;
   console.log(`share url is:${url}`);
-  QrCodeWithLogo.toImage({
+  // TODO: img部分机型显示不出来
+  /* QrCodeWithLogo.toImage({
     image: document.getElementById('ewmImg'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }) */
+  QrCodeWithLogo.toCanvas({
+    canvas: document.getElementById('canvas'),
     content: url,
     width: 120,
     logo: {
@@ -48,9 +57,9 @@ function shareEvent(event) {
     },
   }).then(() => {
     console.log('success777', document.getElementById('showShare'));
-    html2canvas(document.getElementById('showShare'), { useCORS: true }).then((canvas) => {
+    html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
       imgUrl = canvas.toDataURL('image/png');
-      console.log('imgUrl=>>', imgUrl);
+      // console.log('imgUrl=>>', imgUrl);
       document.getElementById('showShare').style.display = 'none';
       dispatch({
         type: 'messageDetail/shareMsg',
@@ -79,7 +88,7 @@ class MsgDetail extends BaseComponent {
     if (state && state.indexOf('messageId') !== -1) {
       const tagNameArea = state.split('tagName');
       // 分享进入时，在此补充tagName
-      if (tagNameArea && tagNameArea.length > 0) {
+      if (tagNameArea && tagNameArea.length > 1) {
         const tagName = tagNameArea[1].split('#')[0];
         console.log(`tagName get:${tagName}`);
         const tagNameReal = decodeURIComponent(tagName);
@@ -148,6 +157,7 @@ class MsgDetail extends BaseComponent {
     const srcs = [];
     if (replaceVal && replaceVal !== null) {
       const imgs = replaceVal.querySelectorAll('img');
+      console.log('get images', imgs);
       if (imgs && imgs.length > 0) {
         for (let i = 0, j = imgs.length; i < j; i++) {
           // 解决跨域,传递现有的img、src数组
@@ -292,6 +302,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
+    console.log('msgObj is', msgObj);
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
@@ -336,7 +347,8 @@ class MsgDetail extends BaseComponent {
     let shareContentCard = null;
     let val = null;
     console.log('88888888', msgDetailData.data.typeCode);
-    if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+    // if (msgDetailData.data.typeCode && msgDetailData.data.typeCode === 'currencies') {
+    if (msgDetailData.data.verbid === 717 || msgDetailData.data.verbid === 718) {
       console.log('MessageContent', msgObj.typeCode);
       contentCard = (<MessageContent content={JSON.parse(msgObj.content)} />);
       shareContentCard = (<MessageContent content={JSON.parse(msgObj.content)} shareType={1} />);
@@ -348,12 +360,12 @@ class MsgDetail extends BaseComponent {
         msgObj.content = ' ';
       }
       val = msgObj.content.replace(/＆nbsp;/g, ' ');
-      // val = val.replace('bpimg.6bey.com', 'biping.oss-cn-beijing.aliyuncs.com');
+      val = val.replace('https://biping.oss-cn-beijing.aliyuncs.com', 'http://biping.oss-cn-beijing.aliyuncs.com');
       // val = val.replace('//Static', '/Static');
       // console.log('val after rep:'+val);
       contentCard = (<div id="article" className={style.article} dangerouslySetInnerHTML={{ __html: val }} />);
       shareContentCard =
-      (<div id="shareArticle" className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
+      (<div className={style.picFonts} dangerouslySetInnerHTML={{ __html: val }} />);
     }
 
     if (!showMsgShare) {
@@ -505,25 +517,43 @@ class MsgDetail extends BaseComponent {
 
         <div id="showShare" className={style.hide}>
           <div className={style.picBox} id="picBox">
-            <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
-            <div className={style.picTitle}>{msgObj.title}</div>
-            <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
-            <div className={style.clear} />
-            {shareContentCard}
-            <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
-
-            <div className={style.bottomCopy}>
+            <div className={style.bgImg}>
+              <img alt="币评" src="/images/msgImages/bg.jpg" />
+            </div>
+            <div className={style.shareCon}>
+              <div className={style.picKinds}><span >{msgObj.verbname}</span></div>
+              <div className={style.picTitle}>{msgObj.title}</div>
+              <div className={msgObj.verbname === '币事件' ? style.startTimes : style.hide}>事件开始日期：{msgObj.startTime}</div>
+              <div className={style.clear} />
+              <div id="shareArticle">
+                {shareContentCard}
+                <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
+              </div>
+            </div>
+            {/* <div className={style.bottomCopy}>
               <div className={style.wechatBox}>
                 <img id="ewmImg" crossOrigin="anonymous" alt="" />
                 <div className={style.readAll}>扫码阅读全文</div>
               </div>
-              <div className={style.con}>
-                {/* <div className={style.copytop}>
-                  <img src="/images/msgImages/copy.png" />
-                </div> */}
-                <div className={style.logotop}>【币评】你最想要的币市信息</div>
-                <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+            </div>
+            <div className={style.con}>
+              <div className={style.copytop}>
+                <img src="/images/msgImages/copy.png" />
               </div>
+              <div className={style.logotop}>【币评】你最想要的币市信息</div>
+              <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
+            </div> */}
+            <div className={style.ewmCon}>
+              {/* <img id="ewmImg" className={style.leftImg} crossOrigin="anonymous" alt="" /> */}
+              <canvas id="canvas" className={style.leftImg}></canvas>
+              <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
+              {/* <div className={style.rightText}>
+                <p className={style.p1}>扫码阅读全文</p>
+                <div className={style.info}>
+                  <p>【币评】你最想要的币市信息</p>
+                  <p>www.bipingcoin.com</p>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>
