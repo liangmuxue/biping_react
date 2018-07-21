@@ -52,10 +52,32 @@ class MessageContent extends React.Component {
     const { gainHoldFun, priceShow, gainDifferFun } = NumberFormat;
     // 转换为成交金额
     const vol = msgObj.priceReal * msgObj.amount / 10000;
-    const volStr = vol + '万';
+    const volStr = vol.toFixed(2) + '万';
     // 转换为净流入金额
-    const holdVol = msgObj.priceReal / msgObj.price * msgObj.amount /10000;
-    const holdVolStr = holdVol + '万';
+    const holdVol = msgObj.priceReal / msgObj.price * msgObj.gainHold /10000;
+    const holdVolStr = holdVol.toFixed(2) + '万';
+    let differTextArea = null;
+    if(msgObj.direction){
+      differTextArea = "";
+    }else{
+      if(msgObj.gainDiffer > 0){
+        differTextArea =  (<div>
+          {timeUp}分钟内上涨：
+          <span className={style.toUp}>
+            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+          </span>
+        </div>);
+      }
+      if(msgObj.gainDiffer < 0){
+        differTextArea =  (<div>
+          {timeUp}分钟内下跌：
+          <span className={style.toDown}>
+            {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+          </span>
+        </div>);
+      }
+    }
+
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -85,23 +107,11 @@ class MessageContent extends React.Component {
             <div>{timeUp}分钟内资金净流入：
               <span>￥{holdVolStr}
               </span>
-            </div>}
-          {msgObj.direction ?
-            <div>
-            </div>
-            <div>{msgObj.gainDiffer > 0 ?
-              {timeUp}分钟内上涨：
-              <span className={style.toUp}>
-                +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-              </span> :
-              {timeUp}分钟内下跌：
-              <span className={style.toDown}>
-                {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-              </span>}
             </div>
           }
-
-
+          {
+            differTextArea
+          }
         </div>
         <div className={msgObj.direction ? style.hide : style.coinTable} >
           <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
