@@ -50,6 +50,12 @@ class MessageContent extends React.Component {
     }
     // 净流入,涨跌幅,价格显示
     const { gainHoldFun, priceShow, gainDifferFun } = NumberFormat;
+    // 转换为成交金额
+    const vol = msgObj.priceReal * msgObj.amount / 10000;
+    const volStr = vol + '万';
+    // 转换为净流入金额
+    const holdVol = msgObj.priceReal / msgObj.price * msgObj.amount /10000;
+    const holdVolStr = holdVol + '万';
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -71,45 +77,30 @@ class MessageContent extends React.Component {
             </span>
           </div>
           {msgObj.direction ?
-            <div>1分钟内成交量：
+            <div>成交额：
               <span>
-                {(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount).toFixed(2)}，
-              其中买入{(msgObj.quoteList[0].buyAmount).toFixed(2)}、
-              卖出{(msgObj.quoteList[0].sellAmount).toFixed(2)}
+                ￥{volStr}
               </span>
             </div> :
-            <div>{timeUp}分钟内成交量：
-              <span>{(msgObj.buyAmount + msgObj.sellAmount).toFixed(2)}，
-                其中买入{(msgObj.buyAmount).toFixed(2)}、
-                卖出{(msgObj.sellAmount).toFixed(2)}
+            <div>{timeUp}分钟内资金净流入：
+              <span>￥{holdVolStr}
               </span>
             </div>}
           {msgObj.direction ?
-            <div>{'1分钟内净流入额：'}
-              <span>{gainHoldFun(msgObj.quoteList[0].gainHold)} {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}</span>
-            </div> :
-            <div>{timeUp}分钟内净流入额：
-              <span>{gainHoldFun(msgObj.gainHold)}{msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}
-              </span>
-            </div>}
-
-          {msgObj.direction ?
-            <div>{'1分钟内涨幅：'}{msgObj.quoteList[0].gainDiffer > 0 ?
+            <div>
+            </div>
+            <div>{msgObj.gainDiffer > 0 ?
+              {timeUp}分钟内上涨：
               <span className={style.toUp}>
-            +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
+                +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
               </span> :
-              <span className={style.toDown}>
-                {gainDifferFun(msgObj.quoteList[0].gainDiffer)}
-              </span>}
-            </div> :
-            <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
-              <span className={style.toUp}>
-            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-              </span> :
+              {timeUp}分钟内下跌：
               <span className={style.toDown}>
                 {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
               </span>}
-            </div>}
+            </div>
+          }
+
 
         </div>
         <div className={msgObj.direction ? style.hide : style.coinTable} >
