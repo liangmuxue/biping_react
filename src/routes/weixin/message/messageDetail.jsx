@@ -349,7 +349,7 @@ class MsgDetail extends BaseComponent {
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
-    console.log('msgObj is', msgObj);
+    console.log('msgObj in short is', msgObj);
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
@@ -372,7 +372,8 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 拿到数据之后长链接转短链接
-    /* if (!shortUrl) {
+    /* if (!shortUrl&&msgDetailData&&msgDetailData.data) {
+      console.log("need get short url,msgDetailData:",msgDetailData);
       this.shortUrl();
     } */
     // 分享请求,只有点击share方法才进
