@@ -77,7 +77,10 @@ class MessageContent extends React.Component {
         </div>);
       }
     }
-
+    const gainHoldTrans = function(gainHold){
+      const gainHoldReal =  msgObj.priceReal / msgObj.price * gainHold /10000;
+      return '￥ ' + gainHoldReal.toFixed(2) + '万';
+    };
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -134,7 +137,7 @@ class MessageContent extends React.Component {
                   {gainDifferFun(msg.gainDiffer)}
                 </span>
               </div>
-              <div className={style.tableIncome}>{gainHoldFun(msg.gainHold)}</div>
+              <div className={style.tableIncome}>{gainHoldTrans(msg.gainHold)}</div>
             </div>
           </div>
         ))}
