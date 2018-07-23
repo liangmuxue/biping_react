@@ -32,10 +32,11 @@ function shareEvent(dispatch, shortUrl) {
         // 解决跨域,传递现有的img、src数组
         srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
         imgs[i].setAttribute('id', `imgUrl${i}`);
+        imgs[i].setAttribute('crossOrigin', 'Anonymous');
       }
     }
   }
-  dispatch({
+  /* dispatch({
     type: 'eventCalendar/getImgString',
     payload: {
       srcs,
@@ -46,7 +47,7 @@ function shareEvent(dispatch, shortUrl) {
         imgs.setAttribute('src', data[i].src);
       }
     },
-  });
+  }); */
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
   const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
   const dom3 = document.getElementsByClassName('am-list-footer')[1];
