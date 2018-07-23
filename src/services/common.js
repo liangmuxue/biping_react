@@ -77,7 +77,7 @@ export const getImgString = async function getBase64(url) {
  */
 export const getImgStringBase = async function getImgStringBase(url) {
   const image = new Image();
-  image.setAttribute('crossOrigin', 'anonymous');
+  image.setAttribute('crossOrigin', 'Anonymous');
   image.src = `${url}?${Math.random()}`;
   console.log(`rd image src:${image.src}`);
   return new Promise((resolve, reject) => {
