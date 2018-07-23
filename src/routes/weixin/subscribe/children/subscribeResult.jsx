@@ -26,7 +26,7 @@ class SubscribeResult extends BaseComponent {
     const { params } = this.props;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: params.verbId } },
+      payload: { pageName: 'coinList', params: { verbId: params.verbId, exchangeId: params.exchangeId, tabName: params.tabName } },
     });
   }
   render() {

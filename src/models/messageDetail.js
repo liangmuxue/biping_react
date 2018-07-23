@@ -272,14 +272,24 @@ export default modelExtend(pageModel, {
       });
     },
     // 长链接转短链接
-    *shortUrl({ payload }, { call, put }) {
+    *shortUrl({ payload, onComplete }, { call, put }) {
       const endpoint = '/getLong2short';
       const filter = { url: payload };
       const data = yield call(shortUrl, endpoint, filter);
-      yield put({
+      yield call(onComplete, data);
+      /* yield put({
         type: 'shortUrlSuccess',
         payload: data,
-      });
+      }); */
+    },
+    *getQrcode({ payload, onComplete }, { call, select }) {
+      const st = yield select();
+      const endpoint = 'getQRCode';
+      const filter = { url: payload };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      yield call(onComplete, data);
     },
   },
 

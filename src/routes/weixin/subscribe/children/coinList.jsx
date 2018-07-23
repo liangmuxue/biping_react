@@ -25,6 +25,11 @@ class CoinList extends BaseComponent {
       type: 'coinList/queryList',
       payload: { ...params },
     });
+    if (params.tabName) {
+      this.setState({
+        tabName: params.tabName,
+      });
+    }
   }
   // 搜索点击
   searchClick() {
@@ -80,6 +85,7 @@ class CoinList extends BaseComponent {
           exchangeId: params.exchangeId,
           verbId: params.verbId,
           symbolId: rowData.symbolId,
+          tabName: this.state.tabName,
         },
       },
     });
@@ -133,7 +139,7 @@ class CoinList extends BaseComponent {
     const tabs = [
       { title: '自选' },
     ];
-    if (!coinListHeadData) {
+    if (!coinListHeadData || !coinListHeadData.sobmolList) {
       return null;
     }
     coinListHeadData.sobmolList.map(item => {
@@ -143,13 +149,10 @@ class CoinList extends BaseComponent {
       }
       tabs.push(obj);
     });
-    const initialPage = coinListHeadData.subscribeCount > 0 ? 0 : 1;
-    const name = coinListHeadData.subscribeCount > 0 ? '自选' : 'USDT';
-    const that = this;
-    if (!this.state.tabName) {
-      that.setState({
-        tabName: name,
-      });
+    const { coinName } = coinListHeadData.sobmolList[0];
+    let name = coinListHeadData.subscribeCount > 0 ? '自选' : coinName;
+    if (this.state.tabName) {
+      name = this.state.tabName;
     }
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: coinList });
@@ -157,7 +160,7 @@ class CoinList extends BaseComponent {
       ...messageList,
       renderRow: (rowData) => {
         let contentHtml = null;
-        if (this.state.tabName === '自选') {
+        if (name === '自选') {
           contentHtml = (
             <div onClick={() => this.toDetail(rowData)} className={styles.userList}>
               <p className={styles.nametext}>{rowData.exchangeZhName}</p>
@@ -196,7 +199,7 @@ class CoinList extends BaseComponent {
               {
                 params.verbId === 717 ?
                 (
-                  <p className={styles.bottomText}>{`单笔买入 >60万,单比卖出 >60万`}</p>
+                  <p className={styles.bottomText}>{`单笔买入 >60万,单笔卖出 >60万`}</p>
                 ) :
                 (
                   <div>
@@ -233,17 +236,30 @@ class CoinList extends BaseComponent {
       },
     });
     const height = document.documentElement.clientHeight - 100;
+    let initialIndex = 0;
+    if (params.tabName) {
+      console.log('ifif', params.tabName);
+      for (let i in tabs) {
+        if(tabs[i].title == params.tabName) {
+          initialIndex = i;
+        }
+      }
+    } else {
+      coinListHeadData.subscribeCount > 0 ? initialIndex = 0 : initialIndex = 1;
+    }
+    console.log('coinName=>', initialIndex);
+    const ininin = 2;
     return (
       <div className={styles.coinListCon}>
         <div onClick={this.searchClick.bind(this)}>
-          <SearchBar placeholder="搜索" disabled="true" />
+          <SearchBar placeholder='搜索' disabled="true" />
         </div>
         <Tabs
           tabs={tabs}
+          initialPage={Number(initialIndex)}
           swipeable={false}
           tabBarActiveTextColor="#0068dd"
           tabBarTextStyle={{ fontSize: '.26rem' }}
-          initialPage={initialPage}
           renderTab={tab => <span>{tab.title}</span>}
           onChange={tab => this.tabChange(tab)}
         >

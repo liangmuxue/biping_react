@@ -18,7 +18,8 @@ export default modelExtend(pageModel, {
   },
   effects: {
     *queryList({ payload }, { put, select, call }) {
-      const { exchangeId, verbId } = payload;
+      const { exchangeId, verbId, tabName } = payload;
+      console.log('queryList=>', tabName);
       const endpoint = 'symbolVerb/recommendList';
       const filter = { exchangeId, verbId };
       const st = yield select();
@@ -28,7 +29,7 @@ export default modelExtend(pageModel, {
       if (data) {
         console.log('queryList=>', data);
         const { response } = data;
-        if (response.data.subscribeCount > 0) {
+        if (!tabName && response.data.subscribeCount > 0) {
           yield put({
             type: 'userListData',
             payload: {
@@ -36,7 +37,7 @@ export default modelExtend(pageModel, {
             },
           });
         } else {
-          const { coinName } = response.data.sobmolList[0];
+          const coinName = tabName || response.data.sobmolList[0].coinName;
           yield put({
             type: 'listdata',
             payload: {

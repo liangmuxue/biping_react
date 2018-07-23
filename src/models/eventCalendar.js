@@ -120,7 +120,7 @@ export default modelExtend(pageModel, {
       });
     },
     // img的src转base64位
-    *getImgString({ payload }, { put, call }) {
+    *getImgString({ payload, onComplete }, { put, call }) {
       const { srcs } = payload;
       console.log('getImgString data', srcs);
       if (srcs && srcs.length > 0) {
@@ -138,11 +138,12 @@ export default modelExtend(pageModel, {
           srcs[i].src = `${data}`;
         }
       }
+      yield call(onComplete, srcs);
       console.log('after getImgString data', srcs);
-      yield put({
+      /* yield put({
         type: 'getImgStringSuccess',
         payload: srcs,
-      });
+      }); */
     },
     *shareMsg({ payload }, { put, call }) {
       yield put({
@@ -157,14 +158,25 @@ export default modelExtend(pageModel, {
       });
     },
     // 长链接转短链接
-    *shortUrl({ payload }, { call, put }) {
+    *shortUrl({ payload, onComplete }, { call, put }) {
       const endpoint = '/getLong2short';
       const filter = { url: payload };
+      console.log('shortUrl=>>', payload);
       const data = yield call(shortUrl, endpoint, filter);
-      yield put({
+      yield call(onComplete, data);
+      /* yield put({
         type: 'shortUrlSuccess',
         payload: data,
-      });
+      }); */
+    },
+    *getQrcode({ payload, onComplete }, { call, select }) {
+      const st = yield select();
+      const endpoint = 'getQRCode';
+      const filter = { url: payload };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      yield call(onComplete, data);
     },
   },
   reducers: {
@@ -228,6 +240,7 @@ export default modelExtend(pageModel, {
       };
     },
     shortUrlSuccess(state, action) {
+      console.log('shortUrlSuccess=>', action);
       const { data } = action.payload;
       return {
         ...state,
