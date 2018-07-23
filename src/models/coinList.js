@@ -29,7 +29,7 @@ export default modelExtend(pageModel, {
       if (data) {
         console.log('queryList=>', data);
         const { response } = data;
-        if (!tabName && response.data.subscribeCount > 0) {
+        if (response.data.subscribeCount > 0 && (tabName === '自选' || !tabName)) {
           yield put({
             type: 'userListData',
             payload: {

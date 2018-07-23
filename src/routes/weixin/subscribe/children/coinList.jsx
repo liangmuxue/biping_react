@@ -153,6 +153,10 @@ class CoinList extends BaseComponent {
     let name = coinListHeadData.subscribeCount > 0 ? '自选' : coinName;
     if (this.state.tabName) {
       name = this.state.tabName;
+    } else {
+      this.setState({
+        tabName: name,
+      });
     }
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: coinList });
