@@ -106,7 +106,7 @@ function shareEvent(dispatch, shortUrl) {
       const { response } = data;
       const urlBase = response.data.base64;
       imgDom.setAttribute('src', `data:image/png;base64,${urlBase}`);
-      html2canvas(document.getElementById('eventShareDom'), { useCORS: true }).then((canvas) => {
+      html2canvas(document.getElementById('eventShareDom'), { useCORS: false }).then((canvas) => {
         imgUrl = canvas.toDataURL('image/png');
         document.getElementById('eventShareDom').style.display = 'none';
         Toast.hide();
