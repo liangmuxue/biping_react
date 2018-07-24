@@ -38,6 +38,7 @@ export default modelExtend(pageModel, {
       yield put({
         type: 'query',
         payload,
+        ps: 'center',
       });
     },
     *active({ backArrow }, { put }) {

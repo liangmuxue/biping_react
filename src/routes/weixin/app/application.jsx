@@ -69,7 +69,7 @@ class HomePage extends Component {
       return null;
     }
     const {
-      attentionModal, pagiLoading, routeLoading, netError, touchMoveDisable,
+      attentionModal, pagiLoading, routeLoading, netError, touchMoveDisable, pagiPosition,
     } = app;
     console.log(`attentionModal is:${attentionModal}`);
     let modal = null;
@@ -121,7 +121,7 @@ class HomePage extends Component {
     );
     // 翻页加载提示区域
     const pagiLoadingTip = (
-      <div className={pagiLoading ? styles.load : styles.loadingHide}>
+      <div className={pagiLoading ? (pagiPosition === 'center' ? styles.loadCenter : styles.load) : styles.loadingHide}>
         <div className="loading-example">
           <div className="align">
             <ActivityIndicator size="large" />

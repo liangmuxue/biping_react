@@ -359,10 +359,12 @@ const App = {
         ...state, routeLoading: false,
       };
     },
-    showPagiLoading(state) {
-      console.log('showPagiLoading in');
+    showPagiLoading(state, payload) {
+      console.log('showPagiLoading in', payload.position);
       return {
-        ...state, pagiLoading: true,
+        ...state,
+        pagiLoading: true,
+        pagiPosition: payload.position,
       };
     },
     hidePagiLoading(state) {
