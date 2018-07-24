@@ -40,9 +40,8 @@ const pageModel = modelExtend(baseModel, {
       if (!pagination.pageSize) {
         Object.assign(pagination, paginationDef);
       }
-      if (pagination.totalCount > 0) {
+      if (pagination.totalCount > 0 || true) {
         // 只在分页加载时显示加载提示
-        yield put({ type: 'showLoading' });
         yield put({ type: 'app/showPagiLoading' });
       }
       // 拼接请求分页参数
