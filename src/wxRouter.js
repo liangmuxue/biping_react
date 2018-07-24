@@ -82,15 +82,6 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/subscribe/subDetail'),
   });
-  // 订阅详情 - 新
-  const NewSubDetail = dynamic({
-    app,
-    models: () => [
-      import('./models/app'),
-      import('./models/newSubDetail'),
-    ],
-    component: () => import('./routes/weixin/subscribe/children/newSubDetail.jsx'),
-  });
   // 币种列表 - 选择交易对
   const CoinList = dynamic({
     app,
@@ -245,10 +236,6 @@ function RouterConfig({ history, app }) {
     modelName: 'subDetail',
     component: SubDetail,
   }, {
-    name: 'newSubDetail',
-    modelName: 'newSubDetail',
-    component: NewSubDetail,
-  }, {
     name: 'coinList',
     modelName: 'coinList',
     component: CoinList,
@@ -323,7 +310,6 @@ function RouterConfig({ history, app }) {
           <Route path="/Announcement" component={Announcement} />
           <Route path="/subList" component={SubList} />
           <Route path="/subDetail" component={SubDetail} />
-          <Route path="/newSubDetail" component={NewSubDetail} />
           <Route path="/coinList" component={CoinList} />
           <Route path="/coinSearch" component={CoinSearch} />
           <Route path="/coinDetail" component={CoinDetail} />
