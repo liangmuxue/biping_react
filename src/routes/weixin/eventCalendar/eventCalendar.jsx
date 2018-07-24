@@ -17,13 +17,14 @@ import { config } from '../../../../config/environment';
 import { Toast } from 'antd-mobile';
 
 function shareEvent(dispatch, shortUrl) {
+  const { host } = config.env;
   // 隐藏分享内容背景
   document.body.style.overflow = 'hidden';
   document.body.style.height = '100%';
   document.documentElement.style.overflow = 'hidden';
   document.getElementById('eventShareDom').style.display = 'block';
   // 替换过空格之后的内容
-  const replaceVal = document.getElementById('eventShareDom');
+  const replaceVal = document.getElementById('contentImg');
   const srcs = [];
   if (replaceVal && replaceVal !== null) {
     const imgs = replaceVal.querySelectorAll('img');
@@ -32,11 +33,11 @@ function shareEvent(dispatch, shortUrl) {
         // 解决跨域,传递现有的img、src数组
         srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
         imgs[i].setAttribute('id', `imgUrl${i}`);
-        imgs[i].setAttribute('crossOrigin', 'Anonymous');
+        imgs[i].setAttribute('src', `${host}/imgProxy?targetUrl=${imgs[i].src}`);
       }
     }
   }
-  /* dispatch({
+  dispatch({
     type: 'eventCalendar/getImgString',
     payload: {
       srcs,
@@ -47,7 +48,7 @@ function shareEvent(dispatch, shortUrl) {
         imgs.setAttribute('src', data[i].src);
       }
     },
-  }); */
+  });
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
   const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
   const dom3 = document.getElementsByClassName('am-list-footer')[1];
@@ -65,7 +66,6 @@ function shareEvent(dispatch, shortUrl) {
     dom4.style.marginBottom = '0px';
   }
   let imgUrl = null;
-  const { host } = config.env;
   const url = `${host}/shortUrl/${shortUrl}`;
   console.log(`share url is:${url}`);
   // TODO: img部分机型显示不出来
@@ -436,12 +436,14 @@ class EventCalendar extends BaseComponent {
               ))}
             </Flex>
           </div>
-          <EventList
-            {...this.props}
-            changeType={id => this.changeType(id)}
-            reminder={data => this.reminder(data)}
-            toDetail={data => this.toDetail(data)}
-          />
+          <div id="contentImg">
+            <EventList
+              {...this.props}
+              changeType={id => this.changeType(id)}
+              reminder={data => this.reminder(data)}
+              toDetail={data => this.toDetail(data)}
+            />
+          </div>
           <div className={styles.bottomDom}>
             <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
             {/* <canvas id="canvas" className={styles.shareewm} /> */}

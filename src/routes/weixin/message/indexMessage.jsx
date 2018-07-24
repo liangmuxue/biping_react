@@ -119,14 +119,14 @@ class MessageList extends BaseComponent {
     });
   }
   tabClick(tab, index) {
-    Toast.loading('正在加载...');
+    // Toast.loading('正在加载...');
     this.setState({
       contentHtml: null,
     });
     console.log(this.state, tab, index);
     this.getMessageList(tab.tagId);
-
   }
+
   render() {
     const { indexMessage } = this.props;
     if (!indexMessage) {
@@ -145,13 +145,13 @@ class MessageList extends BaseComponent {
           <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
           <div className={styles.notread}>暂无消息</div>
         </div>);
-    } else if (flag === 0 && list.length === 0) {
+    } /* else if (flag === 0 && list.length === 0) {
       this.state.contentHtml = (
         <div className={styles.empty}>
           <div><img src="/images/indexImg/nomsg.png" className={styles.buycar} alt="" /></div>
           <div className={styles.notread}>暂无消息</div>
         </div>);
-    } else {
+    }  */else {
       // 加工数据
       const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
       console.log('messageList in idx', messageList);

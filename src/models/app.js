@@ -354,6 +354,7 @@ const App = {
       };
     },
     hideRouteLoading(state) {
+      console.log('hideRouteLoading in');
       return {
         ...state, routeLoading: false,
       };

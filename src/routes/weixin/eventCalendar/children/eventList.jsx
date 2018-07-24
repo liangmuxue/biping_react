@@ -131,7 +131,7 @@ class EventList extends React.Component {
             ))}
           </ul>
           <div onClick={() => this.showLayer()} className={styles.rightBtn} style={{ display: 'none' }}>
-            <img alt="分类" src="/images/calendar/type-right-Button.png" />
+            {/* <img alt="分类" src="/images/calendar/type-right-Button.png" /> */}
           </div>
         </div>
         {
