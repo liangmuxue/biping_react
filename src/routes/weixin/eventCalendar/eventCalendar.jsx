@@ -457,7 +457,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser, pagiLoading: state.app.pagiLoading };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));

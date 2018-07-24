@@ -69,12 +69,13 @@ export default modelExtend(pageModel, {
     },
     // 请求币事件列表数据
     *getListData({ payload }, { put }) {
-      // TODO: loading重复bug，临时解决 - 以后跟数据统一走
-      yield put({ type: 'app/hideRouteLoading' });
-      Toast.loading('正在加载...');
-      const data = yield put({
+      yield put({
         type: 'query',
         payload,
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     *reminder({ payload }, { call, put, select }) {
@@ -245,6 +246,12 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         shortUrl: { ...data },
+      };
+    },
+    resetList(state) {
+      state.list = [];
+      return {
+        ...state,
       };
     },
   },

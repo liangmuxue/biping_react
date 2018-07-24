@@ -49,7 +49,7 @@ class CoinList extends BaseComponent {
   }
   // tab选项卡点击
   tabChange(tab) {
-    Toast.loading('正在加载...');
+    // Toast.loading('正在加载...');
     const { params } = this.props;
     const { verbId, exchangeId } = params;
     const { title } = tab;
