@@ -232,6 +232,12 @@ class CoinList extends BaseComponent {
     });
     const height = document.documentElement.clientHeight - 100;
     console.log('name=>>', name);
+    let index = null;
+    for(let i in tabs) {
+      if (tabs[i].title == name) {
+        index = i;
+      }
+    }
     return (
       <div className={styles.coinListCon}>
         <div onClick={this.searchClick.bind(this)}>
@@ -240,7 +246,7 @@ class CoinList extends BaseComponent {
         <Tabs
           key={Math.random()}
           tabs={tabs}
-          initialPage={name !== '自选' ? 1 : 0}
+          initialPage={Number(index)}
           swipeable={false}
           tabBarActiveTextColor="#0068dd"
           tabBarTextStyle={{ fontSize: '.26rem' }}
