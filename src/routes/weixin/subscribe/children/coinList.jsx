@@ -9,14 +9,13 @@ import BaseComponent from '../../baseComponent';
 import InfiniteListView from '../../../../components/infiniteListView';
 import { buildPagiProps } from '../../../common/paginationRoute';
 import { rebuildMessageList } from '../../../../selectors/messageList';
-import Toast from 'antd-mobile/lib/toast/index';
-import 'antd-mobile/es/icon/style/index.css';
 
 class CoinList extends BaseComponent {
   constructor(props) {
     super(props);
+    const { params } = this.props;
     this.state = {
-      tabName: null,
+      tabName: params.tabName || null,
     };
   }
   componentWillMount() {
@@ -25,11 +24,6 @@ class CoinList extends BaseComponent {
       type: 'coinList/queryList',
       payload: { ...params },
     });
-    if (params.tabName) {
-      this.setState({
-        tabName: params.tabName,
-      });
-    }
   }
   // 搜索点击
   searchClick() {
@@ -49,11 +43,10 @@ class CoinList extends BaseComponent {
   }
   // tab选项卡点击
   tabChange(tab) {
-    // Toast.loading('正在加载...');
+    console.log('tabChange=>>');
     const { params } = this.props;
     const { verbId, exchangeId } = params;
-    const { title } = tab;
-    const coinName = title;
+    const coinName = tab.title;
     this.setState({
       tabName: coinName,
     });
@@ -143,20 +136,18 @@ class CoinList extends BaseComponent {
       return null;
     }
     coinListHeadData.sobmolList.map(item => {
-      const obj = {
+      let obj = {
         title: item.coinName,
         exchangeId: item.exchangeId,
       }
       tabs.push(obj);
     });
     const { coinName } = coinListHeadData.sobmolList[0];
-    let name = coinListHeadData.subscribeCount > 0 ? '自选' : coinName;
+    let name = null;
     if (this.state.tabName) {
       name = this.state.tabName;
     } else {
-      this.setState({
-        tabName: name,
-      });
+      name = coinListHeadData.subscribeCount > 0 ? '自选' : coinName;
     }
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: coinList });
@@ -240,27 +231,16 @@ class CoinList extends BaseComponent {
       },
     });
     const height = document.documentElement.clientHeight - 100;
-    let initialIndex = 0;
-    if (params.tabName) {
-      console.log('ifif', params.tabName);
-      for (let i in tabs) {
-        if(tabs[i].title == params.tabName) {
-          initialIndex = i;
-        }
-      }
-    } else {
-      coinListHeadData.subscribeCount > 0 ? initialIndex = 0 : initialIndex = 1;
-    }
-    console.log('coinName=>', initialIndex);
-    const ininin = 2;
+    console.log('name=>>', name);
     return (
       <div className={styles.coinListCon}>
         <div onClick={this.searchClick.bind(this)}>
           <SearchBar placeholder='搜索' disabled="true" />
         </div>
         <Tabs
+          key={Math.random()}
           tabs={tabs}
-          initialPage={Number(initialIndex)}
+          initialPage={name !== '自选' ? 1 : 0}
           swipeable={false}
           tabBarActiveTextColor="#0068dd"
           tabBarTextStyle={{ fontSize: '.26rem' }}
