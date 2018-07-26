@@ -63,7 +63,8 @@ class EventList extends React.Component {
     });
   }
   render() {
-    const { eventCalendar } = this.props;
+    const { eventCalendar, pagiLoading } = this.props;
+    console.log('eventList=>', this.props);
     const { typeList, listData } = eventCalendar;
     if (!typeList || !typeList.data) {
       return null;
@@ -144,7 +145,7 @@ class EventList extends React.Component {
               height={height}
               listRemain
             /> :
-            <div style={divStyle} className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>
+            (pagiLoading ? null : <div style={divStyle} className={styles.noData}><img src="/images/calendar/nodata.png" alt="无数据" />当前日期暂无事件，调整日期试试</div>)
         }
         {
           this.state.showLayer ? <TypeLayer closeLayer={() => this.closeLayer()} {...this.props} /> : ''

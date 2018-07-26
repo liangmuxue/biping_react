@@ -52,7 +52,7 @@ export default modelExtend(pageModel, {
       });
     },
     *userListData({ payload }, { put }) {
-      const data = yield put({
+      yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
@@ -65,10 +65,14 @@ export default modelExtend(pageModel, {
             pageSize: 10, // 默认每页条目
           },
         },
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     *listdata({ payload }, { put }) {
-      const data = yield put({
+      yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
@@ -81,6 +85,10 @@ export default modelExtend(pageModel, {
             pageSize: 10, // 默认每页条目
           },
         },
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     // 取消订阅
@@ -238,6 +246,12 @@ export default modelExtend(pageModel, {
       };
     },
     showCancelSuccess(state, action) {
+      return {
+        ...state,
+      };
+    },
+    resetList(state) {
+      state.list = [];
       return {
         ...state,
       };
