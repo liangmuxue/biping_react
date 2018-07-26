@@ -41,6 +41,17 @@ class MessageList extends BaseComponent {
   }
   // 卡片点击事件，进入详情页
   cardClick(msgObj) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'indexMessageCardClick',
+        obj: {
+          '名称': msgObj.name,
+          '标题': msgObj.title,
+          '来自订阅': msgObj.tagName,
+        },
+      },
+    });
     console.log('cardClick in,msgObj:', this.props);
     const { systemUser } = this.props;
     // 是否入群
@@ -61,14 +72,14 @@ class MessageList extends BaseComponent {
       },
     });
     // 进入详情埋点，feed类型
-    this.props.dispatch({
+    /* this.props.dispatch({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst.MESSAGEDETAIL,
         action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
         opt: { enterMessageCase: 'feedCase' },
       },
-    });
+    }); */
   }
   // logo点击事件
   logoClick(msgObj) {
@@ -98,7 +109,25 @@ class MessageList extends BaseComponent {
     console.log('componentWillMount indexMessage', this.props);
     this.getMessageList();
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'indexMessage',
+        obj: {
+          '进入': '进入消息',
+        },
+      },
+    });
+  }
+
   bannerClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'indexMessageBannerClick',
+      },
+    });
     this.emptyClick();
   }
   getMessageList(tagId = null) {
@@ -119,14 +148,21 @@ class MessageList extends BaseComponent {
     });
   }
   tabClick(tab, index) {
-    // Toast.loading('正在加载...');
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'indexMessageTabclick',
+        obj: {
+          '名称': tab.title,
+        },
+      },
+    });
     this.setState({
       contentHtml: null,
     });
     console.log(this.state, tab, index);
     this.getMessageList(tab.tagId);
   }
-
   render() {
     const { indexMessage } = this.props;
     if (!indexMessage) {

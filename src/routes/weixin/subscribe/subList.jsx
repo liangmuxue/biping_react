@@ -22,7 +22,27 @@ class subList extends BaseComponent {
       type: 'subscribe/subscribeQuery',
     });
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeList',
+        obj: {
+          '进入': '进入订阅管理',
+        },
+      },
+    });
+  }
   itemClick(item) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeListClick',
+        obj: {
+          '点击管理订阅': item.typeName,
+        },
+      },
+    });
     const backPath = 'subList';
     // 跳转到新订阅详情页面
     this.props.dispatch({

@@ -36,13 +36,13 @@ export default modelExtend(pageModel, {
         },
       });
       // 埋点
-      yield put({
+      /* yield put({
         type: 'app/analysis',
         payload: {
           page: siteAnalysis.pageConst.ENTERGROUP,
           action: siteAnalysis.actConst.GROUPWECHAT,
         },
-      });
+      }); */
       // 返回
       yield put({
         type: 'shareWechatSuccess',

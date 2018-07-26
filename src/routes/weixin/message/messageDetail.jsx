@@ -68,47 +68,6 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
   const url = `${host}/shortUrl/${shortUrl}`;
   const msgObj = msgDetailData.data;
   console.log(`share url is:${url}`);
-  // TODO: img部分机型显示不出来
-  /* QrCodeWithLogo.toImage({
-    image: document.getElementById('ewmImg'),
-    content: url,
-    width: 120,
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }) */
-  /* QrCodeWithLogo.toCanvas({
-    canvas: document.getElementById('canvas'),
-    content: url,
-    width: 120,
-    bgColor: 'transparent',
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }).then(() => {
-    console.log('success777', document.getElementById('showShare'));
-    html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
-      imgUrl = canvas.toDataURL('image/png');
-      // console.log('imgUrl=>>', imgUrl);
-      document.getElementById('showShare').style.display = 'none';
-      dispatch({
-        type: 'messageDetail/shareMsg',
-        payload: {
-          messageId: msgObj.mid,
-          imgUrl,
-        },
-      });
-      // 分享消息埋点
-      dispatch({
-        type: 'app/analysis',
-        payload: {
-          page: siteAnalysis.pageConst.MESSAGEDETAIL,
-          action: siteAnalysis.actConst.SHAREMESSAGE,
-          opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
-        },
-      });
-    });
-  }); */
   let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'messageDetail/getQrcode',
@@ -129,14 +88,14 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
           },
         });
         // 分享消息埋点
-        dispatch({
+        /* dispatch({
           type: 'app/analysis',
           payload: {
             page: siteAnalysis.pageConst.MESSAGEDETAIL,
             action: siteAnalysis.actConst.SHAREMESSAGE,
             opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
           },
-        });
+        }); */
       });
     },
   });
@@ -187,6 +146,17 @@ class MsgDetail extends BaseComponent {
     }
     super.componentWillMount();
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'messageDetail',
+        obj: {
+          '进入': '进入详情',
+        },
+      },
+    });
+  }
   // 去开通
   toOpen() {
     const { dispatch, msgDetailData } = this.props;
@@ -208,6 +178,15 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'messageDetailShareClick',
+        obj: {
+          '分享': '详情页分享',
+        },
+      },
+    });
     const { messageHost, wechatHost } = config.env;
     const { msgDetailData, params, dispatch } = this.props;
     const msgObj = msgDetailData.data;
@@ -239,14 +218,14 @@ class MsgDetail extends BaseComponent {
       },
     });
     // 进入详情埋点，same类型
-    this.props.dispatch({
+    /* this.props.dispatch({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst.MESSAGEDETAIL,
         action: siteAnalysis.actConst.BROWSE,
         opt: { enterMessageCase: 'sameCase' },
       },
-    });
+    }); */
   }
   closeShare() {
     const { dispatch } = this.props;

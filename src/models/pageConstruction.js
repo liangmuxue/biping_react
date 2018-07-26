@@ -154,13 +154,13 @@ function* switchPageReal({
   pageName, params, currentPage, backArrow, direct,
 }, { put, select }) {
   // 统计pv埋点
-  yield put({
+  /* yield put({
     type: 'app/analysis',
     payload: {
       page: siteAnalysis.pageConst.PVCOUNT,
       action: siteAnalysis.actConst.BROWSE,
     },
-  });
+  }); */
   // 页面名称转大写
   let upPageName = null;
   if (pageName) {
@@ -191,14 +191,14 @@ function* switchPageReal({
     if (pageName && pageName === 'toOpen') {
       opt.typeId = params.typeId;
     }
-    yield put({
+    /* yield put({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst[upPageName],
         action: siteAnalysis.actConst.BROWSE,
         opt,
       },
-    });
+    }); */
   }
   // 上导航返回
   if (backArrow) {

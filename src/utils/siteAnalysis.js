@@ -170,6 +170,12 @@ export const siteAnalysis = {
       });
     }
   },
+  trackEvent(code, obj) {
+    if (config.env.analysis) {
+      console.log('trackEvent', code, obj);
+      zhuge.track(`wx_${code}`, obj);
+    }
+  },
 
   setField(key, value) {
     if (key === 'userId') {

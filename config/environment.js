@@ -12,8 +12,8 @@ if (process.env.NODE_ENV === 'development') {
   // ENV.host = 'http://localhost:8280';
   // ENV.host = 'http://10.0.107.231:8280';
   // ENV.host = 'http://10.0.108.137:8280';
-  ENV.host = 'https://twp.closerhearts.net.cn';
-  // ENV.host = 'https://wps.bipingcoin.com/';
+  // ENV.host = 'https://twp.closerhearts.net.cn';
+  ENV.host = 'https://wps.bipingcoin.com/';
   // ENV.socketHost = 'http://10.0.109.221:8280';
   ENV.wechatHost = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxfd4795144c135bdd&redirect_uri=';
   ENV.messageHost = 'http://twx.closerhearts.net.cn';
@@ -33,7 +33,7 @@ if (process.env.NODE_ENV === 'development') {
   ENV.wxScanurl = 'http://localhost:4200/index.html';
   ENV.imgShareUrl = 'http://img.closerhearts.net.cn';
   ENV.wxBrowserCheck = true;
-  // ENV.analysis = true;
+  ENV.analysis = true;
 }
 if (process.env.NODE_ENV === 'test') {
   ENV.resourceHost = 'http://resource.tnb99.net';

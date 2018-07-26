@@ -295,6 +295,12 @@ const App = {
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
+    // 埋点
+    *pushPoint({ payload }, { select }) {
+      const st = yield select();
+      const { code, obj = {} } = payload;
+      siteAnalysis.trackEvent(code, obj);
+    },
   },
   reducers: {
     // 记录页面跳转信息
