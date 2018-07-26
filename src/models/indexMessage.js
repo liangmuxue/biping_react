@@ -33,8 +33,12 @@ export default modelExtend(pageModel, {
       console.log('query for msgQuery', payload);
       // 在这里拼好filter，然后调用通用的query方法
       yield put({
+        type: 'resetList',
+      });
+      yield put({
         type: 'query',
         payload,
+        ps: 'center',
       });
     },
     *active({ backArrow }, { put }) {
@@ -67,6 +71,13 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         flag,
+      };
+    },
+    resetList(state) {
+      console.log('resetList=>', state.list);
+      state.list = [];
+      return {
+        ...state,
       };
     },
   },

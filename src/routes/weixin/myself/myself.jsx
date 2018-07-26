@@ -28,6 +28,17 @@ class BasicInput extends BaseComponent {
     console.log('props in MsgDetail', props);
     super(props);
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'mySelf',
+        obj: {
+          '进入': '进入我的',
+        },
+      },
+    });
+  }
   onSubmit() {
     this.props.form.validateFields({ force: true }, (error) => {
       if (!error) {
@@ -48,6 +59,12 @@ class BasicInput extends BaseComponent {
     }
   }
   changePage() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'mySelfBuyHistory',
+      },
+    });
     // 跳转到购买记录页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -98,6 +115,15 @@ class BasicInput extends BaseComponent {
               })}
               onClick={(checked) => {
                 dispatch({
+                  type: 'app/pushPoint',
+                  payload: {
+                    code: 'mySelfIsPush',
+                    obj: {
+                      '状态': `${checked ? '开启' : '关闭' }`
+                    },
+                  },
+                });
+                dispatch({
                   type: 'myself/ifpush',
                   payload: { ifpush: checked },
                 });
@@ -118,6 +144,15 @@ class BasicInput extends BaseComponent {
                 valuePropName: 'checked',
               })}
               onClick={(checked) => {
+                dispatch({
+                  type: 'app/pushPoint',
+                  payload: {
+                    code: 'mySelfFreePush',
+                    obj: {
+                      '状态': `${checked ? '开启' : '关闭' }`
+                    },
+                  },
+                });
                 dispatch({
                   type: 'myself/freePush',
                   payload: { freePush: checked },

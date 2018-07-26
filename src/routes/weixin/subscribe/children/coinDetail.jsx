@@ -49,6 +49,12 @@ class CoinDetail extends BaseComponent {
     return returnArr;
   }
   confirmClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinDetailConfirm',
+      },
+    });
     const { coinDetail, params } = this.props;
     const { detailData } = coinDetail;
     const { data } = detailData;
@@ -92,7 +98,12 @@ class CoinDetail extends BaseComponent {
       params: {
         // pageName: 'coinList',
         pageName: 'subscribeResult',
-        params: { exchangeId: params.exchangeId, verbId: params.verbId, backPath: 'coinDetail' },
+        params: {
+          exchangeId: params.exchangeId,
+          verbId: params.verbId,
+          backPath: 'coinDetail',
+          tabName: params.tabName,
+        },
       },
     });
   }
@@ -203,7 +214,7 @@ class CoinDetail extends BaseComponent {
         <p className={styles.p1}>{params.verbId === 718 ? '异动时间段选择' : '交易量异动设置'}</p>
         <SwitchExample />
         <p className={styles.p2}>关闭后，将无法收到该交易对的微信推送消息</p>
-        <Button className={styles.cofrimBtn} onClick={() => this.confirmClick()} type="primary">确定</Button>
+        <Button className={styles.cofrimBtn} onClick={() => this.confirmClick()} type="primary">提交</Button>
       </div>
     );
   }

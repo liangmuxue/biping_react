@@ -9,14 +9,13 @@ import BaseComponent from '../../baseComponent';
 import InfiniteListView from '../../../../components/infiniteListView';
 import { buildPagiProps } from '../../../common/paginationRoute';
 import { rebuildMessageList } from '../../../../selectors/messageList';
-import Toast from 'antd-mobile/lib/toast/index';
-import 'antd-mobile/es/icon/style/index.css';
 
 class CoinList extends BaseComponent {
   constructor(props) {
     super(props);
+    const { params } = this.props;
     this.state = {
-      tabName: null,
+      tabName: params.tabName || null,
     };
   }
   componentWillMount() {
@@ -26,8 +25,25 @@ class CoinList extends BaseComponent {
       payload: { ...params },
     });
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinList',
+        obj: {
+          '进入': '进入交易对列表',
+        },
+      },
+    });
+  }
   // 搜索点击
   searchClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListSearch',
+      },
+    });
     const { params } = this.props;
     // 跳转到信息详情页面
     this.props.dispatch({
@@ -44,11 +60,18 @@ class CoinList extends BaseComponent {
   }
   // tab选项卡点击
   tabChange(tab) {
-    Toast.loading('正在加载...');
     const { params } = this.props;
     const { verbId, exchangeId } = params;
-    const { title } = tab;
-    const coinName = title;
+    const coinName = tab.title;
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListTabClick',
+        obj: {
+          '名称': coinName,
+        },
+      },
+    });
     this.setState({
       tabName: coinName,
     });
@@ -70,6 +93,15 @@ class CoinList extends BaseComponent {
   }
   // 订阅详情
   toDetail(rowData) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListDetailClick',
+        obj: {
+          '币种': rowData.baseCoinCode,
+        },
+      },
+    });
     const { params } = this.props;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -80,6 +112,7 @@ class CoinList extends BaseComponent {
           exchangeId: params.exchangeId,
           verbId: params.verbId,
           symbolId: rowData.symbolId,
+          tabName: this.state.tabName,
         },
       },
     });
@@ -100,6 +133,12 @@ class CoinList extends BaseComponent {
       payload: { symbolVerbId },
       noUser: true,
     });
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListCancel',
+      },
+    });
   }
   cancelBtn(e, data) {
     e.stopPropagation();
@@ -107,6 +146,12 @@ class CoinList extends BaseComponent {
     this.props.dispatch({
       type: 'coinList/subscribeRemove',
       payload: { symbolVerbId },
+    });
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListCancel',
+      },
     });
   }
   // 开启微信推送
@@ -133,23 +178,22 @@ class CoinList extends BaseComponent {
     const tabs = [
       { title: '自选' },
     ];
-    if (!coinListHeadData) {
+    if (!coinListHeadData || !coinListHeadData.sobmolList) {
       return null;
     }
     coinListHeadData.sobmolList.map(item => {
-      const obj = {
+      let obj = {
         title: item.coinName,
         exchangeId: item.exchangeId,
       }
       tabs.push(obj);
     });
-    const initialPage = coinListHeadData.subscribeCount > 0 ? 0 : 1;
-    const name = coinListHeadData.subscribeCount > 0 ? '自选' : 'USDT';
-    const that = this;
-    if (!this.state.tabName) {
-      that.setState({
-        tabName: name,
-      });
+    const { coinName } = coinListHeadData.sobmolList[0];
+    let name = null;
+    if (this.state.tabName) {
+      name = this.state.tabName;
+    } else {
+      name = coinListHeadData.subscribeCount > 0 ? '自选' : coinName;
     }
     // 加工list数据
     const { messageList } = rebuildMessageList({ messageList: coinList });
@@ -157,7 +201,7 @@ class CoinList extends BaseComponent {
       ...messageList,
       renderRow: (rowData) => {
         let contentHtml = null;
-        if (this.state.tabName === '自选') {
+        if (name === '自选') {
           contentHtml = (
             <div onClick={() => this.toDetail(rowData)} className={styles.userList}>
               <p className={styles.nametext}>{rowData.exchangeZhName}</p>
@@ -196,7 +240,7 @@ class CoinList extends BaseComponent {
               {
                 params.verbId === 717 ?
                 (
-                  <p className={styles.bottomText}>{`单笔买入>60万,单比卖出>60万`}</p>
+                  <p className={styles.bottomText}>{`单笔买入 >60万,单笔卖出 >60万`}</p>
                 ) :
                 (
                   <div>
@@ -233,17 +277,25 @@ class CoinList extends BaseComponent {
       },
     });
     const height = document.documentElement.clientHeight - 100;
+    console.log('name=>>', name);
+    let index = null;
+    for(let i in tabs) {
+      if (tabs[i].title == name) {
+        index = i;
+      }
+    }
     return (
       <div className={styles.coinListCon}>
         <div onClick={this.searchClick.bind(this)}>
-          <SearchBar placeholder="搜索" disabled="true" />
+          <SearchBar placeholder='搜索' disabled="true" />
         </div>
         <Tabs
+          key={Math.random()}
           tabs={tabs}
+          initialPage={Number(index)}
           swipeable={false}
           tabBarActiveTextColor="#0068dd"
           tabBarTextStyle={{ fontSize: '.26rem' }}
-          initialPage={initialPage}
           renderTab={tab => <span>{tab.title}</span>}
           onChange={tab => this.tabChange(tab)}
         >

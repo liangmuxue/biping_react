@@ -31,6 +31,17 @@ class SubDetail extends BaseComponent {
       payload: { ...params },
     });
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subdetail',
+        obj: {
+          '进入': '进入订阅管理详情'
+        },
+      },
+    });
+  }
   // 订阅所有
   subscribeAll() {
     const { remainDate, typeId, typeName } = this.props.subDetailData.data;
@@ -127,6 +138,15 @@ class SubDetail extends BaseComponent {
     }
   }
   subTypeClick(subTypeObj) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subTypeClick',
+        obj: {
+          '点击': `${subTypeObj.remainDate < 0 ? '开通' : '续费'}`,
+        },
+      },
+    });
     console.log('subType in', subTypeObj.typeId);
     const { preventFlag } = this.props;
     console.log(`preventFlag is:${preventFlag}`);
@@ -146,6 +166,16 @@ class SubDetail extends BaseComponent {
   // 大单 涨幅 交易所点击
   childrenClick(data) {
     const { typeId } = this.props.subDetailData.data;
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subDetailItemClick',
+        obj: {
+          '类别': this.props.subDetailData.data.typeName,
+          '交易所': data.name,
+        },
+      },
+    });
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: {

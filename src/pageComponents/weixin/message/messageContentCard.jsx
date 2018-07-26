@@ -50,6 +50,37 @@ class MessageContent extends React.Component {
     }
     // 净流入,涨跌幅,价格显示
     const { gainHoldFun, priceShow, gainDifferFun } = NumberFormat;
+    // 转换为成交金额
+    const vol = msgObj.priceReal * msgObj.amount / 10000;
+    const volStr = vol.toFixed(2) + '万';
+    // 转换为净流入金额
+    const holdVol = msgObj.priceReal / msgObj.price * msgObj.gainHold /10000;
+    const holdVolStr = holdVol.toFixed(2) + '万';
+    let differTextArea = null;
+    if(msgObj.direction){
+      differTextArea = "";
+    }else{
+      if(msgObj.gainDiffer > 0){
+        differTextArea =  (<div>
+          {timeUp}分钟内上涨：
+          <span className={style.toUp}>
+            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+          </span>
+        </div>);
+      }
+      if(msgObj.gainDiffer < 0){
+        differTextArea =  (<div>
+          {timeUp}分钟内下跌：
+          <span className={style.toDown}>
+            {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
+          </span>
+        </div>);
+      }
+    }
+    const gainHoldTrans = function(gainHold){
+      const gainHoldReal =  msgObj.priceReal / msgObj.price * gainHold /10000;
+      return '￥ ' + gainHoldReal.toFixed(2) + '万';
+    };
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -64,54 +95,26 @@ class MessageContent extends React.Component {
           {msgObj.direction ? <div>异常大单：<span>{msgObj.direction === 'buy' ? '买入' : '卖出'}{msgObj.amount.toFixed(2)} {msgObj.baseCoinCode }</span></div> : ''}
           <div>当前价格：
             <span>
-              {msgObj.price}
-              {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
+              {msgObj.price} {msgObj.quoteCoinCode !== null ? msgObj.quoteCoinCode.toUpperCase() : ''}<br />
               <b className={style.convert}>
                (≈ 人民币{msgObj.priceReal ? priceShow(msgObj.priceReal) : '-'}）
               </b>
             </span>
           </div>
           {msgObj.direction ?
-            <div>1分钟内成交量：
+            <div>成交额：
               <span>
-                {(msgObj.quoteList[0].buyAmount + msgObj.quoteList[0].sellAmount).toFixed(2)}，
-              其中买入{(msgObj.quoteList[0].buyAmount).toFixed(2)}、
-              卖出{(msgObj.quoteList[0].sellAmount).toFixed(2)}
+                ￥{volStr}
               </span>
             </div> :
-            <div>{timeUp}分钟内成交量：
-              <span>{(msgObj.buyAmount + msgObj.sellAmount).toFixed(2)}，
-                其中买入{(msgObj.buyAmount).toFixed(2)}、
-                卖出{(msgObj.sellAmount).toFixed(2)}
+            <div>{timeUp}分钟内资金净流入：
+              <span>￥{holdVolStr}
               </span>
-            </div>}
-          {msgObj.direction ?
-            <div>{'1分钟内净流入额:'}
-              <span>{gainHoldFun(msgObj.quoteList[0].gainHold)}</span>
-            </div> :
-            <div>{timeUp}分钟内净流入额：
-              <span>{gainHoldFun(msgObj.gainHold)}
-              </span>
-            </div>}
-
-          {msgObj.direction ?
-            <div>{'1分钟内涨幅：'}{msgObj.quoteList[0].gainDiffer > 0 ?
-              <span className={style.toUp}>
-            +{(msgObj.quoteList[0].gainDiffer ? (msgObj.quoteList[0].gainDiffer * 100).toFixed(2) : '-')}%
-              </span> :
-              <span className={style.toDown}>
-                {gainDifferFun(msgObj.quoteList[0].gainDiffer)}
-              </span>}
-            </div> :
-            <div>{timeUp}分钟内涨幅：{msgObj.gainDiffer > 0 ?
-              <span className={style.toUp}>
-            +{(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-              </span> :
-              <span className={style.toDown}>
-                {(msgObj.gainDiffer ? (msgObj.gainDiffer * 100).toFixed(2) : '-')}%
-              </span>}
-            </div>}
-
+            </div>
+          }
+          {
+            differTextArea
+          }
         </div>
         <div className={msgObj.direction ? style.hide : style.coinTable} >
           <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
@@ -134,7 +137,7 @@ class MessageContent extends React.Component {
                   {gainDifferFun(msg.gainDiffer)}
                 </span>
               </div>
-              <div className={style.tableIncome}>{gainHoldFun(msg.gainHold)}</div>
+              <div className={style.tableIncome}>{gainHoldTrans(msg.gainHold)}</div>
             </div>
           </div>
         ))}

@@ -18,15 +18,27 @@ class SubscribeResult extends BaseComponent {
   }
   goIndex() {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeResultGoindex',
+      },
+    });
+    this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'indexMessage' },
     });
   }
   goOn() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeResultGoOn',
+      },
+    });
     const { params } = this.props;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
-      payload: { pageName: 'subDetail', params: { typeId: params.verbId } },
+      payload: { pageName: 'coinList', params: { verbId: params.verbId, exchangeId: params.exchangeId, tabName: params.tabName } },
     });
   }
   render() {

@@ -26,59 +26,80 @@ import { urlUtils } from '../../../utils/urlUtil.js';
 * @author 赵永帅
 * @Date  2018-6-12
 */
-function shareEvent(event) {
+function shareEvent(dispatch, shortUrl, msgDetailData) {
+  // 隐藏分享内容背景
+  document.body.style.overflow = 'hidden';
+  document.body.style.height = '100%';
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('showShare').style.display = 'block';
+
+  // 替换过空格之后的内容
+  const replaceVal = document.getElementById('shareArticle');
+  const srcs = [];
+  if (replaceVal && replaceVal !== null) {
+    const imgs = replaceVal.querySelectorAll('img');
+    console.log('get images', imgs);
+    if (imgs && imgs.length > 0) {
+      for (let i = 0, j = imgs.length; i < j; i++) {
+        // 解决跨域,传递现有的img、src数组
+        srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+        imgs[i].setAttribute('id', `imgUrl${i}`);
+      }
+    }
+  }
+  dispatch({
+    type: 'messageDetail/getImgString',
+    payload: {
+      srcs,
+    },
+    onComplete(data) {
+      for (let i = 0; i < data.length; i++) {
+        const imgs = document.getElementById(data[i].id);
+        imgs.setAttribute('src', data[i].src);
+      }
+    },
+  });
   const dom1 = document.getElementById('picBox');
   if (dom1) {
     dom1.style.paddingBottom = '0';
   }
-  console.log('shareEvent');
   const { host } = config.env;
   let imgUrl = null;
-  const { dispatch, shortUrl, msgDetailData } = event;
-  const reuslturl = shortUrl.data.reuslturl;
-  const url = `${host}/shortUrl/${reuslturl}`;
+  const url = `${host}/shortUrl/${shortUrl}`;
   const msgObj = msgDetailData.data;
   console.log(`share url is:${url}`);
-  // TODO: img部分机型显示不出来
-  /* QrCodeWithLogo.toImage({
-    image: document.getElementById('ewmImg'),
-    content: url,
-    width: 120,
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }) */
-  QrCodeWithLogo.toCanvas({
-    canvas: document.getElementById('canvas'),
-    content: url,
-    width: 120,
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }).then(() => {
-    console.log('success777', document.getElementById('showShare'));
-    html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
-      imgUrl = canvas.toDataURL('image/png');
-      // console.log('imgUrl=>>', imgUrl);
-      document.getElementById('showShare').style.display = 'none';
-      dispatch({
-        type: 'messageDetail/shareMsg',
-        payload: {
-          messageId: msgObj.mid,
-          imgUrl,
-        },
+  let imgDom = document.getElementsByName('shareImg')[0];
+  dispatch({
+    type: 'messageDetail/getQrcode',
+    payload: url,
+    onComplete(data) {
+      const { response } = data;
+      const urlBase = response.data.base64;
+      imgDom.setAttribute('src', `data:image/png;base64,${urlBase}`);
+      html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
+        imgUrl = canvas.toDataURL('image/png');
+        // console.log('imgUrl=>>', imgUrl);
+        document.getElementById('showShare').style.display = 'none';
+        dispatch({
+          type: 'messageDetail/shareMsg',
+          payload: {
+            messageId: msgObj.mid,
+            imgUrl,
+          },
+        });
+        // 分享消息埋点
+        /* dispatch({
+          type: 'app/analysis',
+          payload: {
+            page: siteAnalysis.pageConst.MESSAGEDETAIL,
+            action: siteAnalysis.actConst.SHAREMESSAGE,
+            opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+          },
+        }); */
       });
-      // 分享消息埋点
-      dispatch({
-        type: 'app/analysis',
-        payload: {
-          page: siteAnalysis.pageConst.MESSAGEDETAIL,
-          action: siteAnalysis.actConst.SHAREMESSAGE,
-          opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
-        },
-      });
-    });
+    },
   });
+
 }
 class MsgDetail extends BaseComponent {
   constructor(props) {
@@ -113,7 +134,7 @@ class MsgDetail extends BaseComponent {
       payload: { ...this.props.params },
     });
     //  请求币事件日历的币价信息
-    if (params && params.tagName == '币事件日历') {
+    if (params && params.tagName == '币事件') {
       this.props.dispatch({
         type: 'messageDetail/coinPrice',
         payload: { ...this.props.params },
@@ -124,6 +145,17 @@ class MsgDetail extends BaseComponent {
       });
     }
     super.componentWillMount();
+  }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'messageDetail',
+        obj: {
+          '进入': '进入详情',
+        },
+      },
+    });
   }
   // 去开通
   toOpen() {
@@ -146,33 +178,27 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick() {
-    // 隐藏分享内容背景
-    document.body.style.overflow = 'hidden';
-    document.body.style.height = '100%';
-    document.documentElement.style.overflow = 'hidden';
-    document.getElementById('showShare').style.display = 'block';
-
-    // 替换过空格之后的内容
-    const replaceVal = document.getElementById('shareArticle');
-    const srcs = [];
-    if (replaceVal && replaceVal !== null) {
-      const imgs = replaceVal.querySelectorAll('img');
-      console.log('get images', imgs);
-      if (imgs && imgs.length > 0) {
-        for (let i = 0, j = imgs.length; i < j; i++) {
-          // 解决跨域,传递现有的img、src数组
-          srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
-          imgs[i].setAttribute('id', `imgUrl${i}`);
-        }
-      }
-    }
-
-    const { dispatch } = this.props;
-    console.log('ppppppppp', srcs);
-    dispatch({
-      type: 'messageDetail/getImgString',
+    this.props.dispatch({
+      type: 'app/pushPoint',
       payload: {
-        srcs,
+        code: 'messageDetailShareClick',
+        obj: {
+          '分享': '详情页分享',
+        },
+      },
+    });
+    const { messageHost, wechatHost } = config.env;
+    const { msgDetailData, params, dispatch } = this.props;
+    const msgObj = msgDetailData.data;
+    const { uid } = params;
+    console.log('msgObj is', msgObj);
+    const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
+    this.props.dispatch({
+      type: 'messageDetail/shortUrl',
+      payload: url,
+      onComplete(res) {
+        const { data } = res;
+        shareEvent(dispatch, data.data.reuslturl, msgDetailData);
       },
     });
   }
@@ -192,14 +218,14 @@ class MsgDetail extends BaseComponent {
       },
     });
     // 进入详情埋点，same类型
-    this.props.dispatch({
+    /* this.props.dispatch({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst.MESSAGEDETAIL,
         action: siteAnalysis.actConst.BROWSE,
         opt: { enterMessageCase: 'sameCase' },
       },
-    });
+    }); */
   }
   closeShare() {
     const { dispatch } = this.props;
@@ -297,18 +323,18 @@ class MsgDetail extends BaseComponent {
       },
     });
   }
-  shortUrl() {
+  /* shortUrl() {
     const { messageHost, wechatHost } = config.env;
     const { msgDetailData, params } = this.props;
     const msgObj = msgDetailData.data;
     const { uid } = params;
-    console.log('msgObj is', msgObj);
+    console.log('msgObj in short is', msgObj);
     const url = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=messageId${msgObj.mid}fromUser${uid}tagName${msgObj.verbname}#wechat_redirect`;
     this.props.dispatch({
       type: 'messageDetail/shortUrl',
       payload: url,
     });
-  }
+  } */
 
   render() {
     console.log('MsgDetail Now render', this.props);
@@ -325,17 +351,18 @@ class MsgDetail extends BaseComponent {
       return null;
     }
     // 拿到数据之后长链接转短链接
-    if (!shortUrl) {
+    /* if (!shortUrl&&msgDetailData&&msgDetailData.data) {
+      console.log("need get short url,msgDetailData:",msgDetailData);
       this.shortUrl();
-    }
+    } */
     // 分享请求,只有点击share方法才进
-    if (srcs && curAct && curAct === 'shareClick') {
+    /* if (srcs && curAct && curAct === 'shareClick') {
       for (let i = 0; i < srcs.length; i++) {
         const imgs = document.getElementById(srcs[i].id);
         imgs.setAttribute('src', srcs[i].src);
       }
       shareEvent(this.props);
-    }
+    } */
     const msgObj = msgDetailData.data;
     if (!msgObj.tagList && !msgObj.relateMsg && !msgObj.content) {
       return null;
@@ -530,30 +557,10 @@ class MsgDetail extends BaseComponent {
                 <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
               </div>
             </div>
-            {/* <div className={style.bottomCopy}>
-              <div className={style.wechatBox}>
-                <img id="ewmImg" crossOrigin="anonymous" alt="" />
-                <div className={style.readAll}>扫码阅读全文</div>
-              </div>
-            </div>
-            <div className={style.con}>
-              <div className={style.copytop}>
-                <img src="/images/msgImages/copy.png" />
-              </div>
-              <div className={style.logotop}>【币评】你最想要的币市信息</div>
-              <div className={style.logobottom}>bipingcoin.com <i style={{ color: '#032c4c' }}>扫码阅读全文</i></div>
-            </div> */}
             <div className={style.ewmCon}>
-              {/* <img id="ewmImg" className={style.leftImg} crossOrigin="anonymous" alt="" /> */}
-              <canvas id="canvas" className={style.leftImg}></canvas>
+              {/* <canvas id="canvas" className={style.leftImg}></canvas> */}
+              <img alt="" name="shareImg" className={style.leftImg}  /> 
               <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
-              {/* <div className={style.rightText}>
-                <p className={style.p1}>扫码阅读全文</p>
-                <div className={style.info}>
-                  <p>【币评】你最想要的币市信息</p>
-                  <p>www.bipingcoin.com</p>
-                </div>
-              </div> */}
             </div>
           </div>
         </div>

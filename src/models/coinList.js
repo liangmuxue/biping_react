@@ -18,7 +18,8 @@ export default modelExtend(pageModel, {
   },
   effects: {
     *queryList({ payload }, { put, select, call }) {
-      const { exchangeId, verbId } = payload;
+      const { exchangeId, verbId, tabName } = payload;
+      console.log('queryList=>', tabName);
       const endpoint = 'symbolVerb/recommendList';
       const filter = { exchangeId, verbId };
       const st = yield select();
@@ -28,7 +29,7 @@ export default modelExtend(pageModel, {
       if (data) {
         console.log('queryList=>', data);
         const { response } = data;
-        if (response.data.subscribeCount > 0) {
+        if (response.data.subscribeCount > 0 && (tabName === '自选' || !tabName)) {
           yield put({
             type: 'userListData',
             payload: {
@@ -36,7 +37,7 @@ export default modelExtend(pageModel, {
             },
           });
         } else {
-          const { coinName } = response.data.sobmolList[0].coinName;
+          const coinName = tabName || response.data.sobmolList[0].coinName;
           yield put({
             type: 'listdata',
             payload: {
@@ -51,7 +52,7 @@ export default modelExtend(pageModel, {
       });
     },
     *userListData({ payload }, { put }) {
-      const data = yield put({
+      yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
@@ -64,10 +65,14 @@ export default modelExtend(pageModel, {
             pageSize: 10, // 默认每页条目
           },
         },
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     *listdata({ payload }, { put }) {
-      const data = yield put({
+      yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
@@ -80,6 +85,10 @@ export default modelExtend(pageModel, {
             pageSize: 10, // 默认每页条目
           },
         },
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     // 取消订阅
@@ -237,6 +246,12 @@ export default modelExtend(pageModel, {
       };
     },
     showCancelSuccess(state, action) {
+      return {
+        ...state,
+      };
+    },
+    resetList(state) {
+      state.list = [];
       return {
         ...state,
       };

@@ -68,11 +68,27 @@ export const siteAnalysis = {
     },
     EVENTCALENDAR: {
       code: 'eventCalendar',
-      zh: '币事件日历',
+      zh: '币事件',
     },
     FOOTMENU: {
       code: 'footMenu',
       zh: '底部菜单',
+    },
+    COINLIST: {
+      code: 'coinList',
+      zh: '交易对列表',
+    },
+    COINSEARCH: {
+      code: 'coinSearch',
+      zh: '交易对搜索',
+    },
+    COINDETAIL: {
+      code: 'coinDetail',
+      zh: '交易对详情',
+    },
+    SUBSCRIBERESULT: {
+      code: 'subscribeResult',
+      zh: '提交成功',
     },
   },
   actConst: {
@@ -146,12 +162,18 @@ export const siteAnalysis = {
     // ReactGA.initialize('UA-117280811-2');
   },
   pushEvent(pageDef, actionDef, opt) {
-    console.log('track opt', opt);
+    console.log('track opt', opt, pageDef);
     if (config.env.analysis) {
       zhuge.track(`wx_${pageDef.code}`, {
         action: actionDef.code,
         ...opt,
       });
+    }
+  },
+  trackEvent(code, obj) {
+    if (config.env.analysis) {
+      console.log('trackEvent', code, obj);
+      zhuge.track(`wx_${code}`, obj);
     }
   },
 

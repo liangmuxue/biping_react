@@ -295,6 +295,12 @@ const App = {
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
     },
+    // 埋点
+    *pushPoint({ payload }, { select }) {
+      const st = yield select();
+      const { code, obj = {} } = payload;
+      siteAnalysis.trackEvent(code, obj);
+    },
   },
   reducers: {
     // 记录页面跳转信息
@@ -354,14 +360,17 @@ const App = {
       };
     },
     hideRouteLoading(state) {
+      console.log('hideRouteLoading in');
       return {
         ...state, routeLoading: false,
       };
     },
-    showPagiLoading(state) {
-      console.log('showPagiLoading in');
+    showPagiLoading(state, payload) {
+      console.log('showPagiLoading in', payload.position);
       return {
-        ...state, pagiLoading: true,
+        ...state,
+        pagiLoading: true,
+        pagiPosition: payload.position,
       };
     },
     hidePagiLoading(state) {

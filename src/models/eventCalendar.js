@@ -1,4 +1,5 @@
 import modelExtend from 'dva-model-extend';
+// import base64Img from 'base64-img-promise';
 import { pageModel } from './pagination';
 import { queryNormal, getImgString, getImgStringBase, shortUrl } from '../services/common';
 import Immutable from 'seamless-immutable';
@@ -68,12 +69,13 @@ export default modelExtend(pageModel, {
     },
     // 请求币事件列表数据
     *getListData({ payload }, { put }) {
-      // TODO: loading重复bug，临时解决 - 以后跟数据统一走
-      yield put({ type: 'app/hideRouteLoading' });
-      Toast.loading('正在加载...');
-      const data = yield put({
+      yield put({
         type: 'query',
         payload,
+        ps: 'center',
+      });
+      yield put({
+        type: 'resetList',
       });
     },
     *reminder({ payload }, { call, put, select }) {
@@ -119,7 +121,7 @@ export default modelExtend(pageModel, {
       });
     },
     // img的src转base64位
-    *getImgString({ payload }, { put, call }) {
+    *getImgString({ payload, onComplete }, { put, call }) {
       const { srcs } = payload;
       console.log('getImgString data', srcs);
       if (srcs && srcs.length > 0) {
@@ -137,11 +139,12 @@ export default modelExtend(pageModel, {
           srcs[i].src = `${data}`;
         }
       }
+      yield call(onComplete, srcs);
       console.log('after getImgString data', srcs);
-      yield put({
+      /* yield put({
         type: 'getImgStringSuccess',
         payload: srcs,
-      });
+      }); */
     },
     *shareMsg({ payload }, { put, call }) {
       yield put({
@@ -156,14 +159,25 @@ export default modelExtend(pageModel, {
       });
     },
     // 长链接转短链接
-    *shortUrl({ payload }, { call, put }) {
+    *shortUrl({ payload, onComplete }, { call, put }) {
       const endpoint = '/getLong2short';
       const filter = { url: payload };
+      console.log('shortUrl=>>', payload);
       const data = yield call(shortUrl, endpoint, filter);
-      yield put({
+      yield call(onComplete, data);
+      /* yield put({
         type: 'shortUrlSuccess',
         payload: data,
-      });
+      }); */
+    },
+    *getQrcode({ payload, onComplete }, { call, select }) {
+      const st = yield select();
+      const endpoint = 'getQRCode';
+      const filter = { url: payload };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      yield call(onComplete, data);
     },
   },
   reducers: {
@@ -227,10 +241,17 @@ export default modelExtend(pageModel, {
       };
     },
     shortUrlSuccess(state, action) {
+      console.log('shortUrlSuccess=>', action);
       const { data } = action.payload;
       return {
         ...state,
         shortUrl: { ...data },
+      };
+    },
+    resetList(state) {
+      state.list = [];
+      return {
+        ...state,
       };
     },
   },

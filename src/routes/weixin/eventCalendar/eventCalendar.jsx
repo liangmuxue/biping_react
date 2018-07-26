@@ -16,7 +16,39 @@ import { convertDate, weekDay } from '../../../utils/dateFormat';
 import { config } from '../../../../config/environment';
 import { Toast } from 'antd-mobile';
 
-function shareEvent(event) {
+function shareEvent(dispatch, shortUrl) {
+  const { host } = config.env;
+  // 隐藏分享内容背景
+  document.body.style.overflow = 'hidden';
+  document.body.style.height = '100%';
+  document.documentElement.style.overflow = 'hidden';
+  document.getElementById('eventShareDom').style.display = 'block';
+  // 替换过空格之后的内容
+  const replaceVal = document.getElementById('contentImg');
+  const srcs = [];
+  if (replaceVal && replaceVal !== null) {
+    const imgs = replaceVal.querySelectorAll('img');
+    if (imgs && imgs.length > 0) {
+      for (let i = 0, j = imgs.length; i < j; i++) {
+        // 解决跨域,传递现有的img、src数组
+        srcs.push({ id: `imgUrl${i}`, src: imgs[i].src });
+        imgs[i].setAttribute('id', `imgUrl${i}`);
+        imgs[i].setAttribute('src', `${host}/imgProxy?targetUrl=${imgs[i].src}`);
+      }
+    }
+  }
+  dispatch({
+    type: 'eventCalendar/getImgString',
+    payload: {
+      srcs,
+    },
+    onComplete(data) {
+      for (let i = 0; i < data.length; i++) {
+        const imgs = document.getElementById(data[i].id);
+        imgs.setAttribute('src', data[i].src);
+      }
+    },
+  });
   const dom1 = document.getElementsByClassName('am-list-view-scrollview')[1];
   const dom2 = document.getElementsByClassName('am-list-view-scrollview-content')[1];
   const dom3 = document.getElementsByClassName('am-list-footer')[1];
@@ -34,41 +66,30 @@ function shareEvent(event) {
     dom4.style.marginBottom = '0px';
   }
   let imgUrl = null;
-  console.log('this.props', event);
-  const { host } = config.env;
-  const { dispatch, eventCalendar } = event;
-  const { shortUrl } = eventCalendar;
-  const reuslturl = shortUrl.data.reuslturl;
-  const url = `${host}/shortUrl/${reuslturl}`;
+  const url = `${host}/shortUrl/${shortUrl}`;
   console.log(`share url is:${url}`);
-  // TODO: img部分机型显示不出来
-  /* QrCodeWithLogo.toImage({
-    image: document.getElementById('imgUrl0'),
-    content: url,
-    width: 120,
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }) */
-  QrCodeWithLogo.toCanvas({
-    canvas: document.getElementById('canvas'),
-    content: url,
-    width: 120,
-    logo: {
-      src: '/images/msgImages/copy.png',
-    },
-  }).then(() => {
-    html2canvas(document.getElementById('eventShareDom'), { useCORS: false, allowTaint: false }).then((canvas) => {
-      imgUrl = canvas.toDataURL('image/png');
-      document.getElementById('eventShareDom').style.display = 'none';
-      Toast.hide();
-      dispatch({
-        type: 'eventCalendar/shareMsg',
-        payload: {
-          imgUrl,
-        },
+  let imgDom = document.getElementsByName('shareImg')[0];
+  dispatch({
+    type: 'eventCalendar/getQrcode',
+    payload: url,
+    onComplete(data) {
+      console.log('onComplete=>>>>', data);
+      const { response } = data;
+      const urlBase = response.data.base64;
+      imgDom.setAttribute('src', `data:image/png;base64,${urlBase}`);
+      imgDom.setAttribute('crossOrigin', 'Anonymous');
+      html2canvas(document.getElementById('eventShareDom'), { useCORS: true, allowTaint: false }).then((canvas) => {
+        imgUrl = canvas.toDataURL('image/png');
+        document.getElementById('eventShareDom').style.display = 'none';
+        Toast.hide();
+        dispatch({
+          type: 'eventCalendar/shareMsg',
+          payload: {
+            imgUrl,
+          },
+        });
       });
-    });
+    },
   });
 }
 class EventCalendar extends BaseComponent {
@@ -82,6 +103,7 @@ class EventCalendar extends BaseComponent {
       weekArrZn: ['周日', '周一', '周二', '周三', '周四', '周五', '周六'], // 一周汉字
       thisDate: null, // 当前日期 => DD
       typeId: '',
+      shareTime: new Date().getTime(),
     };
   }
   componentWillMount() {
@@ -112,7 +134,39 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/getTypeList',
     });
   }
-
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendar',
+        obj: {
+          '进入': '进入币事件日历',
+        },
+      },
+    });
+  }
+  newShareEvent() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarShare',
+      },
+    });
+    Toast.loading('正在生成...', 0);
+    const { messageHost, wechatHost } = config.env;
+    const { systemUser, dispatch } = this.props;
+    const { uid } = systemUser;
+    const times = this.state.shareTime;
+    const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${times}#wechat_redirect`;
+    this.props.dispatch({
+      type: 'eventCalendar/shortUrl',
+      payload: wxUrl,
+      onComplete(res) {
+        const { data } = res;
+        shareEvent(dispatch, data.data.reuslturl);
+      },
+    });
+  }
   getListData(timeOri) {
     // 获取币事件日历列表,初始化时进行查询
     let time = null;
@@ -120,19 +174,9 @@ class EventCalendar extends BaseComponent {
     if (timeOri) {
       time = convertDate(parseInt(timeOri), 'YYYY-MM-DD') || null;
     }
-    // 通过time生成长链接和服务器交互
-
-    const { messageHost, wechatHost } = config.env;
-    const { systemUser } = this.props;
-    let uid = null;
-    if (systemUser) {
-      uid = systemUser.uid;
-    }
     const times = parseInt(timeOri) || new Date().getTime();
-    const wxUrl = `${wechatHost}${messageHost}/&response_type=code&scope=snsapi_userinfo&state=directPage_eventCalendar-fromUser_${uid}-time_${times}#wechat_redirect`;
-    this.props.dispatch({
-      type: 'eventCalendar/shortUrl',
-      payload: wxUrl,
+    this.setState({
+      shareTime: times,
     });
     this.props.dispatch({
       type: 'eventCalendar/getListData',
@@ -191,10 +235,28 @@ class EventCalendar extends BaseComponent {
     const time = new Date(eventTime.data.time);
     const clickTime = new Date(time.getFullYear(), time.getMonth(), msg);
     this.onConfirm(clickTime);
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarDateClick',
+        obj: {
+          '日期': clickTime,
+        },
+      },
+    });
   }
 
   // 子组件type点击
   changeType(id) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarTypeClick',
+        obj: {
+          '币事件交易所点击': id,
+        },
+      },
+    });
     this.setState({
       typeId: id,
     });
@@ -212,6 +274,12 @@ class EventCalendar extends BaseComponent {
   // 子组件提醒点击
   reminder(data) {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarReminder',
+      },
+    });
+    this.props.dispatch({
       type: 'eventCalendar/reminder',
       payload: {
         id: data.id,
@@ -221,6 +289,16 @@ class EventCalendar extends BaseComponent {
   // 去详情页
   toDetail(data) {
     console.log(this, data);
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarDetail',
+        obj: {
+          '名称': data.coincode,
+          '标题': data.title,
+        }
+      },
+    });
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -229,7 +307,7 @@ class EventCalendar extends BaseComponent {
         params: {
           messageId: data.id,
           backPath: 'eventCalendar',
-          tagName: '币事件日历',
+          tagName: '币事件',
         },
       },
     });
@@ -286,39 +364,12 @@ class EventCalendar extends BaseComponent {
     if (!eventTime || !eventTime.data) {
       return null;
     }
-    // 分享请求,只有点击share方法才进
-    console.log('srcs=>>', srcs, curAct);
-    if (srcs && curAct && curAct === 'shareClick') {
-      for (let i = 0; i < srcs.length; i++) {
-        const imgs = document.getElementById(srcs[i].id);
-        imgs.setAttribute('src', srcs[i].src);
-      }
-      shareEvent(this.props);
-    }
     if (!showMsgShare) {
       console.log('touchmove rm', this.tmListener);
       document.body.removeEventListener('touchmove', this.tmListener);
     }
     // 分享消息的图片链接
     const msgImgUrl = imgUrl;
-    /* const modal = (<Modal
-      className={styles.shareBg}
-      visible={showMsgShare}
-      transparent
-      maskClosable
-      wrapProps={{ onTouchStart: this.onWrapTouchStart }}
-      onClose={this.closeShare.bind(this)}
-    >
-      <div className={styles.shareCon}>
-        <div className={styles.title}>
-          <span className={styles.text}>长按图片发送好友</span>
-          <img src="/images/msgImages/1.png" alt="" />
-        </div>
-        <div className={styles.content}>
-          <img src={msgImgUrl} alt="" />
-        </div>
-      </div>
-    </Modal>); */
     const modal = (<Modal
       className={styles.shareBg}
       visible={showMsgShare}
@@ -377,7 +428,10 @@ class EventCalendar extends BaseComponent {
           reminder={data => this.reminder(data)}
           toDetail={data => this.toDetail(data)}
         />
-        <div className={styles.shareBtn} onClick={() => this.shareClick()}>
+        {/* <div className={styles.shareBtn} onClick={() => this.shareClick()}>
+          <span>分享</span>
+        </div> */}
+        <div className={styles.shareBtn} onClick={() => this.newShareEvent()}>
           <span>分享</span>
         </div>
         <Calendar
@@ -389,8 +443,6 @@ class EventCalendar extends BaseComponent {
           maxDate={new Date(eventTime.data.time + 63158400000)}
         />
         <div id="eventShareDom" className={styles.shareDom}>
-          {/* <img id="ewmImg" className={styles.shareewm} crossOrigin="anonymous" alt="" /> */}
-          <canvas id="canvas" className={styles.shareewm} />
           <div id="calendarDom" className={styles.calendar}>
             <div className={styles.shareTop}>
               <p>事件日历</p>
@@ -405,19 +457,18 @@ class EventCalendar extends BaseComponent {
               ))}
             </Flex>
           </div>
-          <EventList
-            {...this.props}
-            changeType={id => this.changeType(id)}
-            reminder={data => this.reminder(data)}
-            toDetail={data => this.toDetail(data)}
-          />
+          <div id="contentImg">
+            <EventList
+              {...this.props}
+              changeType={id => this.changeType(id)}
+              reminder={data => this.reminder(data)}
+              toDetail={data => this.toDetail(data)}
+            />
+          </div>
           <div className={styles.bottomDom}>
-            {/* <img className={styles.logo} alt="" src="/images/msgImages/copy.png" />
-            <div className={styles.info}>
-              <p className={styles.p1}>【币评】你最想要的币市信息</p>
-              <p className={styles.p2}>www.bipingcoin.com</p>
-            </div> */}
             <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
+            {/* <canvas id="canvas" className={styles.shareewm} /> */}
+            <img className={styles.shareewm} name="shareImg" alt="" />
           </div>
         </div>
       </div>
@@ -427,7 +478,7 @@ class EventCalendar extends BaseComponent {
 
 
 function mapStateToProps(state) {
-  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser };
+  return { eventCalendar: state.eventCalendar, extraData: state.app.directPageData.params, systemUser: state.app.systemUser, pagiLoading: state.app.pagiLoading };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(EventCalendar));
