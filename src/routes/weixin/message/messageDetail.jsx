@@ -109,7 +109,7 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
       });
     });
   }); */
-  let imgDom = document.getElementsByName('shareImg')[0];
+  /* let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'messageDetail/getQrcode',
     payload: url,
@@ -139,8 +139,27 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
         });
       });
     },
+  }); */
+  html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
+    imgUrl = canvas.toDataURL('image/png');
+    document.getElementById('showShare').style.display = 'none';
+    dispatch({
+      type: 'messageDetail/shareMsg',
+      payload: {
+        messageId: msgObj.mid,
+        imgUrl,
+      },
+    });
+    // 分享消息埋点
+    dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.SHAREMESSAGE,
+        opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+      },
+    });
   });
-
 }
 class MsgDetail extends BaseComponent {
   constructor(props) {
@@ -580,7 +599,8 @@ class MsgDetail extends BaseComponent {
             </div>
             <div className={style.ewmCon}>
               {/* <canvas id="canvas" className={style.leftImg}></canvas> */}
-              <img alt="" name="shareImg" className={style.leftImg}  /> 
+              {/* <img alt="" name="shareImg" className={style.leftImg}  />  */}
+              <img className={style.leftImg}  alt="" src="/images/share/ewm.jpg" />
               <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
             </div>
           </div>

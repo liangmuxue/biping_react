@@ -98,7 +98,7 @@ function shareEvent(dispatch, shortUrl) {
       });
     });
   }); */
-  let imgDom = document.getElementsByName('shareImg')[0];
+  /* let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'eventCalendar/getQrcode',
     payload: url,
@@ -120,6 +120,17 @@ function shareEvent(dispatch, shortUrl) {
         });
       });
     },
+  }); */
+  html2canvas(document.getElementById('eventShareDom'), { useCORS: true, allowTaint: false }).then((canvas) => {
+    imgUrl = canvas.toDataURL('image/png');
+    document.getElementById('eventShareDom').style.display = 'none';
+    Toast.hide();
+    dispatch({
+      type: 'eventCalendar/shareMsg',
+      payload: {
+        imgUrl,
+      },
+    });
   });
 }
 class EventCalendar extends BaseComponent {
@@ -447,7 +458,8 @@ class EventCalendar extends BaseComponent {
           <div className={styles.bottomDom}>
             <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
             {/* <canvas id="canvas" className={styles.shareewm} /> */}
-            <img className={styles.shareewm} name="shareImg" alt="" />
+            {/* <img className={styles.shareewm} name="shareImg" alt="" /> */}
+            <img className={styles.shareewm}  alt="" src="/images/share/ewm.jpg" />
           </div>
         </div>
       </div>
