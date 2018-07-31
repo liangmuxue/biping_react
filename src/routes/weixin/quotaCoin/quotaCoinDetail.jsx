@@ -52,7 +52,7 @@ class QuotaCoinDetail extends BaseComponent {
     } = data;
     let rgs = 0;
     if (percentage.result < 0) {
-      rgs = -30 - (-60 * percentage.sellPer);
+      rgs = -30 - (60 * percentage.sellPer);
     } else if (percentage.result === 0) {
       rgs = -30 + (60 * percentage.neutralityPer);
     } else {
@@ -60,14 +60,15 @@ class QuotaCoinDetail extends BaseComponent {
     }
     let textRg = 0; // 波动区间文字
     let spanRg = 0; // 波动区间白框
-    const { support } = quota.rsPosition; // 支撑位
-    const { resistance } = quota.rsPosition; // 阻力位
-    const { bpCurPrice } = range; // 当前价格
-    const a = resistance - support;
-    const b = bpCurPrice - support;
-    textRg = (b / a) * 74;
-    spanRg = (b / a) * 95;
-    console.log(textRg, spanRg);
+    if (quota.rsPosition) {
+      const { support } = quota.rsPosition; // 支撑位
+      const { resistance } = quota.rsPosition; // 阻力位
+      const { bpCurPrice } = range; // 当前价格
+      const a = resistance - support;
+      const b = bpCurPrice - support;
+      textRg = (b / a) * 74;
+      spanRg = (b / a) * 95;
+    }
     return (
       <div id="shareCon">
         <div className={styles.headMsg}>
