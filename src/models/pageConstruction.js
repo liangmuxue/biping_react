@@ -204,14 +204,14 @@ function* switchPageReal({
   if (backArrow) {
     fromPath = currentPage;
     opt = { fromPath };
-    yield put({
+    /* yield put({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst[upPageName],
         action: siteAnalysis.actConst.BACK,
         opt,
       },
-    });
+    }); */
   }
   console.log('switchToInnerPage55555', pageName);
   const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);

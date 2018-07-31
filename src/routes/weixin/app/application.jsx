@@ -153,7 +153,8 @@ class HomePage extends Component {
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
       pageContent = (<div ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
-        {loadingTip}{pagiLoadingTip}<Footer />
+        {loadingTip}{pagiLoadingTip}
+        <Footer />
                      </div>);
     } else {
       pageContent = <div>没有权限查看</div>;

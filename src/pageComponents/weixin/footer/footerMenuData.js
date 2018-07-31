@@ -23,6 +23,14 @@ const menus = [
     selectedIcon: 'url(/images/footerImg/calendar-blue.png) center center /  21px 21px no-repeat',
   },
   {
+    code: 'quotaCoin',
+    title: '诊币',
+    key: 'quotaCoin',
+    badge: 0,
+    icon: 'url(/images/footerImg/quotaGray.png) center center /  21px 21px no-repeat',
+    selectedIcon: 'url(/images/footerImg/quotaBlue.png) center center /  21px 21px no-repeat',
+  },
+  {
     code: 'subList',
     title: '订阅管理',
     key: 'subList',
