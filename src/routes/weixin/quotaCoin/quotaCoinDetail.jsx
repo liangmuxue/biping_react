@@ -4,6 +4,7 @@ import BaseComponent from '../baseComponent';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoinDetail.less';
 import { convertDate } from '../../../utils/dateFormat';
+import html2canvas from 'html2canvas';
 
 class QuotaCoinDetail extends BaseComponent {
   constructor(props) {
@@ -25,6 +26,12 @@ class QuotaCoinDetail extends BaseComponent {
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'quotaCoin',
     });
+  }
+  shareBtn() {
+    console.log('shareBtn', this.state);
+  }
+  showEwm() {
+    console.log('showEwm', this.state);
   }
   render() {
     console.log('render=>', this.props);
@@ -51,8 +58,8 @@ class QuotaCoinDetail extends BaseComponent {
     } else {
       rgs = 30 + (60 * percentage.buyPer);
     }
-    let textRg = 0;
-    let spanRg = 0;
+    let textRg = 0; // 波动区间文字
+    let spanRg = 0; // 波动区间白框
     const { support } = quota.rsPosition; // 支撑位
     const { resistance } = quota.rsPosition; // 阻力位
     const { bpCurPrice } = range; // 当前价格
@@ -62,7 +69,7 @@ class QuotaCoinDetail extends BaseComponent {
     spanRg = (b / a) * 95;
     console.log(textRg, spanRg);
     return (
-      <div>
+      <div id="shareCon">
         <div className={styles.headMsg}>
           <div className={styles.left}>
             <span className={styles.exc}>{exchange.exchangeZhName}</span>
@@ -243,6 +250,14 @@ class QuotaCoinDetail extends BaseComponent {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+        <div className={styles.btnList}>
+          <div onClick={() => this.shareBtn()}>
+            <img alt="" src="/images/quotaCoin/share.jpg" />
+          </div>
+          <div onClick={() => this.showEwm()}>
+            <img alt="" src="/images/quotaCoin/wen.jpg" />
           </div>
         </div>
       </div>
