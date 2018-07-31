@@ -199,6 +199,7 @@ const App = {
         const systemUser = response.data;
         Object.assign(systemUser, payload);
         console.log('wap reg suc', systemUser);
+        systemUser.name = "wapUser";
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',

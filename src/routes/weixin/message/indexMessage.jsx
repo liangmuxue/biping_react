@@ -110,6 +110,7 @@ class MessageList extends BaseComponent {
     this.getMessageList();
   }
   componentDidMount() {
+    console.log("componentDidMount in indexMessage");
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
