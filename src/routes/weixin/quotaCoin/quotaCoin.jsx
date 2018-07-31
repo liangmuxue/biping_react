@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
+import NP from 'number-precision';
 import BaseComponent from '../baseComponent';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoin.less';
@@ -79,7 +80,7 @@ class QuotaCoin extends BaseComponent {
                     <div className={styles.rightCon}>
                       <p className={styles.p1}>{item.name}</p>
                       <p className={`${styles.p2} ${item.range < 0 ? styles.down : styles.up}`}>
-                        {item.range < 0 ? `- ${Math.abs(item.range) * 100}%` : `+ ${item.range * 100}%`} (24H)
+                        {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.prophecyResult < 0 ? styles.sellBtn : (item.prophecyResult === 0 ? styles.neutralBtn : styles.buyBtn)}`}>

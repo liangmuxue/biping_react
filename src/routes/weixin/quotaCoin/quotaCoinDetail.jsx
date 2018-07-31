@@ -1,10 +1,11 @@
 import React from 'react';
 import { connect } from 'dva';
+import NP from 'number-precision';
 import BaseComponent from '../baseComponent';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoinDetail.less';
 import { convertDate } from '../../../utils/dateFormat';
-import html2canvas from 'html2canvas';
+// import html2canvas from 'html2canvas';
 
 class QuotaCoinDetail extends BaseComponent {
   constructor(props) {
@@ -83,7 +84,7 @@ class QuotaCoinDetail extends BaseComponent {
             <span className={styles.price}>¥ {range.bpOpen}</span>
             <span className={styles.time}>24小时涨跌幅：
               <em>
-                {range.range < 0 ? `- ${Math.abs(range.range) * 100}%` : `+ ${range.range * 100}%`}
+                {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
               </em>
             </span>
           </div>
@@ -98,7 +99,7 @@ class QuotaCoinDetail extends BaseComponent {
               <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
               <span className={styles.circle}>{}</span>
               <span className={styles.text1}>
-                {percentage.result < 0 ? `${percentage.sellPer * 100}%` : (percentage.result === 0 ? `${percentage.neutralityPer * 100}%` : `${percentage.buyPer * 100}%`) }
+                {percentage.result < 0 ? `${NP.times(percentage.sellPer, 100)}%` : (percentage.result === 0 ? `${NP.times(percentage.neutralityPer, 100)}%` : `${NP.times(percentage.buyPer, 100)}%`) }
               </span>
             </div>
           </div>
