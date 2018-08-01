@@ -337,12 +337,14 @@
   overflow: inherit;
 }
 .shareBottom {
-    display: none;
-    height: 2.1rem;
-    margin: .3rem;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
   .leftCon {
     float: left;
     width: 4.3rem;
+    margin-top: 64px;
+    margin-left: 20px;
     p {
       color: #222222;
       font-size: .3rem;
@@ -367,11 +369,12 @@
     }
   }
   .rightCon {
-    height: 100%;
+    width: 120px;
+    height: 120px;
     float: right;
-    img {
-      height: 100%;
-    }
+    margin-top: 64px;
+    margin-right: 20px;
+    margin-bottom: 64px;
   }
 }
 .textLayer {
@@ -392,5 +395,26 @@
     display: block;
     color: #000000;
     padding: .2rem 0;
+  }
+}
+.shareewm {
+  width: 120px;
+  height: 120px;
+  float: right;
+  margin-top: 40px;
+  margin-right: 20px;
+}
+.bottomDom{
+  display: none;
+  position: relative;
+  box-sizing: border-box;
+  height: 180px;
+  .leftImg {
+    width: 4rem;
+    height: .84rem;
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    margin-top: -.42rem;
   }
 }
