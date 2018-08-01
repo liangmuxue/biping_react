@@ -1,17 +1,22 @@
 import React from 'react';
 import { connect } from 'dva';
 import NP from 'number-precision';
+import Modal from 'antd-mobile/lib/modal/index';
+import 'antd-mobile/es/modal/style/index.css';
+import html2canvas from 'html2canvas';
 import BaseComponent from '../baseComponent';
 import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoinDetail.less';
 import { convertDate } from '../../../utils/dateFormat';
-// import html2canvas from 'html2canvas';
+import BipingEwm from './layer/bipingEwm';
 
 class QuotaCoinDetail extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
-
+      bipingEwm: false,
+      showModel: false,
+      imgUrl: null,
     };
   }
   componentWillMount() {
@@ -30,9 +35,27 @@ class QuotaCoinDetail extends BaseComponent {
   }
   shareBtn() {
     console.log('shareBtn', this.state);
+    html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
+      this.state.imgUrl = canvas.toDataURL('image/png');
+      this.setState({
+        showModel: true,
+      });
+    });
   }
   showEwm() {
-    console.log('showEwm', this.state);
+    this.setState({
+      bipingEwm: true,
+    });
+  }
+  closeShare() {
+    this.setState({
+      showModel: false,
+    });
+  }
+  closeShareEwm() {
+    this.setState({
+      bipingEwm: false,
+    });
   }
   render() {
     console.log('render=>', this.props);
@@ -70,6 +93,40 @@ class QuotaCoinDetail extends BaseComponent {
       textRg = (b / a) * 74;
       spanRg = (b / a) * 95;
     }
+    // 问币评弹层
+    let bipingEwmDom = null;
+    bipingEwmDom = (
+      <Modal
+        visible={this.state.bipingEwm}
+        transparent
+        maskClosable
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        onClose={this.closeShareEwm.bind(this)}
+      >
+        <BipingEwm />
+      </Modal>
+    );
+    // 问群友弹层
+    const modal = (
+      <Modal
+        className={styles.shareBg}
+        visible={this.state.showModel}
+        transparent
+        maskClosable
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        onClose={this.closeShare.bind(this)}
+      >
+        <div >
+          <div style={{ lineHeight: '1.08rem' }}>
+            <span className={styles.titleTips}>长按图片发送好友</span>
+            <img src="/images/msgImages/1.png" alt="" className={styles.finger} />
+          </div>
+          <div style={{ height: 400, overflow: 'scroll' }}>
+            <img src={this.state.imgUrl} alt="" />
+          </div>
+        </div>
+      </Modal>
+    );
     return (
       <div id="shareCon">
         <div className={styles.headMsg}>
@@ -81,7 +138,7 @@ class QuotaCoinDetail extends BaseComponent {
             </div>
           </div>
           <div className={styles.right}>
-            <span className={styles.price}>¥ {range.bpOpen}</span>
+            <span className={styles.price}>¥ {range.bpCurPrice}</span>
             <span className={styles.time}>24小时涨跌幅：
               <em>
                 {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
@@ -262,6 +319,8 @@ class QuotaCoinDetail extends BaseComponent {
             <img alt="" src="/images/quotaCoin/wen.jpg" />
           </div>
         </div>
+        {bipingEwmDom}
+        {modal}
       </div>
     );
   }
