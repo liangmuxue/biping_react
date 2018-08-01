@@ -190,9 +190,9 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
             <div>
-              <span className={styles.usdtPrice}>7963.03</span>
+              <span className={styles.usdtPrice}>{range.bpCurPrice}</span>
               <span>USDT ≈ ¥ </span>
-              <span className={styles.price}>{range.bpCurPrice}</span>
+              <span className={styles.price}>{range.bpCurPriceCny}</span>
             </div>
           </div>
           <div className={styles.content}>
@@ -214,7 +214,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.column}>{}</div>
                 <span className={styles.titleText}>波动区间</span>
                 <img onClick={this.showTextBtn.bind(this)} className={styles.titleImg} src="/images/quotaCoin/wen.png" alt="" />
-                <span className={styles.rightText}>单位（元）</span>
+                <span className={styles.rightText}>单位 USDT</span>
               </div>
               <div className={styles.conText}>
                 <div className={styles.centerText} style={{ textIndent: `${textRg}%` }}>

@@ -56,7 +56,8 @@ class QuotaCoin extends BaseComponent {
       <div>
         <div className={styles.banner}>
           <p className={styles.text}>
-            全方位多维度诊断，操作建议一键可得
+            <p>多维度技术指标、300余种热门货币、</p>
+            <p>小时级别的交易信号</p>
           </p>
           <span className={styles.line}></span>
           <span className={styles.time}>更新于：{convertDate(data.time, 'MM-DD hh:ss')}</span>
