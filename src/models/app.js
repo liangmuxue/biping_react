@@ -69,13 +69,20 @@ const getDirectPageParams = function () {
       },
     };
   }
-  // 币事件日历分享
+
   if (state.indexOf('directPage') >= 0) {
-    const stateStr = state.split('-');
-    const directPage = stateStr[0].split('_')[1];
-    const fromUser = stateStr[1].split('_')[1];
-    const time = stateStr[2].split('_')[1].split('#')[0];
-    return { directPage, params: { fromUser, time } };
+    // 币事件日历分享
+    if(state.indexOf('directPage_eventCalendar') >= 0){
+      const stateStr = state.split('-');
+      const directPage = stateStr[0].split('_')[1];
+      const fromUser = stateStr[1].split('_')[1];
+      const time = stateStr[2].split('_')[1].split('#')[0];
+      return { directPage, params: { fromUser, time } };
+    }
+    const pagePart = state.split('#')[0];
+    //直接进入内页
+    let directPage = pagePart.split('_')[1];
+    return { directPage, params: {  } };
   }
 };
 

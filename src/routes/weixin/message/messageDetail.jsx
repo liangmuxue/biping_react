@@ -68,7 +68,48 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
   const url = `${host}/shortUrl/${shortUrl}`;
   const msgObj = msgDetailData.data;
   console.log(`share url is:${url}`);
-  let imgDom = document.getElementsByName('shareImg')[0];
+  // TODO: img部分机型显示不出来
+  /* QrCodeWithLogo.toImage({
+    image: document.getElementById('ewmImg'),
+    content: url,
+    width: 120,
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }) */
+  /* QrCodeWithLogo.toCanvas({
+    canvas: document.getElementById('canvas'),
+    content: url,
+    width: 120,
+    bgColor: 'transparent',
+    logo: {
+      src: '/images/msgImages/copy.png',
+    },
+  }).then(() => {
+    console.log('success777', document.getElementById('showShare'));
+    html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
+      imgUrl = canvas.toDataURL('image/png');
+      // console.log('imgUrl=>>', imgUrl);
+      document.getElementById('showShare').style.display = 'none';
+      dispatch({
+        type: 'messageDetail/shareMsg',
+        payload: {
+          messageId: msgObj.mid,
+          imgUrl,
+        },
+      });
+      // 分享消息埋点
+      dispatch({
+        type: 'app/analysis',
+        payload: {
+          page: siteAnalysis.pageConst.MESSAGEDETAIL,
+          action: siteAnalysis.actConst.SHAREMESSAGE,
+          opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+        },
+      });
+    });
+  }); */
+  /* let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'messageDetail/getQrcode',
     payload: url,
@@ -95,11 +136,30 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
             action: siteAnalysis.actConst.SHAREMESSAGE,
             opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
           },
-        }); */
+        });
       });
     },
+  }); */
+  html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
+    imgUrl = canvas.toDataURL('image/png');
+    document.getElementById('showShare').style.display = 'none';
+    dispatch({
+      type: 'messageDetail/shareMsg',
+      payload: {
+        messageId: msgObj.mid,
+        imgUrl,
+      },
+    });
+    // 分享消息埋点
+    dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.SHAREMESSAGE,
+        opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+      },
+    });
   });
-
 }
 class MsgDetail extends BaseComponent {
   constructor(props) {
@@ -559,7 +619,8 @@ class MsgDetail extends BaseComponent {
             </div>
             <div className={style.ewmCon}>
               {/* <canvas id="canvas" className={style.leftImg}></canvas> */}
-              <img alt="" name="shareImg" className={style.leftImg}  /> 
+              {/* <img alt="" name="shareImg" className={style.leftImg}  />  */}
+              <img className={style.leftImg}  alt="" src="/images/share/ewm.jpg" />
               <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
             </div>
           </div>
