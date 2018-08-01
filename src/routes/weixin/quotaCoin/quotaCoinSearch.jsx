@@ -34,7 +34,15 @@ class QuotaCoinSearch extends BaseComponent {
     this.autoFocusInst.focus();
   }
   onCancel() {
-    console.log('onCancel');
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'quotaCoin',
+        params: {
+          backPath: 'quotaCoinSearch',
+        },
+      },
+    });
   }
   onChange(val) {
     this.setState({
