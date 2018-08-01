@@ -77,6 +77,7 @@
         margin: 0 auto;
         transform: rotateZ(0deg);
         transform-origin: bottom;
+        transition: 1s ease-in-out;
         position: relative;
         top: 0.07rem;
       }
@@ -233,7 +234,6 @@
   background-color: #fff;
   padding: .3rem;
   margin-top: .3rem;
-  margin-bottom: .98rem;
   .tableHeader {
     color: #666666;
   }
@@ -271,6 +271,12 @@
       }
     }
   }
+}
+.bottomText {
+  color: #999999;
+  font-size: .24rem;
+  margin: .3rem;
+  margin-bottom: 1.2rem;
 }
 .btnList {
   position: fixed;
@@ -311,12 +317,9 @@
 :global(.am-modal-body){
   padding: 0 !important;
 }
-:global(.am-modal-body img){
-  height: auto;
-  width: 5rem;
-}
 :global(.am-modal-content){
   border-radius: 0 !important;
   background: none;
   padding-top: 0 !important;
+  overflow: inherit;
 }
