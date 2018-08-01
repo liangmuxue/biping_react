@@ -83,8 +83,8 @@ class QuotaCoin extends BaseComponent {
                         {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
                       </p>
                     </div>
-                    <button className={`${styles.rightBtn} ${item.prophecyResult < 0 ? styles.sellBtn : (item.prophecyResult === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
-                      {item.prophecyResult < 0 ? '建议卖出' : (item.prophecyResult === 0 ? '保持中立' : '建议买入') }
+                    <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
+                      {item.result < 0 ? '建议卖出' : (item.result === 0 ? '保持中立' : '建议买入') }
                     </button>
                   </li>
                 ))
