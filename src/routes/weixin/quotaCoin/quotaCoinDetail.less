@@ -77,7 +77,6 @@
         margin: 0 auto;
         transform: rotateZ(0deg);
         transform-origin: bottom;
-        transition: 1s ease-in-out;
         position: relative;
         top: 0.07rem;
       }
@@ -276,7 +275,8 @@
   color: #999999;
   font-size: .24rem;
   margin: .3rem;
-  margin-bottom: 1.2rem;
+  padding-bottom: .3rem;
+  margin-bottom: .98rem;
 }
 .btnList {
   position: fixed;
@@ -322,4 +322,42 @@
   background: none;
   padding-top: 0 !important;
   overflow: inherit;
+}
+.shareBottom {
+    display: none;
+    height: 2.1rem;
+    margin: .3rem;
+  .leftCon {
+    float: left;
+    width: 4.3rem;
+    p {
+      color: #222222;
+      font-size: .3rem;
+      text-align: left;
+      line-height: .4rem;
+      margin-top: .2rem;
+    }
+    ul {
+      margin-top: .2rem;
+      li {
+        float: left;
+        color: #666666;
+        width: 50%;
+        text-align: left;
+        line-height: .5rem;
+      }
+      li::before {
+        content: "•";
+        color: #108EE9;
+        margin-right: .12rem;
+      }
+    }
+  }
+  .rightCon {
+    height: 100%;
+    float: right;
+    img {
+      height: 100%;
+    }
+  }
 }

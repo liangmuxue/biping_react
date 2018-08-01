@@ -35,7 +35,9 @@ class QuotaCoinDetail extends BaseComponent {
   }
   shareBtn() {
     console.log('shareBtn', this.state);
+    document.getElementById('shareBottom').style.display = 'block';
     html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
+      document.getElementById('shareBottom').style.display = 'none';
       this.state.imgUrl = canvas.toDataURL('image/png');
       this.setState({
         showModel: true,
@@ -312,8 +314,19 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
           </div>
-          <div className={styles.shareBottom}>
-            
+          <div id="shareBottom" className={styles.shareBottom}>
+            <div className={styles.leftCon}>
+              <p>本信号由币评AI诊币系统产生，并提取了部分内容发布</p>
+              <ul>
+                <li>暴涨暴跌提醒</li>
+                <li>大单买卖提醒</li>
+                <li>事件日历</li>
+                <li>交易所公告</li>
+              </ul>
+            </div>
+            <div className={styles.rightCon}>
+              <img src="/images/share/ewm.jpg" alt="" />
+            </div>
           </div>
           <div className={styles.bottomText}>免责说明：本功能中的内容仅供参考，建议投资者根据自身投资风格进行筛选，并合理控制风险。币圈有风险，投资需谨慎。</div>
         </div>
