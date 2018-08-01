@@ -81,6 +81,7 @@ class MessageContent extends React.Component {
       const gainHoldReal =  msgObj.priceReal / msgObj.price * gainHold /10000;
       return '￥ ' + gainHoldReal.toFixed(2) + '万';
     };
+
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -129,6 +130,7 @@ class MessageContent extends React.Component {
         {msgObj.quoteList.map(msg =>
         (
           <div className={msgObj.direction ? style.hide : style.coinLists} >
+            {msg.price ?
             <div className={style.tableTitle}>
               <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
               <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
@@ -139,6 +141,18 @@ class MessageContent extends React.Component {
               </div>
               <div className={style.tableIncome}>{gainHoldTrans(msg.gainHold)}</div>
             </div>
+            :
+            <div className={style.tableTitle}>
+              <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
+              <div className={style.tablePrice}>-</div>
+              <div className={style.tableChg}>
+                <span>
+                  -
+                </span>
+              </div>
+              <div className={style.tableIncome}>-</div>
+            </div>
+            }
           </div>
         ))}
       </div>
