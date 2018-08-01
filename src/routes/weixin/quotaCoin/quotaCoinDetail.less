@@ -2,18 +2,16 @@
   margin: .2rem 0;
   background-color: #fff;
   overflow: hidden;
-  padding: 0 .3rem;
-  height: 1.26rem;
+  padding: .27rem .3rem;
+  text-align: left;
   .left {
-    float: left;
-    text-align: left;
-    .exc {
-      color: #828A92;
-      display: block;
-      font-size: .22rem;
-      margin: .16rem 0;
+    color: #828A92;
+    font-size: .22rem;
+    .time {
+      margin-left: .3rem;
     }
     .name {
+      margin-top: .16rem;
       img {
         width: .44rem;
         height: .44rem;
@@ -35,17 +33,8 @@
         }
       }
     }
-  }
-  .right {
-    float: right;
-    text-align: right;
-    .price {
-      display: block;
-      color: #000000;
-      font-size: .32rem;
-      margin: .18rem 0 .1rem 0;
-    }
-    .time {
+    .timeZf {
+      float: right;
       color: #888888;
       font-size: .26rem;
       em {
@@ -54,6 +43,12 @@
         font-size: .32rem;
       }
     }
+  }
+  .usdtPrice {
+    font-size: .5rem;
+  }
+  .price {
+    font-size: .3rem;
   }
 }
 .content {
@@ -167,17 +162,31 @@
       }
     }
     .centerText {
-      overflow: hidden;
       text-align: left;
       text-indent: 76%;
       margin-bottom: .1rem;
+      margin-bottom: .2rem;
       .text1 {
         color: #000;
         font-size: .24rem;
       }
-      .text2 {
-        color: #666666;
+      .leftBtn {
+        border: 1px solid #1CAA3D;
+        color: #1CAA3D;
         font-size: .2rem;
+        padding: .04rem .06rem;
+        margin-right: .1rem;
+        position: relative;
+        top: -.06rem;
+      }
+      .rightBtn {
+        border: 1px solid #F35833;
+        color: #F35833;
+        font-size: .2rem;
+        padding: .04rem .06rem;
+        margin-left: .1rem;
+        position: relative;
+        top: -.06rem;
       }
     }
     .rightText {
@@ -201,7 +210,7 @@
   .column {
     background-color: #108EE9;
     width: .08rem;
-    height: .28rem;
+    height: .30rem;
     display: inline-block;
     float: left;
     position: relative;
@@ -209,7 +218,7 @@
   }
   .titleText {
     color: #353535;
-    font-size: .32rem;
+    font-size: .34rem;
     float: left;
     margin: 0 .16rem;
   }
@@ -241,7 +250,7 @@
     border-bottom: 1px solid #E5E5E5;
     height: .88rem;
     line-height: .88rem;
-    font-size: .28rem;
+    font-size: .30rem;
     .tableLeft {
       text-align: left;
     }
@@ -359,5 +368,25 @@
     img {
       height: 100%;
     }
+  }
+}
+.textLayer {
+  background-color: #fff;
+  width: 5.58rem;
+  border-radius: .16rem;
+  box-sizing: border-box;
+  .text {
+    display: block;
+    color: #333333;
+    font-size: .24rem;
+    padding: .4rem;
+    border-bottom: 1px solid #E5E5E5;
+    line-height: 2;
+  }
+  .btn {
+    width: 100%;
+    display: block;
+    color: #000000;
+    padding: .2rem 0;
   }
 }

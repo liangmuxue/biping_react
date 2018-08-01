@@ -17,6 +17,7 @@ class QuotaCoinDetail extends BaseComponent {
       bipingEwm: false,
       showModel: false,
       imgUrl: null,
+      showTextLayer: false,
     };
   }
   componentWillMount() {
@@ -34,7 +35,6 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   shareBtn() {
-    console.log('shareBtn', this.state);
     document.getElementById('shareBottom').style.display = 'block';
     html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
       document.getElementById('shareBottom').style.display = 'none';
@@ -59,8 +59,17 @@ class QuotaCoinDetail extends BaseComponent {
       bipingEwm: false,
     });
   }
+  showTextBtn() {
+    this.setState({
+      showTextLayer: true,
+    });
+  }
+  closeshowTextLayer() {
+    this.setState({
+      showTextLayer: false,
+    });
+  }
   render() {
-    console.log('render=>', this.props);
     const { quotaCoinDetail } = this.props;
     if (!quotaCoinDetail) {
       return null;
@@ -86,15 +95,47 @@ class QuotaCoinDetail extends BaseComponent {
     }
     let textRg = 0; // 波动区间文字
     let spanRg = 0; // 波动区间白框
+    let leftBtnDom = null;
+    let rightBtnDom = null;
     if (quota.rsPosition) {
       const { support } = quota.rsPosition; // 支撑位
       const { resistance } = quota.rsPosition; // 阻力位
       const { bpCurPrice } = range; // 当前价格
       const a = resistance - support;
       const b = bpCurPrice - support;
-      textRg = (b / a) * 74;
-      spanRg = (b / a) * 95;
+      if (bpCurPrice < support) {
+        textRg = 0;
+        spanRg = 0;
+        leftBtnDom = (<a className={styles.rightBtn}>突破支撑位</a>);
+      } else if (bpCurPrice > resistance) {
+        textRg = 65;
+        spanRg = 95;
+        rightBtnDom = (<a className={styles.leftBtn}>突破阻力位</a>);
+      } else {
+        textRg = (b / a) * 85;
+        spanRg = (b / a) * 95;
+      }
     }
+    // 波动区间弹层
+    let showTextLayerDom = null;
+    showTextLayerDom = (
+      <Modal
+        visible={this.state.showTextLayer}
+        transparent
+        maskClosable
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        onClose={this.closeshowTextLayer.bind(this)}
+      >
+        <div className={styles.textLayer}>
+          <span className={styles.text}>
+            压力位就是当汇价上升到某价位附近时，汇价会停止上涨，甚至回落。这个起着阻止或暂时阻止股价继续上升的价位就是压力线所在的位置。支撑位又称为抵抗线。当汇价跌到某个价位附近时，汇价停止下跌，甚至有可能还会回升。这个起着阻止或暂时阻止股价继续下跌的价位就是支撑线所在的位置。
+          </span>
+          <span onClick={this.closeshowTextLayer.bind(this)} className={styles.btn}>
+            我知道了
+          </span>
+        </div>
+      </Modal>
+    );
     // 问币评弹层
     let bipingEwmDom = null;
     bipingEwmDom = (
@@ -134,19 +175,24 @@ class QuotaCoinDetail extends BaseComponent {
         <div id="shareCon">
           <div className={styles.headMsg}>
             <div className={styles.left}>
-              <span className={styles.exc}>{exchange.exchangeZhName}</span>
+              <div className={styles.top}>
+                <span>{exchange.exchangeZhName}</span>
+                <span className={styles.time}>上次更新 {convertDate(range.bpUpdateTime, 'hh:mm')}</span>
+              </div>
               <div className={styles.name}>
                 <img src={symbol.symbolLogo} alt="" />
                 <span>{symbol.baseCoinCode}<em>/{symbol.quoteCoinCode}</em></span>
+                <div className={styles.timeZf}>24h涨跌幅：
+                  <em>
+                    {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
+                  </em>
+                </div>
               </div>
             </div>
-            <div className={styles.right}>
-              <span className={styles.price}>¥ {range.bpCurPrice}</span>
-              <span className={styles.time}>24小时涨跌幅：
-                <em>
-                  {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
-                </em>
-              </span>
+            <div>
+              <span className={styles.usdtPrice}>7963.03</span>
+              <span>USDT ≈ ¥ </span>
+              <span className={styles.price}>{range.bpCurPrice}</span>
             </div>
           </div>
           <div className={styles.content}>
@@ -167,13 +213,16 @@ class QuotaCoinDetail extends BaseComponent {
               <div className={styles.conTitle}>
                 <div className={styles.column}>{}</div>
                 <span className={styles.titleText}>波动区间</span>
-                <img className={styles.titleImg} src="/images/quotaCoin/wen.png" alt="" />
+                <img onClick={this.showTextBtn.bind(this)} className={styles.titleImg} src="/images/quotaCoin/wen.png" alt="" />
                 <span className={styles.rightText}>单位（元）</span>
               </div>
               <div className={styles.conText}>
                 <div className={styles.centerText} style={{ textIndent: `${textRg}%` }}>
-                  <span className={styles.text1}>{range.bpCurPrice}</span>
-                  <span className={styles.text2}>上次更新 {convertDate(range.bpUpdateTime, 'hh:mm')}</span>
+                  <span className={styles.text1}>
+                    {rightBtnDom}
+                    {range.bpCurPrice}
+                    {leftBtnDom}
+                  </span>
                 </div>
                 <div className={styles.bgColr}>
                   <span style={{ left: `${spanRg}%` }}>{}</span>
@@ -340,6 +389,7 @@ class QuotaCoinDetail extends BaseComponent {
         </div>
         {bipingEwmDom}
         {modal}
+        {showTextLayerDom}
       </div>
     );
   }
