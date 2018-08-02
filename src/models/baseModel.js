@@ -32,6 +32,10 @@ const baseModel = {
         ...state,
       };
     },
+    clearState(state, { payload }) {
+      return {
+      };
+    },
   },
 };
 

@@ -297,6 +297,9 @@ export default modelExtend(pageModel, {
     emptyData(state, action) {
       console.log('emptyData in');
       const { msgDetailData } = state;
+      if(!msgDetailData){
+        return {};
+      }
       msgDetailData.data = {};
       return {
         msgDetailData,

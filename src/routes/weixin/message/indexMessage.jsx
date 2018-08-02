@@ -5,6 +5,7 @@ import 'antd-mobile/es/wing-blank/style/index.css';
 import 'antd-mobile/es/white-space/style/index.css';
 import Tabs from 'antd-mobile/lib/tabs/index';
 import 'antd-mobile/es/notice-bar/style/index.css';
+import { commonUtils } from '../../../utils/commonUtil.js';
 import InfiniteListView from '../../../components/infiniteListView';
 import { buildPagiProps } from '../../common/paginationRoute';
 import { rebuildMessageList } from '../../../selectors/messageList';
@@ -166,7 +167,7 @@ class MessageList extends BaseComponent {
   }
   render() {
     const { indexMessage } = this.props;
-    if (!indexMessage) {
+    if (commonUtils.isEmpty(indexMessage)) {
       return null;
     }
     const { flag, list } = this.props.indexMessage;
@@ -190,6 +191,9 @@ class MessageList extends BaseComponent {
         </div>);
     }  */else {
       // 加工数据
+      if(!list||list.length==0){
+        return null;
+      }
       const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
       console.log('messageList in idx', messageList);
       const messageListProps = buildPagiProps(this.props.dispatch, {
