@@ -248,14 +248,14 @@ function* switchPageReal({
   if (!direct) {
     console.log('pageConstruction66666666', pageName);
     if (pageName === 'subList') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
       });
     }
     if (pageName === 'subDetail') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
@@ -269,7 +269,7 @@ function* switchPageReal({
       });
     }
     if (pageName === 'buyHistory') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[4];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
