@@ -21,6 +21,7 @@ class QuotaCoinDetail extends BaseComponent {
     };
   }
   componentWillMount() {
+    window.scrollTo(0, 0);
     const { params } = this.props;
     this.props.dispatch({
       type: 'quotaCoinDetail/getDetail',

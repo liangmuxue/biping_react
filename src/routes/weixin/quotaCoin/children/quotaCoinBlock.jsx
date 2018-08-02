@@ -14,6 +14,7 @@ class QuotaCoinBlock extends BaseComponent {
     };
   }
   componentWillMount() {
+    window.scrollTo(0, 0);
     this.props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'quotaCoin',
@@ -30,6 +31,19 @@ class QuotaCoinBlock extends BaseComponent {
   showLayerBtn() {
     this.setState({
       showLayer: true,
+    });
+  }
+  gotoText() {
+    const anchorElement = document.getElementById('textName');
+    anchorElement.scrollIntoView();
+  }
+  toOpen() {
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'toOpen',
+        params: { typeId: 719, typeName: 'AI诊币', backPath: 'quotaCoinBlock' },
+      },
     });
   }
   render() {
@@ -63,7 +77,10 @@ class QuotaCoinBlock extends BaseComponent {
     return (
       <div className={styles.centerBlock}>
         <div className={styles.banner}>
-          <img alt="" src="/images/quotaCoin/one.png" />
+          <img alt="" src="/images/quotaCoin/one.jpg" />
+        </div>
+        <div className={styles.textBan}>
+          想知道币价未来走势？用币评AI诊币，基于机器学习，综合分析影响盘面数据后得出。
         </div>
         <div className={styles.one}>
           <img alt="" src="/images/quotaCoin/two.jpg" />
@@ -100,22 +117,24 @@ class QuotaCoinBlock extends BaseComponent {
             </div>
           </div>
         </div>
-        <div className={styles.text2}>
+        <div id="textName" className={styles.text2}>
           <div className={styles.header}>
             <div className={styles.line}>{}</div>
             <span>参与规则</span>
           </div>
           <p className={styles.p1}>
-          免费方式：点击右下角“邀请好友”按钮，分享到朋友圈或发送给好友，成功邀请5个好友关注【币评区块链】公众号，即可获得AI诊币内测服务，本次免费内测仅开放500个名额，先到先得。
+            免费方式：点击右下角“邀请好友”按钮，生成邀请海报，成功邀请5个好友关注【币评区块链】公众号，即可获得AI诊币内测服务，本次免费内测仅开放500个名额，先到先得。
           </p>
-          <p className={styles.p2}>付费方式：AI诊币服务￥99元，本次开放300个名额。缴费成功后，系统即为您自动开通。</p>
-          <p className={styles.p3}>
+          <p className={styles.p2}>
+            付费方式：AI诊币服务￥39元，本次开放500个名额。缴费成功后，系统即为您自动开通。
+          </p>
+          <p onClick={() => this.toOpen()} className={styles.p3}>
             进入限时购买通道
             <img alt="" src="/images/quotaCoin/four.png" />
           </p>
         </div>
         <div className={styles.footerBtn}>
-          <div className={styles.leftBtn}>参与规则</div>
+          <div onClick={() => this.gotoText()} className={styles.leftBtn}>参与规则</div>
           <div onClick={() => this.showLayerBtn()} className={styles.rightBtn}>邀请好友</div>
         </div>
         {layerDom}
