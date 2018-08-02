@@ -45,6 +45,7 @@
         width: 1.3rem;
         height: 1.3rem;
         margin: 0 .16rem 0 .24rem;
+        border-radius: 50%;
       }
       .infoCenter {
         text-align: left;
@@ -157,4 +158,37 @@
       color: #fff;
     }
   }
+}
+.shareBg{
+  background: #1D3D70;
+  padding: .62rem;
+  padding-top: 0;
+  box-sizing: border-box;
+  position: relative;
+}
+.titleTips{
+	color: #FFF;
+  text-align: left;
+  margin-left: -.3rem;
+}
+.titleTips h2{
+	font-size: .32rem;
+	font-weight: normal;
+  color: #fff;
+  text-align: left;
+}
+.finger{
+  position: absolute;
+  top: 0.4rem;
+	width: .28rem !important;
+	height: .32rem !important;
+}
+:global(.am-modal-body){
+  padding: 0 !important;
+}
+:global(.am-modal-content){
+  border-radius: 0 !important;
+  background: none;
+  padding-top: 0 !important;
+  overflow: inherit;
 }

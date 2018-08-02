@@ -9,7 +9,26 @@ export const MODEL_DEF = {
 export default modelExtend(pageModel, {
   namespace: MODEL_DEF.modelName,
   effects: {
+    *getPoster({ payload }, { call, put, select}) {
+      const st = yield select();
+      const endpoint = 'userPoster/getPoster';
+      const data = yield call(queryNormal, {
+        endpoint,
+      }, st);
+      
+      yield put({
+        type: 'getPosterSuccess',
+        payload: data,
+      })
+    },
   },
   reducers: {
+    getPosterSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        userInfo: { ...response },
+      };
+    },
   },
 });

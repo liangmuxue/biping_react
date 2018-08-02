@@ -1,5 +1,7 @@
 import React from 'react';
 import { connect } from 'dva';
+import Modal from 'antd-mobile/lib/modal/index';
+import 'antd-mobile/es/modal/style/index.css';
 import BaseComponent from '../../baseComponent';
 import mobileRouteComponent from '../../../common/mobileRouteComponent';
 import styles from './quotaCoinBlock.less';
@@ -7,15 +9,57 @@ import styles from './quotaCoinBlock.less';
 class QuotaCoinBlock extends BaseComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      showLayer: false,
+    };
   }
   componentWillMount() {
     this.props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'quotaCoin',
     });
+    this.props.dispatch({
+      type: 'quotaCoinBlock/getPoster',
+    });
+  }
+  closeLayer() {
+    this.setState({
+      showLayer: false,
+    });
+  }
+  showLayerBtn() {
+    this.setState({
+      showLayer: true,
+    });
   }
   render() {
+    console.log('render=>', this.props);
+    const { userInfo } = this.props;
+    if (!userInfo) {
+      return null;
+    }
+    const { data } = userInfo;
+    let layerDom = null;
+    layerDom = (
+      <Modal
+        className={styles.shareBg}
+        visible={this.state.showLayer}
+        transparent
+        maskClosable
+        wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+        onClose={this.closeLayer.bind(this)}
+      >
+        <div>
+          <div style={{ lineHeight: '1.08rem' }}>
+            <span className={styles.titleTips}>长按图片发送好友</span>
+            <img src="/images/msgImages/1.png" alt="" className={styles.finger} />
+          </div>
+          <div style={{ height: 400, overflow: 'scroll' }}>
+            <img style={{ height: 'auto', width: '5rem' }} src={data.imgUrl} alt="" />
+          </div>
+        </div>
+      </Modal>
+    );
     return (
       <div className={styles.centerBlock}>
         <div className={styles.banner}>
@@ -33,12 +77,12 @@ class QuotaCoinBlock extends BaseComponent {
             团队成员来自腾讯、阿里及知名区块链公司，拥有互联网、金融、数学等专业背景。在区块链领域鱼龙混杂的当下，币评致力于打造最好用的币圈投资工具，为投资者提供最有价值的建议。
           </div>
           <div className={styles.userInfo}>
-            <img alt="" src="/images/quotaCoin/three.png" />
+            <img alt="" src={data.headImg} />
             <div className={styles.infoCenter}>
-              <span className={styles.span1}>币评（No:62831）</span>
-              <span className={styles.span2}>还需邀请5人才有参与资格</span>
+              <span className={styles.span1}>币评（No:{data.vid}）</span>
+              <span className={styles.span2}>还需邀请{data.maxCount}人才有参与资格</span>
             </div>
-            <button className={styles.infoBtn}>邀请好友</button>
+            <button onClick={() => this.showLayerBtn()} className={styles.infoBtn}>邀请好友</button>
           </div>
           <div className={styles.userPrice}>
             <div className={styles.left}>
@@ -48,11 +92,11 @@ class QuotaCoinBlock extends BaseComponent {
             </div>
             <div className={styles.center}>
               <span>需邀请人数</span>
-              <span className={styles.spanNum}>5</span>
+              <span className={styles.spanNum}>{data.maxCount}</span>
             </div>
             <div className={styles.right}>
               <span>已邀请</span>
-              <span className={styles.spanNum}>0</span>
+              <span className={styles.spanNum}>{data.nowCount}</span>
             </div>
           </div>
         </div>
@@ -72,8 +116,9 @@ class QuotaCoinBlock extends BaseComponent {
         </div>
         <div className={styles.footerBtn}>
           <div className={styles.leftBtn}>参与规则</div>
-          <div className={styles.rightBtn}>邀请好友</div>
+          <div onClick={() => this.showLayerBtn()} className={styles.rightBtn}>邀请好友</div>
         </div>
+        {layerDom}
       </div>
     );
   }
