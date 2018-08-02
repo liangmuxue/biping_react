@@ -285,7 +285,7 @@ function* switchPageReal({
   }
 
   // 支付页面隐藏底部
-  if (pageName === 'toOpen') {
+  if (pageName === 'toOpen' || pageName === 'quotaCoinBlock') {
     yield put({
       type: 'hideFooter',
     });
