@@ -363,23 +363,11 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
           </div>
-          {/* <div id="shareBottom" className={styles.shareBottom}>
-            <div className={styles.leftCon}>
-              <p>本信号由币评AI诊币系统产生，并提取了部分内容发布</p>
-              <ul>
-                <li>暴涨暴跌提醒</li>
-                <li>大单买卖提醒</li>
-                <li>事件日历</li>
-                <li>交易所公告</li>
-              </ul>
-            </div>
-            <img className={styles.rightCon} src="/images/share/ewm.jpg" alt="" />
-          </div> */}
           <div id="shareBottom" className={styles.bottomDom}>
-            <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
+            <img className={styles.leftImg} src="/images/quotaCoin/footerShare.jpg" alt="" />
             <img className={styles.shareewm}  alt="" src="/images/share/ewm.jpg" />
           </div>
-          {/* <div className={styles.bottomText}>免责说明：本功能中的内容仅供参考，建议投资者根据自身投资风格进行筛选，并合理控制风险。币圈有风险，投资需谨慎。</div> */}
+          <div className={styles.bottomText}>免责说明：本功能中的内容仅供参考，建议投资者根据自身投资风格进行筛选，并合理控制风险。币圈有风险，投资需谨慎。</div>
         </div>
         <div className={styles.btnList}>
           <div onClick={() => this.shareBtn()}>

@@ -239,7 +239,16 @@ function RouterConfig({ history, app }) {
       import('./models/quotaCoinSearch'),
     ],
     component: () => import('./routes/weixin/quotaCoin/quotaCoinSearch'),
-  })
+  });
+  // 诊币中间页
+  const QuotaCoinBlock = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/quotaCoinBlock'),
+    ],
+    component: () => import('./routes/weixin/quotaCoin/children/quotaCoinBlock'),
+  });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -321,6 +330,10 @@ function RouterConfig({ history, app }) {
     name: 'quotaCoinSearch',
     modelName: 'quotaCoinSearch',
     component: QuotaCoinSearch,
+  }, {
+    name: 'quotaCoinBlock',
+    modelName: 'quotaCoinBlock',
+    component: QuotaCoinBlock,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -371,6 +384,7 @@ function RouterConfig({ history, app }) {
           <Route path="/quotaCoin" component={QuotaCoin} />
           <Route path="/quotaCoinDetail" component={QuotaCoinDetail} />
           <Route path="/quotaCoinSearch" component={QuotaCoinSearch} />
+          <Route path="/quotaCoinBlock" component={QuotaCoinBlock} />
           {routeInner}
         </div>
       </ConnectedRouter>
