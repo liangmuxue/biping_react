@@ -146,7 +146,7 @@ class toOpenDetail extends BaseComponent {
     }
     return (
       <div>
-        <HeaderBar headerText={subDesc} backRouteLink={backPath} {...this.props} />
+        <HeaderBar headerText={subDesc} backRouteLink='subList' {...this.props} />
         <OpenCard openObj={systemUser} openClick={this.openClick.bind(this)} />
         <div className={style.introduceTitle}>套餐介绍</div>
         {data.map(i => (
