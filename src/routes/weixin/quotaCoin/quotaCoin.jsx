@@ -15,24 +15,33 @@ class QuotaCoin extends BaseComponent {
     this.props.dispatch({
       type: 'quotaCoin/hotList',
     });
-    this.props.dispatch({
-      type: 'pageConstruction/hideRouteLoading',
-      pageName: 'quotaCoin',
-    });
   }
   // 诊币详情页
   toDetail(item) {
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
-        pageName: 'quotaCoinDetail',
-        params: {
-          backPath: 'quotaCoin',
-          exchangeId: item.exchangeId,
-          symbolId: item.symbolId,
+    const { data } = this.props.hotDetail;
+    if (data.isVerb) {
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'quotaCoinDetail',
+          params: {
+            backPath: 'quotaCoin',
+            exchangeId: item.exchangeId,
+            symbolId: item.symbolId,
+          },
         },
-      },
-    });
+      });
+    } else {
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'quotaCoinBlock',
+          params: {
+            backPath: 'quotaCoin',
+          },
+        },
+      });
+    }
   }
   // 搜索点击
   toSearch() {
@@ -56,7 +65,8 @@ class QuotaCoin extends BaseComponent {
       <div>
         <div className={styles.banner}>
           <p className={styles.text}>
-            全方位多维度诊断，操作建议一键可得
+            <span>多维度技术指标、300余种热门货币、</span>
+            <span>小时级别的交易信号</span>
           </p>
           <span className={styles.line}></span>
           <span className={styles.time}>更新于：{convertDate(data.time, 'MM-DD hh:ss')}</span>

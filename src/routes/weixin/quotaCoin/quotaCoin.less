@@ -10,7 +10,10 @@
     font-size: 0.26rem;
     position: absolute;
     left: .44rem;
-    top: 1.24rem;
+    top: 1.2rem;
+    span {
+      display: block;
+    }
   }
   .line {
     position: absolute;
@@ -19,16 +22,19 @@
     width: .3rem;
     height: .04rem;
     background-color: #ffffff;
-    top: 1.78rem;
+    bottom: .59rem;
   }
   .time {
     position: absolute;
     left: .44rem;
-    bottom: .28rem;
+    bottom: .16rem;
     font-size: .24rem;
+    color: #D7D5EC;
   }
 }
 .hotCoin {
+  background-color: #fff;
+  margin-top: .2rem;
   .search {
     input[type='search'] {
       width: 6rem;
@@ -45,9 +51,6 @@
       text-indent: 2.4rem;
       background-position-x: 2rem;
       background-size: .25rem;;
-    }
-    input[type='search']::placeholder {
-      color: #888888;
     }
   }
   .hotTitle {
@@ -127,4 +130,7 @@
   margin: .3rem;
   line-height: 1.5;
   margin-bottom: 1.2rem;
+}
+*::placeholder {
+  color: #888888;
 }

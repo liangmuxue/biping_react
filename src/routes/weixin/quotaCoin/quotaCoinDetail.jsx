@@ -190,9 +190,9 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
             <div>
-              <span className={styles.usdtPrice}>7963.03</span>
+              <span className={styles.usdtPrice}>{range.bpCurPrice}</span>
               <span>USDT ≈ ¥ </span>
-              <span className={styles.price}>{range.bpCurPrice}</span>
+              <span className={styles.price}>{range.bpCurPriceCny}</span>
             </div>
           </div>
           <div className={styles.content}>
@@ -214,7 +214,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.column}>{}</div>
                 <span className={styles.titleText}>波动区间</span>
                 <img onClick={this.showTextBtn.bind(this)} className={styles.titleImg} src="/images/quotaCoin/wen.png" alt="" />
-                <span className={styles.rightText}>单位（元）</span>
+                <span className={styles.rightText}>单位（USDT）</span>
               </div>
               <div className={styles.conText}>
                 <div className={styles.centerText} style={{ textIndent: `${textRg}%` }}>
@@ -363,19 +363,9 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
           </div>
-          <div id="shareBottom" className={styles.shareBottom}>
-            <div className={styles.leftCon}>
-              <p>本信号由币评AI诊币系统产生，并提取了部分内容发布</p>
-              <ul>
-                <li>暴涨暴跌提醒</li>
-                <li>大单买卖提醒</li>
-                <li>事件日历</li>
-                <li>交易所公告</li>
-              </ul>
-            </div>
-            <div className={styles.rightCon}>
-              <img src="/images/share/ewm.jpg" alt="" />
-            </div>
+          <div id="shareBottom" className={styles.bottomDom}>
+            <img className={styles.leftImg} src="/images/quotaCoin/footerShare.jpg" alt="" />
+            <img className={styles.shareewm}  alt="" src="/images/share/ewm.jpg" />
           </div>
           <div className={styles.bottomText}>免责说明：本功能中的内容仅供参考，建议投资者根据自身投资风格进行筛选，并合理控制风险。币圈有风险，投资需谨慎。</div>
         </div>

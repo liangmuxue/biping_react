@@ -87,6 +87,7 @@
         color: #333333;
         margin: .1rem 0 .26rem;
         font-weight: bold;
+        font-size: .4rem;
       }
       .text2 {
         font-weight: bold;
@@ -114,13 +115,13 @@
     position: relative;
     .bgColr {
       position: relative;
-      height: .12rem;
+      height: .16rem;
       background: linear-gradient(to right, #F35833 , #FFC601, #1CAA3D);
       border-radius: .05rem;
       span {
         display: block;
         width: .36rem;
-        height: .16rem;
+        height: .20rem;
         background-color: #fff;
         border-radius: .08rem;
         left: 50%;
@@ -159,6 +160,7 @@
       }
       .text1 {
         color: #F35833;
+        font-weight: bold;
       }
     }
     .centerText {
@@ -169,6 +171,7 @@
       .text1 {
         color: #000;
         font-size: .24rem;
+        font-weight: bold;
       }
       .leftBtn {
         border: 1px solid #1CAA3D;
@@ -198,6 +201,7 @@
       }
       .text1 {
         color: #1CAA3D;
+        font-weight: bold;
       }
     }
   }
@@ -237,10 +241,11 @@
 }
 .shockItem {
   padding: .4rem 0;
+  padding-bottom: 0;
 }
 .tableList {
   background-color: #fff;
-  padding: .3rem;
+  padding: .3rem .3rem 0;
   margin-top: .3rem;
   .tableHeader {
     color: #666666;
@@ -283,9 +288,8 @@
 .bottomText {
   color: #999999;
   font-size: .24rem;
-  margin: .3rem;
-  padding-bottom: .3rem;
-  margin-bottom: .98rem;
+  padding: .5rem .3rem 0;
+  margin-bottom: 1.2rem;
 }
 .btnList {
   position: fixed;
@@ -333,12 +337,14 @@
   overflow: inherit;
 }
 .shareBottom {
-    display: none;
-    height: 2.1rem;
-    margin: .3rem;
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
   .leftCon {
     float: left;
     width: 4.3rem;
+    margin-top: 64px;
+    margin-left: 20px;
     p {
       color: #222222;
       font-size: .3rem;
@@ -363,11 +369,12 @@
     }
   }
   .rightCon {
-    height: 100%;
+    width: 120px;
+    height: 120px;
     float: right;
-    img {
-      height: 100%;
-    }
+    margin-top: 64px;
+    margin-right: 20px;
+    margin-bottom: 64px;
   }
 }
 .textLayer {
@@ -388,5 +395,20 @@
     display: block;
     color: #000000;
     padding: .2rem 0;
+  }
+}
+.bottomDom{
+  display: none;
+  position: relative;
+  height: 3.43rem;
+  .leftImg {
+    width: 3.97rem;
+    float: left;
+    margin-top: .69rem;
+    margin-left: .3rem;
+  }
+  .shareewm {
+    width: 2.46rem;
+    margin-top: .5rem;
   }
 }
