@@ -82,6 +82,10 @@ const getDirectPageParams = function () {
     const pagePart = state.split('#')[0];
     //直接进入内页
     let directPage = pagePart.split('_')[1];
+    // 进入支付页时添加参数
+    if(state.indexOf('directPage_toOpen') >= 0){
+      return { directPage, params: { typeId:719, typeName: 'AI诊币' } };
+    }
     return { directPage, params: {  } };
   }
 };

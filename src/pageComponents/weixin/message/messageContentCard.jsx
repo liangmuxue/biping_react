@@ -81,7 +81,6 @@ class MessageContent extends React.Component {
       const gainHoldReal =  msgObj.priceReal / msgObj.price * gainHold /10000;
       return '￥ ' + gainHoldReal.toFixed(2) + '万';
     };
-
     return (
       <div className={`${shareType == 1 ? style.shareCon : ''}`}>
         <div className={`${style.transactionCoin}`} >
@@ -117,44 +116,47 @@ class MessageContent extends React.Component {
             differTextArea
           }
         </div>
-        <div className={msgObj.direction ? style.hide : style.coinTable} >
-          <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
-          <div className={style.tableTitle}>
-            <div className={style.tableTime}>时间</div>
-            <div className={style.tablePrice}>单价</div>
-            <div className={style.tableChg}>涨跌幅</div>
-            <div className={style.tableIncome}>净流入</div>
-          </div>
-        </div>
-
-        {msgObj.quoteList.map(msg =>
-        (
-          <div className={msgObj.direction ? style.hide : style.coinLists} >
-            {msg.price ?
-            <div className={style.tableTitle}>
-              <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
-              <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
-              <div className={style.tableChg}>
-                <span className={msg.gainDiffer >= 0 ? style.toUp : style.toDown}>
-                  {gainDifferFun(msg.gainDiffer)}
-                </span>
+        {msgObj.quoteList?
+          <div>
+            <div className={msgObj.direction ? style.hide : style.coinTable} >
+              <div className={style.coinTitle} >异动数据（单位：{(msgObj.quoteCoinCode) ? (msgObj.quoteCoinCode).toUpperCase() : ''})</div>
+              <div className={style.tableTitle}>
+                <div className={style.tableTime}>时间</div>
+                <div className={style.tablePrice}>单价</div>
+                <div className={style.tableChg}>涨跌幅</div>
+                <div className={style.tableIncome}>净流入</div>
               </div>
-              <div className={style.tableIncome}>{gainHoldTrans(msg.gainHold)}</div>
             </div>
-            :
-            <div className={style.tableTitle}>
-              <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
-              <div className={style.tablePrice}>-</div>
-              <div className={style.tableChg}>
-                <span>
-                  -
-                </span>
+            {msgObj.quoteList.map(msg =>
+            (
+              <div className={msgObj.direction ? style.hide : style.coinLists} >
+                {msg.price ?
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
+                  <div className={style.tablePrice}>{msg.price.toString().substr(0, 9)}</div>
+                  <div className={style.tableChg}>
+                    <span className={msg.gainDiffer >= 0 ? style.toUp : style.toDown}>
+                      {gainDifferFun(msg.gainDiffer)}
+                    </span>
+                  </div>
+                  <div className={style.tableIncome}>{gainHoldTrans(msg.gainHold)}</div>
+                </div>
+                :
+                <div className={style.tableTitle}>
+                  <div className={style.tableTime}> {moment(msg.qTime * 1000).format('HH:mm')}</div>
+                  <div className={style.tablePrice}>-</div>
+                  <div className={style.tableChg}>
+                    <span>
+                      -
+                    </span>
+                  </div>
+                  <div className={style.tableIncome}>-</div>
+                </div>
+                }
               </div>
-              <div className={style.tableIncome}>-</div>
-            </div>
-            }
+            ))}
           </div>
-        ))}
+        :''}
       </div>
 
     );

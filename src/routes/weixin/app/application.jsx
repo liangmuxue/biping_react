@@ -152,7 +152,7 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = (<div ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
+      pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
         {loadingTip}{pagiLoadingTip}
         <Footer />
                      </div>);

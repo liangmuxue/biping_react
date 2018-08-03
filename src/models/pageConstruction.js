@@ -1,4 +1,5 @@
 import { Route, routerRedux } from 'dva/router';
+import ReactDOM from 'react-dom';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { innerPageDefs } from '../wxRouter';
 import { siteAnalysis } from '../utils/siteAnalysis.js';
@@ -231,21 +232,30 @@ function* switchPageReal({
   };
   // 设置动态key
   matchPage.extraKey = Math.random();
-  // 放入页面列表
-  innerPageList.length = 0;
+  if(innerPageList.length>0){
+    // const prePageComp = innerPageList[0];
+    // const modelName = prePageComp.pageName;
+    // const clearState = `${modelName}/clearState`;
+    // console.log(`need send clearState:${clearState}`);
+    // yield put({
+    //   type: clearState,
+    // });
+    // 放入页面列表
+    innerPageList.length = 0;
+  }
   innerPageList.push(matchPage);
   // 直接跳转时，需要判断当前页面属于哪个底部菜单
   if (!direct) {
     console.log('pageConstruction66666666', pageName);
     if (pageName === 'subList') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
       });
     }
     if (pageName === 'subDetail') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
@@ -259,7 +269,7 @@ function* switchPageReal({
       });
     }
     if (pageName === 'buyHistory') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[4];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
