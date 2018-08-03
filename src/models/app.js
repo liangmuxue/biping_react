@@ -190,6 +190,7 @@ const App = {
         if (!mockUser) {
           window.localStorage.clear();
           console.log(`need clear`);
+          window.localtion.href = window.localtion.href;
         }
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
