@@ -11,7 +11,7 @@ function SearchList(props) {
   return (
     <ul className={styles.searchList}>
       {list.map(item => (
-        <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{`${item.baseCoinCode}/${item.quoteCoinCode}`}</li>
+        <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{`${item.baseCoinCode}`}</li>
       ))}
     </ul>
   );

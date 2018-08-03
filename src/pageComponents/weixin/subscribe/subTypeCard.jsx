@@ -55,6 +55,9 @@ class SubTypeCard extends React.Component {
       );
       remainButton = (<Renew />);
     }
+    if (typeObj.typeId !== 719) { // 719 AI诊币
+      remainButton = null;
+    }
     let imgSrc = '';
     switch (typeObj.typeName) {
       case '暴涨暴跌':

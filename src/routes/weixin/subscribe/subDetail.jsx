@@ -118,7 +118,13 @@ class SubDetail extends BaseComponent {
     if (preventFlag) {
       return null;
     }
-    if (remainDate >= 0) {
+    this.props.dispatch({
+      type: 'subDetail/subscribeItem',
+      payload: {
+        subItem: itemObj,
+      },
+    });
+    /* if (remainDate >= 0) {
       // 发起订阅请求
       this.props.dispatch({
         type: 'subDetail/subscribeItem',
@@ -135,7 +141,7 @@ class SubDetail extends BaseComponent {
           params: { typeId, typeName, backPath: 'subList' },
         },
       });
-    }
+    } */
   }
   subTypeClick(subTypeObj) {
     this.props.dispatch({
@@ -202,6 +208,7 @@ class SubDetail extends BaseComponent {
         subscribeItem={this.subscribeItem.bind(this)}
         subscribeAll={this.subscribeAllTrans.bind(this)}
         gainOrLose={this.gainOrLose.bind(this)}
+
       />);
     } else if (subDetailData.data.typeName === '暴涨暴跌' || subDetailData.data.typeName === '大单买卖') {
       subContent = (
@@ -210,6 +217,8 @@ class SubDetail extends BaseComponent {
           itemClick={this.childrenClick.bind(this)}
         />
       );
+    } else if (subDetailData.data.typeId === 719) {
+      subContent = null;
     } else {
       subContent = (<div>
         <div className={style.listTitle}>

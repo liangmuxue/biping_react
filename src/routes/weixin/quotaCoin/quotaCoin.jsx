@@ -45,15 +45,28 @@ class QuotaCoin extends BaseComponent {
   }
   // 搜索点击
   toSearch() {
-    this.props.dispatch({
-      type: 'pageConstruction/switchToInnerPage',
-      payload: {
-        pageName: 'quotaCoinSearch',
-        params: {
-          backPath: 'quotaCoin',
+    const { data } = this.props.hotDetail;
+    if (data.isVerb) {
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'quotaCoinSearch',
+          params: {
+            backPath: 'quotaCoin',
+          },
         },
-      },
-    });
+      });
+    } else {
+      this.props.dispatch({
+        type: 'pageConstruction/switchToInnerPage',
+        payload: {
+          pageName: 'quotaCoinBlock',
+          params: {
+            backPath: 'quotaCoin',
+          },
+        },
+      });
+    }
   }
   render() {
     const { hotDetail } = this.props;
