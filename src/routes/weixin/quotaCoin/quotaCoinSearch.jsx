@@ -48,17 +48,16 @@ class QuotaCoinSearch extends BaseComponent {
     clearTimeout(this.state.timeOut);
     const content = val;
     this.state.timeOut = setTimeout(() => {
-      console.log('search');
       this.props.dispatch({
         type: 'quotaCoinSearch/searchList',
         payload: {
           filter: { content },
         },
       });
+      this.setState({
+        searchVal: val,
+      });
     }, 500);
-    this.setState({
-      searchVal: val,
-    });
   }
   itemClick(item) {
     this.props.dispatch({
@@ -72,15 +71,16 @@ class QuotaCoinSearch extends BaseComponent {
         },
       },
     });
-  }
+  } 
   render() {
     console.log('render=>', this.props);
-    const { list } = this.props;
+    const { quotaCoinSearch, pagiLoading } = this.props;
+    const { list } = quotaCoinSearch;
     let conHtml = null;
     if (!this.state.searchVal) {
       conHtml = null;
     } else if (list.length <= 0) {
-      conHtml = (
+      conHtml = pagiLoading ? null : (
         <div className={styles.noCon}>暂无匹配项</div>
       );
     } else {
@@ -101,7 +101,7 @@ class QuotaCoinSearch extends BaseComponent {
 }
 
 function mapStateToProps(state) {
-  return state.quotaCoinSearch;
+  return { quotaCoinSearch: state.quotaCoinSearch, pagiLoading: state.app.pagiLoading };
 }
 
 export default connect(mapStateToProps)(mobileRouteComponent(QuotaCoinSearch));

@@ -9,6 +9,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoinDetail.less';
 import { convertDate } from '../../../utils/dateFormat';
 import BipingEwm from './layer/bipingEwm';
+// import { config } from '../../../../config/environment';
 
 class QuotaCoinDetail extends BaseComponent {
   constructor(props) {
@@ -45,6 +46,7 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   shareBtn() {
+    // const { host } = config.env;
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -52,6 +54,8 @@ class QuotaCoinDetail extends BaseComponent {
       },
     });
     document.getElementById('shareBottom').style.display = 'block';
+    // const replaceVal = document.getElementById('imgLogo');
+    // replaceVal.setAttribute('src', `${host}/imgProxy?targetUrl=${replaceVal.src}`);
     html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
       document.getElementById('shareBottom').style.display = 'none';
       this.state.imgUrl = canvas.toDataURL('image/png');
@@ -205,7 +209,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <span className={styles.time}>上次更新 {convertDate(range.bpUpdateTime, 'hh:mm')}</span>
               </div>
               <div className={styles.name}>
-                <img src={symbol.symbolLogo} alt="" />
+                <img id="imgLogo" src={symbol.symbolLogo} alt="" />
                 <span className={styles.fontWeight}>{symbol.baseCoinCode}<em className={styles.fontWeight}>/{symbol.quoteCoinCode}</em></span>
                 <div className={styles.timeZf}>24h涨跌幅：
                   <em className={`${styles.fontWeight} ${range.range < 0 ? styles.downColor : styles.upColor}`}>
