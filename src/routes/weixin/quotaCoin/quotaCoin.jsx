@@ -13,11 +13,29 @@ class QuotaCoin extends BaseComponent {
   }
   componentWillMount() {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoin',
+        obj: {
+          '进入': '进入诊币',
+        },
+      },
+    });
+    this.props.dispatch({
       type: 'quotaCoin/hotList',
     });
   }
   // 诊币详情页
   toDetail(item) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinDetailClick',
+        obj: {
+          '名称': item.name,
+        },
+      },
+    });
     const { data } = this.props.hotDetail;
     if (data.isVerb) {
       this.props.dispatch({
@@ -45,6 +63,12 @@ class QuotaCoin extends BaseComponent {
   }
   // 搜索点击
   toSearch() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinSearch',
+      },
+    });
     const { data } = this.props.hotDetail;
     if (data.isVerb) {
       this.props.dispatch({

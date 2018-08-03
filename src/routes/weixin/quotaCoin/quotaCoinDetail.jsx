@@ -21,6 +21,15 @@ class QuotaCoinDetail extends BaseComponent {
     };
   }
   componentWillMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinDetail',
+        obj: {
+          '进入': '进入诊币详情',
+        },
+      },
+    });
     window.scrollTo(0, 0);
     const { params } = this.props;
     this.props.dispatch({
@@ -36,6 +45,12 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   shareBtn() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinSharebtn',
+      },
+    });
     document.getElementById('shareBottom').style.display = 'block';
     html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
       document.getElementById('shareBottom').style.display = 'none';
@@ -46,6 +61,12 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   showEwm() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinshowEwm',
+      },
+    });
     this.setState({
       bipingEwm: true,
     });
