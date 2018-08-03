@@ -45,9 +45,6 @@ class QuotaCoinSearch extends BaseComponent {
     });
   }
   onChange(val) {
-    this.setState({
-      searchVal: val,
-    });
     clearTimeout(this.state.timeOut);
     const content = val;
     this.state.timeOut = setTimeout(() => {
@@ -59,6 +56,9 @@ class QuotaCoinSearch extends BaseComponent {
         },
       });
     }, 500);
+    this.setState({
+      searchVal: val,
+    });
   }
   itemClick(item) {
     this.props.dispatch({

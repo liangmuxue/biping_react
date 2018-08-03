@@ -22,6 +22,7 @@ export default modelExtend(pageModel, {
             pageSize: 10, // 默认每页条目
           },
         },
+        ps: 'top',
       });
     },
   },

@@ -121,7 +121,7 @@ class HomePage extends Component {
     );
     // 翻页加载提示区域
     const pagiLoadingTip = (
-      <div className={pagiLoading ? (pagiPosition === 'center' ? styles.loadCenter : styles.load) : styles.loadingHide}>
+      <div className={pagiLoading ? (pagiPosition === 'center' ? styles.loadCenter : (pagiPosition === 'top' ? styles.loadTop : styles.load)) : styles.loadingHide}>
         <div className="loading-example">
           <div className="align">
             <ActivityIndicator size="large" />

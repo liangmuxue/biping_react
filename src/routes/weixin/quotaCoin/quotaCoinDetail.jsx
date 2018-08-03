@@ -295,7 +295,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableRight}>{}</div>
               </div>
               <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>移动平均线（90）</div>
+                <div className={styles.tableLeft}>移动平均线（30）</div>
                 <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma90 : null}</div>
                 <div className={styles.tableRight}>{}</div>
               </div>
