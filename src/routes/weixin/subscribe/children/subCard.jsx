@@ -29,6 +29,9 @@ class SubCard extends React.Component {
       case '币事件':
         imgSrc = '/images/coinList/coin1.png';
         break;
+      case 'AI诊币':
+        imgSrc = '/images/coinList/coin5.jpg';
+        break;
       default:
         imgSrc = '/images/coinList/coin1.png';
     }
