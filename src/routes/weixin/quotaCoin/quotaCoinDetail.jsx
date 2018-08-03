@@ -214,7 +214,7 @@ class QuotaCoinDetail extends BaseComponent {
                 </div>
               </div>
             </div>
-            <div className={styles.fontWeight}>
+            <div className={`${styles.fontWeight} ${styles.color3}`}>
               <span className={styles.usdtPrice}>{range.bpCurPrice}</span>
               <span>USDT ≈ ¥ </span>
               <span className={styles.price}>{range.bpCurPriceCny}</span>
