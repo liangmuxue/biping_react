@@ -185,8 +185,11 @@ const App = {
         // 用户信息查询失败，重新进入注册流程
         yield put({ type: 'autoReg', payload: { code: codenow } });
       } else if (success && response.flag === 1003) {
-        // 取消关注了的用户不允许直接进入
-        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
+        // 取消关注了的用户不允许进入,需要清空本地存储
+        window.localStorage.clear();
+        console.log(`need clear`);
+        window.location.href = window.location.href;
+        return;
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
         const { mockUser } = config.env;
