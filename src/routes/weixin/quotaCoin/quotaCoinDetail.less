@@ -2,7 +2,7 @@
   margin: .2rem 0;
   background-color: #fff;
   overflow: hidden;
-  padding: .27rem .3rem;
+  padding: .27rem .3rem .1rem;
   text-align: left;
   .left {
     color: #828A92;
@@ -54,58 +54,59 @@
 .content {
   background-color: #fff;
   padding: .18rem .3rem .3rem;
-  .suggest {
-    .suggestImg {
-      width: 4.47rem;
+}
+.suggest {
+  margin-bottom: .76rem;
+  .suggestImg {
+    width: 4.47rem;
+  }
+  .suggestText {
+    position: relative;
+    font-size: .3rem;
+    margin-top: -1.4rem;
+    span {
+      display: block;
     }
-    .suggestText {
+    .line {
+      width: .04rem;
+      height: 1.22rem;
+      background-color: #666666;
+      margin: 0 auto;
+      transform: rotateZ(0deg);
+      transform-origin: bottom;
       position: relative;
-      font-size: .3rem;
-      margin-top: -1.4rem;
-      span {
-        display: block;
-      }
-      .line {
-        width: .04rem;
-        height: 1.22rem;
-        background-color: #666666;
-        margin: 0 auto;
-        transform: rotateZ(0deg);
-        transform-origin: bottom;
-        position: relative;
-        top: 0.07rem;
-      }
-      .circle {
-        display: block;
-        width: 0.14rem;
-        height: .14rem;
-        background-color: #666666;
-        margin: 0 auto;
-        border-radius: .18rem;
-      }
-      .text1 {
-        color: #333333;
-        margin: .1rem 0 .26rem;
-        font-weight: bold;
-        font-size: .4rem;
-      }
-      .text2 {
-        font-weight: bold;
-        position: absolute;
-        width: 100%;
-        text-align: center;
-        font-size: .4rem;
-        top: 0.4rem;
-      }
-      .sell {
-        color: #F35833;
-      }
-      .neutral {
-        color: #FBBE01;
-      }
-      .buy {
-        color: #1CAA3D
-      }
+      top: 0.07rem;
+    }
+    .circle {
+      display: block;
+      width: 0.14rem;
+      height: .14rem;
+      background-color: #666666;
+      margin: 0 auto;
+      border-radius: .18rem;
+    }
+    .text1 {
+      color: #333333;
+      margin: .1rem 0 .26rem;
+      font-weight: bold;
+      font-size: .4rem;
+    }
+    .text2 {
+      font-weight: bold;
+      position: absolute;
+      width: 100%;
+      text-align: center;
+      font-size: .4rem;
+      top: 0.4rem;
+    }
+    .sell {
+      color: #F35833;
+    }
+    .neutral {
+      color: #FBBE01;
+    }
+    .buy {
+      color: #1CAA3D
     }
   }
 }
@@ -219,12 +220,14 @@
     float: left;
     position: relative;
     top: .1rem;
+    margin-right: .16rem;
   }
   .titleText {
-    color: #353535;
+    color: #222222;
     font-size: .34rem;
     float: left;
-    margin: 0 .16rem;
+    font-weight: bold;
+    margin-right:.16rem;
   }
   .titleImg {
     width: .26rem;
@@ -240,6 +243,7 @@
   }
 }
 .shockItem {
+  margin-top: .3rem;
   padding: .4rem 0;
   padding-bottom: 0;
 }
@@ -247,6 +251,12 @@
   background-color: #fff;
   padding: .3rem .3rem 0;
   margin-top: .3rem;
+  .sugText {
+    text-align: left;
+    font-size: .28rem;
+    color: #888888;
+    margin-bottom: .34rem;
+  }
   .tableHeader {
     color: #666666;
   }
@@ -388,7 +398,10 @@
     font-size: .24rem;
     padding: .4rem;
     border-bottom: 1px solid #E5E5E5;
-    line-height: 2;
+    text-align: left;
+    p {
+      margin-top: .1rem;
+    }
   }
   .btn {
     width: 100%;
@@ -411,4 +424,7 @@
     width: 2.46rem;
     margin-top: .5rem;
   }
+}
+.fontWeight {
+  font-weight: bold;
 }

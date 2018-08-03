@@ -191,9 +191,9 @@ class MessageList extends BaseComponent {
         </div>);
     }  */else {
       // 加工数据
-      if(!list||list.length==0){
-        return null;
-      }
+      // if(!list||list.length==0){
+      //   return null;
+      // }
       const { messageList } = rebuildMessageList({ messageList: this.props.indexMessage });
       console.log('messageList in idx', messageList);
       const messageListProps = buildPagiProps(this.props.dispatch, {

@@ -88,11 +88,11 @@ class QuotaCoinDetail extends BaseComponent {
     } = data;
     let rgs = 0;
     if (percentage.result < 0) {
-      rgs = -30 - (60 * percentage.sellPer);
+      rgs = -27 - (60 * percentage.sellPer);
     } else if (percentage.result === 0) {
-      rgs = -30 + (60 * percentage.neutralityPer);
+      rgs = -27 + (60 * percentage.neutralityPer);
     } else {
-      rgs = 30 + (60 * percentage.buyPer);
+      rgs = 27 + (60 * percentage.buyPer);
     }
     let textRg = 0; // 波动区间文字
     let spanRg = 0; // 波动区间白框
@@ -129,7 +129,10 @@ class QuotaCoinDetail extends BaseComponent {
       >
         <div className={styles.textLayer}>
           <span className={styles.text}>
-            压力位就是当汇价上升到某价位附近时，汇价会停止上涨，甚至回落。这个起着阻止或暂时阻止股价继续上升的价位就是压力线所在的位置。支撑位又称为抵抗线。当汇价跌到某个价位附近时，汇价停止下跌，甚至有可能还会回升。这个起着阻止或暂时阻止股价继续下跌的价位就是支撑线所在的位置。
+            阻力位就是当币价上涨到某价位附近时，就会停止上涨，甚至回落，这个起着阻止或暂时阻止币价继续上涨的价位就是阻力线所在的位置。
+            <p>
+              支撑位又称为抵抗线，当币价跌到某个价位附近时，就会停止下跌，甚至回升，这个起着阻止或暂时阻止币价继续下跌的价位就是支撑线所在的位置。
+            </p>
           </span>
           <span onClick={this.closeshowTextLayer.bind(this)} className={styles.btn}>
             我知道了
@@ -162,7 +165,7 @@ class QuotaCoinDetail extends BaseComponent {
       >
         <div >
           <div style={{ lineHeight: '1.08rem' }}>
-            <span className={styles.titleTips}>长按图片发送好友</span>
+            <span className={styles.titleTips}>长按图片发送给群友</span>
             <img src="/images/msgImages/1.png" alt="" className={styles.finger} />
           </div>
           <div style={{ height: 400, overflow: 'scroll' }}>
@@ -182,34 +185,21 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
               <div className={styles.name}>
                 <img src={symbol.symbolLogo} alt="" />
-                <span>{symbol.baseCoinCode}<em>/{symbol.quoteCoinCode}</em></span>
+                <span className={styles.fontWeight}>{symbol.baseCoinCode}<em className={styles.fontWeight}>/{symbol.quoteCoinCode}</em></span>
                 <div className={styles.timeZf}>24h涨跌幅：
-                  <em>
+                  <em className={styles.fontWeight}>
                     {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
                   </em>
                 </div>
               </div>
             </div>
-            <div>
+            <div className={styles.fontWeight}>
               <span className={styles.usdtPrice}>{range.bpCurPrice}</span>
               <span>USDT ≈ ¥ </span>
               <span className={styles.price}>{range.bpCurPriceCny}</span>
             </div>
           </div>
           <div className={styles.content}>
-            <div className={styles.suggest}>
-              <img className={styles.suggestImg} src="/images/quotaCoin/green.jpg" alt="" />
-              <div className={styles.suggestText}>
-                <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
-                  {percentage.result < 0 ? '卖出' : (percentage.result === 0 ? '中立' : '买入') }
-                </span>
-                <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
-                <span className={styles.circle}>{}</span>
-                <span className={styles.text1}>
-                  {percentage.result < 0 ? `${NP.times(percentage.sellPer, 100)}%` : (percentage.result === 0 ? `${NP.times(percentage.neutralityPer, 100)}%` : `${NP.times(percentage.buyPer, 100)}%`) }
-                </span>
-              </div>
-            </div>
             <div className={styles.fluctuate}>
               <div className={styles.conTitle}>
                 <div className={styles.column}>{}</div>
@@ -242,9 +232,30 @@ class QuotaCoinDetail extends BaseComponent {
             </div>
           </div>
           <div className={styles.tableList}>
+            <div className={styles.conTitle}>
+              <div className={styles.column}>{}</div>
+              <span className={styles.titleText}>技术分析概要</span>
+              <span className={styles.rightText}>上次更新 {convertDate(range.bpQuotaUpdateTime, 'hh:mm')}</span>
+            </div>
+            <p className={styles.sugText}>
+              根据价格数据波动作为指标，每小时预判币种涨跌趋势，进而给出买卖建议。
+            </p>
+            <div className={styles.suggest}>
+              <img className={styles.suggestImg} src="/images/quotaCoin/green.jpg" alt="" />
+              <div className={styles.suggestText}>
+                <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
+                  {percentage.result < 0 ? '卖出' : (percentage.result === 0 ? '中立' : '买入') }
+                </span>
+                <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
+                <span className={styles.circle}>{}</span>
+                <span className={styles.text1}>
+                  {/* {percentage.result < 0 ? `${NP.times(percentage.sellPer, 100)}%` : (percentage.result === 0 ? `${NP.times(percentage.neutralityPer, 100)}%` : `${NP.times(percentage.buyPer, 100)}%`) } */}
+                </span>
+              </div>
+            </div>
             <div className={styles.tableItem}>
               <div className={styles.conTitle}>
-                <div className={styles.column}>{}</div>
+                {/* <div className={styles.column}>{}</div> */}
                 <span className={styles.titleText}>趋势</span>
               </div>
               <div className={`${styles.tableCon} ${styles.tableHeader}`}>
@@ -288,7 +299,6 @@ class QuotaCoinDetail extends BaseComponent {
             </div>
             <div className={`${styles.tableItem} ${styles.shockItem}`}>
               <div className={styles.conTitle}>
-                <div className={styles.column}>{}</div>
                 <span className={styles.titleText}>震荡指标</span>
               </div>
               <div className={`${styles.tableCon} ${styles.tableHeader}`}>

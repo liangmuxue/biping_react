@@ -101,7 +101,7 @@ class QuotaCoin extends BaseComponent {
                   <li key={item.symbolId} onClick={() => this.toDetail(item)}>
                     <img className={styles.headImg} alt="" src={item.symbolLogo} />
                     <div className={styles.rightCon}>
-                      <p className={styles.p1}>{item.name}</p>
+                      <p className={`${styles.fontWeight} ${styles.p1}`}>{item.name}</p>
                       <p className={`${styles.p2} ${item.range < 0 ? styles.down : styles.up}`}>
                         {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
                       </p>

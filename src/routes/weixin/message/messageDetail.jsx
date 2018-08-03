@@ -207,13 +207,23 @@ class MsgDetail extends BaseComponent {
     super.componentWillMount();
   }
   componentDidMount() {
+    const { params } = this.props;
+    const { enterMessageCase } = params;
+    console.log('componentDidMount=>', enterMessageCase);
+    let objs = {
+      '进入': '进入详情',
+    };
+    if (enterMessageCase) {
+      objs = {
+        '进入': '进入详情',
+        enterMessageCase,
+      };
+    }
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
         code: 'messageDetail',
-        obj: {
-          '进入': '进入详情',
-        },
+        obj: objs,
       },
     });
   }

@@ -97,7 +97,7 @@ class QuotaCoinBlock extends BaseComponent {
             <img alt="" src={data.headImg} />
             <div className={styles.infoCenter}>
               <span className={styles.span1}>币评（No:{data.vid}）</span>
-              <span className={styles.span2}>还需邀请{data.maxCount}人才有参与资格</span>
+              <span className={styles.span2}>还需邀请{data.maxCount - data.nowCount}人才有参与资格</span>
             </div>
             <button onClick={() => this.showLayerBtn()} className={styles.infoBtn}>邀请好友</button>
           </div>
@@ -109,7 +109,7 @@ class QuotaCoinBlock extends BaseComponent {
             </div>
             <div className={styles.center}>
               <span>需邀请人数</span>
-              <span className={styles.spanNum}>{data.maxCount}</span>
+              <span className={styles.spanNum}>{data.maxCount - data.nowCount}</span>
             </div>
             <div className={styles.right}>
               <span>已邀请</span>

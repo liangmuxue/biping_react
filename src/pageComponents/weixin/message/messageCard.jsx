@@ -14,7 +14,7 @@ import styles from './messageCard.less';
 class MessageCard extends React.Component {
   constructor(props) {
     super(props);
-    console.log('props in MessageCard', props);
+    // console.log('props in MessageCard', props);
     this.state = {
     };
   }

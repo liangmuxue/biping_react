@@ -148,7 +148,7 @@ class InfiniteListView extends React.Component {
     }
 
     const renderRowInner = (rowData, sectionID, rowID) => {
-      console.log('renderRowInner rowData:', rowData);
+      // console.log('renderRowInner rowData:', rowData);
       if (rowData.noMoreTip && rowData.noMoreTip === 1) {
         return <div className={styles.noMoreTip}>没有更多啦</div>;
       } else {
