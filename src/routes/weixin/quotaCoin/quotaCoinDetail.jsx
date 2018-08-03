@@ -208,7 +208,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <img src={symbol.symbolLogo} alt="" />
                 <span className={styles.fontWeight}>{symbol.baseCoinCode}<em className={styles.fontWeight}>/{symbol.quoteCoinCode}</em></span>
                 <div className={styles.timeZf}>24h涨跌幅：
-                  <em className={styles.fontWeight}>
+                  <em className={`${styles.fontWeight} ${range.range < 0 ? styles.downColor : styles.upColor}`}>
                     {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
                   </em>
                 </div>
