@@ -189,7 +189,7 @@ const App = {
         yield put({ type: 'tourLogin', payload: { attentionModal: true } });
         window.localStorage.clear();
         console.log(`need clear`);
-        window.localtion.href = window.localtion.href;
+        window.location.href = window.location.href;
         return;
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
