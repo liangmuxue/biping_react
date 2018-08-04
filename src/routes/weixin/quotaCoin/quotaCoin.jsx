@@ -131,8 +131,7 @@ class QuotaCoin extends BaseComponent {
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
-                      {/* {item.result < 0 ? '建议卖出' : (item.result === 0 ? '保持中立' : '建议买入') } */}
-                      {item.result < 0 ? '看空' : (item.result === 0 ? '保持中立' : '看多') }
+                      {item.result < 0 ? '看空' : (item.result === 0 ? '中立' : '看多') }
                     </button>
                   </li>
                 ))
@@ -141,7 +140,7 @@ class QuotaCoin extends BaseComponent {
           </ul>
         </div>
         <div className={styles.bottomtext}>
-          免责申明：本站建议是利用技术指标结合历史数据实时运算所得，投资者须知未来行情趋势具有极强随机性，本建议仅供参考，需要投资者根据不同行情合理应用，控制风险。币圈有风险，投资需谨慎。
+        免责申明：本预测指标是利用技术指标结合历史数据实时运算所得，投资者须知未来行情趋势具有极强随机性，本指标仅供参考，需要投资者根据不同行情合理应用，控制风险。币圈有风险，投资需谨慎。
         </div>
       </div>
     );

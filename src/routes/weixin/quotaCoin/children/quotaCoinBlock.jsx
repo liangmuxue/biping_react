@@ -110,7 +110,7 @@ class QuotaCoinBlock extends BaseComponent {
           想知道币价未来走势？用币评AI诊币，基于机器学习，综合分析影响盘面数据后得出。
         </div>
         <div className={styles.one}>
-          <img alt="" src="/images/quotaCoin/two.jpg" />
+          <img alt="" src="/images/quotaCoin/two2.jpg" />
         </div>
         <div className={styles.text1}>
           <div className={styles.header}>

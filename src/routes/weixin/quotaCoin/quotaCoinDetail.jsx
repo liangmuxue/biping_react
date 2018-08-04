@@ -263,7 +263,7 @@ class QuotaCoinDetail extends BaseComponent {
               <span className={styles.rightText}>上次更新 <em>{convertDate(range.bpQuotaUpdateTime, 'hh:mm')}</em></span>
             </div>
             <p className={styles.sugText}>
-              根据价格数据波动作为指标，每小时预判币种涨跌趋势，进而给出买卖建议。
+              根据价格数据波动作为指标，每小时预判币种价格走势，本结果仅供参考，不作为投资建议。
             </p>
             <div className={styles.suggest}>
               <img className={styles.suggestImg} src="/images/quotaCoin/green1.jpg" alt="" />
@@ -404,7 +404,7 @@ class QuotaCoinDetail extends BaseComponent {
             <img className={styles.shareewm}  alt="" src="/images/share/ewm1.jpg" />
           </div>
           <div className={styles.bottomText}>
-          免责申明：本站建议是利用技术指标结合历史数据实时运算所得，投资者须知未来行情趋势具有极强随机性，本建议仅供参考，需要投资者根据不同行情合理应用，控制风险。币圈有风险，投资需谨慎。
+          免责申明：本预测指标是利用技术指标结合历史数据实时运算所得，投资者须知未来行情趋势具有极强随机性，本指标仅供参考，需要投资者根据不同行情合理应用，控制风险。币圈有风险，投资需谨慎。
           </div>
         </div>
         <div className={styles.btnList}>
