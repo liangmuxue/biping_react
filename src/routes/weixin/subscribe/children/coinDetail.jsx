@@ -49,6 +49,12 @@ class CoinDetail extends BaseComponent {
     return returnArr;
   }
   confirmClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinDetailConfirm',
+      },
+    });
     const { coinDetail, params } = this.props;
     const { detailData } = coinDetail;
     const { data } = detailData;

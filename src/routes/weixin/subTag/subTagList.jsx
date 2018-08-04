@@ -61,14 +61,14 @@ class SubTag extends BaseComponent {
       },
     });
     // 进入详情埋点，feed类型
-    this.props.dispatch({
+    /* this.props.dispatch({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst.MESSAGEDETAIL,
         action: siteAnalysis.actConst.USERSMTMESSAGEDETAIL,
         opt: { enterMessageCase: 'feedCase' },
       },
-    });
+    }); */
   }
   onEndReachedAttach() {
     console.log('onEndReachedAttach in', this.pageDef);

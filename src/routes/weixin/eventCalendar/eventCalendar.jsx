@@ -98,7 +98,7 @@ function shareEvent(dispatch, shortUrl) {
       });
     });
   }); */
-  let imgDom = document.getElementsByName('shareImg')[0];
+  /* let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'eventCalendar/getQrcode',
     payload: url,
@@ -120,6 +120,17 @@ function shareEvent(dispatch, shortUrl) {
         });
       });
     },
+  }); */
+  html2canvas(document.getElementById('eventShareDom'), { useCORS: true, allowTaint: false }).then((canvas) => {
+    imgUrl = canvas.toDataURL('image/png');
+    document.getElementById('eventShareDom').style.display = 'none';
+    Toast.hide();
+    dispatch({
+      type: 'eventCalendar/shareMsg',
+      payload: {
+        imgUrl,
+      },
+    });
   });
 }
 class EventCalendar extends BaseComponent {
@@ -164,7 +175,24 @@ class EventCalendar extends BaseComponent {
       type: 'eventCalendar/getTypeList',
     });
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendar',
+        obj: {
+          '进入': '进入币事件日历',
+        },
+      },
+    });
+  }
   newShareEvent() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarShare',
+      },
+    });
     Toast.loading('正在生成...', 0);
     const { messageHost, wechatHost } = config.env;
     const { systemUser, dispatch } = this.props;
@@ -248,10 +276,28 @@ class EventCalendar extends BaseComponent {
     const time = new Date(eventTime.data.time);
     const clickTime = new Date(time.getFullYear(), time.getMonth(), msg);
     this.onConfirm(clickTime);
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarDateClick',
+        obj: {
+          '日期': clickTime,
+        },
+      },
+    });
   }
 
   // 子组件type点击
   changeType(id) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarTypeClick',
+        obj: {
+          '币事件交易所点击': id,
+        },
+      },
+    });
     this.setState({
       typeId: id,
     });
@@ -269,6 +315,12 @@ class EventCalendar extends BaseComponent {
   // 子组件提醒点击
   reminder(data) {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarReminder',
+      },
+    });
+    this.props.dispatch({
       type: 'eventCalendar/reminder',
       payload: {
         id: data.id,
@@ -278,6 +330,16 @@ class EventCalendar extends BaseComponent {
   // 去详情页
   toDetail(data) {
     console.log(this, data);
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'eventCalendarDetail',
+        obj: {
+          '名称': data.coincode,
+          '标题': data.title,
+        }
+      },
+    });
     // 跳转到信息详情页面
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -447,7 +509,8 @@ class EventCalendar extends BaseComponent {
           <div className={styles.bottomDom}>
             <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
             {/* <canvas id="canvas" className={styles.shareewm} /> */}
-            <img className={styles.shareewm} name="shareImg" alt="" />
+            {/* <img className={styles.shareewm} name="shareImg" alt="" /> */}
+            <img className={styles.shareewm}  alt="" src="/images/share/ewm1.jpg" />
           </div>
         </div>
       </div>

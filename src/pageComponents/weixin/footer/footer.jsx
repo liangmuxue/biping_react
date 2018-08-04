@@ -16,6 +16,15 @@ function genFooterMenus({ dispatch, pageConstruction }) {
   const { selectedMenu, footerHide } = pageConstruction;
   const menuChoice = (menu) => {
     dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'footerClick',
+        obj: {
+          '分类': menu.title,
+        },
+      },
+    });
+    dispatch({
       type: 'pageConstruction/footMenuChoice',
       payload: { selectedMenu: menu },
     });

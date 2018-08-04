@@ -213,7 +213,42 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/eventCalendar/eventCalendar'),
   });
-
+  // 诊币
+  const QuotaCoin = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/quotaCoin'),
+    ],
+    component: () => import('./routes/weixin/quotaCoin/quotaCoin'),
+  });
+  // 诊币详情
+  const QuotaCoinDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/quotaCoinDetail'),
+    ],
+    component: () => import('./routes/weixin/quotaCoin/quotaCoinDetail'),
+  });
+  // 诊币搜索
+  const QuotaCoinSearch = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/quotaCoinSearch'),
+    ],
+    component: () => import('./routes/weixin/quotaCoin/quotaCoinSearch'),
+  });
+  // 诊币中间页
+  const QuotaCoinBlock = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/quotaCoinBlock'),
+    ],
+    component: () => import('./routes/weixin/quotaCoin/children/quotaCoinBlock'),
+  });
   // 定义内部页面，并导出，用于后续动态页面渲染使用
   innerPageDefs.def = innerPageDefs.def.concat([{
     name: 'indexMessage',
@@ -257,25 +292,48 @@ function RouterConfig({ history, app }) {
     component: ToOpen,
   }, {
     name: 'myself',
+    modelName: 'myself',
     component: Myself,
   }, {
     name: 'buyHistory',
+    modelName: 'buyHistory',
     component: BuyHistory,
   }, {
     name: 'enterGroup',
+    modelName: 'enterGroup',
     component: EnterGroup,
   }, {
     name: 'result',
+    modelName: 'result',
     component: Result,
   }, {
     name: 'subTagList',
+    modelName: 'subTagList',
     component: SubTagList,
   }, {
     name: 'myLike',
+    modelName: 'myLike',
     component: MyLike,
   }, {
     name: 'eventCalendar',
+    modelName: 'eventCalendar',
     component: EventCalendar,
+  }, {
+    name: 'quotaCoin',
+    modelName: 'quotaCoin',
+    component: QuotaCoin,
+  }, {
+    name: 'quotaCoinDetail',
+    modelName: 'quotaCoinDetail',
+    component: QuotaCoinDetail,
+  }, {
+    name: 'quotaCoinSearch',
+    modelName: 'quotaCoinSearch',
+    component: QuotaCoinSearch,
+  }, {
+    name: 'quotaCoinBlock',
+    modelName: 'quotaCoinBlock',
+    component: QuotaCoinBlock,
   }]);
   const routeInner = [];
   for (let i = 0; i < innerPageDefs.def.length; i += 1) {
@@ -323,6 +381,10 @@ function RouterConfig({ history, app }) {
           <Route path="/subTagList" component={SubTagList} />
           <Route path="/myLike" component={MyLike} />
           <Route path="/eventCalendar" component={EventCalendar} />
+          <Route path="/quotaCoin" component={QuotaCoin} />
+          <Route path="/quotaCoinDetail" component={QuotaCoinDetail} />
+          <Route path="/quotaCoinSearch" component={QuotaCoinSearch} />
+          <Route path="/quotaCoinBlock" component={QuotaCoinBlock} />
           {routeInner}
         </div>
       </ConnectedRouter>

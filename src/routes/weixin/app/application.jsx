@@ -121,7 +121,7 @@ class HomePage extends Component {
     );
     // 翻页加载提示区域
     const pagiLoadingTip = (
-      <div className={pagiLoading ? (pagiPosition === 'center' ? styles.loadCenter : styles.load) : styles.loadingHide}>
+      <div className={pagiLoading ? (pagiPosition === 'center' ? styles.loadCenter : (pagiPosition === 'top' ? styles.loadTop : styles.load)) : styles.loadingHide}>
         <div className="loading-example">
           <div className="align">
             <ActivityIndicator size="large" />
@@ -152,8 +152,9 @@ class HomePage extends Component {
     // 根据用户是否登录决定显示内容
     if (app.user.id || true) {
       // 本级路由定义,动态显示下级组件
-      pageContent = (<div ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
-        {loadingTip}{pagiLoadingTip}<Footer />
+      pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
+        {loadingTip}{pagiLoadingTip}
+        <Footer />
                      </div>);
     } else {
       pageContent = <div>没有权限查看</div>;

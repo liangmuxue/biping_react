@@ -18,11 +18,23 @@ class SubscribeResult extends BaseComponent {
   }
   goIndex() {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeResultGoindex',
+      },
+    });
+    this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: { pageName: 'indexMessage' },
     });
   }
   goOn() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'subscribeResultGoOn',
+      },
+    });
     const { params } = this.props;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',

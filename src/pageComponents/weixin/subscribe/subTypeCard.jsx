@@ -55,6 +55,9 @@ class SubTypeCard extends React.Component {
       );
       remainButton = (<Renew />);
     }
+    if (typeObj.typeId !== 719) { // 719 AI诊币
+      remainButton = null;
+    }
     let imgSrc = '';
     switch (typeObj.typeName) {
       case '暴涨暴跌':
@@ -71,6 +74,9 @@ class SubTypeCard extends React.Component {
         break;
       case '币事件':
         imgSrc = '/images/coinList/coin1.png';
+        break;
+      case 'AI诊币':
+        imgSrc = '/images/coinList/coin5.jpg';
         break;
       default:
         imgSrc = '/images/coinList/coin1.png';

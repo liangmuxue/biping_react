@@ -3,9 +3,10 @@
 <head>
     <base href="/" />
     <meta charset="UTF-8"/>
+    <meta http-equiv="x-dns-prefetch-control" content="on">
     <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
-    <!-- <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover"> -->
-    <!-- <meta name="viewport" content="user-scalable=no,width=device-width,initial-scale=1,maximum-scale=1"> -->
+    <link rel="dns-prefetch" href="//wp.bipingcoin.com">
+    <link rel="dns-prefetch" href="//twp.closerhearts.net.cn">
     <title>币评</title>
     <script type="text/javascript">
       window.zhuge = window.zhuge || [];window.zhuge.methods = "_init debug identify track trackLink trackForm page".split(" ");
@@ -17,7 +18,8 @@
       a.type = "text/javascript";a.id = "zhuge-js";a.async = !0;a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge.min.js?v=" : 'https://zgsdk.zhugeio.com/zhuge.min.js?v=') + verStr;
       a.onerror = function(){window.zhuge.identify = window.zhuge.track = function(ename, props, callback){if(callback && Object.prototype.toString.call(callback) === '[object Function]')callback();};};
       var c = document.getElementsByTagName("script")[0];c.parentNode.insertBefore(a, c);window.zhuge._init(b, x)}};
-      window.zhuge.load('127888f81d094ff08aa9cdf7804f5a16');//配置应用的AppKey
+      // window.zhuge.load('127888f81d094ff08aa9cdf7804f5a16');//配置应用的AppKey 币评
+      window.zhuge.load('173256aa43264982a4d83924a95aa840');//配置应用的AppKey 一说
     </script>
 </head>
 <body>

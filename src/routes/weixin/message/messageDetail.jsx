@@ -109,7 +109,7 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
       });
     });
   }); */
-  let imgDom = document.getElementsByName('shareImg')[0];
+  /* let imgDom = document.getElementsByName('shareImg')[0];
   dispatch({
     type: 'messageDetail/getQrcode',
     payload: url,
@@ -129,7 +129,7 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
           },
         });
         // 分享消息埋点
-        dispatch({
+        /* dispatch({
           type: 'app/analysis',
           payload: {
             page: siteAnalysis.pageConst.MESSAGEDETAIL,
@@ -139,8 +139,27 @@ function shareEvent(dispatch, shortUrl, msgDetailData) {
         });
       });
     },
+  }); */
+  html2canvas(document.getElementById('showShare'), { useCORS: false, allowTaint: false }).then((canvas) => {
+    imgUrl = canvas.toDataURL('image/png');
+    document.getElementById('showShare').style.display = 'none';
+    dispatch({
+      type: 'messageDetail/shareMsg',
+      payload: {
+        messageId: msgObj.mid,
+        imgUrl,
+      },
+    });
+    // 分享消息埋点
+    dispatch({
+      type: 'app/analysis',
+      payload: {
+        page: siteAnalysis.pageConst.MESSAGEDETAIL,
+        action: siteAnalysis.actConst.SHAREMESSAGE,
+        opt: { messageTitle: msgObj.title, messageId: msgObj.mid },
+      },
+    });
   });
-
 }
 class MsgDetail extends BaseComponent {
   constructor(props) {
@@ -187,6 +206,27 @@ class MsgDetail extends BaseComponent {
     }
     super.componentWillMount();
   }
+  componentDidMount() {
+    const { params } = this.props;
+    const { enterMessageCase } = params;
+    console.log('componentDidMount=>', enterMessageCase);
+    let objs = {
+      '进入': '进入详情',
+    };
+    if (enterMessageCase) {
+      objs = {
+        '进入': '进入详情',
+        enterMessageCase,
+      };
+    }
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'messageDetail',
+        obj: objs,
+      },
+    });
+  }
   // 去开通
   toOpen() {
     const { dispatch, msgDetailData } = this.props;
@@ -208,6 +248,15 @@ class MsgDetail extends BaseComponent {
   }
   // 分享点击
   shareClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'messageDetailShareClick',
+        obj: {
+          '分享': '详情页分享',
+        },
+      },
+    });
     const { messageHost, wechatHost } = config.env;
     const { msgDetailData, params, dispatch } = this.props;
     const msgObj = msgDetailData.data;
@@ -239,14 +288,14 @@ class MsgDetail extends BaseComponent {
       },
     });
     // 进入详情埋点，same类型
-    this.props.dispatch({
+    /* this.props.dispatch({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst.MESSAGEDETAIL,
         action: siteAnalysis.actConst.BROWSE,
         opt: { enterMessageCase: 'sameCase' },
       },
-    });
+    }); */
   }
   closeShare() {
     const { dispatch } = this.props;
@@ -580,7 +629,8 @@ class MsgDetail extends BaseComponent {
             </div>
             <div className={style.ewmCon}>
               {/* <canvas id="canvas" className={style.leftImg}></canvas> */}
-              <img alt="" name="shareImg" className={style.leftImg}  /> 
+              {/* <img alt="" name="shareImg" className={style.leftImg}  />  */}
+              <img className={style.leftImg}  alt="" src="/images/share/ewm1.jpg" />
               <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
             </div>
           </div>

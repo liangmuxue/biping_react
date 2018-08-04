@@ -25,8 +25,25 @@ class CoinList extends BaseComponent {
       payload: { ...params },
     });
   }
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinList',
+        obj: {
+          '进入': '进入交易对列表',
+        },
+      },
+    });
+  }
   // 搜索点击
   searchClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListSearch',
+      },
+    });
     const { params } = this.props;
     // 跳转到信息详情页面
     this.props.dispatch({
@@ -43,10 +60,18 @@ class CoinList extends BaseComponent {
   }
   // tab选项卡点击
   tabChange(tab) {
-    console.log('tabChange=>>');
     const { params } = this.props;
     const { verbId, exchangeId } = params;
     const coinName = tab.title;
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListTabClick',
+        obj: {
+          '名称': coinName,
+        },
+      },
+    });
     this.setState({
       tabName: coinName,
     });
@@ -68,6 +93,15 @@ class CoinList extends BaseComponent {
   }
   // 订阅详情
   toDetail(rowData) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListDetailClick',
+        obj: {
+          '币种': rowData.baseCoinCode,
+        },
+      },
+    });
     const { params } = this.props;
     this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
@@ -99,6 +133,12 @@ class CoinList extends BaseComponent {
       payload: { symbolVerbId },
       noUser: true,
     });
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListCancel',
+      },
+    });
   }
   cancelBtn(e, data) {
     e.stopPropagation();
@@ -106,6 +146,12 @@ class CoinList extends BaseComponent {
     this.props.dispatch({
       type: 'coinList/subscribeRemove',
       payload: { symbolVerbId },
+    });
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'coinListCancel',
+      },
     });
   }
   // 开启微信推送

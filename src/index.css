@@ -2,6 +2,9 @@
 html, body, :global(#root) {
   height: 100%;
 }
+html {
+  font: 400 15px/1.4 PingFang SC,Helvetica Neue,Helvetica,Microsoft YaHei,Arial,sans-serif;
+}
 
 .showMore {
   /* text-overflow: ellipsis; */

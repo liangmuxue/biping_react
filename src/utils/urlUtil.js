@@ -5,9 +5,9 @@
 export const urlUtils = {
   analysisParam(paras) {
     const url = window.location.href;
-    console.log(`url is:${url}`);
+    // console.log(`url is:${url}`);
     const paraString = url.substring(url.indexOf('?') + 1, url.length).split('&');
-    console.log(`paraString is:${paraString}`);
+    // console.log(`paraString is:${paraString}`);
     const paraObj = {};
     let j;
     for (let i = 0; j = paraString[i]; i++) {

@@ -1,4 +1,5 @@
 import { Route, routerRedux } from 'dva/router';
+import ReactDOM from 'react-dom';
 import footMenus from '../pageComponents/weixin/footer/footerMenuData';
 import { innerPageDefs } from '../wxRouter';
 import { siteAnalysis } from '../utils/siteAnalysis.js';
@@ -154,13 +155,13 @@ function* switchPageReal({
   pageName, params, currentPage, backArrow, direct,
 }, { put, select }) {
   // 统计pv埋点
-  yield put({
+  /* yield put({
     type: 'app/analysis',
     payload: {
       page: siteAnalysis.pageConst.PVCOUNT,
       action: siteAnalysis.actConst.BROWSE,
     },
-  });
+  }); */
   // 页面名称转大写
   let upPageName = null;
   if (pageName) {
@@ -191,27 +192,27 @@ function* switchPageReal({
     if (pageName && pageName === 'toOpen') {
       opt.typeId = params.typeId;
     }
-    yield put({
+    /* yield put({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst[upPageName],
         action: siteAnalysis.actConst.BROWSE,
         opt,
       },
-    });
+    }); */
   }
   // 上导航返回
   if (backArrow) {
     fromPath = currentPage;
     opt = { fromPath };
-    yield put({
+    /* yield put({
       type: 'app/analysis',
       payload: {
         page: siteAnalysis.pageConst[upPageName],
         action: siteAnalysis.actConst.BACK,
         opt,
       },
-    });
+    }); */
   }
   console.log('switchToInnerPage55555', pageName);
   const { innerPageList } = yield select(({ pageConstruction }) => pageConstruction);
@@ -231,21 +232,30 @@ function* switchPageReal({
   };
   // 设置动态key
   matchPage.extraKey = Math.random();
-  // 放入页面列表
-  innerPageList.length = 0;
+  if(innerPageList.length>0){
+    // const prePageComp = innerPageList[0];
+    // const modelName = prePageComp.pageName;
+    // const clearState = `${modelName}/clearState`;
+    // console.log(`need send clearState:${clearState}`);
+    // yield put({
+    //   type: clearState,
+    // });
+    // 放入页面列表
+    innerPageList.length = 0;
+  }
   innerPageList.push(matchPage);
   // 直接跳转时，需要判断当前页面属于哪个底部菜单
   if (!direct) {
     console.log('pageConstruction66666666', pageName);
     if (pageName === 'subList') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
       });
     }
     if (pageName === 'subDetail') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[3];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
@@ -259,7 +269,7 @@ function* switchPageReal({
       });
     }
     if (pageName === 'buyHistory') {
-      const selectedMenu = footMenus[2];
+      const selectedMenu = footMenus[4];
       yield put({
         type: 'footMenuChoiced',
         payload: { selectedMenu },
@@ -275,7 +285,7 @@ function* switchPageReal({
   }
 
   // 支付页面隐藏底部
-  if (pageName === 'toOpen') {
+  if (pageName === 'toOpen' || pageName === 'quotaCoinBlock') {
     yield put({
       type: 'hideFooter',
     });

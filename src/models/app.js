@@ -82,6 +82,10 @@ const getDirectPageParams = function () {
     const pagePart = state.split('#')[0];
     //直接进入内页
     let directPage = pagePart.split('_')[1];
+    // 进入支付页时添加参数
+    if(state.indexOf('directPage_toOpen') >= 0){
+      return { directPage, params: { typeId:719, typeName: 'AI诊币' } };
+    }
     return { directPage, params: {  } };
   }
 };
@@ -181,8 +185,11 @@ const App = {
         // 用户信息查询失败，重新进入注册流程
         yield put({ type: 'autoReg', payload: { code: codenow } });
       } else if (success && response.flag === 1003) {
-        // 取消关注了的用户不允许直接进入
-        yield put({ type: 'tourLogin', payload: { attentionModal: true } });
+        // 取消关注了的用户不允许进入,需要清空本地存储
+        window.localStorage.clear();
+        console.log(`need clear`);
+        window.location.href = window.location.href;
+        return;
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
         const { mockUser } = config.env;
@@ -206,6 +213,7 @@ const App = {
         const systemUser = response.data;
         Object.assign(systemUser, payload);
         console.log('wap reg suc', systemUser);
+        systemUser.name = "wapUser";
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',
@@ -301,6 +309,12 @@ const App = {
       opt.hasSubcribe = hasSubcribe;
       siteAnalysis.pushEvent(page, action, opt);
       yield 0;
+    },
+    // 埋点
+    *pushPoint({ payload }, { select }) {
+      const st = yield select();
+      const { code, obj = {} } = payload;
+      siteAnalysis.trackEvent(code, obj);
     },
   },
   reducers: {
