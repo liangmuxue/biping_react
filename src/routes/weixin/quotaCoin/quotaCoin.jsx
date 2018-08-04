@@ -131,7 +131,8 @@ class QuotaCoin extends BaseComponent {
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
-                      {item.result < 0 ? '建议卖出' : (item.result === 0 ? '保持中立' : '建议买入') }
+                      {/* {item.result < 0 ? '建议卖出' : (item.result === 0 ? '保持中立' : '建议买入') } */}
+                      {item.result < 0 ? '看空' : (item.result === 0 ? '保持中立' : '看多') }
                     </button>
                   </li>
                 ))
