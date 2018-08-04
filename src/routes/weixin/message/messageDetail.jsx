@@ -630,7 +630,7 @@ class MsgDetail extends BaseComponent {
             <div className={style.ewmCon}>
               {/* <canvas id="canvas" className={style.leftImg}></canvas> */}
               {/* <img alt="" name="shareImg" className={style.leftImg}  />  */}
-              <img className={style.leftImg}  alt="" src="/images/share/ewm.jpg" />
+              <img className={style.leftImg}  alt="" src="/images/share/ewm1.jpg" />
               <img className={style.rightImg} src="/images/share/detail.jpg" alt="" />
             </div>
           </div>

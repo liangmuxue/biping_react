@@ -510,7 +510,7 @@ class EventCalendar extends BaseComponent {
             <img className={styles.leftImg} src="/images/share/calendar.jpg" alt="" />
             {/* <canvas id="canvas" className={styles.shareewm} /> */}
             {/* <img className={styles.shareewm} name="shareImg" alt="" /> */}
-            <img className={styles.shareewm}  alt="" src="/images/share/ewm.jpg" />
+            <img className={styles.shareewm}  alt="" src="/images/share/ewm1.jpg" />
           </div>
         </div>
       </div>
