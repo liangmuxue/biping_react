@@ -9,7 +9,7 @@ import mobileRouteComponent from '../../common/mobileRouteComponent';
 import styles from './quotaCoinDetail.less';
 import { convertDate } from '../../../utils/dateFormat';
 import BipingEwm from './layer/bipingEwm';
-// import { config } from '../../../../config/environment';
+import { config } from '../../../../config/environment';
 
 class QuotaCoinDetail extends BaseComponent {
   constructor(props) {
@@ -46,7 +46,7 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   shareBtn() {
-    // const { host } = config.env;
+    const { host } = config.env;
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -54,8 +54,8 @@ class QuotaCoinDetail extends BaseComponent {
       },
     });
     document.getElementById('shareBottom').style.display = 'block';
-    // const replaceVal = document.getElementById('imgLogo');
-    // replaceVal.setAttribute('src', `${host}/imgProxy?targetUrl=${replaceVal.src}`);
+    const replaceVal = document.getElementById('imgLogo');
+    replaceVal.setAttribute('src', `${host}/imgProxy?targetUrl=${replaceVal.src}`);
     html2canvas(document.getElementById('shareCon'), { useCORS: true, allowTaint: false }).then((canvas) => {
       document.getElementById('shareBottom').style.display = 'none';
       this.state.imgUrl = canvas.toDataURL('image/png');
