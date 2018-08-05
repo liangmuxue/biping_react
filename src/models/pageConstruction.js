@@ -15,7 +15,7 @@ const pcEntity = {
   namespace: 'pageConstruction',
 
   state: {
-    selectedMenu: footMenus[0],
+    selectedMenu: footMenus[2],
     innerPageList: [], // 当前页面
     hisPageList: [], // 历史页面链
   },

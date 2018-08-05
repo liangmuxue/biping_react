@@ -127,7 +127,8 @@ const App = {
         Object.assign(directPageData, directPageParams);
       }
       if (!directPageData.directPage) {
-        directPageData.directPage = 'indexMessage';
+        // directPageData.directPage = 'indexMessage';
+        directPageData.directPage = 'quotaCoin';
       }
       // 记录跳转信息
       dispatch({ type: 'directPageData', payload: { directPageData } });
