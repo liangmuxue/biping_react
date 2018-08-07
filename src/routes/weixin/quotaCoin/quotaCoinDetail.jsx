@@ -408,11 +408,11 @@ class QuotaCoinDetail extends BaseComponent {
           </div>
         </div>
         <div className={styles.btnList}>
-          <div onClick={() => this.shareBtn()}>
-            <img alt="" src="/images/quotaCoin/share.jpg" />
+          <div className={styles.tBtn} onClick={() => this.shareBtn()}>
+            {}
           </div>
-          <div onClick={() => this.showEwm()}>
-            <img alt="" src="/images/quotaCoin/wen.jpg" />
+          <div className={styles.bBtn} onClick={() => this.showEwm()}>
+            {}
           </div>
         </div>
         {bipingEwmDom}
