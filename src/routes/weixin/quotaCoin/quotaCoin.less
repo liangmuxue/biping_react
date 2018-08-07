@@ -1,8 +1,8 @@
 .banner {
   position: relative;
   width: 100%;
-  height: 2.7rem;
-  background: url('/images/quotaCoin/banner1.jpg') center no-repeat;
+  height: 2.6rem;
+  background: url('/images/quotaCoin/banner2.jpg') center no-repeat;
   background-size: cover;
   color: #ffffff;
   text-align: left;
@@ -36,8 +36,22 @@
 }
 .hotCoin {
   background-color: #fff;
-  margin-top: .2rem;
+  .time {
+    color: #888888;
+    font-size: .24rem;
+    margin-bottom: .3rem;
+    line-height: 1.5;
+    em {
+      font-size: .28rem;
+      font-style: normal;
+      color: #585C64;
+      margin: 0 .1rem;
+    }
+  }
   .search {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
     input[type='search'] {
       width: 6rem;
       // text-align: center;
@@ -45,7 +59,7 @@
       border: 1px solid #999999;
       border-radius: .32rem;
       line-height: .64rem;
-      margin: .5rem 0;
+      margin: .35rem 0;
       color: #888888;
       font-size: .26rem;
       -webkit-appearance: none;
@@ -139,4 +153,10 @@
 }
 .fontWeight {
   font-weight: 400;
+}
+.search[data-fixed="fixed"]{
+  position: fixed;
+  top:0;
+  left: 0;
+  margin: 0;
 }

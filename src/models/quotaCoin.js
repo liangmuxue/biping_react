@@ -9,12 +9,13 @@ export const MODEL_DEF = {
 export default modelExtend(pageModel, {
   namespace: MODEL_DEF.modelName,
   effects: {
-    *hotList({ payload }, { put, call, select }) {
+    *hotList({ payload, onComplete }, { put, call, select }) {
       const st = yield select();
       const endpoint = 'quota/hotList';
       const data = yield call(queryNormal, {
         endpoint,
       }, st);
+      yield call(onComplete, data);
       yield put({
         type: 'hotListSuccess',
         payload: data,

@@ -34,7 +34,7 @@ function genFooterMenus({ dispatch, pageConstruction }) {
       style={{
  position: 'fixed', zIndex: 99, width: '100%', bottom: 0,
 }}
-      className={footerHide ? styles.hide : null}
+      className={`${footerHide ? styles.hide : null} ${styles.footerBar}`}
     >
       <TabBar
         unselectedTintColor="#7F8389"

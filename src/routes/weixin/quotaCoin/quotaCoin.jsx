@@ -9,7 +9,9 @@ import { convertDate } from '../../../utils/dateFormat';
 class QuotaCoin extends BaseComponent {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      dTime: 0,
+    };
   }
   componentWillMount() {
     this.props.dispatch({
@@ -19,14 +21,37 @@ class QuotaCoin extends BaseComponent {
         obj: {
           '进入': '进入诊币',
         },
+        siv: 0,
       },
     });
+    this.getHostList();
+  }
+  getHostList() {
+    const that = this;
     this.props.dispatch({
       type: 'quotaCoin/hotList',
+      onComplete(data) {
+        const { time } = data.response.data;
+        const date = (time.minute * 60) + time.second;
+        that.setState({
+          dTime: date,
+        });
+        that.state.siv = setInterval(() => {
+          that.setState({
+            dTime: that.state.dTime - 1,
+          }, () => {
+            if (that.state.dTime === 0) {
+              clearInterval(that.state.siv);
+              that.getHostList();
+            }
+          });
+        }, 1000);
+      },
     });
   }
   // 诊币详情页
   toDetail(item) {
+    clearInterval(this.state.siv);
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -63,6 +88,7 @@ class QuotaCoin extends BaseComponent {
   }
   // 搜索点击
   toSearch() {
+    clearInterval(this.state.siv);
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -100,19 +126,21 @@ class QuotaCoin extends BaseComponent {
     const { data } = hotDetail;
     return (
       <div>
-        <div className={styles.banner}>
-          <p className={styles.text}>
-            <span>多维度技术指标、300余种热门货币、</span>
-            <span>小时级别的交易信号</span>
-          </p>
-          <span className={styles.line}></span>
-          <span className={styles.time}>更新于：{convertDate(data.time, 'MM-DD hh:ss')}</span>
+        <div className={styles.banner}>{}
         </div>
         <div className={styles.hotCoin}>
-          <div className={styles.search}>
+          <div id="wrap" className={styles.search}>
             <span onClick={() => this.toSearch()}>
               <input type="search" placeholder="输入币种简称" disabled />
             </span>
+          </div>
+          <div className={styles.time}>
+            <p className={styles.lastTime}>
+              更新于：{convertDate(data.time.lastTime, 'MM-DD hh:ss')}
+            </p>
+            <p className={styles.newTime}>
+              预计下次更新:<em>{parseInt(this.state.dTime / 60)}</em>分<em>{this.state.dTime % 60 < 10 ? `0${this.state.dTime % 60}` : this.state.dTime % 60}</em>秒
+            </p>
           </div>
           <div className={styles.hotTitle}>
             <i className={styles.hotIcon}></i>
@@ -125,13 +153,13 @@ class QuotaCoin extends BaseComponent {
                   <li key={item.symbolId} onClick={() => this.toDetail(item)}>
                     <img className={styles.headImg} alt="" src={item.symbolLogo} />
                     <div className={styles.rightCon}>
-                      <p className={`${styles.fontWeight} ${styles.p1}`}>{item.name}</p>
+                      <p className={`${styles.fontWeight} ${styles.p1}`}>{item.baseCoinCode}</p>
                       <p className={`${styles.p2} ${item.range < 0 ? styles.down : styles.up}`}>
                         {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
-                      {item.result < 0 ? '看空' : (item.result === 0 ? '中立' : '看多') }
+                      {item.result < 0 ? '卖出' : (item.result === 0 ? '中立' : '买入') }
                     </button>
                   </li>
                 ))
