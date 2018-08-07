@@ -266,7 +266,7 @@ class QuotaCoinDetail extends BaseComponent {
               根据价格数据波动作为指标，每小时预判币种价格走势，本结果仅供参考，不作为投资建议。
             </p>
             <div className={styles.suggest}>
-              <img className={styles.suggestImg} src="/images/quotaCoin/green.jpg" alt="" />
+              <img className={styles.suggestImg} src="/images/quotaCoin/green3.jpg" alt="" />
               <div className={styles.suggestText}>
                 <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
                   {percentage.result < 0 ? '卖出' : (percentage.result === 0 ? '中立' : '买入') }
