@@ -71,6 +71,12 @@ class QuotaCoinSearch extends BaseComponent {
       },
     });
     this.props.dispatch({
+      type: 'quotaCoinSearch/createCount',
+      payload: {
+        symbolId: item.symbolId,
+      },
+    });
+    this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: {
         pageName: 'quotaCoinDetail',

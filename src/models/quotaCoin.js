@@ -21,6 +21,15 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *createCount({ payload }, { call, select }) {
+      const { symbolId } = payload;
+      const filter = { symbolId };
+      const st = yield select();
+      const endpoint = 'quota/createCount';
+      yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+    },
   },
   reducers: {
     hotListSuccess(state, action) {

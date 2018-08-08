@@ -1,5 +1,6 @@
 import modelExtend from 'dva-model-extend';
 import { pageModel } from './pagination';
+import { queryNormal } from '../services/common';
 
 // 使用常量定义，用于多个地方引用
 export const MODEL_DEF = {
@@ -24,6 +25,15 @@ export default modelExtend(pageModel, {
         },
         ps: 'top',
       });
+    },
+    *createCount({ payload }, { call, select }) {
+      const { symbolId } = payload;
+      const filter = { symbolId };
+      const st = yield select();
+      const endpoint = 'quota/createCount';
+      yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
     },
   },
   reducers: {
