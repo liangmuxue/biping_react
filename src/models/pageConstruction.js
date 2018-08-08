@@ -247,6 +247,13 @@ function* switchPageReal({
   // 直接跳转时，需要判断当前页面属于哪个底部菜单
   if (!direct) {
     console.log('pageConstruction66666666', pageName);
+    if (pageName === 'messageDetail') {
+      const selectedMenu = footMenus[0];
+      yield put({
+        type: 'footMenuChoiced',
+        payload: { selectedMenu },
+      });
+    }
     if (pageName === 'subList') {
       const selectedMenu = footMenus[3];
       yield put({

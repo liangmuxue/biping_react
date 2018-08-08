@@ -266,6 +266,7 @@ const App = {
     },
     // 自动登录成功后返回
     * autoLoginSuc({ payload }, { call, put, select }) {
+      console.log('autoLoginSuc is in');
       const { directPageData } = yield select(({ app }) => app);
       yield put({
         type: 'pageConstruction/switchToInnerPage',
