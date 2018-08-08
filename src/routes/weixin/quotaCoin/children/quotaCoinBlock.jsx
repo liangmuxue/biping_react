@@ -104,7 +104,7 @@ class QuotaCoinBlock extends BaseComponent {
     return (
       <div className={styles.centerBlock}>
         <div className={styles.banner}>
-          <img alt="" src="/images/quotaCoin/oneq.jpg" />
+          <img alt="" src="/images/quotaCoin/one5.jpg" />
         </div>
         <div className={styles.textBan}>
           想知道币价未来走势？用币评AI诊币，基于机器学习，综合分析影响盘面数据后得出。
@@ -150,7 +150,7 @@ class QuotaCoinBlock extends BaseComponent {
             <span>参与规则</span>
           </div>
           <p className={styles.p1}>
-            免费方式：点击右下角“邀请好友”按钮，生成邀请海报，成功邀请3个好友关注【币评区块链】公众号，即可获得AI诊币内测服务，本次免费内测仅开放500个名额，先到先得。
+            免费方式：点击右下角“邀请好友”按钮，生成邀请海报，成功邀请5个好友关注【币评区块链】公众号，即可获得AI诊币内测服务，本次免费内测仅开放500个名额，先到先得。
           </p>
           <p className={styles.p2}>
             付费方式：AI诊币服务￥39元，本次开放500个名额。缴费成功后，系统即为您自动开通。
