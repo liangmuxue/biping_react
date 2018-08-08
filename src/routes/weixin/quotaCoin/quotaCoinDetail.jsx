@@ -194,7 +194,8 @@ class QuotaCoinDetail extends BaseComponent {
             <p className={styles.p3}>{data.lestCount}</p>
             <p className={styles.p4}>次</p>
             <div onClick={() => this.toBlock()} className={styles.btText}>
-              不想等，直接成为VIP >>>
+              不想等，直接成为VIP 
+              <img alt="" src="/images/quotaCoin/rightA.jpg" />
             </div>
           </div>
         </Modal>
