@@ -61,6 +61,16 @@ class QuotaCoinSearch extends BaseComponent {
   }
   itemClick(item) {
     this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinDetailSearchDetail',
+        obj: {
+          '联想内容': item.baseCoinCode,
+          '输入内容': this.state.searchVal,
+        },
+      },
+    });
+    this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: {
         pageName: 'quotaCoinDetail',
@@ -73,7 +83,6 @@ class QuotaCoinSearch extends BaseComponent {
     });
   } 
   render() {
-    console.log('render=>', this.props);
     const { quotaCoinSearch, pagiLoading } = this.props;
     const { list } = quotaCoinSearch;
     let conHtml = null;

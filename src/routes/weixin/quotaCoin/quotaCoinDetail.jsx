@@ -19,6 +19,7 @@ class QuotaCoinDetail extends BaseComponent {
       showModel: false,
       imgUrl: null,
       showTextLayer: false,
+      showBlockLayer: true,
     };
   }
   componentWillMount() {
@@ -95,6 +96,34 @@ class QuotaCoinDetail extends BaseComponent {
       showTextLayer: false,
     });
   }
+  closeBlockLayer() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinDetailCloseBlock',
+      },
+    });
+    this.setState({
+      showBlockLayer: false,
+    });
+  }
+  toBlock() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'quotaCoinDetailClickBlock',
+      },
+    });
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'quotaCoinBlock',
+        params: {
+          backPath: 'quotaCoin',
+        },
+      },
+    });
+  }
   render() {
     const { quotaCoinDetail } = this.props;
     if (!quotaCoinDetail) {
@@ -141,6 +170,35 @@ class QuotaCoinDetail extends BaseComponent {
         textRg = (b / a) * 85;
         spanRg = (b / a) * 95;
       }
+    }
+    // 阻断弹层
+    let showBlockLayerDom = null;
+    if (data.lestCount >= 0) {
+      showBlockLayerDom = (
+        <Modal
+          visible={this.state.showBlockLayer}
+          transparent
+          maskClosable
+          wrapProps={{ onTouchStart: this.onWrapTouchStart }}
+          onClose={this.closeBlockLayer.bind(this)}
+        >
+          <div className={styles.blockLayer}>
+            <div onClick={() => this.closeBlockLayer()} className={styles.blockClose}>
+              <img alt="" src="/images/quotaCoin/blockClose.jpg" />
+            </div>
+            <div className={styles.blockBg}>
+              <img alt="" src="/images/quotaCoin/blockBg.jpg" />
+            </div>
+            <p className={styles.p1}>3次免费体验机会</p>
+            <p className={styles.p2}>剩余</p>
+            <p className={styles.p3}>{data.lestCount}</p>
+            <p className={styles.p4}>次</p>
+            <div onClick={() => this.toBlock()} className={styles.btText}>
+              不想等，直接成为VIP >>>
+            </div>
+          </div>
+        </Modal>
+      );
     }
     // 波动区间弹层
     let showTextLayerDom = null;
@@ -418,6 +476,7 @@ class QuotaCoinDetail extends BaseComponent {
         {bipingEwmDom}
         {modal}
         {showTextLayerDom}
+        {showBlockLayerDom}
       </div>
     );
   }

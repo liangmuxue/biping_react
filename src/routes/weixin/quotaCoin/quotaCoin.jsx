@@ -26,6 +26,9 @@ class QuotaCoin extends BaseComponent {
     });
     this.getHostList();
   }
+  componentWillUnmount() {
+    clearInterval(this.state.siv);
+  }
   getHostList() {
     const that = this;
     this.props.dispatch({
@@ -51,7 +54,6 @@ class QuotaCoin extends BaseComponent {
   }
   // 诊币详情页
   toDetail(item) {
-    clearInterval(this.state.siv);
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -88,7 +90,6 @@ class QuotaCoin extends BaseComponent {
   }
   // 搜索点击
   toSearch() {
-    clearInterval(this.state.siv);
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
