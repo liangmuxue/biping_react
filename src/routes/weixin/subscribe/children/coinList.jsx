@@ -126,12 +126,16 @@ class CoinList extends BaseComponent {
     });
   }
   cancelBtnlist(e, data) {
+    const { params } = this.props;
     e.stopPropagation();
     const { symbolVerbId } = data;
     this.props.dispatch({
       type: 'coinList/subscribeRemove',
       payload: { symbolVerbId },
       noUser: true,
+      params: {
+        verbId: params.verbId,
+      },
     });
     this.props.dispatch({
       type: 'app/pushPoint',
@@ -141,11 +145,15 @@ class CoinList extends BaseComponent {
     });
   }
   cancelBtn(e, data) {
+    const { params } = this.props;
     e.stopPropagation();
     const { symbolVerbId } = data;
     this.props.dispatch({
       type: 'coinList/subscribeRemove',
       payload: { symbolVerbId },
+      params: {
+        verbId: params.verbId,
+      },
     });
     this.props.dispatch({
       type: 'app/pushPoint',
@@ -209,17 +217,22 @@ class CoinList extends BaseComponent {
                 <img className={styles.headimg} alt="" src={rowData.baseLogo} />
                 <span className={styles.headtext}>{rowData.baseCoinCode}<em>/{rowData.quoteCoinCode}</em></span>
                 <div className={styles.rightBtn}>
-                  <div className={styles.btns}>
-                    {
-                      rowData.pushFlag ?
-                      (
-                        <img onClick={(e) => this.pushRemove(e, rowData)} alt="" src="/images/coinList/blueremind.png" />
-                      ) :
-                      (
-                        <img onClick={(e) => this.pushAdd(e, rowData)} alt="" src="/images/coinList/grayremind.png" />
-                      )
-                    }
-                  </div>
+                  {
+                    params.verbId === 730 ? null :
+                    (
+                      <div className={styles.btns}>
+                        {
+                          rowData.pushFlag ?
+                          (
+                            <img onClick={(e) => this.pushRemove(e, rowData)} alt="" src="/images/coinList/blueremind.png" />
+                          ) :
+                          (
+                            <img onClick={(e) => this.pushAdd(e, rowData)} alt="" src="/images/coinList/grayremind.png" />
+                          )
+                        }
+                      </div>
+                    )
+                  }
                   <div className={`${styles.btns} ${styles.rightBtns}`}>
                     <img onClick={(e) => this.showCancel(e, rowData)} alt="" src="/images/coinList/three.png" />
                     {
@@ -242,11 +255,26 @@ class CoinList extends BaseComponent {
                 (
                   <p className={styles.bottomText}>{`单笔买入 >60万,单笔卖出 >60万`}</p>
                 ) :
-                (
-                  <div>
-                    <p className={styles.bottomText}>{`检测时间段：${rowData.timeStr.split(',').join('分钟 、')}分钟`}</p>
-                    <p className={styles.bottomText}>{`涨幅 >${rowData.gainHold * 100}% 跌幅 <${rowData.loseHold * 100}%`}</p>
-                  </div>
+                (params.verbId === 718 ?
+                  (
+                    <div>
+                      <p className={styles.bottomText}>{`检测时间段：${rowData.timeStr.split(',').join('分钟 、')}分钟`}</p>
+                      <p className={styles.bottomText}>{`涨幅 >${rowData.gainHold * 100}% 跌幅 <${rowData.loseHold * 100}%`}</p>
+                    </div>
+                  ) :
+                  (
+                    <div>
+                      {
+                        rowData.macdFlag === 0 ? null : <p className={styles.bottomText} >MACD（{rowData.macdTimeStr}线）</p>
+                      }
+                      {
+                        rowData.kdjFlag === 0 ? null : <p className={styles.bottomText} >KDJ（{rowData.kdjTimeStr}线）</p>
+                      }
+                      {
+                        rowData.bollFlag === 0 ? null : <p className={styles.bottomText} >布林带（{rowData.bollTimeStr}线）</p>
+                      }
+                    </div>
+                  )
                 )
               }
               <div className={styles.line}></div>

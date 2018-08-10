@@ -16,18 +16,88 @@ function SearchList(props) {
     </ul>
   );
 }
+function HotList(props) {
+  const { hotList, changeClick } = props;
+  if (!hotList) {
+    return null;
+  }
+  const { data } = hotList;
+  let listData = null;
+  if (changeClick) {
+    listData = data.list;
+  } else {
+    listData = data.default;
+  }
+  return (
+    <div className={styles.history}>
+      <div className={styles.title}>
+        热搜
+        <span onClick={props.exchangeClick.bind(this)} className={styles.right}><img alt="" src="/images/quotaCoin/exchange.png" />换一批</span>
+      </div>
+      {
+        listData.length > 0 ?
+        (
+          <ul>
+            {listData.map(item => (
+              <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{item.baseCoinCode}</li>
+            ))}
+          </ul>
+        ) : (
+          <div className={styles.noData}>暂无热搜</div>
+        )
+      }
+    </div>
+  );
+}
+function HistoryList(props) {
+  const { historyList } = props;
+  if (!historyList) {
+    return null;
+  }
+  const { data } = historyList;
+  const listData = data.list;
+  return (
+    <div className={styles.history}>
+      <div className={styles.title}>
+        搜索历史
+        <span onClick={props.deleteClick.bind(this)} className={styles.right}><img alt="" src="/images/quotaCoin/delete.png" /></span>
+      </div>
+      {
+        listData.length > 0 ?
+        (
+          <ul>
+            {listData.map(item => (
+              <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{item.baseCoinCode}</li>
+            ))}
+          </ul>
+        ) : (
+          <div className={styles.noData}>暂无搜索历史</div>
+        )
+      }
+    </div>
+  );
+}
 class QuotaCoinSearch extends BaseComponent {
   constructor(props) {
     super(props);
     this.state = {
       searchVal: null,
       timeOut: 0,
+      changeClick: false,
     };
   }
   componentWillMount() {
     this.props.dispatch({
       type: 'pageConstruction/hideRouteLoading',
       pageName: 'quotaCoin',
+    });
+    this.props.dispatch({
+      type: 'quotaCoinSearch/searchHot',
+      payload: {},
+    });
+    this.props.dispatch({
+      type: 'quotaCoinSearch/searchHistory',
+      payload: {},
     });
   }
   componentDidMount() {
@@ -77,6 +147,13 @@ class QuotaCoinSearch extends BaseComponent {
       },
     });
     this.props.dispatch({
+      type: 'quotaCoinSearch/searchHistoryAdd',
+      payload: {
+        exchangeId: item.exchangeId,
+        symbolId: item.symbolId,
+      },
+    });
+    this.props.dispatch({
       type: 'pageConstruction/switchToInnerPage',
       payload: {
         pageName: 'quotaCoinDetail',
@@ -87,13 +164,43 @@ class QuotaCoinSearch extends BaseComponent {
         },
       },
     });
-  } 
+  }
+  exchangeClick() {
+    this.setState({
+      changeClick: true,
+    });
+    this.props.dispatch({
+      type: 'quotaCoinSearch/searchHot',
+      payload: {},
+    });
+  }
+  deleteClick() {
+    this.props.dispatch({
+      type: 'quotaCoinSearch/searchHistoryRemove',
+      payload: {},
+    });
+  }
   render() {
+    console.log('render=>', this.props);
     const { quotaCoinSearch, pagiLoading } = this.props;
     const { list } = quotaCoinSearch;
     let conHtml = null;
     if (!this.state.searchVal) {
-      conHtml = null;
+      conHtml = (
+        <div>
+          <HotList
+            hotList={quotaCoinSearch.hotList}
+            changeClick={this.state.changeClick}
+            itemClick={this.itemClick.bind(this)}
+            exchangeClick={this.exchangeClick.bind(this)}
+          />
+          <HistoryList
+            historyList={quotaCoinSearch.historyList}
+            itemClick={this.itemClick.bind(this)}
+            deleteClick={this.deleteClick.bind(this)}
+          />
+        </div>
+      );
     } else if (list.length <= 0) {
       conHtml = pagiLoading ? null : (
         <div className={styles.noCon}>暂无匹配项</div>
