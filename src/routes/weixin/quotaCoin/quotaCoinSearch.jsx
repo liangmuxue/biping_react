@@ -57,24 +57,24 @@ function HistoryList(props) {
   const { data } = historyList;
   const listData = data.list;
   return (
-    <div className={styles.history}>
-      <div className={styles.title}>
-        搜索历史
-        <span onClick={props.deleteClick.bind(this)} className={styles.right}><img alt="" src="/images/quotaCoin/delete.png" /></span>
+    listData.length > 0 ? (
+      <div className={styles.history}>
+        <div className={styles.title}>
+          搜索历史
+          <span onClick={props.deleteClick.bind(this)} className={styles.right}><img alt="" src="/images/quotaCoin/delete.png" /></span>
+        </div>
+        <ul>
+          {listData.map(item => (
+            <li
+              onClick={props.itemClick.bind(this, item)}
+              key={item.symbolId}
+            >
+              {item.baseCoinCode}
+            </li>
+          ))}
+        </ul>
       </div>
-      {
-        listData.length > 0 ?
-        (
-          <ul>
-            {listData.map(item => (
-              <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{item.baseCoinCode}</li>
-            ))}
-          </ul>
-        ) : (
-          <div className={styles.noData}>暂无搜索历史</div>
-        )
-      }
-    </div>
+    ) : null
   );
 }
 class QuotaCoinSearch extends BaseComponent {
