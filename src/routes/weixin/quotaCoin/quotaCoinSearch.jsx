@@ -11,7 +11,7 @@ function SearchList(props) {
   return (
     <ul className={styles.searchList}>
       {list.map(item => (
-        <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{`${item.baseCoinCode}`}</li>
+        <li onClick={props.itemClickItem.bind(this, item)} key={item.symbolId}>{`${item.baseCoinCode}`}</li>
       ))}
     </ul>
   );
@@ -39,7 +39,7 @@ function HotList(props) {
         (
           <ul>
             {listData.map(item => (
-              <li onClick={props.itemClick.bind(this, item)} key={item.symbolId}>{item.baseCoinCode}</li>
+              <li onClick={props.itemClickHot.bind(this, item)} key={item.symbolId}>{item.baseCoinCode}</li>
             ))}
           </ul>
         ) : (
@@ -66,7 +66,7 @@ function HistoryList(props) {
         <ul>
           {listData.map(item => (
             <li
-              onClick={props.itemClick.bind(this, item)}
+              onClick={props.itemClickHis.bind(this, item)}
               key={item.symbolId}
             >
               {item.baseCoinCode}
@@ -129,7 +129,31 @@ class QuotaCoinSearch extends BaseComponent {
       });
     }, 500);
   }
-  itemClick(item) {
+  itemClickHis(item) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'historyItemClick',
+        obj: {
+          '点击内容': item.baseCoinCode,
+        },
+      },
+    });
+    this.itemClick(item);
+  }
+  itemClickHot(item) {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'hotItemClick',
+        obj: {
+          '点击内容': item.baseCoinCode,
+        },
+      },
+    });
+    this.itemClick(item);
+  }
+  itemClickItem(item) {
     this.props.dispatch({
       type: 'app/pushPoint',
       payload: {
@@ -140,6 +164,9 @@ class QuotaCoinSearch extends BaseComponent {
         },
       },
     });
+    this.itemClick(item);
+  }
+  itemClick(item) {
     this.props.dispatch({
       type: 'quotaCoinSearch/createCount',
       payload: {
@@ -166,6 +193,12 @@ class QuotaCoinSearch extends BaseComponent {
     });
   }
   exchangeClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'hotExchangeClick',
+      },
+    });
     this.setState({
       changeClick: true,
     });
@@ -175,6 +208,12 @@ class QuotaCoinSearch extends BaseComponent {
     });
   }
   deleteClick() {
+    this.props.dispatch({
+      type: 'app/pushPoint',
+      payload: {
+        code: 'historyDeleteClick',
+      },
+    });
     this.props.dispatch({
       type: 'quotaCoinSearch/searchHistoryRemove',
       payload: {},
@@ -191,12 +230,12 @@ class QuotaCoinSearch extends BaseComponent {
           <HotList
             hotList={quotaCoinSearch.hotList}
             changeClick={this.state.changeClick}
-            itemClick={this.itemClick.bind(this)}
+            itemClickHot={this.itemClickHot.bind(this)}
             exchangeClick={this.exchangeClick.bind(this)}
           />
           <HistoryList
             historyList={quotaCoinSearch.historyList}
-            itemClick={this.itemClick.bind(this)}
+            itemClickHis={this.itemClickHis.bind(this)}
             deleteClick={this.deleteClick.bind(this)}
           />
         </div>
@@ -206,7 +245,7 @@ class QuotaCoinSearch extends BaseComponent {
         <div className={styles.noCon}>暂无匹配项</div>
       );
     } else {
-      conHtml = (<SearchList list={list} itemClick={this.itemClick.bind(this)} />);
+      conHtml = (<SearchList list={list} itemClickItem={this.itemClickItem.bind(this)} />);
     }
     return (
       <div>

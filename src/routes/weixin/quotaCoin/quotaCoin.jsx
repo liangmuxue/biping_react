@@ -162,7 +162,7 @@ class QuotaCoin extends BaseComponent {
                     <div className={styles.rightCon}>
                       <p className={`${styles.fontWeight} ${styles.p1}`}>{item.baseCoinCode}</p>
                       <p className={`${styles.p2} ${item.range < 0 ? styles.down : styles.up}`}>
-                        {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
+                        {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`}
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>
