@@ -17,8 +17,8 @@ export default modelExtend(pageModel, {
     *searchHot({ payload }, { put, call, select }) {
       const st = yield select();
       const endpoint = 'symbolVerb/searchHot';
-      const { exchangeId } = payload;
-      const filter = { exchangeId };
+      const { exchangeId, verbId } = payload;
+      const filter = { exchangeId, verbId };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);

@@ -77,14 +77,14 @@ class CoinSearch extends React.Component {
       searchVal: val,
     });
     const { params } = this.props;
-    const { exchangeId } = params;
+    const { exchangeId, verbId } = params;
     const content = val;
     clearTimeout(this.state.timeOut);
     this.state.timeOut = setTimeout(() => {
       this.props.dispatch({
         type: 'coinSearch/searchList',
         payload: {
-          filter: { exchangeId, content },
+          filter: { exchangeId, verbId, content },
         },
       });
     }, 500);
