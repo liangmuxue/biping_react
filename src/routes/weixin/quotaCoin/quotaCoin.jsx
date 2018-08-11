@@ -137,8 +137,9 @@ class QuotaCoin extends BaseComponent {
         </div>
         <div className={styles.hotCoin}>
           <div id="wrap" className={styles.search}>
-            <span onClick={() => this.toSearch()}>
-              <input type="search" placeholder="输入币种简称" disabled />
+            <span className={styles.fa} onClick={() => this.toSearch()}>
+              <input type="search" disabled />
+              <span>输入币种简称</span>
             </span>
           </div>
           <div className={styles.time}>
