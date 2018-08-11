@@ -37,7 +37,7 @@ class QuotaCoinDetail extends BaseComponent {
     this.props.dispatch({
       type: 'quotaCoinDetail/getDetail',
       payload: {
-        exchangeId: params.exchangeId,
+        // exchangeId: params.exchangeId,
         symbolId: params.symbolId,
       },
     });
@@ -136,9 +136,10 @@ class QuotaCoinDetail extends BaseComponent {
     * percentage 买入 中立 卖出百分比
     * range 当天开盘价格、此刻涨跌幅(range)、此时价格（close）
     * exchange 交易所信息
+    * remindList 指标异动
     * * */
     const {
-      symbol, quota, percentage, range, exchange,
+      symbol, quota, percentage, range, exchange, remindList
     } = data;
     let rgs = 0;
     if (percentage.result < 0) {
@@ -258,6 +259,29 @@ class QuotaCoinDetail extends BaseComponent {
         </div>
       </Modal>
     );
+
+    // 指标异动dom
+    let remindListDom = null;
+    if (remindList.length > 0) {
+      remindListDom = (
+        <div className={styles.actionMou}>
+          <div className={styles.actionTitle}>
+            <img alt="" src="/images/quotaCoin/actionTitle.jpg" />
+          </div>
+          <ul className={styles.actionCon}>
+            {remindList.map(item => (
+              <li key={item.createTime}>
+                <img className={styles.actionTimeImg} alt="" src="/images/quotaCoin/actionTime.jpg" />
+                <span className={styles.timeTitle}>{convertDate(item.createTime, 'hh:mm')} {item.title}</span>
+                <span className={styles.actionConText}>
+                  {item.value} {item.content}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
     return (
       <div>
         <div id="shareCon">
@@ -270,7 +294,8 @@ class QuotaCoinDetail extends BaseComponent {
               <div className={styles.name}>
                 <img id="imgLogo" src={symbol.symbolLogo} alt="" />
                 <span className={styles.fontWeight}>{symbol.baseCoinCode}<em className={styles.fontWeight}>/{symbol.quoteCoinCode}</em></span>
-                <div className={styles.timeZf}>24h涨跌幅：
+                <div className={styles.timeZf}>
+                  {/* 24h涨跌幅： */}
                   <em className={`${styles.fontWeight} ${range.range < 0 ? styles.downColor : styles.upColor}`}>
                     {range.range < 0 ? `- ${NP.times(Math.abs(range.range), 100)}%` : `+ ${NP.times(range.range, 100)}%`}
                   </em>
@@ -337,6 +362,7 @@ class QuotaCoinDetail extends BaseComponent {
                 </span>
               </div>
             </div>
+            {remindListDom}
             <div className={styles.tableItem}>
               <div className={styles.conTitle}>
                 {/* <div className={styles.column}>{}</div> */}

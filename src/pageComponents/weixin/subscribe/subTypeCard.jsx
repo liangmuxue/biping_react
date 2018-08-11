@@ -59,24 +59,24 @@ class SubTypeCard extends React.Component {
       remainButton = null;
     }
     let imgSrc = '';
-    switch (typeObj.typeName) {
-      case '暴涨暴跌':
+    switch (typeObj.typeId) {
+      case 718: // 暴涨暴跌
         imgSrc = '/images/coinList/coin3.png';
         break;
-      case '大单买卖':
+      case 717: // 大单买卖
         imgSrc = '/images/coinList/coin4.png';
         break;
-      case '异动币':
-        imgSrc = '/images/coinList/coin3.png';
-        break;
-      case '交易所公告':
+      case 702: // 交易所公告
         imgSrc = '/images/coinList/coin2.png';
         break;
-      case '币事件':
+      case 701: // 币事件
         imgSrc = '/images/coinList/coin1.png';
         break;
-      case 'AI诊币':
+      case 719: // AI诊币
         imgSrc = '/images/coinList/coin5.jpg';
+        break;
+      case 730: // 指标异动
+        imgSrc = '/images/coinList/coin6.jpg';
         break;
       default:
         imgSrc = '/images/coinList/coin1.png';

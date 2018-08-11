@@ -210,7 +210,7 @@ class SubDetail extends BaseComponent {
         gainOrLose={this.gainOrLose.bind(this)}
 
       />);
-    } else if (subDetailData.data.typeName === '暴涨暴跌' || subDetailData.data.typeName === '大单买卖') {
+    } else if (subDetailData.data.typeName === '暴涨暴跌' || subDetailData.data.typeName === '大单买卖' || subDetailData.data.typeName === '指标异动') {
       subContent = (
         <SubDetailChildrenCard
           data={this.props}

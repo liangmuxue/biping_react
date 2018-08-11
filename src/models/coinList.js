@@ -19,8 +19,11 @@ export default modelExtend(pageModel, {
   effects: {
     *queryList({ payload }, { put, select, call }) {
       const { exchangeId, verbId, tabName } = payload;
-      console.log('queryList=>', tabName);
-      const endpoint = 'symbolVerb/recommendList';
+      console.log('queryList=>', exchangeId, tabName);
+      let endpoint = 'symbolVerb/recommendList';
+      if (verbId === 730) {
+        endpoint = 'quotaVerb/recommendList';
+      }
       const filter = { exchangeId, verbId };
       const st = yield select();
       const data = yield call(queryNormal, {
@@ -52,13 +55,18 @@ export default modelExtend(pageModel, {
       });
     },
     *userListData({ payload }, { put }) {
+      const { filter } = payload;
+      let endpointUrl = 'symbolVerb/userList';
+      if (filter.verbId === 730) {
+        endpointUrl = 'quotaVerb/userList';
+      }
       yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
           modelDef: {
             modelName: 'coinList',
-            endpoint: 'symbolVerb/userList',
+            endpoint: endpointUrl,
           },
           pagination: {
             current: 0, // 当前页码
@@ -72,13 +80,18 @@ export default modelExtend(pageModel, {
       });
     },
     *listdata({ payload }, { put }) {
+      const { filter } = payload;
+      let endpointUrl = 'symbolVerb/tradeList';
+      if (filter.verbId === 730) {
+        endpointUrl = 'quotaVerb/tradeList';
+      }
       yield put({
         type: 'query',
         payload: {
           filter: payload.filter,
           modelDef: {
             modelName: 'coinList',
-            endpoint: 'symbolVerb/tradeList',
+            endpoint: endpointUrl,
           },
           pagination: {
             current: 0, // 当前页码
@@ -92,11 +105,15 @@ export default modelExtend(pageModel, {
       });
     },
     // 取消订阅
-    *subscribeRemove({ payload, noUser }, { put, call, select }) {
+    *subscribeRemove({ payload, noUser, params }, { put, call, select }) {
       const filter = {};
       const st = yield select();
       const { coinList } = st;
-      const endpoint = 'symbolVerb/subscribeRemove';
+      const { verbId } = params;
+      let endpoint = 'symbolVerb/subscribeRemove';
+      if (verbId === 730) {
+        endpoint = 'quotaVerb/subscribeRemove';
+      }
       const data = yield call(queryNormal, {
         endpoint,
         filter,

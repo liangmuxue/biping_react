@@ -35,7 +35,79 @@ export default modelExtend(pageModel, {
         endpoint, filter,
       }, st);
     },
+    *searchHot({ payload }, { put, call, select }) {
+      const st = yield select();
+      const endpoint = 'quota/searchHot';
+      const data = yield call(queryNormal, {
+        endpoint,
+      }, st);
+      yield put({
+        type: 'searchHotSuccess',
+        payload: data,
+      });
+    },
+    *searchHistory({ payload }, { put, call, select }) {
+      const st = yield select();
+      const endpoint = 'quota/searchHistory';
+      const data = yield call(queryNormal, {
+        endpoint,
+      }, st);
+      yield put({
+        type: 'searchHistorySuccess',
+        payload: data,
+      });
+    },
+    *searchHistoryRemove({ payload }, { put, call, select }) {
+      const st = yield select();
+      const filter = {};
+      const endpoint = 'quota/searchHistoryRemove';
+      const data = yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: {},
+      }, st);
+      yield put({
+        type: 'searchHistoryRemoveSuccess',
+        payload: data,
+      });
+    },
+    *searchHistoryAdd( {payload}, { put, call, select} ) {
+      const filter = {};
+      const st = yield select();
+      const endpoint = 'quota/searchHistoryAdd';
+      yield call(queryNormal, {
+        endpoint,
+        filter,
+        method: 'POST',
+        data: payload,
+      }, st);
+    },
   },
   reducers: {
+    searchHotSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        hotList: { ...response },
+      };
+    },
+    searchHistorySuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        historyList: { ...response },
+      };
+    },
+    searchHistoryRemoveSuccess(state, action) {
+      return {
+        ...state,
+        historyList: {
+          data: {
+            list: [],
+          },
+        },
+      };
+    },
   },
 });

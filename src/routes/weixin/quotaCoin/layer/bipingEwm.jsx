@@ -11,7 +11,7 @@ class BipingEwm extends React.Component {
         </div>
         <span className={styles.text1}>扫描下方二维码，免费获得</span>
         <span className={styles.text1}>每日点评币市早晚报</span>
-        <img className={styles.ewmImg} alt="" src="/images/quotaCoin/ewm.jpg" />
+        <img className={styles.ewmImg} alt="" src="/images/quotaCoin/ewm2.jpg" />
         <span className={styles.text2}>长按扫描二维码关注</span>
       </div>
     );

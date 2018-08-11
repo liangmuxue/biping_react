@@ -137,8 +137,9 @@ class QuotaCoin extends BaseComponent {
         </div>
         <div className={styles.hotCoin}>
           <div id="wrap" className={styles.search}>
-            <span onClick={() => this.toSearch()}>
-              <input type="search" placeholder="输入币种简称" disabled />
+            <span className={styles.fa} onClick={() => this.toSearch()}>
+              <input type="search" disabled />
+              <span>输入币种简称</span>
             </span>
           </div>
           <div className={styles.time}>
@@ -162,7 +163,7 @@ class QuotaCoin extends BaseComponent {
                     <div className={styles.rightCon}>
                       <p className={`${styles.fontWeight} ${styles.p1}`}>{item.baseCoinCode}</p>
                       <p className={`${styles.p2} ${item.range < 0 ? styles.down : styles.up}`}>
-                        {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`} (24H)
+                        {item.range < 0 ? `- ${NP.times(Math.abs(item.range), 100)}%` : `+ ${NP.times(Math.abs(item.range), 100)}%`}
                       </p>
                     </div>
                     <button className={`${styles.rightBtn} ${item.result < 0 ? styles.sellBtn : (item.result === 0 ? styles.neutralBtn : styles.buyBtn)}`}>

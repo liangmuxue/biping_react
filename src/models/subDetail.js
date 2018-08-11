@@ -38,7 +38,7 @@ export default modelExtend(pageModel, {
         // 异动币跳转方法
         endpoint = 'transSubscribeDetail';
       }
-      if (typeId === 717 || typeId === 718) {
+      if (typeId === 717 || typeId === 718 || typeId === 730) {
         endpoint = 'transSubscribeExchange';
       }
       let filter = {};
