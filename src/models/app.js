@@ -72,7 +72,7 @@ const getDirectPageParams = function () {
 
   if (state.indexOf('directPage') >= 0) {
     // 币事件日历分享
-    if(state.indexOf('directPage_eventCalendar') >= 0){
+    if (state.indexOf('directPage_eventCalendar') >= 0) {
       const stateStr = state.split('-');
       const directPage = stateStr[0].split('_')[1];
       const fromUser = stateStr[1].split('_')[1];
@@ -80,13 +80,19 @@ const getDirectPageParams = function () {
       return { directPage, params: { fromUser, time } };
     }
     const pagePart = state.split('#')[0];
-    //直接进入内页
+    // 直接进入内页
     let directPage = pagePart.split('_')[1];
-    // 进入支付页时添加参数
-    if(state.indexOf('directPage_toOpen') >= 0){
-      return { directPage, params: { typeId:719, typeName: 'AI诊币' } };
+    // 诊币详情页
+    if (directPage.indexOf('quotaCoin') >= 0) {
+      directPage = 'quotaCoinDetail';
+      const id = pagePart.split('_')[2];
+      return { directPage, params: { symbolId: id } };
     }
-    return { directPage, params: {  } };
+    // 进入支付页时添加参数
+    if (state.indexOf('directPage_toOpen') >= 0) {
+      return { directPage, params: { typeId: 719, typeName: 'AI诊币' } };
+    }
+    return { directPage, params: { } };
   }
 };
 
@@ -188,9 +194,8 @@ const App = {
       } else if (success && response.flag === 1003) {
         // 取消关注了的用户不允许进入,需要清空本地存储
         window.localStorage.clear();
-        console.log(`need clear`);
+        console.log('need clear');
         window.location.href = window.location.href;
-        return;
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
         const { mockUser } = config.env;
@@ -214,7 +219,7 @@ const App = {
         const systemUser = response.data;
         Object.assign(systemUser, payload);
         console.log('wap reg suc', systemUser);
-        systemUser.name = "wapUser";
+        systemUser.name = 'wapUser';
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',

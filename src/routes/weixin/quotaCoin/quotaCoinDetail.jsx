@@ -28,7 +28,7 @@ class QuotaCoinDetail extends BaseComponent {
       payload: {
         code: 'quotaCoinDetail',
         obj: {
-          '进入': '进入诊币详情',
+          进入: '进入诊币详情',
         },
       },
     });
@@ -194,7 +194,7 @@ class QuotaCoinDetail extends BaseComponent {
             <p className={styles.p3}>{data.lestCount}</p>
             <p className={styles.p4}>次</p>
             <div onClick={() => this.toBlock()} className={styles.btText}>
-              不想等，直接成为VIP 
+              不想等，直接成为VIP
               <img alt="" src="/images/quotaCoin/rightA.jpg" />
             </div>
           </div>
@@ -460,7 +460,7 @@ class QuotaCoinDetail extends BaseComponent {
           </div>
           <div id="shareBottom" className={styles.bottomDom}>
             <img className={styles.leftImg} src="/images/quotaCoin/footerShare.jpg" alt="" />
-            <img className={styles.shareewm}  alt="" src="/images/share/ewm1.jpg" />
+            <img className={styles.shareewm} alt="" src="/images/share/ewm1.jpg" />
           </div>
           <div className={styles.bottomText}>
           免责申明：本预测指标是利用技术指标结合历史数据实时运算所得，投资者须知未来行情趋势具有极强随机性，本指标仅供参考，需要投资者根据不同行情合理应用，控制风险。币圈有风险，投资需谨慎。
