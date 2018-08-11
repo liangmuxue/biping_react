@@ -37,7 +37,7 @@ class QuotaCoinDetail extends BaseComponent {
     this.props.dispatch({
       type: 'quotaCoinDetail/getDetail',
       payload: {
-        exchangeId: params.exchangeId,
+        // exchangeId: params.exchangeId,
         symbolId: params.symbolId,
       },
     });

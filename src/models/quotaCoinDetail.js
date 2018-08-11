@@ -10,10 +10,12 @@ export default modelExtend(pageModel, {
   namespace: MODEL_DEF.modelName,
   effects: {
     *getDetail({ payload }, { put, call, select }) {
-      const { exchangeId, symbolId } = payload;
+      // const { exchangeId, symbolId } = payload;
+      const { symbolId } = payload;
       const st = yield select();
       const endpoint = 'quota/detail';
-      const filter = { exchangeId, symbolId };
+      // const filter = { exchangeId, symbolId };
+      const filter = { symbolId };
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
