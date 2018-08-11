@@ -18,7 +18,10 @@ export default modelExtend(pageModel, {
       const st = yield select();
       const { exchangeId, verbId, symbolId } = payload;
       const filter = { exchangeId, verbId, symbolId };
-      const endpoint = 'symbolVerb/detail';
+      let endpoint = 'symbolVerb/detail';
+      if (verbId === 730) {
+        endpoint = 'quotaVerb/detail';
+      }
       const data = yield call(queryNormal, {
         endpoint, filter,
       }, st);
@@ -29,7 +32,11 @@ export default modelExtend(pageModel, {
     },
     *subscribeAdd({ payload, params }, { put, call, select }) {
       const st = yield select();
-      const endpoint = 'symbolVerb/subscribeAdd';
+      const { verbId } = params.params;
+      let endpoint = 'symbolVerb/subscribeAdd';
+      if (verbId === 730) {
+        endpoint = '/quotaVerb/subscribeAdd';
+      }
       const filter = {};
       const data = yield call(queryNormal, {
         endpoint,

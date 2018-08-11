@@ -566,7 +566,7 @@ class MsgDetail extends BaseComponent {
           </div>
           <EventDetail forecast={bol => this.forecast(bol)} {...this.props} />
           <div className={style.up}>
-            <div className={style.upCenter}>
+            {/* <div className={style.upCenter}>
               <div className={style.upTitle}>所属标签</div>
               <ul className={style.labels}>
                 {msgObj.tagList.map(msg => (
@@ -588,12 +588,12 @@ class MsgDetail extends BaseComponent {
                   {unlikeArea}
                 </div>
               </div>
-            </div>
+            </div> */}
 
             <div className={hideRelateMsg === 0 ? style.hide : style.showBox} />
 
             <div className={hideRelateMsg === 0 ? style.similarBox : style.hide}>
-              <div className={style.similarCenter}>
+              {/* <div className={style.similarCenter}>
                 <div className={style.similarTitle}>类似消息</div>
                 <ul className={style.similarListUl}>
                   {msgObj.relateMsg.map(msg =>
@@ -607,7 +607,7 @@ class MsgDetail extends BaseComponent {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

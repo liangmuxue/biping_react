@@ -49,9 +49,20 @@
     }
   }
   .search {
-    position: sticky;
-    top: 0;
-    background-color: #fff;
+    // position: sticky;
+    // top: 0;
+    // background-color: #fff;
+    .fa {
+      position: relative;
+      span {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        left: .3rem;
+        top: 1px;
+        color: #888;
+      }
+    }
     input[type='search'] {
       width: 6rem;
       // text-align: center;
@@ -147,9 +158,6 @@
   line-height: 1.5;
   margin-bottom: 1.2rem;
   text-align: left;
-}
-*::placeholder {
-  color: #444444;
 }
 .fontWeight {
   font-weight: 400;
