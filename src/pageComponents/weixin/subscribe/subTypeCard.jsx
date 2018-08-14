@@ -55,7 +55,9 @@ class SubTypeCard extends React.Component {
       );
       remainButton = (<Renew />);
     }
-    if (typeObj.typeId !== 719) { // 719 AI诊币
+    if (typeObj.typeId === 719 || typeObj.typeId === 730) { // 719 AI诊币
+      console.log(1);
+    } else {
       remainButton = null;
     }
     let imgSrc = '';
