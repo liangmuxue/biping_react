@@ -83,13 +83,13 @@ const getDirectPageParams = function () {
     // 直接进入内页
     let directPage = pagePart.split('_')[1];
     // 诊币详情页
-    if (directPage.indexOf('quotaCoin') >= 0) {
+    if (directPage === 'quotaCoin') {
       directPage = 'quotaCoinDetail';
       const id = pagePart.split('_')[2];
       return { directPage, params: { symbolId: id } };
     }
     // 中间页
-    if (directPage.indexOf('quotaCoinBlock') >= 0) {
+    if (directPage === 'quotaCoinBlock') {
       directPage = 'quotaCoinBlock';
       return { directPage, params: {} };
     }
