@@ -88,6 +88,12 @@ const getDirectPageParams = function () {
       const id = pagePart.split('_')[2];
       return { directPage, params: { symbolId: id } };
     }
+    // 中间页
+    if (directPage.indexOf('quotaCoinBlock') >= 0) {
+      directPage = 'quotaCoinBlock';
+      return { directPage, params: {} };
+    }
+
     // 进入支付页时添加参数
     if (state.indexOf('directPage_toOpen') >= 0) {
       return { directPage, params: { typeId: 719, typeName: 'AI诊币' } };
