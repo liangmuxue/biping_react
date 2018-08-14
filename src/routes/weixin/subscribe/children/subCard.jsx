@@ -31,7 +31,7 @@ class SubCard extends React.Component {
         imgSrc = '/images/coinList/coin5.jpg';
         break;
       case 730: // 指标异动
-        imgSrc = '/images/coinList/coin6.jpg';
+        imgSrc = '/images/coinList/coin61.jpg';
         break;
       default:
         imgSrc = '/images/coinList/coin1.png';
