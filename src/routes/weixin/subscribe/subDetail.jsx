@@ -164,7 +164,8 @@ class SubDetail extends BaseComponent {
         type: 'pageConstruction/switchToInnerPage',
         payload: {
           pageName: 'toOpen',
-          params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subList' },
+          // params: { typeId: subTypeObj.typeId, typeName: subTypeObj.typeName, backPath: 'subList' },
+          params: { typeId: 719, typeName: 'AI诊币', backPath: 'subList' },
         },
       });
     }

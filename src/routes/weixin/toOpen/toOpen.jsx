@@ -148,6 +148,9 @@ class toOpenDetail extends BaseComponent {
       <div>
         <HeaderBar headerText={subDesc} backRouteLink='subList' {...this.props} />
         <OpenCard openObj={systemUser} openClick={this.openClick.bind(this)} />
+        <div className={style.text1}>
+          指标异动提醒是AI诊币附属功能，需购买AI诊币服务才能使用指标异动提醒服务
+        </div>
         <div className={style.introduceTitle}>套餐介绍</div>
         {data.map(i => (
           <CheckboxItem key={i.count} onChange={() => this.switchPayType(i)} checked={i.checked} className={style.lastList}>
