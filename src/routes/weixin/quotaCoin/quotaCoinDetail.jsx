@@ -157,13 +157,16 @@ class QuotaCoinDetail extends BaseComponent {
       const { support } = quota.rsPosition; // 支撑位
       const { resistance } = quota.rsPosition; // 阻力位
       const { bpCurPrice } = range; // 当前价格
-      const a = resistance - support;
-      const b = bpCurPrice - support;
-      if (bpCurPrice < support) {
+      const support1 = NP.strip(Number(support));
+      const resistance1 = NP.strip(Number(resistance));
+      const bpCurPrice1 = NP.strip(Number(bpCurPrice));
+      const a = NP.strip(resistance1 - support1);
+      const b = NP.strip(bpCurPrice1 - support1);
+      if (bpCurPrice1 < support1) {
         textRg = 0;
         spanRg = 0;
         leftBtnDom = (<a className={styles.rightBtn}>突破支撑位</a>);
-      } else if (bpCurPrice > resistance) {
+      } else if (bpCurPrice1 > resistance1) {
         textRg = 65;
         spanRg = 95;
         rightBtnDom = (<a className={styles.leftBtn}>突破阻力位</a>);
