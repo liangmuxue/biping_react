@@ -201,7 +201,7 @@ const App = {
         // 取消关注了的用户不允许进入,需要清空本地存储
         window.localStorage.clear();
         console.log('need clear');
-        window.location.href = window.location.href;
+        // window.location.href = window.location.href;
       } else if (success && response.flag === 0 && !response.data) {
         // 用户密码登录失败,重置缓存
         const { mockUser } = config.env;
