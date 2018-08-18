@@ -353,10 +353,10 @@ class QuotaCoinDetail extends BaseComponent {
               根据价格数据波动作为指标，每小时预判币种价格走势，本结果仅供参考，不作为投资建议。
             </p>
             <div className={styles.suggest}>
-              <img className={styles.suggestImg} src="/images/quotaCoin/green3.jpg" alt="" />
+              <img className={styles.suggestImg} src="/images/quotaCoin/green1.jpg" alt="" />
               <div className={styles.suggestText}>
                 <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
-                  {percentage.result < 0 ? '卖出' : (percentage.result === 0 ? '中立' : '买入') }
+                  {percentage.result < 0 ? '看空' : (percentage.result === 0 ? '中立' : '看多') }
                 </span>
                 <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
                 <span className={styles.circle}>{}</span>
@@ -396,7 +396,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.ma ? (quota.ma.result < 0 ? styles.sellBtn : (quota.ma.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.ma ? (quota.ma.result < 0 ? '卖出' : (quota.ma.result === 0 ? '中立' : '买入')) : null}
+                    {quota.ma ? (quota.ma.result < 0 ? '看空' : (quota.ma.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
@@ -405,7 +405,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{quota.mtm ? quota.mtm.mtmValue : null}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.mtm ? (quota.mtm.result < 0 ? styles.sellBtn : (quota.mtm.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.mtm ? (quota.mtm.result < 0 ? '卖出' : (quota.mtm.result === 0 ? '中立' : '买入')) : null}
+                    {quota.mtm ? (quota.mtm.result < 0 ? '看空' : (quota.mtm.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
@@ -424,7 +424,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{quota.kdj ? quota.kdj.kdjValue : null}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.kdj ? (quota.kdj.result < 0 ? styles.sellBtn : (quota.kdj.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.kdj ? (quota.kdj.result < 0 ? '卖出' : (quota.kdj.result === 0 ? '中立' : '买入')) : null}
+                    {quota.kdj ? (quota.kdj.result < 0 ? '看空' : (quota.kdj.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
@@ -433,7 +433,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{quota.rsi ? quota.rsi.rsiValue : null}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.rsi ? (quota.rsi.result < 0 ? styles.sellBtn : (quota.rsi.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.rsi ? (quota.rsi.result < 0 ? '卖出' : (quota.rsi.result === 0 ? '中立' : '买入')) : null}
+                    {quota.rsi ? (quota.rsi.result < 0 ? '看空' : (quota.rsi.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
@@ -457,7 +457,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.boll ? (quota.boll.result < 0 ? styles.sellBtn : (quota.boll.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.boll ? (quota.boll.result < 0 ? '卖出' : (quota.boll.result === 0 ? '中立' : '买入')) : null}
+                    {quota.boll ? (quota.boll.result < 0 ? '看空' : (quota.boll.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
@@ -481,7 +481,7 @@ class QuotaCoinDetail extends BaseComponent {
                 <div className={styles.tableCenter}>{}</div>
                 <div className={styles.tableRight}>
                   <button className={`${quota.macd ? (quota.macd.result < 0 ? styles.sellBtn : (quota.macd.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.macd ? (quota.macd.result < 0 ? '卖出' : (quota.macd.result === 0 ? '中立' : '买入')) : null}
+                    {quota.macd ? (quota.macd.result < 0 ? '看空' : (quota.macd.result === 0 ? '中立' : '看多')) : null}
                   </button>
                 </div>
               </div>
