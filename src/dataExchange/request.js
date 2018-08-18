@@ -23,7 +23,7 @@ const fetch = (endpoint, options) => {
     retry: 3,
     retryDelay: 1000,
     headers: {
-      type: 'wechat',
+      type: systemUser.sourceType,
       token: systemUser.token,
     },
     method: options.method,
