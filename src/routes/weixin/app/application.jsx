@@ -154,7 +154,6 @@ class HomePage extends Component {
       if (app.systemUser.sourceType === 'wap') {
         pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
           {loadingTip}{pagiLoadingTip}
-
                        </div>);
       } else {
         pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }

@@ -229,7 +229,6 @@ const App = {
       const { directPage, sourceType } = payload;
       if (success && response.data && response.flag === 0) {
         const systemUser = response.data;
-        Object.assign(systemUser, payload);
         console.log('wap reg suc', systemUser);
         systemUser.name = 'wapUser';
         systemUser.sourceType = urlParamValue_sourceType.fromWap;
