@@ -146,7 +146,13 @@ const App = {
       dispatch({ type: 'directPageData', payload: { directPageData } });
       if (userLocal) {
         // 有用户信息，直接登录
-        dispatch({ type: 'query', payload: userLocal });
+        if (sourceType === urlParamValue_sourceType.fromWap) {
+          // wap方式登录
+          dispatch({ type: 'wapReg', payload: userLocal });
+        } else {
+          // 微信方式登录
+          dispatch({ type: 'query', payload: userLocal });
+        }
       } else {
         // 没有用户信息，则进行注册
         if (sourceType === urlParamValue_sourceType.fromWap) {
@@ -223,9 +229,9 @@ const App = {
       const { directPage, sourceType } = payload;
       if (success && response.data && response.flag === 0) {
         const systemUser = response.data;
-        Object.assign(systemUser, payload);
         console.log('wap reg suc', systemUser);
         systemUser.name = 'wapUser';
+        systemUser.sourceType = urlParamValue_sourceType.fromWap;
         // 成功后把用户数据存储到全局
         yield put({
           type: 'sysUserSet',
@@ -255,7 +261,8 @@ const App = {
       const { success, response } = ret;
       if (success && response.data && response.flag === 0) {
         const systemUser = response.data;
-        console.log('usermessage1111222', systemUser);
+        systemUser.sourceType = urlParamValue_sourceType.fromWx;
+        console.log('systemUser in autoReg', systemUser);
         yield put({
           type: 'sysUserSet',
           payload: {

@@ -149,15 +149,18 @@ class HomePage extends Component {
               </div>);
     });
     let pageContent = null;
-    // 根据用户是否登录决定显示内容
-    if (app.user.id || true) {
-      // 本级路由定义,动态显示下级组件
-      pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
-        {loadingTip}{pagiLoadingTip}
-        <Footer />
-                     </div>);
-    } else {
-      pageContent = <div>没有权限查看</div>;
+    if (app && app.systemUser) {
+      // wap登录不显示底部菜单
+      if (app.systemUser.sourceType === 'wap') {
+        pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
+          {loadingTip}{pagiLoadingTip}
+                       </div>);
+      } else {
+        pageContent = (<div id="rootContainer" ref={this.setPageRef}>{modal}{loadingTip}{ routeInner }
+          {loadingTip}{pagiLoadingTip}
+          <Footer />
+                       </div>);
+      }
     }
     // 弹层时禁止屏幕滑动
     if (attentionModal) {
