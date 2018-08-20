@@ -159,7 +159,6 @@ class CoinList extends BaseComponent {
         },
       });
     }
-    
   }
   cancelBtn(e, data) {
     const { params } = this.props;
@@ -172,12 +171,28 @@ class CoinList extends BaseComponent {
         verbId: params.verbId,
       },
     });
-    this.props.dispatch({
-      type: 'app/pushPoint',
-      payload: {
-        code: 'coinListCancel',
-      },
-    });
+    if (params.verbId === 717) { // 大单
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'dadancoinListCancel',
+        },
+      });
+    } else if (params.verbId === 718) { // 暴涨暴跌
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'baozhangcoinListCancel',
+        },
+      });
+    } else { // 指标异动
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'yidongcoinListCancel',
+        },
+      });
+    }
   }
   // 开启微信推送
   pushAdd(e, data) {
