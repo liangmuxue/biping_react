@@ -59,7 +59,7 @@ class QuotaCoin extends BaseComponent {
       payload: {
         code: 'quotaCoinDetailClick',
         obj: {
-          '名称': item.name,
+          '名称': item.baseCoinCode,
         },
       },
     });

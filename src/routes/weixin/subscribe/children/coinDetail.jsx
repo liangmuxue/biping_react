@@ -49,18 +49,19 @@ class CoinDetail extends BaseComponent {
     return returnArr;
   }
   confirmClick() {
-    this.props.dispatch({
-      type: 'app/pushPoint',
-      payload: {
-        code: 'coinDetailConfirm',
-      },
-    });
     const { coinDetail, params } = this.props;
     const { detailData } = coinDetail;
     const { data } = detailData;
     let payloadData = null;
     var that = this;
+    // 大单
     if (params.verbId === 717) {
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'dadancoinDetailConfirm',
+        },
+      });
       payloadData = {
         exchangeId: params.exchangeId,
         verbId: params.verbId,
@@ -69,7 +70,13 @@ class CoinDetail extends BaseComponent {
         sellFlag: data.detail.sellFlag,
         pushFlag: data.detail.pushFlag,
       };
-    } else if (params.verbId === 718) {
+    } else if (params.verbId === 718) { // 暴涨暴跌
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'baozhangcoinDetailConfirm',
+        },
+      });
       payloadData = {
         exchangeId: params.exchangeId,
         verbId: params.verbId,
@@ -91,7 +98,13 @@ class CoinDetail extends BaseComponent {
       } else {
         payloadData.loseHold = data.detail.loseHold;
       }
-    } else {
+    } else { // 指标异动
+      this.props.dispatch({
+        type: 'app/pushPoint',
+        payload: {
+          code: 'yidongcoinDetailConfirm',
+        },
+      });
       payloadData = data.detail;
       payloadData.exchangeId = params.exchangeId;
       payloadData.verbId = params.verbId;
