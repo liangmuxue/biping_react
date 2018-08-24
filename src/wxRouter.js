@@ -62,6 +62,16 @@ function RouterConfig({ history, app }) {
     ],
     component: () => import('./routes/weixin/message/messageDetail'),
   });
+
+  // 指标异动页面
+  const YidongDetail = dynamic({
+    app,
+    models: () => [
+      import('./models/app'),
+      import('./models/yidongDetail'),
+    ],
+    component: () => import('./routes/weixin/message/yidongDetail'),
+  });
   // 订阅列表
   const SubList = dynamic({
     app,
@@ -259,6 +269,10 @@ function RouterConfig({ history, app }) {
     modelName: 'messageDetail',
     component: MsgDetail,
   }, {
+    name: 'yidongDetail',
+    modelName: 'yidongDetail',
+    component: YidongDetail,
+  }, {
     name: 'messageList',
     modelName: 'messageList',
     component: MessageList,
@@ -364,6 +378,7 @@ function RouterConfig({ history, app }) {
           <Route path="/mainpage" component={MainPage} />
           <Route path="/messageList" component={MessageList} />
           <Route path="/messageDetail" component={MsgDetail} />
+          <Route path="/yidongDetail" component={YidongDetail} />
           <Route path="/indexMessage" component={IndexMessage} />
           <Route path="/Announcement" component={Announcement} />
           <Route path="/subList" component={SubList} />

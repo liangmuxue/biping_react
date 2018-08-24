@@ -165,6 +165,17 @@ class MessageList extends BaseComponent {
     console.log(this.state, tab, index);
     this.getMessageList(tab.tagId);
   }
+  yidongClick() {
+    this.props.dispatch({
+      type: 'pageConstruction/switchToInnerPage',
+      payload: {
+        pageName: 'yidongDetail',
+        params: {
+          symbolId: 216, quotaId: 477446, backPath: 'indexMessage',
+        },
+      },
+    });
+  }
   render() {
     const { indexMessage } = this.props;
     if (commonUtils.isEmpty(indexMessage)) {
@@ -223,6 +234,7 @@ class MessageList extends BaseComponent {
     }
     return (
       <div>
+        <button onClick={this.yidongClick.bind(this)}>异动指标</button>
         <Tabs
           tabs={this.state.tabs}
           initialPage={0}
