@@ -50,7 +50,7 @@ class YidongDetail extends BaseComponent {
             </li>
             <li>
               <span className={styles.leftC}>信号建议：</span>
-              <span className={styles.rightC}>{data.quota.computedValue < 0 ? '看多' : '看空'}</span>
+              <span className={styles.rightC}>{data.quota.computedValue < 0 ? '看空' : '看多'}</span>
             </li>
             <li>
               <span className={styles.leftC}>信号详情：</span>
