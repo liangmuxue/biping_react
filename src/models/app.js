@@ -88,6 +88,13 @@ const getDirectPageParams = function () {
       const id = pagePart.split('_')[2];
       return { directPage, params: { symbolId: id } };
     }
+    // 异动指标
+    if (directPage.indexOf('yidongDetail') >= 0) {
+      const symbolId = directPage.split('-')[1];
+      const quotaId = directPage.split('-')[2];
+      directPage = 'yidongDetail';
+      return { directPage, params: { symbolId, quotaId } };
+    }
     // 中间页
     if (directPage === 'quotaCoinBlock') {
       directPage = 'quotaCoinBlock';
