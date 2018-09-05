@@ -358,6 +358,7 @@ class QuotaCoinDetail extends BaseComponent {
           </div>
           <Tabs
             tabs={tabs}
+            swipeable={false}
           >
             {/* 技术分析 */}
             <div className={styles.tableList}>
