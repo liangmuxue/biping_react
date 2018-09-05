@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'dva';
 import NP from 'number-precision';
 import Modal from 'antd-mobile/lib/modal/index';
+import { Tabs } from 'antd-mobile';
 import 'antd-mobile/es/modal/style/index.css';
 import html2canvas from 'html2canvas';
 import BaseComponent from '../baseComponent';
@@ -38,6 +39,12 @@ class QuotaCoinDetail extends BaseComponent {
       type: 'quotaCoinDetail/getDetail',
       payload: {
         // exchangeId: params.exchangeId,
+        symbolId: params.symbolId,
+      },
+    });
+    this.props.dispatch({
+      type: 'quotaCoinDetail/capital',
+      payload: {
         symbolId: params.symbolId,
       },
     });
@@ -125,10 +132,16 @@ class QuotaCoinDetail extends BaseComponent {
     });
   }
   render() {
-    const { quotaCoinDetail } = this.props;
+    const { quotaCoinDetail, capitalData } = this.props;
     if (!quotaCoinDetail) {
       return null;
     }
+    console.log('render=>', capitalData);
+    const { quote } = capitalData.data;
+    const tabs = [
+      { title: '技术分析' },
+      { title: '资金' },
+    ];
     const { data } = quotaCoinDetail;
     /* **
     * symbol 交易对
@@ -343,150 +356,190 @@ class QuotaCoinDetail extends BaseComponent {
               </div>
             </div>
           </div>
-          <div className={styles.tableList}>
-            <div className={styles.conTitle}>
-              <div className={styles.column}>{}</div>
-              <span className={styles.titleText}>技术分析概要</span>
-              <span className={styles.rightText}>上次更新 <em>{convertDate(range.bpQuotaUpdateTime, 'hh:mm')}</em></span>
-            </div>
-            <p className={styles.sugText}>
-              根据价格数据波动作为指标，每小时预判币种价格走势，本结果仅供参考，不作为投资建议。
-            </p>
-            <div className={styles.suggest}>
-              <img className={styles.suggestImg} src="/images/quotaCoin/green1.jpg" alt="" />
-              <div className={styles.suggestText}>
-                <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
-                  {percentage.result < 0 ? '看空' : (percentage.result === 0 ? '中立' : '看多') }
-                </span>
-                <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
-                <span className={styles.circle}>{}</span>
-                <span className={styles.text1}>
-                  {/* {percentage.result < 0 ? `${NP.times(percentage.sellPer, 100)}%` : (percentage.result === 0 ? `${NP.times(percentage.neutralityPer, 100)}%` : `${NP.times(percentage.buyPer, 100)}%`) } */}
-                </span>
-              </div>
-            </div>
-            {remindListDom}
-            <div className={styles.tableItem}>
+          <Tabs
+            tabs={tabs}
+          >
+            {/* 技术分析 */}
+            <div className={styles.tableList}>
               <div className={styles.conTitle}>
-                {/* <div className={styles.column}>{}</div> */}
-                <span className={styles.titleText}>趋势</span>
+                <div className={styles.column}>{}</div>
+                <span className={styles.titleText}>技术分析概要</span>
+                <span className={styles.rightText}>上次更新 <em>{convertDate(range.bpQuotaUpdateTime, 'hh:mm')}</em></span>
               </div>
-              <div className={`${styles.tableCon} ${styles.tableHeader}`}>
-                <div className={styles.tableLeft}>名</div>
-                <div className={styles.tableCenter}>值</div>
-                <div className={styles.tableRight}>行动</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>移动平均线（5）</div>
-                <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma5 : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>移动平均线（10）</div>
-                <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma10 : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>移动平均线（30）</div>
-                <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma90 : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>移动平均线综合</div>
-                <div className={styles.tableCenter}>{}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.ma ? (quota.ma.result < 0 ? styles.sellBtn : (quota.ma.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.ma ? (quota.ma.result < 0 ? '看空' : (quota.ma.result === 0 ? '中立' : '看多')) : null}
-                  </button>
+              <p className={styles.sugText}>
+                根据价格数据波动作为指标，每小时预判币种价格走势，本结果仅供参考，不作为投资建议。
+              </p>
+              <div className={styles.suggest}>
+                <img className={styles.suggestImg} src="/images/quotaCoin/green1.jpg" alt="" />
+                <div className={styles.suggestText}>
+                  <span className={`${styles.text2} ${percentage.result < 0 ? styles.sell : (percentage.result === 0 ? styles.neutral : styles.buy)}`}>
+                    {percentage.result < 0 ? '看空' : (percentage.result === 0 ? '中立' : '看多') }
+                  </span>
+                  <span className={styles.line} style={{ transform: `rotateZ(${rgs}deg)` }}>{}</span>
+                  <span className={styles.circle}>{}</span>
+                  <span className={styles.text1}>
+                    {/* {percentage.result < 0 ? `${NP.times(percentage.sellPer, 100)}%` : (percentage.result === 0 ? `${NP.times(percentage.neutralityPer, 100)}%` : `${NP.times(percentage.buyPer, 100)}%`) } */}
+                  </span>
                 </div>
               </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>MTM</div>
-                <div className={styles.tableCenter}>{quota.mtm ? quota.mtm.mtmValue : null}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.mtm ? (quota.mtm.result < 0 ? styles.sellBtn : (quota.mtm.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.mtm ? (quota.mtm.result < 0 ? '看空' : (quota.mtm.result === 0 ? '中立' : '看多')) : null}
-                  </button>
+              {/* {remindListDom} */}
+              <div className={styles.tableItem}>
+                <div className={styles.conTitle}>
+                  {/* <div className={styles.column}>{}</div> */}
+                  <span className={styles.titleText}>趋势</span>
                 </div>
+                <div className={`${styles.tableCon} ${styles.tableHeader}`}>
+                  <div className={styles.tableLeft}>名</div>
+                  <div className={styles.tableCenter}>值</div>
+                  <div className={styles.tableRight}>行动</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>移动平均线（5）</div>
+                  <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma5 : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>移动平均线（10）</div>
+                  <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma10 : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>移动平均线（30）</div>
+                  <div className={styles.tableCenter}>{quota.ma ? quota.ma.ma90 : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>移动平均线综合</div>
+                  <div className={styles.tableCenter}>{}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.ma ? (quota.ma.result < 0 ? styles.sellBtn : (quota.ma.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.ma ? (quota.ma.result < 0 ? '看空' : (quota.ma.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>MTM</div>
+                  <div className={styles.tableCenter}>{quota.mtm ? quota.mtm.mtmValue : null}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.mtm ? (quota.mtm.result < 0 ? styles.sellBtn : (quota.mtm.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.mtm ? (quota.mtm.result < 0 ? '看空' : (quota.mtm.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.jiedu}>
+                  <span className={styles.title}>趋势指标解读</span>
+                  <div className={styles.con}>{quota.shockUnscramble}</div>
+                </div>
+              </div>
+              <div className={`${styles.tableItem} ${styles.shockItem}`}>
+                <div className={styles.conTitle}>
+                  <span className={styles.titleText}>震荡指标</span>
+                </div>
+                <div className={`${styles.tableCon} ${styles.tableHeader}`}>
+                  <div className={styles.tableLeft}>名</div>
+                  <div className={styles.tableCenter}>值</div>
+                  <div className={styles.tableRight}>行动</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>KDJ</div>
+                  <div className={styles.tableCenter}>{quota.kdj ? quota.kdj.kdjValue : null}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.kdj ? (quota.kdj.result < 0 ? styles.sellBtn : (quota.kdj.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.kdj ? (quota.kdj.result < 0 ? '看空' : (quota.kdj.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>RSI</div>
+                  <div className={styles.tableCenter}>{quota.rsi ? quota.rsi.rsiValue : null}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.rsi ? (quota.rsi.result < 0 ? styles.sellBtn : (quota.rsi.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.rsi ? (quota.rsi.result < 0 ? '看空' : (quota.rsi.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>布林带上轨</div>
+                  <div className={styles.tableCenter}>{quota.boll ? quota.boll.up : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>布林带中轨</div>
+                  <div className={styles.tableCenter}>{quota.boll ? quota.boll.mp : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>布林带下轨</div>
+                  <div className={styles.tableCenter}>{quota.boll ? quota.boll.down : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>布林带综合</div>
+                  <div className={styles.tableCenter}>{}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.boll ? (quota.boll.result < 0 ? styles.sellBtn : (quota.boll.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.boll ? (quota.boll.result < 0 ? '看空' : (quota.boll.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>DIF</div>
+                  <div className={styles.tableCenter}>{quota.macd ? quota.macd.dif : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>DEA</div>
+                  <div className={styles.tableCenter}>{quota.macd ? quota.macd.dea : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>MACD</div>
+                  <div className={styles.tableCenter}>{quota.macd ? quota.macd.macdValue : null}</div>
+                  <div className={styles.tableRight}>{}</div>
+                </div>
+                <div className={styles.tableCon}>
+                  <div className={styles.tableLeft}>MACD综合</div>
+                  <div className={styles.tableCenter}>{}</div>
+                  <div className={styles.tableRight}>
+                    <button className={`${quota.macd ? (quota.macd.result < 0 ? styles.sellBtn : (quota.macd.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
+                      {quota.macd ? (quota.macd.result < 0 ? '看空' : (quota.macd.result === 0 ? '中立' : '看多')) : null}
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div className={styles.jiedu}>
+                <span className={styles.title}>震荡指标解读</span>
+                <div className={styles.con}>{quota.trendUnscramble}</div>
               </div>
             </div>
-            <div className={`${styles.tableItem} ${styles.shockItem}`}>
-              <div className={styles.conTitle}>
-                <span className={styles.titleText}>震荡指标</span>
-              </div>
-              <div className={`${styles.tableCon} ${styles.tableHeader}`}>
-                <div className={styles.tableLeft}>名</div>
-                <div className={styles.tableCenter}>值</div>
-                <div className={styles.tableRight}>行动</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>KDJ</div>
-                <div className={styles.tableCenter}>{quota.kdj ? quota.kdj.kdjValue : null}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.kdj ? (quota.kdj.result < 0 ? styles.sellBtn : (quota.kdj.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.kdj ? (quota.kdj.result < 0 ? '看空' : (quota.kdj.result === 0 ? '中立' : '看多')) : null}
-                  </button>
+            {/* 资金 */}
+            <div className={styles.zijin}>
+              <div className={styles.title}>
+                <span className={styles.leftTitle}>实时资金流向</span>
+                <span className={styles.rightTitle}>每小时更新<em>上次更新：{convertDate(range.bpQuotaUpdateTime, 'hh:mm')}</em></span>
+                <div className={styles.conTitle}>
+                  最近一小时内资金呈流出状态，共{quote.direction == 'buy' ? '流入' : '流出'}{quote.total}。
                 </div>
               </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>RSI</div>
-                <div className={styles.tableCenter}>{quota.rsi ? quota.rsi.rsiValue : null}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.rsi ? (quota.rsi.result < 0 ? styles.sellBtn : (quota.rsi.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.rsi ? (quota.rsi.result < 0 ? '看空' : (quota.rsi.result === 0 ? '中立' : '看多')) : null}
-                  </button>
-                </div>
+              <div className={styles.tu1}>
+                <span>(单位：¥)</span>
+                <img alt="" src={quote.chart[0].url} />
               </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>布林带上轨</div>
-                <div className={styles.tableCenter}>{quota.boll ? quota.boll.up : null}</div>
-                <div className={styles.tableRight}>{}</div>
+              <div className={styles.tu2}>
+                <img alt="" src={quote.chart[1].url} />
+                <span>流入：<em>{quote.buy}</em></span>
               </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>布林带中轨</div>
-                <div className={styles.tableCenter}>{quota.boll ? quota.boll.mp : null}</div>
-                <div className={styles.tableRight}>{}</div>
+              <div className={styles.tu3}>
+                <img alt="" src={quote.chart[2].url} />
+                <span>流出：<em>{quote.sell}</em></span>
               </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>布林带下轨</div>
-                <div className={styles.tableCenter}>{quota.boll ? quota.boll.down : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>布林带综合</div>
-                <div className={styles.tableCenter}>{}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.boll ? (quota.boll.result < 0 ? styles.sellBtn : (quota.boll.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.boll ? (quota.boll.result < 0 ? '看空' : (quota.boll.result === 0 ? '中立' : '看多')) : null}
-                  </button>
-                </div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>DIF</div>
-                <div className={styles.tableCenter}>{quota.macd ? quota.macd.dif : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>DEA</div>
-                <div className={styles.tableCenter}>{quota.macd ? quota.macd.dea : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>MACD</div>
-                <div className={styles.tableCenter}>{quota.macd ? quota.macd.macdValue : null}</div>
-                <div className={styles.tableRight}>{}</div>
-              </div>
-              <div className={styles.tableCon}>
-                <div className={styles.tableLeft}>MACD综合</div>
-                <div className={styles.tableCenter}>{}</div>
-                <div className={styles.tableRight}>
-                  <button className={`${quota.macd ? (quota.macd.result < 0 ? styles.sellBtn : (quota.macd.result === 0 ? styles.neutralBtn : styles.buyBtn)) : null}`}>
-                    {quota.macd ? (quota.macd.result < 0 ? '看空' : (quota.macd.result === 0 ? '中立' : '看多')) : null}
-                  </button>
-                </div>
+              <div className={styles.tu4}>
+                <span className={styles.leftText}>近五日资金净流入</span>
+                <span className={styles.rightText}>(单位：¥)</span>
+                <img alt="" src={quote.chart[3].url} />
               </div>
             </div>
-          </div>
+          </Tabs>
           <div id="shareBottom" className={styles.bottomDom}>
             <img className={styles.leftImg} src="/images/quotaCoin/footerShare.jpg" alt="" />
             <img className={styles.shareewm} alt="" src="/images/share/ewm1.jpg" />

@@ -24,6 +24,19 @@ export default modelExtend(pageModel, {
         payload: data,
       });
     },
+    *capital({ payload }, { put, call, select }) {
+      const { symbolId } = payload;
+      const st = yield select();
+      const endpoint = 'quota/capital';
+      const filter = { symbolId };
+      const data = yield call(queryNormal, {
+        endpoint, filter,
+      }, st);
+      yield put({
+        type: 'capitalSuccess',
+        payload: data,
+      });
+    },
   },
   reducers: {
     getDetailSuccess(state, action) {
@@ -31,6 +44,13 @@ export default modelExtend(pageModel, {
       return {
         ...state,
         quotaCoinDetail: { ...response },
+      };
+    },
+    capitalSuccess(state, action) {
+      const { response } = action.payload;
+      return {
+        ...state,
+        capitalData: { ...response },
       };
     },
   },
