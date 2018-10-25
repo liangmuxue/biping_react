@@ -133,6 +133,18 @@ class QuotaCoin extends BaseComponent {
     const { data } = hotDetail;
     return (
       <div>
+        <div className={styles.publicLayer}>
+          <div className={styles.content}>
+            <p className={styles.center}>通告</p>
+            <p>亲爱的币评用户们：</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;对不起，要和大家说再见了。</p>
+            <p>&nbsp;&nbsp;&nbsp;&nbsp;感谢你们陪伴币评走过了5个多月的时光。今
+              天，我们不得不通知大家，「币
+              评区块链」微信公众平台将于2018年10月29日正式停止服务和运营。对于停止服务和运营，我们深表歉意，祝大家在今后的日子，走上财务自由之路。</p>
+            <p className={styles.right}>全体币评成员</p>
+            <p className={styles.right}>2018年10月25日</p>
+          </div>
+        </div>
         <div className={styles.banner}>{}
         </div>
         <div className={styles.hotCoin}>
